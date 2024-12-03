@@ -1,0 +1,30 @@
+.header {
+  //Pour mettre le logo donc le text 'EcoRide' au millieu du header en mode tablet et mobile
+  .navbar-brand {
+    @media (max-width: "768px") {
+      margin-left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  // Pour positioner le bouton du menu à droit du header
+  .navbar-toggler{
+    position: absolute;
+    right: 15px;
+    top: 20%;
+    border: none;
+  }
+
+  // Pour avoir un peu d'espace de deux cotes
+  .container-fluid {
+    width: 95%;
+  }
+  // Pour mettre la list de menu à la fin du header
+  .menu-list {
+    justify-content: end;
+    // Changement de la couleur des texts du menu
+    a{
+        color: black;
+    }
+  }
+}
