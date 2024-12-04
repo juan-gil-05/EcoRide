@@ -23,6 +23,23 @@
   font-family: "Montserrat", serif;
   font-size: 1.1rem !important;
 }
+@media (max-width: 768px) {
+  .content-text {
+    font-size: 0.8rem !important;
+    font-weight: 500;
+  }
+}
+
+.small-text {
+  font-family: "Montserrat", serif;
+  font-size: 1rem !important;
+}
+@media (max-width: 768px) {
+  .small-text {
+    font-size: 0.6rem !important;
+    font-weight: 500;
+  }
+}
 
 /*!
  * Bootstrap  v5.3.3 (https://getbootstrap.com/)
@@ -12010,4 +12027,51 @@ textarea.form-control-lg {
 }
 .header .menu-list a {
   color: black;
+}
+
+.footer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  background-color: #4e4e4e;
+}
+.footer p {
+  margin-bottom: 5px;
+}
+.footer .footer-info {
+  padding: 10px 10px 0px 10px;
+  display: flex;
+  justify-content: space-around;
+  color: white;
+}
+.footer .separator {
+  width: 2px;
+  height: 30px;
+  background-color: white;
+}
+@media (max-width: 768px) {
+  .footer .separator {
+    height: 20px;
+  }
+}
+.footer .principal {
+  color: #ede42b;
+}
+.footer .text {
+  text-align: center;
+  color: white;
+}
+.footer .copyright::before {
+  display: block;
+  position: absolute;
+  content: "";
+  height: 2px;
+  width: 100%;
+  background-color: white;
+  margin-bottom: 10px;
+}
+.footer .copyright {
+  text-align: end;
+  color: white;
+  margin-right: 15px;
 }/*# sourceMappingURL=main.css.map */

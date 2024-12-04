@@ -33,6 +33,22 @@ $font-family-serif: "Montserrat", serif; // content Text
 .content-text {
   font-family: $font-family-serif;
   font-size: 1.1rem !important;
+  // Content Text Mobile
+  @media (max-width: "768px") {
+    font-size: 0.8rem !important;
+    font-weight: 500;
+  }
+}
+
+// Style du Small text
+.small-text {
+  font-family: $font-family-serif;
+  font-size: 1rem !important;
+  // Small Text Mobile
+  @media (max-width: "768px") {
+    font-size: 0.6rem !important;
+    font-weight: 500;
+  }
 }
 
 //-------------------------------------------------------------------------------

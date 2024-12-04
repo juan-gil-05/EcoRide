@@ -1,0 +1,58 @@
+.footer{
+    // Pour positioner le footer en bas de la page
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    background-color: $dark;
+
+    p{
+        margin-bottom: 5px;
+    }
+
+    // Style du text du footer
+    .footer-info{
+        padding: 10px 10px 0px 10px;
+        display: flex;
+        justify-content: space-around;
+        color: white;
+    }
+
+    // Des lignes pour séparer les texts du footer
+    .separator{
+        width: 2px;
+        height: 30px;
+        background-color: white;
+        // Hauteur des lignes pour le mobile et tablets
+        @media (max-width: "768px") {
+            height: 20px;
+          }
+    }
+
+    // Couleur du text 'EcoRide' dans le footer
+    .principal{
+        color: $tertiary;
+    }
+
+    // Pour centrer les texts
+    .text{
+        text-align: center;
+        color: white;
+    }
+
+    // ligne qui va sur le text du copyright 
+    .copyright::before{
+        display: block;
+        position: absolute;
+        content: "";
+        height: 2px;
+        width: 100%;
+        background-color: white;
+        margin-bottom: 10px;
+    }
+    // Text du copyright
+    .copyright{
+        text-align: end;
+        color: white;
+        margin-right: 15px;
+    }
+}
