@@ -1,4 +1,6 @@
 .header {
+  // Effet de shadow
+  box-shadow: 0px 2px 22px 1px rgba(0, 0, 0, 0.25);
   //Pour mettre le logo donc le text 'EcoRide' au millieu du header en mode tablet et mobile
   .navbar-brand {
     @media (max-width: "768px") {
@@ -8,7 +10,7 @@
   }
 
   // Pour positioner le bouton du menu à droit du header
-  .navbar-toggler{
+  .navbar-toggler {
     position: absolute;
     right: 15px;
     top: 20%;
@@ -23,8 +25,8 @@
   .menu-list {
     justify-content: end;
     // Changement de la couleur des texts du menu
-    a{
-        color: black;
+    a {
+      color: black;
     }
   }
 }

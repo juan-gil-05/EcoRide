@@ -18,6 +18,12 @@
   font-size: 1.25rem !important;
   font-weight: 500;
 }
+@media (max-width: 768px) {
+  .subtitle-text {
+    font-size: 1.1rem !important;
+    font-weight: 500;
+  }
+}
 
 .content-text {
   font-family: "Montserrat", serif;
@@ -12007,6 +12013,9 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.header {
+  box-shadow: 0px 2px 22px 1px rgba(0, 0, 0, 0.25);
+}
 @media (max-width: 768px) {
   .header .navbar-brand {
     margin-left: 50%;
@@ -12027,6 +12036,15 @@ textarea.form-control-lg {
 }
 .header .menu-list a {
   color: black;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+main {
+  margin-bottom: 100px;
 }
 
 .footer {
@@ -12074,4 +12092,104 @@ textarea.form-control-lg {
   text-align: end;
   color: white;
   margin-right: 15px;
+}
+
+section .slogan {
+  text-align: center;
+  background-color: #4caf50;
+  height: 345px;
+}
+section .slogan h2, section .slogan .h2 {
+  padding: 20px;
+}
+section .slogan .search-bar {
+  background-color: white;
+  border: solid 3px #f5f5f5;
+  height: 340px;
+  border-radius: 62px;
+  position: relative;
+  box-shadow: 0px 4px 15px 1px rgba(0, 0, 0, 0.25);
+}
+section .slogan .d-flex {
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 40px;
+}
+section .slogan .d-flex form {
+  width: 40%;
+  position: relative;
+}
+section .slogan .d-flex form div {
+  width: 100%;
+}
+section .slogan .d-flex form i {
+  margin-right: 13px;
+  color: #0063ac;
+  position: absolute;
+  left: 15px;
+  top: 13px;
+}
+section .slogan .d-flex form input {
+  border: 1px solid #4e4e4e;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+  padding-left: 45px;
+  height: 50px;
+  width: 100%;
+}
+section .slogan .d-flex .search-btn {
+  width: 85%;
+}
+section .slogan .d-flex button {
+  width: 100%;
+  color: white;
+  height: 60px;
+}
+@media (max-width: 768px) {
+  section .slogan {
+    height: 168px;
+  }
+  section .slogan h2, section .slogan .h2 {
+    margin-bottom: 0;
+    font-size: 0.8rem !important;
+  }
+  section .slogan .search-bar {
+    height: 207px;
+    border-radius: 20px;
+  }
+  section .slogan .d-flex {
+    flex-direction: column;
+    padding-top: 13px !important;
+    gap: 10px;
+  }
+  section .slogan .d-flex .date {
+    width: 40%;
+  }
+  section .slogan .d-flex form {
+    width: 80%;
+  }
+  section .slogan .d-flex form i {
+    top: 9px;
+    font-size: 10px;
+  }
+  section .slogan .d-flex form input {
+    padding-left: 32px;
+    height: 32px;
+    font-size: 0.6rem !important;
+  }
+  section .slogan .d-flex .search-btn {
+    width: 90%;
+  }
+  section .slogan .d-flex button {
+    height: 37px;
+    font-size: 0.8rem !important;
+  }
+  section .container {
+    width: 90%;
+  }
+}
+
+.description_1 {
+  background-color: #f5f5f5;
+  height: 400px;
 }/*# sourceMappingURL=main.css.map */
