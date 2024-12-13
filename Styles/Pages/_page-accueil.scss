@@ -1,5 +1,5 @@
 // Style pour ajouter une petite ombre a tous les section de la page
-section{
+section {
   box-shadow: 0px 4px 15px 2px rgba(0, 0, 0, 0.55);
 }
 
@@ -63,8 +63,55 @@ section{
   }
 }
 
+// Style pour les section des descriptions
+.description-1 {
+  background-color: $light;
+  height: 430px;
+  display: flex;
+  padding-top: 55px;
+}
+.description-2 {
+  background-color: $primary;
+  height: 400px;
+  display: flex;
+}
+.description {
+  .container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  // Style des images des descriptions
+  .img-description {
+    width: 30%;
+    height: auto;
+    .img-1 {
+      object-fit: cover;
+      width: 100%;
+      border-radius: 35px;
+      height: auto;
+      border: solid $primary 2px;
+      box-shadow: 0px 4px 15px 1px rgba(0, 0, 0, 0.25);
+    }
+    .img-2 {
+      object-fit: cover;
+      width: 100%;
+      border-radius: 35px;
+      height: auto;
+      border: solid $tertiary 2px;
+      box-shadow: 0px 4px 15px 1px rgba(0, 0, 0, 0.25);
+    }
+  }
+  // Style des texts des descriptions
+  .text-description {
+    width: 55%;
+    text-align: center;
+  }
+}
+
 // Style pour les tablets et mobiles
 @media (max-width: "768px") {
+  // Style du texte du slogan et de la section
   .slogan {
     height: 168px;
     //Padding du slogan
@@ -115,50 +162,51 @@ section{
   .container {
     width: 90%;
   }
-}
 
-// Style pour les section des descriptions
-.description-1 {
-  background-color: $light;
-  height: 430px;
-  display: flex;
-  padding-top: 55px;
-}
-.description-2 {
-  background-color: $primary;
-  height: 400px;
-  display: flex;
-}
-.description {
-  .container {
+  // Style pour les section des descriptions
+  .description-1 {
+    background-color: $light;
+    height: 300px;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    padding-top: 120px;
   }
-  // Style des images des descriptions
-  .img-description {
-    width: 30%;
-    height: auto;
-    .img-1 {
-      object-fit: cover;
-      width: 100%;
-      border-radius: 35px;
-      height: auto;
-      border: solid $primary 2px;
-      box-shadow: 0px 4px 15px 1px rgba(0, 0, 0, 0.25);
-    }
-    .img-2 {
-      object-fit: cover;
-      width: 100%;
-      border-radius: 35px;
-      height: auto;
-      border: solid $tertiary 2px;
-      box-shadow: 0px 4px 15px 1px rgba(0, 0, 0, 0.25);
-    }
+  .description-2 {
+    background-color: $primary;
+    height: 200px;
+    display: flex;
   }
-  // Style des texts des descriptions
-  .text-description {
-    width: 55%;
-    text-align: center;
+  .description {
+    .container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    // Style des images des descriptions
+    .img-description {
+      width: 35%;
+      height: auto;
+      .img-1 {
+        object-fit: cover;
+        width: 100%;
+        border-radius: 15px;
+        height: auto;
+        border: solid $primary 2px;
+        box-shadow: 0px 4px 15px 1px rgba(0, 0, 0, 0.25);
+      }
+      .img-2 {
+        object-fit: cover;
+        width: 100%;
+        border-radius: 15px;
+        height: auto;
+        border: solid $tertiary 2px;
+        box-shadow: 0px 4px 15px 1px rgba(0, 0, 0, 0.25);
+      }
+    }
+    // Style des texts des descriptions
+    .text-description {
+      width: 60%;
+      text-align: center;
+      font-size: 0.6rem !important;
+    }
   }
 }
