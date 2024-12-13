@@ -1,120 +1,164 @@
-section {
-  // Style du texte du slogan et de la section
-  .slogan {
-    text-align: center;
-    background-color: $primary;
-    height: 345px;
-    //Padding du slogan
-    h2 {
-      padding: 20px;
-    }
-    // Style du conteneur de la barre de recherche
-    .search-bar {
-      background-color: white;
-      border: solid 3px $light;
-      height: 340px;
-      border-radius: 62px;
-      position: relative;
-      box-shadow: 0px 4px 15px 1px rgba(0, 0, 0, 0.25); // Effet de shadow
-    }
-    // Sytle en display flex du contenu de la barre de recherche
-    .d-flex {
-      justify-content: space-around;
-      align-items: center;
-      padding-top: 40px;
-      // Style du formulaire de recherche des covoiturage
-      form {
-        width: 40%;
-        position: relative;
-        div {
-          width: 100%;
-        }
-        // Style des icons de la barre de recherche
-        i {
-          margin-right: 13px;
-          color: #0063ac;
-          position: absolute;
-          left: 15px;
-          top: 13px;
-        }
-        // Style de l'input de la barre de recherche
-        input {
-          border: 1px solid #4e4e4e;
-          border-radius: 10px;
-          background-color: #f5f5f5;
-          padding-left: 45px;
-          height: 50px;
-          width: 100%;
-        }
-      }
-      // style du boutton de la barre de recherche
-      .search-btn {
-        width: 85%;
-      }
-      button {
-        width: 100%;
-        color: white;
-        height: 60px;
-      }
-    }
-  }
+// Style pour ajouter une petite ombre a tous les section de la page
+section{
+  box-shadow: 0px 4px 15px 2px rgba(0, 0, 0, 0.55);
+}
 
-  // Style pour les tablets et mobiles
-  @media (max-width: "768px") {
-    .slogan {
-      height: 168px;
-      //Padding du slogan
-      h2 {
-        margin-bottom: 0;
-        font-size: 0.8rem !important;
+// Style du texte du slogan et de la section
+.slogan {
+  text-align: center;
+  background-color: $primary;
+  height: 345px;
+  //Padding du slogan
+  h2 {
+    padding: 20px;
+  }
+  // Style du conteneur de la barre de recherche
+  .search-bar {
+    background-color: white;
+    border: solid 3px $light;
+    height: 340px;
+    border-radius: 62px;
+    position: relative;
+    box-shadow: 0px 4px 15px 1px rgba(0, 0, 0, 0.25); // Effet de shadow
+  }
+  // Sytle en display flex du contenu de la barre de recherche
+  .d-flex {
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 40px;
+    // Style du formulaire de recherche des covoiturage
+    form {
+      width: 40%;
+      position: relative;
+      div {
+        width: 100%;
       }
-      // Style du conteneur de la barre de recherche
-      .search-bar {
-        height: 207px;
-        border-radius: 20px;
+      // Style des icons de la barre de recherche
+      i {
+        margin-right: 13px;
+        color: #0063ac;
+        position: absolute;
+        left: 15px;
+        top: 13px;
       }
-      // Sytle en display flex du contenu de la barre de recherche
-      .d-flex {
-        flex-direction: column;
-        padding-top: 13px !important;
-        gap: 10px;
-        // Pour faire l'input de la date un peu plus petit que les autres input
-        .date {
-          width: 40%;
-        }
-        // Style du formulaire de recherche des covoiturage
-        form {
-          width: 80%;
-          // Style des icons de la barre de recherche
-          i {
-            top: 9px;
-            font-size: 10px;
-          }
-          // Style de l'input de la barre de recherche
-          input {
-            padding-left: 32px;
-            height: 32px;
-            font-size: 0.6rem !important;
-          }
-        }
-        // style du boutton de la barre de recherche
-        .search-btn {
-          width: 90%;
-        }
-        button {
-          height: 37px;
-          font-size: 0.8rem !important;
-        }
+      // Style de l'input de la barre de recherche
+      input {
+        border: 1px solid #4e4e4e;
+        border-radius: 10px;
+        background-color: #f5f5f5;
+        padding-left: 45px;
+        height: 50px;
+        width: 100%;
       }
     }
-    // Pour que le container ne fasse toute la largeur de l'ecran en mode mobile
-    .container {
-      width: 90%;
+    // style du boutton de la barre de recherche
+    .search-btn {
+      width: 85%;
+    }
+    button {
+      width: 100%;
+      color: white;
+      height: 60px;
     }
   }
 }
 
-.description_1 {
+// Style pour les tablets et mobiles
+@media (max-width: "768px") {
+  .slogan {
+    height: 168px;
+    //Padding du slogan
+    h2 {
+      margin-bottom: 0;
+      font-size: 0.8rem !important;
+    }
+    // Style du conteneur de la barre de recherche
+    .search-bar {
+      height: 207px;
+      border-radius: 20px;
+    }
+    // Sytle en display flex du contenu de la barre de recherche
+    .d-flex {
+      flex-direction: column;
+      padding-top: 13px !important;
+      gap: 10px;
+      // Pour faire l'input de la date un peu plus petit que les autres input
+      .date {
+        width: 40%;
+      }
+      // Style du formulaire de recherche des covoiturage
+      form {
+        width: 80%;
+        // Style des icons de la barre de recherche
+        i {
+          top: 9px;
+          font-size: 10px;
+        }
+        // Style de l'input de la barre de recherche
+        input {
+          padding-left: 32px;
+          height: 32px;
+          font-size: 0.6rem !important;
+        }
+      }
+      // style du boutton de la barre de recherche
+      .search-btn {
+        width: 90%;
+      }
+      button {
+        height: 37px;
+        font-size: 0.8rem !important;
+      }
+    }
+  }
+  // Pour que le container ne fasse toute la largeur de l'ecran en mode mobile
+  .container {
+    width: 90%;
+  }
+}
+
+// Style pour les section des descriptions
+.description-1 {
   background-color: $light;
+  height: 430px;
+  display: flex;
+  padding-top: 55px;
+}
+.description-2 {
+  background-color: $primary;
   height: 400px;
+  display: flex;
+}
+.description {
+  .container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  // Style des images des descriptions
+  .img-description {
+    width: 30%;
+    height: auto;
+    .img-1 {
+      object-fit: cover;
+      width: 100%;
+      border-radius: 35px;
+      height: auto;
+      border: solid $primary 2px;
+      box-shadow: 0px 4px 15px 1px rgba(0, 0, 0, 0.25);
+    }
+    .img-2 {
+      object-fit: cover;
+      width: 100%;
+      border-radius: 35px;
+      height: auto;
+      border: solid $tertiary 2px;
+      box-shadow: 0px 4px 15px 1px rgba(0, 0, 0, 0.25);
+    }
+  }
+  // Style des texts des descriptions
+  .text-description {
+    width: 55%;
+    text-align: center;
+  }
 }
