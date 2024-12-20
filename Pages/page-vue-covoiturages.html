@@ -19,7 +19,7 @@
           <!-- Nom du filtre -->
           <label for="">Voyage Écologique</label>
           <!-- Filtre -->
-          <i class="bi bi-circle" id="eco-trip-check"></i>
+          <i class="bi bi-circle"></i>
         </div>
         <!-- Filtre du Prix maximum -->
         <div>
@@ -44,7 +44,7 @@
           <!-- Icon du filtre -->
           <i class="bi bi-star"></i>
           <!-- Nom du filtre -->
-          <label for="">Note minimal</label>
+          <label for="">Note minimale</label>
           <!-- Étoiles pour filtrer la note minimal -->
           <div class="note-stars">
             <i class="bi bi-star-fill star"></i>
@@ -64,8 +64,105 @@
       <!-- Icon de recherche -->
       <i class="bi bi-search"></i>
       <!-- Input avec le l'adresse de départ et d'arrivée comme placeholder -->
-      <input type="text" placeholder="Lyon -> Paris" class="shadow-section" />
-      <button class="btn btn-secondary filter-btn small-text"><i class="bi bi-filter"></i>Filtrer</button>
+      <input
+        type="text"
+        placeholder="Lyon -> Paris"
+        class="shadow-section search-input"
+      />
+      <!-- Bouton pour afficher les filtres quand on est en mobile ou tablet -->
+      <button
+        class="btn btn-secondary filter-btn small-text"
+        data-bs-toggle="modal"
+        data-bs-target="#filterModal"
+      >
+        <i class="bi bi-filter"></i>Filtrer
+      </button>
+    </div>
+    <!-- Modal des filtres en mode mobile et tablet-->
+    <div
+      class="modal fade"
+      id="filterModal"
+      tabindex="-1"
+      aria-labelledby="filterModalLabel"
+      aria-hidden="true"
+    >
+      <!-- Contenu de la modal -->
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Header de la modal -->
+          <div class="modal-header">
+            <h1 class="modal-title fs-5 subtitle-text" id="filterModalLabel">
+              Filtrer
+            </h1>
+          </div>
+          <!-- Body de la modal -->
+          <div class="modal-body">
+            <!-- Formulaire pour les filtres de la section des covoiturages -->
+            <form action="" class="filter-body content-text">
+              <!-- Filtre du Voyage Écologique -->
+              <div>
+                <!-- Icon du filtre -->
+                <i class="bi bi-tree"></i>
+                <!-- Nom du filtre -->
+                <label for="">Voyage Écologique</label>
+                <!-- Filtre -->
+                <i class="bi bi-circle"></i>
+              </div>
+              <!-- Filtre du Prix maximum -->
+              <div>
+                <!-- Icon du filtre -->
+                <i class="bi bi-cash"></i>
+                <!-- Nom du filtre -->
+                <label for="">Prix maximum</label>
+                <!-- Filtre -->
+                <input type="number" />
+              </div>
+              <!-- Filtre de la Durée maximum -->
+              <div>
+                <!-- Icon du filtre -->
+                <i class="bi bi-clock"></i>
+                <!-- Nom du filtre -->
+                <label for="">Durée maximum</label>
+                <!-- Filtre -->
+                <input type="time" class="small-text" />
+              </div>
+              <!-- Filtre de la Note minimal -->
+              <div class="note-filter">
+                <!-- Icon du filtre -->
+                <i class="bi bi-star"></i>
+                <!-- Nom du filtre -->
+                <label for="">Note minimale</label>
+                <!-- Étoiles pour filtrer la note minimal -->
+                <div class="note-stars">
+                  <i class="bi bi-star-fill star"></i>
+                  <i class="bi bi-star-fill star"></i>
+                  <i class="bi bi-star-fill star"></i>
+                  <i class="bi bi-star-fill star"></i>
+                  <i class="bi bi-star-fill star"></i>
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- Footer de la modal -->
+          <div class="modal-footer">
+            <!-- Bouton pour annuler l'ajout des filtres -->
+            <button
+              type="button"
+              class="btn btn-danger content-text text-white"
+              data-bs-dismiss="modal"
+            >
+              Annuler
+            </button>
+            <!-- Bouton pour appliquer des filtres -->
+            <button
+              type="button"
+              class="btn btn-primary content-text text-white"
+            >
+              Appliquer
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Le jour et la date du covoiturage -->

@@ -12351,6 +12351,7 @@ body {
 }
 .covoiturages .filter .filter-body form .note-filter .note-stars {
   margin-left: 15px;
+  cursor: pointer;
 }
 .covoiturages .filter .filter-body form .note-filter .note-stars i {
   color: #4e4e4e;
@@ -12369,18 +12370,21 @@ body {
   display: flex;
   align-items: center;
 }
-.covoiturages .covoiturage-results .search-bar-covoiturage i {
+.covoiturages .covoiturage-results .search-bar-covoiturage .bi-search {
   color: #0063ac;
   position: absolute;
   padding-left: 25px;
   font-size: 20px;
 }
-.covoiturages .covoiturage-results .search-bar-covoiturage input {
+.covoiturages .covoiturage-results .search-bar-covoiturage .search-input {
   width: 100%;
   border-radius: 24px;
   border: solid 1.5px #4e4e4e;
   height: 80px;
   padding-left: 70px;
+}
+.covoiturages .covoiturage-results .search-bar-covoiturage .filter-btn {
+  display: none;
 }
 .covoiturages .covoiturage-results h2, .covoiturages .covoiturage-results .h2 {
   color: white;
@@ -12498,11 +12502,11 @@ body {
   .covoiturages .covoiturage-results {
     width: 100% !important;
   }
-  .covoiturages .covoiturage-results .search-bar-covoiturage i {
+  .covoiturages .covoiturage-results .search-bar-covoiturage .bi-search {
     padding-left: 15px !important;
     font-size: 15px !important;
   }
-  .covoiturages .covoiturage-results .search-bar-covoiturage input {
+  .covoiturages .covoiturage-results .search-bar-covoiturage .search-input {
     border: solid 1px #4e4e4e !important;
     height: 35px !important;
     padding-left: 45px !important;
@@ -12565,5 +12569,51 @@ body {
   }
   .covoiturages .covoiturage-results .travel-card .driver-profile p {
     font-size: 0.6rem !important;
+  }
+  .modal-content {
+    background-color: #f5f5f5 !important;
+  }
+  .modal-content .modal-header {
+    justify-content: center;
+  }
+  .modal-content .modal-body .filter-body div {
+    margin-bottom: 20px;
+  }
+  .modal-content .modal-body .filter-body div i {
+    color: #4e4e4e;
+  }
+  .modal-content .modal-body .filter-body div .bi-circle,
+  .modal-content .modal-body .filter-body div .bi-circle-fill {
+    margin-left: 15px;
+    color: #0063ac;
+    cursor: pointer;
+  }
+  .modal-content .modal-body .filter-body div label {
+    margin-left: 5px;
+  }
+  .modal-content .modal-body .filter-body div input {
+    margin-left: 15px;
+    border: solid 1px #0063ac;
+    max-width: 30%;
+    height: 20px;
+  }
+  .modal-content .modal-body .filter-body .note-filter {
+    display: flex;
+  }
+  .modal-content .modal-body .filter-body .note-filter label {
+    margin-left: 10px;
+  }
+  .modal-content .modal-body .filter-body .note-filter .note-stars {
+    margin-left: 15px;
+    cursor: pointer;
+  }
+  .modal-content .modal-body .filter-body .note-filter .note-stars i {
+    color: #4e4e4e;
+    opacity: 0.3;
+    cursor: pointer;
+  }
+  .modal-content .modal-body .filter-body .note-filter .note-stars .active-star {
+    color: #0063ac;
+    opacity: 1;
   }
 }/*# sourceMappingURL=main.css.map */

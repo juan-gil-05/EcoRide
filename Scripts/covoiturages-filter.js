@@ -1,11 +1,12 @@
 // Event pour remplir le circle du filtre du voyage écologique quand on le clique
 // Ajout de la classe "bi-circle-fill" au clique
-const circleCheck = document
-  .querySelector(".bi-circle")
-  .addEventListener("click", function () {
+const circleCheck = document.querySelectorAll(".bi-circle");
+circleCheck.forEach((circle) =>
+  circle.addEventListener("click", function () {
     this.classList.toggle("bi-circle");
     this.classList.toggle("bi-circle-fill");
-  });
+  })
+);
 
 //-------------------------------------------------------------------------------------------------------------------
 
@@ -21,7 +22,7 @@ allStar.forEach((star, index) => {
     // Si oui, on démarque tous les étoiles
     if (isLastActive) {
       allStar.forEach((s) => s.classList.remove("active-star"));
-    } 
+    }
     // Sinon,
     else {
       // on active les étoiles jusqu'à l'étoile sélectionnée
