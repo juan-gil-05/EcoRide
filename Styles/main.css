@@ -26,7 +26,7 @@
 }
 
 .content-text {
-  font-family: "Montserrat", serif;
+  font-family: "Montserrat", serif !important;
   font-size: 1.1rem !important;
 }
 @media (max-width: 768px) {
@@ -37,7 +37,7 @@
 }
 
 .small-text {
-  font-family: "Montserrat", serif;
+  font-family: "Montserrat", serif !important;
   font-size: 1rem !important;
 }
 @media (max-width: 768px) {
@@ -12467,20 +12467,17 @@ body {
 .covoiturages .covoiturage-results .travel-card .driver-profile .driver-img .content-text {
   color: #4e4e4e;
 }
-.covoiturages .covoiturage-results .travel-card .driver-profile .driver-img p {
-  margin-bottom: 0;
-}
 .covoiturages .covoiturage-results .travel-card .driver-profile .driver-note {
   color: #4e4e4e;
   display: flex;
   gap: 5px;
 }
-.covoiturages .covoiturage-results .travel-card .driver-profile .driver-note p {
-  margin-bottom: 0;
-}
 .covoiturages .covoiturage-results .travel-card .driver-profile .btn {
   width: 147px;
   border: 0.3px solid #4e4e4e;
+}
+.covoiturages .covoiturage-results .travel-card .driver-profile p {
+  margin-bottom: 0;
 }
 .covoiturages .covoiturage-results .travel-card .driver-profile::before {
   content: "";
@@ -12489,4 +12486,84 @@ body {
   background-color: #4e4e4e;
   position: absolute;
   top: 0;
+}
+
+@media (max-width: 768px) {
+  .covoiturages {
+    margin-top: 20px;
+  }
+  .covoiturages .filter {
+    display: none;
+  }
+  .covoiturages .covoiturage-results {
+    width: 100% !important;
+  }
+  .covoiturages .covoiturage-results .search-bar-covoiturage i {
+    padding-left: 15px !important;
+    font-size: 15px !important;
+  }
+  .covoiturages .covoiturage-results .search-bar-covoiturage input {
+    border: solid 1px #4e4e4e !important;
+    height: 35px !important;
+    padding-left: 45px !important;
+    border-radius: 10px !important;
+    font-size: 0.8rem !important;
+  }
+  .covoiturages .covoiturage-results .search-bar-covoiturage .filter-btn {
+    position: absolute;
+    right: 10px;
+    border-radius: 10px;
+    padding: 1px 10px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+  .covoiturages .covoiturage-results .search-bar-covoiturage .filter-btn i {
+    color: white;
+    position: relative;
+    padding: 0 !important;
+    font-size: 12px !important;
+  }
+  .covoiturages .covoiturage-results .travel-card {
+    padding: 8px 0px;
+  }
+  .covoiturages .covoiturage-results .travel-card .travel-content {
+    margin-bottom: 10px;
+  }
+  .covoiturages .covoiturage-results .travel-card .travel-content .travel-time i {
+    font-size: 25px !important;
+  }
+  .covoiturages .covoiturage-results .travel-card .travel-content .travel-description {
+    font-size: 0.6rem !important;
+  }
+  .covoiturages .covoiturage-results .travel-card .travel-content .travel-price > p:first-child,
+  .covoiturages .covoiturage-results .travel-card .travel-content .travel-price i {
+    font-size: 1.1rem !important;
+    font-weight: 600;
+  }
+  .covoiturages .covoiturage-results .travel-card .travel-content .travel-price .content-text {
+    font-size: 0.6rem !important;
+    margin-top: 9px;
+  }
+  .covoiturages .covoiturage-results .travel-card .driver-profile .driver-img {
+    gap: 10px;
+  }
+  .covoiturages .covoiturage-results .travel-card .driver-profile .driver-img img {
+    width: 25px;
+    height: 25px;
+  }
+  .covoiturages .covoiturage-results .travel-card .driver-profile .driver-note {
+    align-items: center;
+  }
+  .covoiturages .covoiturage-results .travel-card .driver-profile .driver-note i {
+    font-size: 10px;
+  }
+  .covoiturages .covoiturage-results .travel-card .driver-profile .btn {
+    font-size: 0.6rem !important;
+    padding: 3px;
+    width: 60px;
+  }
+  .covoiturages .covoiturage-results .travel-card .driver-profile p {
+    font-size: 0.6rem !important;
+  }
 }/*# sourceMappingURL=main.css.map */

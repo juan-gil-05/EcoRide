@@ -126,7 +126,7 @@ body {
         display: flex;
         justify-content: space-around;
         margin-bottom: 15px;
-        // Le filtre du heure de départ et d'arrivée
+        // L'heure de départ et d'arrivée
         .travel-time {
           display: flex;
           align-items: center;
@@ -140,7 +140,7 @@ body {
             font-size: 30px;
           }
         }
-        // Le filtre des déscriptions
+        // Les déscriptions
         .travel-description {
           // Pour mettre en gras les texts avec le lieu de départ et d'arrivée
           > div:first-child,
@@ -169,7 +169,7 @@ body {
             }
           }
         }
-        // Le filtre du prix
+        // Le prix
         .travel-price {
           display: flex;
           // Les euros
@@ -211,23 +211,21 @@ body {
           .content-text {
             color: $dark;
           }
-          p {
-            margin-bottom: 0;
-          }
         }
-        // La note du chauffeur 
+        // La note du chauffeur
         .driver-note {
           color: $dark;
           display: flex;
           gap: 5px;
-          p {
-            margin-bottom: 0;
-          }
         }
         // Le bouton pour plus de détail sur le covoiturage
         .btn {
           width: 147px;
           border: 0.3px solid $dark;
+        }
+        // Pour suprimmer la margin-bottom dans tous les textes en <p>
+        p {
+          margin-bottom: 0;
         }
       }
       // Une ligne sur la section du profil du chauffeur
@@ -238,6 +236,118 @@ body {
         background-color: $dark;
         position: absolute;
         top: 0;
+      }
+    }
+  }
+}
+
+// Medias Queries pour les mobiles et tablets
+@media (max-width: "768px") {
+  // Section des covoiturages
+  .covoiturages {
+    margin-top: 20px;
+    // Pour soupprimer la section de filtres
+    .filter {
+      display: none;
+    }
+    // Section des résultats des covoiturages
+    .covoiturage-results {
+      width: 100% !important; // Il fait tout le width car il n'y a plus de section des filtres
+      // Barre de recherche
+      .search-bar-covoiturage {
+        // Icon de la loupe de recherche
+        i {
+          padding-left: 15px !important;
+          font-size: 15px !important;
+        }
+        // Style pour l'input
+        input {
+          border: solid 1px $dark !important;
+          height: 35px !important;
+          padding-left: 45px !important;
+          border-radius: 10px !important;
+          font-size: 0.8rem !important;
+        }
+        // Le bouton pour voir les filtres
+        .filter-btn {
+          position: absolute;
+          right: 10px;
+          border-radius: 10px;
+          padding: 1px 10px;
+          display: flex;
+          align-items: center;
+          gap: 2px;
+          // Icon de filtrer
+          i {
+            color: white;
+            position: relative;
+            padding: 0 !important;
+            font-size: 12px !important;
+          }
+        }
+      }
+      // Les cartes avec les covoiturages
+      .travel-card {
+        padding: 8px 0px;
+        // Le contenu des cartes
+        .travel-content {
+          margin-bottom: 10px;
+          // L'heure de départ et d'arrivée
+          .travel-time {
+            // icon de la fleche
+            i {
+              font-size: 25px !important;
+            }
+          }
+          // Les déscriptions
+          .travel-description {
+            font-size: 0.6rem !important;
+          }
+          // Le prix
+          .travel-price {
+            // Pour les euros et l'icon d'euro
+            > p:first-child,
+            i {
+              font-size: 1.1rem !important;
+              font-weight: 600;
+            }
+            // Pour les centimes
+            .content-text {
+              font-size: 0.6rem !important;
+              margin-top: 9px;
+            }
+          }
+        }
+        // Pour le profil du chauffeur
+        .driver-profile {
+          // La photo et le prenom/nom du chauffeur
+          .driver-img {
+            gap: 10px;
+            // La photo
+            img {
+              width: 25px;
+              height: 25px;
+            }
+          }
+          // La note du chauffeur
+          .driver-note {
+            align-items: center;
+            // icon de l'étoile
+            i {
+              font-size: 10px;
+            }
+          }
+          // Le bouton pour plus de détail sur le covoiturage
+          .btn {
+            font-size: 0.6rem !important;
+            padding: 3px;
+            width: 60px;
+          }
+          // Pour changer la taille dans tous les textes en <p>
+          p {
+            font-size: 0.6rem !important;
+          }
+        }
       }
     }
   }

@@ -37,7 +37,7 @@ $font-family-serif: "Montserrat", serif; // content Text
 
 // Style du Content text
 .content-text {
-  font-family: $font-family-serif;
+  font-family: $font-family-serif !important;
   font-size: 1.1rem !important;
   // Content Text Mobile
   @media (max-width: "768px") {
@@ -48,7 +48,7 @@ $font-family-serif: "Montserrat", serif; // content Text
 
 // Style du Small text
 .small-text {
-  font-family: $font-family-serif;
+  font-family: $font-family-serif !important;
   font-size: 1rem !important;
   // Small Text Mobile
   @media (max-width: "768px") {
