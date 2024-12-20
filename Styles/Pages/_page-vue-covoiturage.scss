@@ -1,4 +1,244 @@
 // la couleur pour le fond de la page
-body{
-    background-color: $primary;
+body {
+  background-color: $primary;
+}
+// Section des covoiturages
+.covoiturages {
+  display: flex;
+  margin-top: 30px;
+  justify-content: space-between;
+  // Section des filtres
+  .filter {
+    width: 30%;
+    // Header des filtres
+    .filter-header {
+      display: flex;
+      background-color: $secondary;
+      color: white;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border-radius: 5px 5px 0 0;
+      padding: 5px;
+      h3 {
+        margin-bottom: 0;
+      }
+      i {
+        font-size: 26px;
+      }
+    }
+    // Corps des filtres
+    .filter-body {
+      padding: 9px;
+      background-color: $light;
+      border-radius: 0 0 5px 5px;
+      // Formulaire des filtres
+      form {
+        margin: 5%;
+        div {
+          margin-bottom: 20px;
+          // Couleur des icons qui expliquent les filtres
+          i {
+            color: $dark;
+          }
+          // Pour le filtre du Voyage Écologique
+          .bi-circle,
+          .bi-circle-fill {
+            margin-left: 15px;
+            color: $secondary;
+            cursor: pointer;
+          }
+          // Pour eloigner les labels des icons
+          label {
+            margin-left: 5px;
+          }
+          // Style des inputs
+          input {
+            margin-left: 15px;
+            border: solid 1px $secondary;
+            max-width: 30%;
+            height: 20px;
+          }
+        }
+        // Pour le filtre de la note du chauffeur
+        .note-filter {
+          display: flex;
+
+          label {
+            margin-left: 10px;
+          }
+          // Style pour chaque étoile
+          .note-stars {
+            margin-left: 15px;
+            i {
+              color: $dark;
+              opacity: 0.3;
+              cursor: pointer;
+            }
+            // Quand on clique sur les étoiles
+            .active-star {
+              color: $secondary;
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+  // Section des résultats des covoiturages
+  .covoiturage-results {
+    width: 65%;
+    // Barre de récherche
+    .search-bar-covoiturage {
+      position: relative;
+      display: flex;
+      align-items: center;
+      // Style de l'icon
+      i {
+        color: $secondary;
+        position: absolute;
+        padding-left: 25px;
+        font-size: 20px;
+      }
+      // Style de l'input
+      input {
+        width: 100%;
+        border-radius: 24px;
+        border: solid 1.5px $dark;
+        height: 80px;
+        padding-left: 70px;
+      }
+    }
+    // Text avec le jour et la date du covoiturage
+    h2 {
+      color: white;
+      margin-top: 3%;
+      margin-bottom: 3%;
+    }
+    // Pour les cartes avec les covoiturages
+    .travel-card {
+      padding: 25px 0 10px;
+      background-color: $light;
+      border-radius: 12px;
+      margin-bottom: 5%;
+      // Pour les informations du covoiturage
+      .travel-content {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 15px;
+        // Le filtre du heure de départ et d'arrivée
+        .travel-time {
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          justify-content: space-between;
+
+          p {
+            margin-bottom: 0;
+          }
+          i {
+            font-size: 30px;
+          }
+        }
+        // Le filtre des déscriptions
+        .travel-description {
+          // Pour mettre en gras les texts avec le lieu de départ et d'arrivée
+          > div:first-child,
+          > div:last-child {
+            font-weight: bold;
+          }
+          // les Places disponibles et Voyage Écologique
+          div {
+            display: flex;
+            gap: 9px;
+            margin-bottom: 10px;
+            // Icon
+            .bi-car-front-fill {
+              color: $secondary;
+            }
+            // Icon
+            .bi-tree-fill {
+              color: $primary;
+            }
+            p {
+              margin-bottom: 0;
+              // Pour mettre en gras le résultat des Places disponibles et du Voyage Écologique
+              span {
+                font-weight: bold;
+              }
+            }
+          }
+        }
+        // Le filtre du prix
+        .travel-price {
+          display: flex;
+          // Les euros
+          .headline-text {
+            font-weight: 500;
+          }
+          // Les céntimes
+          .content-text {
+            margin-top: 15px;
+          }
+          // Icon
+          i {
+            margin-left: 4px;
+          }
+        }
+      }
+      // Pour le profil du chauffeur
+      .driver-profile {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        position: relative;
+        div {
+          margin-top: 10px;
+        }
+        // Pour la photo et le prenom/nom du chauffeur
+        .driver-img {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          // la photo
+          img {
+            border-radius: 100%;
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+          }
+          // Nom/prenom
+          .content-text {
+            color: $dark;
+          }
+          p {
+            margin-bottom: 0;
+          }
+        }
+        // La note du chauffeur 
+        .driver-note {
+          color: $dark;
+          display: flex;
+          gap: 5px;
+          p {
+            margin-bottom: 0;
+          }
+        }
+        // Le bouton pour plus de détail sur le covoiturage
+        .btn {
+          width: 147px;
+          border: 0.3px solid $dark;
+        }
+      }
+      // Une ligne sur la section du profil du chauffeur
+      .driver-profile::before {
+        content: "";
+        width: 100%;
+        height: 0.3px;
+        background-color: $dark;
+        position: absolute;
+        top: 0;
+      }
+    }
+  }
 }
