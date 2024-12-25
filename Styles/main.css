@@ -51,6 +51,11 @@
   box-shadow: 0px 2px 15px 2px rgba(0, 0, 0, 0.25);
 }
 
+a {
+  color: #4e4e4e !important;
+  text-decoration: none !important;
+}
+
 /*!
  * Bootstrap  v5.3.3 (https://getbootstrap.com/)
  * Copyright 2011-2024 The Bootstrap Authors
@@ -12616,4 +12621,105 @@ body {
     color: #0063ac;
     opacity: 1;
   }
+}
+.covoiturage-info {
+  display: flex;
+  margin-top: 30px;
+  justify-content: space-between;
+}
+.covoiturage-info .trip-info {
+  width: 35%;
+}
+.covoiturage-info .trip-info .trip-header {
+  display: flex;
+  background-color: #0063ac;
+  color: white;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 5px 5px 0 0;
+  padding: 5px;
+}
+.covoiturage-info .trip-info .trip-header h3, .covoiturage-info .trip-info .trip-header .h3,
+.covoiturage-info .trip-info .trip-header p {
+  margin-bottom: 0;
+}
+.covoiturage-info .trip-info .trip-header .trip-price {
+  display: flex;
+}
+.covoiturage-info .trip-info .trip-header .trip-price .headline-text {
+  font-weight: 500;
+}
+.covoiturage-info .trip-info .trip-header .trip-price .content-text {
+  margin-top: 15px;
+}
+.covoiturage-info .trip-info .trip-header .trip-price i {
+  margin-left: 4px;
+}
+.covoiturage-info .trip-info .trip-body {
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 0 0 5px 5px;
+}
+.covoiturage-info .trip-info .trip-body .time-description {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  position: relative;
+}
+.covoiturage-info .trip-info .trip-body .time-description .time {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+.covoiturage-info .trip-info .trip-body .time-description .time p {
+  margin-bottom: 0;
+  font-weight: 500;
+}
+.covoiturage-info .trip-info .trip-body .time-description .time i {
+  font-size: 30px;
+}
+.covoiturage-info .trip-info .trip-body .time-description .places {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+.covoiturage-info .trip-info .trip-body .time-description p {
+  margin-bottom: 0;
+  font-weight: 500;
+}
+.covoiturage-info .trip-info .trip-body .time-description:after {
+  content: "";
+  width: 100%;
+  height: 0.3px;
+  background-color: #4e4e4e;
+  position: absolute;
+  bottom: 0;
+}
+.covoiturage-info .trip-info .trip-body .trip-description {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+.covoiturage-info .trip-info .trip-body .trip-description .descriptions div {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.covoiturage-info .trip-info .trip-body .trip-description .descriptions div .bi-car-front-fill,
+.covoiturage-info .trip-info .trip-body .trip-description .descriptions div .fa-car-side,
+.covoiturage-info .trip-info .trip-body .trip-description .descriptions div .fa-car-on {
+  color: #0063ac;
+}
+.covoiturage-info .trip-info .trip-body .trip-description .descriptions div .bi-tree-fill,
+.covoiturage-info .trip-info .trip-body .trip-description .descriptions div .bi-lightning-charge-fill {
+  color: #4caf50;
+}
+.covoiturage-info .trip-info .trip-body .trip-description .descriptions div p {
+  margin-bottom: 0;
+}
+.covoiturage-info .trip-info .trip-body .trip-description .descriptions div p span {
+  font-weight: 600;
 }/*# sourceMappingURL=main.css.map */
