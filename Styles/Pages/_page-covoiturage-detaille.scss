@@ -53,25 +53,22 @@
           flex-direction: column;
           justify-content: space-between;
           margin-bottom: 15px;
-
-          p {
-            margin-bottom: 0;
-            font-weight: 500;
-          }
           i {
             font-size: 30px;
           }
         }
-        // Les lieus
+        // Les lieus et la durée
         .places {
           display: flex;
           gap: 10px;
           flex-direction: column;
           margin-bottom: 15px;
         }
-        p {
+        // Pour mettre quelques textes en gras
+        p,
+        span {
           margin-bottom: 0;
-          font-weight: 500;
+          font-weight: 600;
         }
         // Une ligne
         &:after {
@@ -112,6 +109,44 @@
                 font-weight: 600;
               }
             }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Medias queries pour les mobiles et tablets
+@media (max-width: "768px") {
+  .covoiturage-info {
+    flex-direction: column;
+    margin-top: 20px;
+    // Infomation du voyage
+    .trip-info {
+      width: 100%;
+      .trip-header {
+        padding: 10px 5px;
+        // Pour le prix du covoiturage
+        .trip-price {
+          .content-text {
+            margin-top: 11px;
+          }
+        }
+      }
+      .trip-body {
+        position: relative;
+        padding: 10px 10px 0px;
+        border-radius: 0 0 20px 20px;
+        // Les descriptions des heures du covoiturage, les lieus de départ et d'arrivée et la durée du trajet
+        .time-description {
+          position: unset; // Pour que la ligne fasse toute la largeur on enleve la position relative et on la passse au .trip-body
+          // Les lieus et la durée
+          .places {
+            font-size: 0.8rem !important;
+          }
+          // Une ligne
+          &:after {
+            bottom: 63%;
           }
         }
       }
