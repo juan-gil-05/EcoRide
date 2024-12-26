@@ -12732,7 +12732,8 @@ body {
   color: #4e4e4e;
   text-transform: uppercase;
   font-weight: bold;
-  padding: 2.5%;
+  padding: 2%;
+  border: 1px solid #4e4e4e;
 }
 .covoiturage-info .driver-info {
   padding: 15px 3%;
@@ -12843,6 +12844,7 @@ body {
 }
 .covoiturage-info .driver-info .comments ul li .user-comment p:last-child {
   margin-bottom: 40px;
+  text-align: justify;
 }
 .covoiturage-info .driver-info .comments ul li:after {
   content: "";
@@ -12880,5 +12882,34 @@ body {
   }
   .covoiturage-info .trip-info .trip-body .time-description:after {
     bottom: 63%;
+  }
+  .covoiturage-info .trip-info .participation-btn {
+    margin-top: 5%;
+  }
+  .covoiturage-info .trip-info .participation-btn .btn {
+    width: 60%;
+    border-radius: 10px;
+    text-transform: capitalize;
+  }
+  .covoiturage-info .driver-info {
+    margin-top: 5%;
+    width: 100%;
+    padding: 15px 5%;
+  }
+  .covoiturage-info .driver-info .driver-header img {
+    width: 50px;
+    height: 50px;
+  }
+  .covoiturage-info .driver-info .preferences h2, .covoiturage-info .driver-info .preferences .h2 {
+    margin-bottom: 10px;
+  }
+  .covoiturage-info .driver-info .preferences ul {
+    padding-left: 5%;
+  }
+  .covoiturage-info .driver-info .comments h2, .covoiturage-info .driver-info .comments .h2 {
+    margin-bottom: 10px;
+  }
+  .covoiturage-info .driver-info .comments ul li .user-comment p:last-child {
+    margin-bottom: 20px;
   }
 }/*# sourceMappingURL=main.css.map */
