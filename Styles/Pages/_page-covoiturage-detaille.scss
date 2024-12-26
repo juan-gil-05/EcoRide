@@ -6,6 +6,7 @@
   // Infomation du voyage
   .trip-info {
     width: 40%;
+    // Header
     .trip-header {
       display: flex;
       background-color: $secondary;
@@ -36,6 +37,7 @@
         }
       }
     }
+    // Body
     .trip-body {
       padding: 15px;
       background-color: $light;
@@ -111,6 +113,20 @@
             }
           }
         }
+      }
+    }
+    // Bouton pour participer au covoiturage
+    .participation-btn {
+      margin-top: 7%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      .btn {
+        width: 95%;
+        color: $dark;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding: 2.5%;
       }
     }
   }

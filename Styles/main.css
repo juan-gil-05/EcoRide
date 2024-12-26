@@ -12721,6 +12721,19 @@ body {
 .covoiturage-info .trip-info .trip-body .trip-description .descriptions div p span {
   font-weight: 600;
 }
+.covoiturage-info .trip-info .participation-btn {
+  margin-top: 7%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.covoiturage-info .trip-info .participation-btn .btn {
+  width: 95%;
+  color: #4e4e4e;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 2.5%;
+}
 .covoiturage-info .driver-info {
   padding: 15px 3%;
   background-color: #f5f5f5;
