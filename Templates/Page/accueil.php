@@ -1,3 +1,10 @@
+<?php
+// HEADER
+require_once './Templates/header.php';
+?>
+
+<!-- main -->
+
 <!-- Section qui contient le slogan et la barre de recherche des covoiturages -->
 <section class="shadow-section">
   <div class="slogan">
@@ -44,8 +51,8 @@
     </div>
   </div>
 </section>
-<!-- Sections des descriptions de l'entreprise-->
- <!-- Première description-->
+<!-- Sections des descriptions de l'entreprise -->
+<!-- Première description-->
 <section class="shadow-section">
   <div class="description description-1">
     <div class="container">
@@ -54,8 +61,7 @@
         <img
           src="../Assets/Img_page-accueil/description-1.webp"
           alt=""
-          class="img-1"
-        />
+          class="img-1" />
       </div>
       <!--Text de la description-->
       <div class="text-description content-text">
@@ -87,9 +93,13 @@
         <img
           src="../Assets/Img_page-accueil/description-2.webp"
           alt=""
-          class="img-2"
-        />
+          class="img-2" />
       </div>
     </div>
   </div>
 </section>
+
+<?php
+// FOOTER
+require_once './Templates/footer.php';
+?>

@@ -1,3 +1,9 @@
+<?php
+// HEADER
+require_once './Templates/header.php';
+?>
+
+<!-- main -->
 <section class="covoiturages container">
   <!-- Section des filtres du covoiturages -->
   <div class="filter">
@@ -231,7 +237,7 @@
         </div>
         <!-- Bouton pour voir plus en détail le covoiturage -->
         <div class="content-text">
-          <a href="/detaille-covoiturage"><button class="btn btn-warning">Détail</button></a>
+          <a href="?controller=covoiturages&action=showOne"><button class="btn btn-warning">Détail</button></a>
         </div>
       </div>
     </div>
@@ -298,7 +304,7 @@
         </div>
         <!-- Bouton pour voir plus en détail le covoiturage -->
         <div class="content-text">
-          <a href="/detaille-covoiturage"><button class="btn btn-warning">Détail</button></a>
+          <a href="?controller=covoiturages&action=showOne"><button class="btn btn-warning">Détail</button></a>
         </div>
       </div>
     </div>
@@ -365,9 +371,14 @@
         </div>
         <!-- Bouton pour voir plus en détail le covoiturage -->
         <div class="content-text">
-          <a href="/detaille-covoiturage"><button class="btn btn-warning">Détail</button></a>
+          <a href="?controller=covoiturages&action=showOne"><button class="btn btn-warning">Détail</button></a>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<?php
+// FOOTER
+require_once './Templates/footer.php';
+?>

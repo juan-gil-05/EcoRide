@@ -1,3 +1,9 @@
+<?php
+//HEADER
+require_once './Templates/header.php';
+?>
+
+<!-- main -->
 <section class="container covoiturage-info">
   <!-- Infomation du voyage -->
   <div class="trip-info">
@@ -201,3 +207,8 @@
     </div>
   </div>
 </section>
+
+<?php
+// FOOTER
+require_once './Templates/footer.php';
+?>
