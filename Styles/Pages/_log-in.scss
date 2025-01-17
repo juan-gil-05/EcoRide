@@ -1,0 +1,22 @@
+.log-in-form {
+  .form {
+    .form-floating {
+      width: 90%;
+
+      input {
+        border: 0.5px solid $dark;
+        background-color: $light;
+      }
+    }
+  }
+
+  .if-form-error{
+    .alert{
+        width: 90%;
+    }
+  }
+
+  button {
+    border: 0.5px solid $dark;
+  }
+}

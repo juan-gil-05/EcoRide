@@ -62,7 +62,7 @@ use App\Security\Security;
                             <?php if(Security::islogged()) {?>
                                 <a class="nav-link" href="?controller=auth&action=logOut">Se Deconnecter</a>
                             <?php } else {?>
-                            <a class="nav-link" href="?controller=user&action=singUp">Se connecter</a>
+                            <a class="nav-link" href="?controller=auth&action=logIn">Se connecter</a>
                             <?php }?>
                         </li>
                     </ul>

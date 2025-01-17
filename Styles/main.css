@@ -12912,4 +12912,17 @@ body {
   .covoiturage-info .driver-info .comments ul li .user-comment p:last-child {
     margin-bottom: 20px;
   }
+}
+.log-in-form .form .form-floating {
+  width: 90%;
+}
+.log-in-form .form .form-floating input {
+  border: 0.5px solid #4e4e4e;
+  background-color: #f5f5f5;
+}
+.log-in-form .if-form-error .alert {
+  width: 90%;
+}
+.log-in-form button {
+  border: 0.5px solid #4e4e4e;
 }/*# sourceMappingURL=main.css.map */

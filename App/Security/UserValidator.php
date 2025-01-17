@@ -27,15 +27,24 @@ class UserValidator
         return $errors;
     }
 
-    public function verifyPassword(string $password)
-    {
-        $userRepository = new UserRepository;
-        $user = $userRepository->findOneByMail($_POST['mail']);
+    public function logInValidate(User $user):array
+    {   
+        $errors = [];
+        
+        if(empty($user->getMail())){
+            $errors['mail'] = "Vous devez mettre une adresse e-mail";
+        }
 
-        if(password_verify($password, $user->getPassword())){
+        return $errors;
+    }
+
+    public function passwordVerify(User $user)
+    {
+        if($user && $_POST['password'] === $user->getPassword()){
             return true;
         } else {
             return false;
         }
     }
+
 }

@@ -47,27 +47,28 @@ class AuthController extends Controller
     protected function logIn()
     {
         $errors = [];
+        $mail = "";
 
         try {
             if (isset($_POST['logIn'])) {
                 $userRepository = new UserRepository;
                 $userValidator = new UserValidator;
                 $user = $userRepository->findOneByMail($_POST['mail']);
-                var_dump($user->getPassword());
-                var_dump($_POST['password']);
-                // var_dump($user);
-
-                if ($user && $_POST['password'] === $user->getPassword()) {
-                    session_regenerate_id(true);
-                    $_SESSION['user'] = [
-                        "id" => $user->getId(),
-                        "pseudo" => $user->getPseudo(),
-                        "mail" => $user->getMail(),
-                        "password" => $user->getPassword(),
-                    ];
-                    header('location: ?controller=page&action=accueil');
-                } else {
-                    $errors[] = "Mail ou mot de passe incorrect";
+                $mail = $user->getMail();
+                $errors = $userValidator->logInValidate($user);
+                if (empty($errors)) {
+                    if ($user && $userValidator->passwordVerify($user)) {
+                        session_regenerate_id(true);
+                        $_SESSION['user'] = [
+                            "id" => $user->getId(),
+                            "pseudo" => $user->getPseudo(),
+                            "mail" => $user->getMail(),
+                            "password" => $user->getPassword(),
+                        ];
+                        header('location: ?controller=page&action=accueil');
+                    } else {
+                        $errors['invalidUser'] = "Email ou mot de passe invalide";
+                    }
                 }
             }
         } catch (Exception $e) {
@@ -75,7 +76,7 @@ class AuthController extends Controller
                 'error' => $e->getMessage()
             ]);
         }
-        $this->render("Auth/log-in");
+        $this->render("Auth/log-in", ['errors' => $errors, 'mail' => $mail]);
     }
 
     protected function logOut()
