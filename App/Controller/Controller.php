@@ -23,9 +23,17 @@ class Controller
                         $controller = new CovoiturageController();
                         $controller->route();
                         break;
-                    // Si le contrôtreul passe dans l'url n'existe pas
+                    case 'user':
+                        $controller = new UserController();
+                        $controller->route();
+                        break;
+                    case 'auth':
+                        $controller = new AuthController();
+                        $controller->route();
+                        break;
+                        // Si le contrôtreul passe dans l'url n'existe pas
                     default:
-                        throw new Exception("Ce contrôleur n'existe pas: ".$_GET['controller']);
+                        throw new Exception("Ce contrôleur n'existe pas: " . $_GET['controller']);
                         break;
                 }
             }
@@ -46,7 +54,7 @@ class Controller
     protected function render(string $path, array $params = []): void
     {
         // Path du fichier avec la vue
-        $filePath = _ROOTPATH_ ."/Templates/".$path.".php";
+        $filePath = _ROOTPATH_ . "/Templates/" . $path . ".php";
 
         try {
             // Si le path est introuvable

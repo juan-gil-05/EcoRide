@@ -1,3 +1,7 @@
+<?php 
+use App\Security\Security;
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -55,7 +59,11 @@
                             <a class="nav-link" href="#">Contact</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Conexion</a>
+                            <?php if(Security::islogged()) {?>
+                                <a class="nav-link" href="?controller=auth&action=logOut">Se Deconnecter</a>
+                            <?php } else {?>
+                            <a class="nav-link" href="?controller=user&action=singUp">Se connecter</a>
+                            <?php }?>
                         </li>
                     </ul>
                 </div>

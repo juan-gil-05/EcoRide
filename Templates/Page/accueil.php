@@ -1,10 +1,14 @@
 <?php
 // HEADER
 require_once './Templates/header.php';
+
+use App\Security\Security;
 ?>
 
 <!-- main -->
-
+<?php if (Security::isLogged()) { ?>
+  <h1>bienvenue <?=$_SESSION['user']['pseudo']?></h1>
+<?php } ?>
 <!-- Section qui contient le slogan et la barre de recherche des covoiturages -->
 <section class="shadow-section">
   <div class="slogan">

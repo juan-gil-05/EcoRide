@@ -5,13 +5,12 @@ namespace App\Entity;
 class User extends Entity
 {
     protected ?int $id = null;
-    protected ?int $nb_credits = null;
-    protected ?string $pseudo = "";
-    protected ?string $mail = "";
-    protected ?string $mot_de_passe = "";
+    protected int $nb_credits = 20;
+    protected string $pseudo = "";
+    protected string $mail = "";
+    protected string $password = "";
     protected ?string $photo = "";
     protected ?int $role_id = null;
-
     /**
      * Get the value of id
      */
@@ -33,7 +32,7 @@ class User extends Entity
     /**
      * Get the value of nb_credits
      */
-    public function getNbCredits(): ?int
+    public function getNbCredits(): int
     {
         return $this->nb_credits;
     }
@@ -41,7 +40,7 @@ class User extends Entity
     /**
      * Set the value of nb_credits
      */
-    public function setNbCredits(?int $nb_credits): self
+    public function setNbCredits(int $nb_credits): self
     {
         $this->nb_credits = $nb_credits;
 
@@ -51,7 +50,7 @@ class User extends Entity
     /**
      * Get the value of pseudo
      */
-    public function getPseudo(): ?string
+    public function getPseudo(): string
     {
         return $this->pseudo;
     }
@@ -59,7 +58,7 @@ class User extends Entity
     /**
      * Set the value of pseudo
      */
-    public function setPseudo(?string $pseudo): self
+    public function setPseudo(string $pseudo): self
     {
         $this->pseudo = $pseudo;
 
@@ -69,7 +68,7 @@ class User extends Entity
     /**
      * Get the value of mail
      */
-    public function getMail(): ?string
+    public function getMail(): string
     {
         return $this->mail;
     }
@@ -77,7 +76,7 @@ class User extends Entity
     /**
      * Set the value of mail
      */
-    public function setMail(?string $mail): self
+    public function setMail(string $mail): self
     {
         $this->mail = $mail;
 
@@ -85,19 +84,19 @@ class User extends Entity
     }
 
     /**
-     * Get the value of mot_de_passe
+     * Get the value of password
      */
-    public function getMotDePasse(): ?string
+    public function getPassword(): string
     {
-        return $this->mot_de_passe;
+        return $this->password;
     }
 
     /**
-     * Set the value of mot_de_passe
+     * Set the value of password
      */
-    public function setMotDePasse(?string $mot_de_passe): self
+    public function setPassword(string $password): self
     {
-        $this->mot_de_passe = $mot_de_passe;
+        $this->password = $password;
 
         return $this;
     }
