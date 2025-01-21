@@ -42,12 +42,19 @@ class UserController extends Controller
     */
     protected function singUp()
     {
+        $errors = [];
+        $pseudo = "";
+        $mail = "";
+        $password = "";
         try {
-            $errors = [];
             $user = new User();
             $UserValidator = new UserValidator();
             if (isset($_POST['singUp'])) {
                 $user->hydrate($_POST);
+                $pseudo = $user->getPseudo();
+                $mail = $user->getMail();
+                $password = $user->getPassword();
+                $this->passwordHasher($user);
                 $errors = $UserValidator->singUpValidate($user);
                 if (empty($errors)) {
                     $userRepository = new UserRepository();
@@ -57,12 +64,24 @@ class UserController extends Controller
             }
             $this->render(
                 "User/sing-up",
-                ['errors' => $errors]
+                ['errors' => $errors, 'pseudo' => $pseudo, 'password' => $password, 'mail' => $mail]
             );
         } catch (Exception $e) {
             $this->render("Errors/404", [
                 'error' => $e->getMessage()
             ]);
+        }
+    }
+
+
+    // Fonction pour hasher le mot de passe
+    protected function passwordHasher(User $user)
+    {
+        if (! empty($_POST['password'])) {
+            $passwordHashed = password_hash($user->getPassword(), PASSWORD_DEFAULT);
+            return $user->setPassword($passwordHashed);
+        } else {
+            return false;
         }
     }
 }

@@ -1,0 +1,42 @@
+.connection-form {
+  form {
+    .form-floating {
+      width: 90%;
+
+      input {
+        border: 0.5px solid $dark;
+        background-color: $light;
+      }
+
+      .form-control ~ label::after {
+        background-color: $light;
+      }
+
+      .show-password {
+        display: flex;
+        gap: 10px;
+        justify-content: end;
+        position: absolute;
+        right: 0;
+        i {
+          cursor: pointer;
+          color: white;
+        }
+      }
+
+      .invalid-tooltip{
+        width: 60%;
+      }
+    }
+  }
+
+  .if-form-error {
+    .alert {
+      width: 90%;
+    }
+  }
+
+  button {
+    border: 0.5px solid $dark;
+  }
+}

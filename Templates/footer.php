@@ -23,7 +23,8 @@
 <!--Import du JS du Bootstrap-->
 <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Import du JS -->
-<script src="../Scripts/covoiturages-filter.js"></script>
+<script src="../Scripts/covoituragesfilter.js"></script>
+<script src="../Scripts/showPassword.js"></script>
 </body>
 
 </html>

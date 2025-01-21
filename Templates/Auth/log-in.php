@@ -1,32 +1,35 @@
 <?php
 // HEADER
 require_once './Templates/header.php';
-
 ?>
 
 <!-- main -->
 
-<section class="container mt-5 log-in-form">
+<section class="container mt-5 connection-form">
     <form method="post">
         <h2 class="h3 mb-4 text-center text-white headline-text">Se connecter à EcoRide</h2>
 
-        <div class="d-flex flex-column align-items-center form content-text">
+        <div class="d-flex flex-column align-items-center content-text">
             <div class="form-floating mb-3 ">
                 <input type="email" name="mail" class="form-control
-                <?= (isset($errors['mail'])) || (isset($errors['invalidUser'])) ? "is-invalid" : "" ?>" 
-                id="floatingInput" placeholder="name@example.com" value="<?=$mail?>">
+                <?= (isset($errors['mail'])) || (isset($errors['invalidUser'])) ? "is-invalid" : "" ?>"
+                    id="floatingInput" placeholder="name@example.com" value="<?= $mail ?>">
                 <label for="floatingInput">Adresse e-mail</label>
                 <?php if (isset($errors['mail'])) { ?>
                     <div class="invalid-tooltip position-static "><?= $errors['mail'] ?></div>
                 <?php } ?>
             </div>
-    
-            <div class="form-floating">
+
+            <div class="form-floating mb-5">
                 <input type="password" name="password" class="form-control <?= (isset($errors['invalidUser'])) ? "is-invalid" : "" ?>" id="floatingPassword" placeholder="Password">
                 <label for="floatingPassword">Mot de passe</label>
+                <div class="show-password">
+                    <span class="text-white small-text" id="showPasswordText">Afficher le mot de passe</span>
+                    <i class="bi bi-square" id="showPasswordIcon"></i>
+                </div>
             </div>
         </div>
-    
+
         <?php if (isset($errors['invalidUser'])) { ?>
             <div class="if-form-error d-flex justify-content-center content-text">
                 <div class="alert alert-danger mt-3 "><?= $errors['invalidUser'] ?></div>
