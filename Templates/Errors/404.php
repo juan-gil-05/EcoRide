@@ -4,6 +4,7 @@ require_once './Templates/header.php';
 ?>
 
 <!-- main -->
+ 
 <div class="container text-white mt-3">
     <h1>404 - Page introuvable</h1>
     <p>oups, il semble que cette page n'existe pas</p>

@@ -1,5 +1,7 @@
+// Style pour les page de connexion et du création du compte
 .connection-form {
   form {
+    // Tous les champs du formulaire
     .form-floating {
       width: 90%;
 
@@ -7,35 +9,36 @@
         border: 0.5px solid $dark;
         background-color: $light;
       }
-
+      // Pour le text de l'input qui est dedans le label
       .form-control ~ label::after {
         background-color: $light;
       }
-
+      // Pour l'affichage du mot de passe
       .show-password {
         display: flex;
         gap: 10px;
         justify-content: end;
         position: absolute;
         right: 0;
+        // Icon du petit carré
         i {
           cursor: pointer;
           color: white;
         }
       }
-
-      .invalid-tooltip{
+      // Pour les messages des erreurs
+      .invalid-tooltip {
         width: 60%;
       }
     }
   }
-
+  // pour le message d'erreur
   .if-form-error {
     .alert {
       width: 90%;
     }
   }
-
+  // Style du button
   button {
     border: 0.5px solid $dark;
   }

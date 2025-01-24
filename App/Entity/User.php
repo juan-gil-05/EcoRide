@@ -5,12 +5,14 @@ namespace App\Entity;
 class User extends Entity
 {
     protected ?int $id = null;
+    // A la création du compte, l’utilisateur bénéficie de 20 crédits.
     protected int $nb_credits = 20;
     protected string $pseudo = "";
     protected string $mail = "";
     protected string $password = "";
     protected ?string $photo = "";
     protected ?int $role_id = null;
+    
     /**
      * Get the value of id
      */

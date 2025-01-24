@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 use App\Security\Security;
 ?>
 
@@ -58,12 +59,13 @@ use App\Security\Security;
                         <li class="nav-item">
                             <a class="nav-link" href="#">Contact</a>
                         </li>
+                        <!-- On verifie si l'utilisateur est connecté ou pas pour afficher le message indicat -->
                         <li class="nav-item">
-                            <?php if(Security::islogged()) {?>
-                                <a class="nav-link" href="?controller=auth&action=logOut">Se Deconnecter</a>
-                            <?php } else {?>
-                            <a class="nav-link" href="?controller=auth&action=logIn">Se connecter</a>
-                            <?php }?>
+                            <?php if (Security::islogged()) { ?>
+                                <a class="nav-link" href="?controller=auth&action=logOut">Deconnexion</a>
+                            <?php } else { ?>
+                                <a class="nav-link" href="?controller=auth&action=logIn">Connexion</a>
+                            <?php } ?>
                         </li>
                     </ul>
                 </div>

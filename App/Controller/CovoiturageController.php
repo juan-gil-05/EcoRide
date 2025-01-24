@@ -12,12 +12,12 @@ class CovoiturageController extends Controller
         try {
             if (isset($_GET['action'])) {
                 switch ($_GET['action']) {
+                        // Action pour afficher tous les covoiturages
                     case 'showAll':
-                        // On appel l'action pour afficehr tous les covoiturages
                         $this->allCovoiturages();
                         break;
+                        // Action pour afficher un covoiturage specifique
                     case 'showOne':
-                        // On appel l'action pour afficher un covoiturage specifique
                         $this->oneCovoiturage();
                         break;
                         // Si l'action passee dans l'url n'existe pas
@@ -30,7 +30,8 @@ class CovoiturageController extends Controller
             else {
                 throw new \Exception("Aucune action détectée");
             }
-        } catch (Exception $e) {
+        } // On return la page d'erreur s'il en existe un
+        catch (Exception $e) {
             $this->render("Errors/404", [
                 'error' => $e->getMessage()
             ]);
@@ -53,6 +54,4 @@ class CovoiturageController extends Controller
     {
         $this->render("Covoiturage/one-covoiturage");
     }
-
-
 }

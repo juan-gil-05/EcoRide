@@ -2,13 +2,17 @@
 // Definition de un constante pour le path depuis l'index.php
 define('_ROOTPATH_', __DIR__);
 
-// Sécurise le cookie de session avec httponly
+/** Paramètres de la session de l'utilisateur
+ *  Sécurise le cookie de session avec httponly
+ *  */ 
+ 
 session_set_cookie_params([
     'lifetime' => 3600,
     'path' => '/',
     'domain' => $_SERVER['SERVER_NAME'],
     'httponly' => true
 ]);
+// Initialisation de la session
 session_start();
 
 

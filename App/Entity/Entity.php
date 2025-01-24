@@ -6,7 +6,7 @@ use App\Tools\StringTools;
 
 class Entity
 {
-
+    // Fonction pour instancier un objet de la classe de l'enfant et le hydrater avec les données passées
     public static function createAndHydrate(array $data): static
     {
         // Ici static fait référence à la classe de l'enfant, alors que self fait référence à la classe courante
@@ -18,11 +18,13 @@ class Entity
     // Function pour "hydrater" les entités avec les données passées
     public function hydrate(array $data)
     {
+        // S'il existe des données
         if (count($data) > 0) {
             // On parcourt le tableau de données
             foreach ($data as $key => $value) {
-                // Pour chaque donnée, on appel le setter
+                // Pour chaque donnée, on appel le setter et on convertit le text on PascalCase
                 $methodName = 'set' . StringTools::toPascalCase($key);
+                // Si le method set existe, alors on passe le set avec le value correspondant
                 if (method_exists($this, $methodName)) {
                     $this->{$methodName}($value);
                 }

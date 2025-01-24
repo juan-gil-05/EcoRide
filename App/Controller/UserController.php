@@ -15,8 +15,8 @@ class UserController extends Controller
         try {
             if (isset($_GET['action'])) {
                 switch ($_GET['action']) {
+                        // Action pour créer un compte utilisateur
                     case 'singUp':
-                        // On appel l'action pour créer un compte utilisateur
                         $this->singUp();
                         break;
                         // Si l'action passée dans l'url n'existe pas
@@ -25,11 +25,12 @@ class UserController extends Controller
                         break;
                 }
             }
-            // Si il n'y a pas des action dans l'url 
+            // Si il n'y a pas une action dans l'url 
             else {
                 throw new \Exception("Aucune action détectée");
             }
-        } catch (Exception $e) {
+        } // On return la page d'erreur s'il en existe un
+        catch (Exception $e) {
             $this->render("Errors/404", [
                 'error' => $e->getMessage()
             ]);
@@ -40,6 +41,7 @@ class UserController extends Controller
     Exemple d'appel depuis l'url
         ?controller=user&action=singUp
     */
+    // Fonction pour créer un compte utilisateur 
     protected function singUp()
     {
         $errors = [];
@@ -49,19 +51,25 @@ class UserController extends Controller
         try {
             $user = new User();
             $UserValidator = new UserValidator();
+            // Si le formulaire est envoyé, on hydrate l'objet User avec les données passées
             if (isset($_POST['singUp'])) {
                 $user->hydrate($_POST);
                 $pseudo = $user->getPseudo();
                 $mail = $user->getMail();
                 $password = $user->getPassword();
+                // Pour hasher le mot de passe
                 $this->passwordHasher($user);
+                // Pour valider s'il n'y a pas des erreurs dans le formulaire
                 $errors = $UserValidator->singUpValidate($user);
+                // S'il n'y a pas des erreurs, on crée l'utilisateur dans la basse des données
                 if (empty($errors)) {
                     $userRepository = new UserRepository();
                     $userRepository->createUser($user);
+                    // On envoie l'utilisateur vers la page de connexion
                     header('Location: ?controller=auth&action=logIn');
                 }
             }
+            // On affiche la page de création du compte, et on passe des params
             $this->render(
                 "User/sing-up",
                 ['errors' => $errors, 'pseudo' => $pseudo, 'password' => $password, 'mail' => $mail]

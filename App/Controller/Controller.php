@@ -14,24 +14,27 @@ class Controller
         try {
             if (isset($_GET['controller'])) {
                 switch ($_GET['controller']) {
-                        // On appel le contrôleur 
+                        // Appel du contrôleur page
                     case 'page':
                         $controller = new PageController();
                         $controller->route();
                         break;
+                        // Appel du contrôleur covoiturages
                     case 'covoiturages':
                         $controller = new CovoiturageController();
                         $controller->route();
                         break;
+                        // Appel du contrôleur user
                     case 'user':
                         $controller = new UserController();
                         $controller->route();
                         break;
+                        // Appel du contrôleur auth
                     case 'auth':
                         $controller = new AuthController();
                         $controller->route();
                         break;
-                        // Si le contrôtreul passe dans l'url n'existe pas
+                        // Si le contrôleur passe dans l'url n'existe pas
                     default:
                         throw new Exception("Ce contrôleur n'existe pas: " . $_GET['controller']);
                         break;
