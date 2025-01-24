@@ -12934,12 +12934,21 @@ body {
   cursor: pointer;
   color: white;
 }
-.connection-form form .form-floating .invalid-tooltip {
-  width: 60%;
+.connection-form form .form-floating .invalid-tooltip-mdp {
+  width: 50%;
 }
 .connection-form .if-form-error .alert {
   width: 90%;
 }
 .connection-form button {
   border: 0.5px solid #4e4e4e;
+}
+
+@media (max-width: 768px) {
+  .connection-form .alert {
+    margin-top: 0px !important;
+  }
+  .connection-form .lien {
+    margin-top: 50px !important;
+  }
 }/*# sourceMappingURL=main.css.map */

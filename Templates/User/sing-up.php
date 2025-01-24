@@ -20,7 +20,7 @@ require_once './Templates/header.php';
         <label for="floatingPseudo">Pseudo</label>
         <!-- Si il y a des erreurs on affiche le message d'erreur -->
         <?php if (isset($errors['pseudoEmpty'])) { ?>
-          <div class="invalid-tooltip position-static "><?= $errors['pseudoEmpty'] ?></div>
+          <div class="invalid-tooltip position-static small-text"><?= $errors['pseudoEmpty'] ?></div>
         <?php } ?>
       </div>
       <!-- E-mail -->
@@ -30,10 +30,10 @@ require_once './Templates/header.php';
         <label for="floatingMail">Email address</label>
         <!-- Si il y a des erreurs on affiche le message d'erreur -->
         <?php if (isset($errors['mailEmpty'])) { ?>
-          <div class="invalid-tooltip position-static "><?= $errors['mailEmpty'] ?></div>
+          <div class="invalid-tooltip position-static small-text"><?= $errors['mailEmpty'] ?></div>
           <!-- Si le mail est déjà utilisé -->
         <?php } elseif (isset($errors['mailUsed'])) { ?>
-          <div class="invalid-tooltip position-static "><?= $errors['mailUsed'] ?></div>
+          <div class="invalid-tooltip position-static small-text"><?= $errors['mailUsed'] ?></div>
         <?php } ?>
       </div>
       <!-- Mot de passe -->
@@ -48,13 +48,13 @@ require_once './Templates/header.php';
         </div>
         <!-- Si il y a des erreurs on affiche le message d'erreur -->
         <?php if (isset($errors['passwordEmpty'])) { ?>
-          <div class="invalid-tooltip position-static"><?= $errors['passwordEmpty'] ?></div>
+          <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text"><?= $errors['passwordEmpty'] ?></div>
           <!-- Si le mot de passe a moins de 12 caractères   -->
         <?php } elseif (isset($errors['passwordLen'])) { ?>
-          <div class="invalid-tooltip position-static"><?= $errors['passwordLen'] ?></div>
+          <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text"><?= $errors['passwordLen'] ?></div>
           <!-- si le mot de passe ne respecte pas les requis d'une mot de passe secure -->
         <?php } elseif (isset($errors['passwordInfo'])) { ?>
-          <div class="invalid-tooltip position-static"><?= $errors['passwordInfo'] ?></div>
+          <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text"><?= $errors['passwordInfo'] ?></div>
         <?php } ?>
 
       </div>
@@ -64,7 +64,7 @@ require_once './Templates/header.php';
       <button class="btn btn-warning text-dark w-50 py-3 mt-3 content-text fw-medium" name="singUp" type="submit">Se registrer</button>
     </div>
     <!-- Lien si l'utilisateru a déjà un compte -->
-    <div class="d-flex justify-content-center mt-5">
+    <div class="d-flex justify-content-center mt-5 lien content-text">
       <a href="?controller=auth&action=logIn" class="text-light">J'ai dèjà un compte</a>
     </div>
 

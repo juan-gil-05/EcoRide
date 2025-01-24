@@ -27,8 +27,8 @@
         }
       }
       // Pour les messages des erreurs
-      .invalid-tooltip {
-        width: 60%;
+      .invalid-tooltip-mdp {
+        width: 50%;
       }
     }
   }
@@ -41,5 +41,19 @@
   // Style du button
   button {
     border: 0.5px solid $dark;
+  }
+}
+
+// Style pour les tablets et mobiles
+@media (max-width: "768px") {
+
+  .connection-form {
+    .alert{
+      margin-top: 0px !important;
+    }
+
+    .lien {
+      margin-top: 50px !important;
+    }
   }
 }

@@ -20,7 +20,7 @@ require_once './Templates/header.php';
                 <label for="floatingInput">Adresse e-mail</label>
                 <!-- Si il y a des erreurs on affiche le message d'erreur -->
                 <?php if (isset($errors['mail'])) { ?>
-                    <div class="invalid-tooltip position-static "><?= $errors['mail'] ?></div>
+                    <div class="invalid-tooltip position-static small-text"><?= $errors['mail'] ?></div>
                 <?php } ?>
             </div>
             <!-- Mot de passe -->
@@ -37,7 +37,7 @@ require_once './Templates/header.php';
         <!-- Erreur si le mail ou le mot de passe sont incorrect -->
         <?php if (isset($errors['invalidUser'])) { ?>
             <div class="if-form-error d-flex justify-content-center content-text">
-                <div class="alert alert-danger mt-3 "><?= $errors['invalidUser'] ?></div>
+                <div class="alert alert-danger mt-3 content-text text-center"><?= $errors['invalidUser'] ?></div>
             </div>
         <?php } ?>
         <!-- Button de connection -->
@@ -45,7 +45,7 @@ require_once './Templates/header.php';
             <button class="btn btn-warning text-dark w-50 py-3 mt-3 content-text fw-medium" name="logIn" type="submit">Se connecter</button>
         </div>
         <!-- Lien si l'utilisateru n'a pas un compte, pour s'en créer un -->
-        <div class="d-flex justify-content-center mt-5">
+        <div class="d-flex justify-content-center mt-5 content-text lien">
             <a href="?controller=user&action=singUp" class="text-light">Créer un compte</a>
         </div>
     </form>
