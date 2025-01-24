@@ -1,0 +1,16 @@
+// la couleur pour le fond de la page
+body {
+  background-color: $primary;
+
+  // Pour laisser une padding entre le header, le contenu et le footer
+  main {
+    padding-top: 72px;
+    padding-bottom: 100px;
+
+    // Pour laisser une padding entre le header, le contenu et le footer en mobile et tablets
+    @media (max-width: "768px") {
+      padding-top: 62px;
+      padding-bottom: 72px;
+    }
+  }
+}

@@ -10,7 +10,7 @@ use App\Security\Security;
   <h1>bienvenue <?=$_SESSION['user']['pseudo']?></h1>
 <?php } ?>
 <!-- Section qui contient le slogan et la barre de recherche des covoiturages -->
-<section class="shadow-section">
+<section>
   <div class="slogan">
     <!-- Slogan du site -->
     <h2 class="subtitle-text text-white">

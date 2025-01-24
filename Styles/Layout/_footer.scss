@@ -3,17 +3,6 @@ html {
   position: relative;
   min-height: 100%;
 }
-
-// Pour laisser une marge entre le contenu de la page et le footer
-main {
-  margin-bottom: 99px;
-
-  // Marge pour les tablets et mobiles
-  @media (max-width: "768px") {
-    margin-bottom: 73px;
-  }
-}
-
 .footer {
   // Pour positioner le footer en bas de la page
   position: absolute;
