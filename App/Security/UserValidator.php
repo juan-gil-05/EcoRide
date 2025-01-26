@@ -44,8 +44,16 @@ class UserValidator
 	                                un chiffre et
 	                                un caractère spécial";
         }
+
+        // Si l'option du role est vide
+        if (empty($user->getRoleId())){
+            $errors['roleEmpty'] = "Vous debez choisir un role";
+        }
+        
         return $errors;
     }
+
+
 
     // Fonction pour valider le formulaire de connexion
     public function logInValidate(User $user): array

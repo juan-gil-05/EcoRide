@@ -9,11 +9,12 @@ class UserRepository extends Repository
     // Fonction pour créer un nouveau utilisateur
     public function createUser(User $user)
     {
-        $sql = ("INSERT INTO User (pseudo, mail, password) VALUES (:pseudo,:mail,:mdp)");
+        $sql = ("INSERT INTO User (pseudo, mail, password, role_id) VALUES (:pseudo,:mail,:mdp, :role_id)");
         $query = $this->pdo->prepare($sql);
         $query->bindValue(":pseudo", $user->getPseudo(), $this->pdo::PARAM_STR);
         $query->bindValue(":mail", $user->getMail(), $this->pdo::PARAM_STR);
         $query->bindValue(":mdp", $user->getPassword(), $this->pdo::PARAM_STR);
+        $query->bindValue(":role_id", $user->getRoleId(), $this->pdo::PARAM_STR);
         return $query->execute();
     }
 
@@ -33,5 +34,23 @@ class UserRepository extends Repository
             return false;
         }
     }
+
+    // Fonction pour trouver le nom du role selon l'id donné
+    public function findRoleName(string $role_id)
+    {
+        $sql = ("SELECT libelle FROM Role WHERE id = :role_id");
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(':role_id', $role_id, $this->pdo::PARAM_STR);
+        $roleName = $query->execute();
+        $roleName = $query->fetch($this->pdo::FETCH_ASSOC);
+
+        if($roleName){
+            return $roleName['libelle'];
+        } else {
+            return false;
+        }
+    }
+
+
 
 }

@@ -48,22 +48,28 @@ class UserController extends Controller
         $pseudo = "";
         $mail = "";
         $password = "";
+        $roleName = "";
+        $roleId = "";
         try {
             $user = new User();
             $UserValidator = new UserValidator();
+            $userRepository = new UserRepository();
             // Si le formulaire est envoyé, on hydrate l'objet User avec les données passées
             if (isset($_POST['singUp'])) {
+                var_dump($_POST);
                 $user->hydrate($_POST);
                 $pseudo = $user->getPseudo();
                 $mail = $user->getMail();
                 $password = $user->getPassword();
+                $roleId = $user->getRoleId();
+                $roleName = $userRepository->findRoleName($user->getRoleId());
+                var_dump($roleName);
                 // Pour hasher le mot de passe
                 $this->passwordHasher($user);
                 // Pour valider s'il n'y a pas des erreurs dans le formulaire
                 $errors = $UserValidator->singUpValidate($user);
                 // S'il n'y a pas des erreurs, on crée l'utilisateur dans la basse des données
                 if (empty($errors)) {
-                    $userRepository = new UserRepository();
                     $userRepository->createUser($user);
                     // On envoie l'utilisateur vers la page de connexion
                     header('Location: ?controller=auth&action=logIn');
@@ -72,7 +78,7 @@ class UserController extends Controller
             // On affiche la page de création du compte, et on passe des params
             $this->render(
                 "User/sing-up",
-                ['errors' => $errors, 'pseudo' => $pseudo, 'password' => $password, 'mail' => $mail]
+                ['errors' => $errors, 'pseudo' => $pseudo, 'password' => $password, 'mail' => $mail, 'roleName' => $roleName, 'roleId' => $roleId]
             );
         } catch (Exception $e) {
             $this->render("Errors/404", [
@@ -80,7 +86,6 @@ class UserController extends Controller
             ]);
         }
     }
-
 
     // Fonction pour hasher le mot de passe
     protected function passwordHasher(User $user)

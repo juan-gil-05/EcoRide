@@ -11,7 +11,7 @@ class User extends Entity
     protected string $mail = "";
     protected string $password = "";
     protected ?string $photo = "";
-    protected ?int $role_id = null;
+    protected ?string $role_id = "";
     
     /**
      * Get the value of id
@@ -124,7 +124,7 @@ class User extends Entity
     /**
      * Get the value of role_id
      */
-    public function getRoleId(): ?int
+    public function getRoleId(): ?string
     {
         return $this->role_id;
     }
@@ -132,7 +132,7 @@ class User extends Entity
     /**
      * Set the value of role_id
      */
-    public function setRoleId(?int $role_id): self
+    public function setRoleId(?string $role_id): self
     {
         $this->role_id = $role_id;
 

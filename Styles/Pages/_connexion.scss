@@ -31,6 +31,36 @@
         width: 50%;
       }
     }
+
+    // Si l'utilisateur est un chauffuer, alors on affiche le fomulaire pour les chauffeur
+    .if-chauffeur {
+      label {
+        color: white;
+      }
+      input {
+        background-color: $light;
+      }
+      // les champs du formulaire pour ajouter une voiture
+      .car-form {
+        width: 45%;
+        .car-form-div {
+          display: flex;
+          gap: 25px;
+          align-items: center;
+        }
+      }
+      // les champs du formulaire pour ajouter le profil du chauffeur
+      .driver-form {
+        width: 50%;
+        .form-check-input:checked {
+          background-color: $secondary;
+        }
+      }
+    }
+    // Si l'utilisateur n'est pas un chauffuer, alors on n'affiche pas le fomulaire pour les chauffeur
+    .non-chauffeur {
+      display: none !important;
+    }
   }
   // pour le message d'erreur
   .if-form-error {
@@ -46,9 +76,8 @@
 
 // Style pour les tablets et mobiles
 @media (max-width: "768px") {
-
   .connection-form {
-    .alert{
+    .alert {
       margin-top: 0px !important;
     }
 
