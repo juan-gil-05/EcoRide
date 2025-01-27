@@ -26,8 +26,12 @@ class Entity
                 $methodName = 'set' . StringTools::toPascalCase($key);
                 // Si le method set existe, alors on passe le set avec le value correspondant
                 if (method_exists($this, $methodName)) {
+                    // Pour les données de types Datetime
+                    if ($key == 'date_premiere_immatriculation') {
+                        $value = new \DateTime($value);
+                    }
                     $this->{$methodName}($value);
-                }
+                } 
             }
         }
     }

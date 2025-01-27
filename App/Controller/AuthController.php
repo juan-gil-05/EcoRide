@@ -72,9 +72,14 @@ class AuthController extends Controller
                             "pseudo" => $user->getPseudo(),
                             "mail" => $user->getMail(),
                             "password" => $user->getPassword(),
+                            "role" => $user->getRoleId(),
                         ];
-                        // On envoie l'utilisateur vers la page d'accueil
-                        header('location: ?controller=page&action=accueil');
+                        if ($user->getRoleId() == 2 || $user->getRoleId() == 3) {
+                            header('Location: ?controller=voiture&action=driverInscription');
+                        } else {
+                            // On envoie l'utilisateur vers la page d'accueil
+                            header('location: ?controller=page&action=accueil');
+                        }
                     } // Si le mot de passe ou le mail est incorrect
                     else {
                         $errors['invalidUser'] = "Email ou mot de passe invalide";

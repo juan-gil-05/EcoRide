@@ -7,7 +7,7 @@ require_once './Templates/header.php';
 
 <section class="container mt-5 connection-form">
   <!-- Formulaire pour créer un compte utilisateur -->
-  <form method="post" class="d-flex flex-column" enctype="multipart/form-data">
+  <form method="post" class="d-flex flex-column">
     <!-- titre -->
     <h1 class="mb-4 text-center text-white headline-text">Créer un compte</h1>
 
@@ -74,76 +74,16 @@ require_once './Templates/header.php';
           <div class="invalid-tooltip position-static small-text"><?= $errors['roleEmpty'] ?></div>
         <?php } ?>
       </div>
-    </div>
-
-    <!-- Si l'utilisateur a un role chauffeur, alors, formulaire pour enregistrer la voiture et ses préférences -->
-    <div class="mt-5 d-flex justify-content-between if-chauffeur non-chauffeur" id="driverForm">
-      <!-- Enregistrez une voiture -->
-      <div class="d-flex flex-column gap-3 car-form">
-        <!-- Titre -->
-        <h2 class="text-center text-white headline-text">Enregistrez votre voiture</h2>
-        <!-- Nombre d'immatriculation -->
-        <div class="car-form-div">
-          <label for="immatriculation" class="form-label content-text">Plaque d’immatriculation</label>
-          <input type="text" name="immatriculation" class="form-control" id="immatriculation">
+      <!-- Si l'utilisateur a un role chauffeur, alors, formulaire pour enregistrer la voiture et ses préférences -->
+      <div class="mt-2 d-flex if-chauffeur non-chauffeur" id="driverForm">
+        <!-- la photo et les préférences du chauffeur -->
+        <div class="d-flex flex-column gap-3 driver-form">
+          <!-- Ajouter la photo -->
+          <div>
+            <label for="driverImage" class="form-label">Ajoutez votre photo du profil</label>
+            <input type="file" name="photo" class="form-control" id="driverImage">
+          </div>
         </div>
-        <!-- Date d'immatriculation -->
-        <div class="car-form-div">
-          <label for="immatriculationDate" class="form-label content-text">Date de première immatriculation</label>
-          <input type="date" name="date_premiere_immatriculation" class="form-control text-dark" id="immatriculationDate">
-        </div>
-        <!-- Modèle -->
-        <div class="car-form-div">
-          <label for="modele" class="form-label content-text">Modèle</label>
-          <input type="text" name="modele" class="form-control" id="modele">
-        </div>
-        <!-- Marque -->
-        <div class="car-form-div">
-          <label for="marque" class="form-label content-text">Marque</label>
-          <input type="text" name="marque" class="form-control" id="marque">
-        </div>
-        <!-- couleur -->
-        <div class="car-form-div">
-          <label for="couleur" class="form-label content-text">Couleur</label>
-          <input type="text" name="couleur" class="form-control" id="couleur">
-        </div>
-        <!-- Sélecctioner l'energie utilisé par la voiture -->
-        <div class="car-form-div">
-          <label for="energy" class="text-center content-text">Énergie: </label>
-          <select class="form-select " name="energie_id" id="energy">
-            <option value=""></option>
-            <option value="1">Électrique</option>
-            <option value="2">Hybride</option>
-            <option value="3">Diesel - Gazole</option>
-            <option value="3">Essence</option>
-            <option value="3">GPL</option>
-          </select>
-        </div>
-      </div>
-      <!-- la photo et les préférences du chauffeur -->
-      <div class="d-flex flex-column gap-3 driver-form">
-        <!-- Titre du profil -->
-        <h2 class="text-center text-white headline-text">Votre profil</h2>
-        <!-- Ajouter la photo -->
-        <div>
-          <label for="driverImage" class="form-label">Ajoutez votre photo du profil</label>
-          <input type="file" name="photo" class="form-control" id="driverImage">
-        </div>
-        <!-- Ajouter les préférences -->
-        <h3 class=" text-white subtitle-text">Vos préférences</h3>
-        <!-- Accepte des fumeurs ? -->
-        <div>
-          <label for="smokerCheck" class="form-check-label content-text">J'accepte les fumeurs: </label>
-          <input type="radio" class="form-check-input" name="statut" id="smokerCheck" value="1"> <span class="text-white small-text">Oui</span>
-          <input type="radio" class="form-check-input" name="statut" id="smokerCheck" value="0"> <span class="text-white small-text">Non</span>
-        </div>
-        <!-- Accepte des animaux ? -->
-        <div>
-          <label for="animalCheck" class="form-check-label content-text">J'accepte les animaux: </label>
-          <input type="radio" class="form-check-input" name="statut" id="animalCheck" value="1"> <span class="text-white small-text">Oui</span>
-          <input type="radio" class="form-check-input" name="statut" id="animalCheck" value="0"> <span class="text-white small-text">Non</span>
-        </div>
-
       </div>
     </div>
 

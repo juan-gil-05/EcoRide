@@ -12947,20 +12947,6 @@ html {
 .connection-form form .if-chauffeur input {
   background-color: #f5f5f5;
 }
-.connection-form form .if-chauffeur .car-form {
-  width: 45%;
-}
-.connection-form form .if-chauffeur .car-form .car-form-div {
-  display: flex;
-  gap: 25px;
-  align-items: center;
-}
-.connection-form form .if-chauffeur .driver-form {
-  width: 50%;
-}
-.connection-form form .if-chauffeur .driver-form .form-check-input:checked {
-  background-color: #0063ac;
-}
 .connection-form form .non-chauffeur {
   display: none !important;
 }
@@ -12978,4 +12964,24 @@ html {
   .connection-form .lien {
     margin-top: 50px !important;
   }
+}
+.chauffeur label {
+  color: white;
+}
+.chauffeur input {
+  background-color: #f5f5f5;
+}
+.chauffeur .car-form {
+  width: 45%;
+}
+.chauffeur .car-form .car-form-div {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+.chauffeur .driver-form {
+  width: 50%;
+}
+.chauffeur .driver-form .form-check-input:checked {
+  background-color: #0063ac;
 }/*# sourceMappingURL=main.css.map */

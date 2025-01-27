@@ -40,22 +40,6 @@
       input {
         background-color: $light;
       }
-      // les champs du formulaire pour ajouter une voiture
-      .car-form {
-        width: 45%;
-        .car-form-div {
-          display: flex;
-          gap: 25px;
-          align-items: center;
-        }
-      }
-      // les champs du formulaire pour ajouter le profil du chauffeur
-      .driver-form {
-        width: 50%;
-        .form-check-input:checked {
-          background-color: $secondary;
-        }
-      }
     }
     // Si l'utilisateur n'est pas un chauffuer, alors on n'affiche pas le fomulaire pour les chauffeur
     .non-chauffeur {

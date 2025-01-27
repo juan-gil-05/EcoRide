@@ -4,10 +4,10 @@ namespace App\Entity;
 
 use DateTime;
 
-class Voiture
+class Voiture extends Entity
 {
     protected ?int $id = null;
-    protected string $model = "";
+    protected string $modele = "";
     protected string $couleur = "";
     protected string $marque = "";
     protected string $immatriculation = "";
@@ -36,17 +36,17 @@ class Voiture
     /**
      * Get the value of model
      */
-    public function getModel(): string
+    public function getModele(): string
     {
-        return $this->model;
+        return $this->modele;
     }
 
     /**
      * Set the value of model
      */
-    public function setModel(string $model): self
+    public function setModele(string $modele): self
     {
-        $this->model = $model;
+        $this->modele = $modele;
 
         return $this;
     }
