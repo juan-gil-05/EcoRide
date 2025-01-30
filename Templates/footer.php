@@ -25,7 +25,8 @@
 <!-- Import du JS -->
 <script src="../Scripts/covoituragesfilter.js"></script>
 <script src="../Scripts/showPassword.js"></script>
-<script src="../Scripts/DriverForm.js"></script>
+<script src="../Scripts/driverForm.js"></script>
+<script src="../Scripts/preferencesForm.js"></script>
 </body>
 
 </html>

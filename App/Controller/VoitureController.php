@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\PreferenceUser;
 use App\Entity\Voiture;
+use App\Repository\PreferenceUserRepository;
 use App\Repository\VoitureRepository;
 use App\Security\VoitureValidator;
 use Exception;
@@ -16,9 +18,9 @@ class VoitureController extends Controller
         try {
             if (isset($_GET['action'])) {
                 switch ($_GET['action']) {
-                        // Action pour créer un compte utilisateur
-                    case 'driverInscription':
-                        $this->driverInscription();
+                        // Action pour créer une nouvelle voiture
+                    case 'carInscription':
+                        $this->carInscription();
                         break;
                         // Si l'action passée dans l'url n'existe pas
                     default:
@@ -41,10 +43,11 @@ class VoitureController extends Controller
 
     /*
     Exemple d'appel depuis l'url
-        ?controller=voiture&action=driverInscription
+        ?controller=voiture&action=carInscription
     */
 
-    protected function driverInscription()
+    // Fonction pour enregistrer une voiture
+    protected function carInscription()
     {
         // Tableau d'erreurs
         $errors = [];
@@ -59,9 +62,10 @@ class VoitureController extends Controller
             $voiture = new Voiture;
             $voitureRepository = new VoitureRepository;
             $voitureValidator = new VoitureValidator;
+            $preference = new PreferenceUser;
+            
             // Si le formulaire est envoyé, on hydrate l'objet Voiture avec les données passées
-            if (isset($_POST['driverInscription'])) {
-                var_dump($_POST);
+            if (isset($_POST['carInscription'])) {
                 $voiture->hydrate($_POST);
                 $immatriculation = $voiture->getImmatriculation();
                 $dateImmatriculation = $voiture->getDatePremiereImmatriculation();
@@ -73,7 +77,7 @@ class VoitureController extends Controller
                 // S'il n'y a pas des erreurs, on crée la voiture dans la basse des données
                 if (empty($errors)) {
                     $voitureRepository->createCar($voiture, $user_id);
-                    echo ('registré');
+                    header('Location: ?controller=preferences&action=preferencesInscription');
                 } else {
                     echo ('non registré');
                 }
@@ -87,7 +91,7 @@ class VoitureController extends Controller
         }
 
         $this->render(
-            "Voiture/chauffeur-inscription",
+            "Voiture/voiture-inscription",
             [
                 "errors" => $errors,
                 "immatriculation" => $immatriculation,
@@ -99,18 +103,4 @@ class VoitureController extends Controller
         );
     }
 
-    public function createCar()
-    {
-        $errors = [];
-
-        try {
-            $voiture = new Voiture;
-            $voiture->hydrate($_POST);
-            $voiture->getMarque();
-        } catch (Exception $e) {
-            $this->render("Errors/404", [
-                'error' => $e->getMessage()
-            ]);
-        }
-    }
 }

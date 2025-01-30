@@ -3,6 +3,7 @@
 namespace App\Controller;
 // require_once './App/Controller/PageController.php';
 
+use App\Entity\PreferenceUser;
 use App\Entity\Voiture;
 use Exception;
 
@@ -35,8 +36,13 @@ class Controller
                         $controller = new AuthController();
                         $controller->route();
                         break;
+                        // Appel du contrôleur voiture
                     case 'voiture':
                         $controller = new VoitureController();
+                        $controller->route();
+                        break;
+                    case 'preferences':
+                        $controller = new PreferenceUserController();
                         $controller->route();
                         break;
                         // Si le contrôleur passe dans l'url n'existe pas
