@@ -1,8 +1,10 @@
 .chauffeur {
     label {
       color: white;
+      margin-bottom: 0;
     }
-    input {
+    input, select {
+      border: 0.5px solid $dark;
       background-color: $light;
     }
     // les champs du formulaire pour ajouter une voiture
@@ -12,6 +14,10 @@
         display: flex;
         gap: 25px;
         align-items: center;
+      }
+      // Pour afficher le message d'erreur 
+      .invalid-tooltip{
+        display: block;
       }
     }
     // les champs du formulaire pour ajouter le profil du chauffeur

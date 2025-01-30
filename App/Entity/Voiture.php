@@ -11,9 +11,9 @@ class Voiture extends Entity
     protected string $couleur = "";
     protected string $marque = "";
     protected string $immatriculation = "";
-    protected DateTime $date_premiere_immatriculation;
+    protected ?DateTime $date_premiere_immatriculation = null;
     protected int $user_id;
-    protected int $energie_id;
+    protected ?int $energie_id = null;
 
     /**
      * Get the value of id
@@ -108,7 +108,7 @@ class Voiture extends Entity
     /**
      * Get the value of date_premiere_immatriculation
      */
-    public function getDatePremiereImmatriculation(): DateTime
+    public function getDatePremiereImmatriculation(): ?DateTime
     {
         return $this->date_premiere_immatriculation;
     }
@@ -116,7 +116,7 @@ class Voiture extends Entity
     /**
      * Set the value of date_premiere_immatriculation
      */
-    public function setDatePremiereImmatriculation(DateTime $date_premiere_immatriculation): self
+    public function setDatePremiereImmatriculation(?DateTime $date_premiere_immatriculation): self
     {
         $this->date_premiere_immatriculation = $date_premiere_immatriculation;
 
@@ -144,7 +144,7 @@ class Voiture extends Entity
     /**
      * Get the value of energie_id
      */
-    public function getEnergieId(): int
+    public function getEnergieId(): ?int
     {
         return $this->energie_id;
     }
@@ -152,7 +152,7 @@ class Voiture extends Entity
     /**
      * Set the value of energie_id
      */
-    public function setEnergieId(int $energie_id): self
+    public function setEnergieId(?int $energie_id): self
     {
         $this->energie_id = $energie_id;
 

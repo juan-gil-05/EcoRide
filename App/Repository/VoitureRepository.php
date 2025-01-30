@@ -22,4 +22,21 @@ class VoitureRepository extends Repository
         $query->bindValue(':energie_id', $voiture->getEnergieId(), $this->pdo::PARAM_INT);
         return $query->execute();
     }
+
+    // Fonction pour trouver une voiture par son # d'immatriculation
+    public function findCarByImmatriculation(string $immatriculation)
+    {
+        $sql = ("SELECT * FROM Voiture WHERE immatriculation = :immatriculation");
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(':immatriculation', $immatriculation, $this->pdo::PARAM_STR);
+        $query->execute();
+        $voiture = $query->fetch($this->pdo::FETCH_ASSOC);
+
+        // Si on trouve une voiture, alors, on hydrate la classe de Voiture avec celle trouvée
+        if ($voiture) {
+            return Voiture::createAndHydrate($voiture);
+        } else {
+            return false;
+        }
+    }
 }

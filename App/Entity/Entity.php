@@ -13,7 +13,7 @@ class Entity
         $entity = new static();
         $entity->hydrate($data);
         return $entity;
-    }   
+    }
 
     // Function pour "hydrater" les entités avec les données passées
     public function hydrate(array $data)
@@ -28,10 +28,17 @@ class Entity
                 if (method_exists($this, $methodName)) {
                     // Pour les données de types Datetime
                     if ($key == 'date_premiere_immatriculation') {
-                        $value = new \DateTime($value);
+                        // Si l'utlisateur ne sélectionne pas une date, 
+                        // alors, la date est null, 
+                        // sinon, on crée un objet DateTime avec la value passée
+                        if (empty($value)) {
+                            $value = null;
+                        } else {
+                            $value = new \DateTime($value);
+                        }
                     }
                     $this->{$methodName}($value);
-                } 
+                }
             }
         }
     }

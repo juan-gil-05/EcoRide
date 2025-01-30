@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Voiture;
 use App\Repository\VoitureRepository;
+use App\Security\VoitureValidator;
 use Exception;
 
 class VoitureController extends Controller
@@ -49,18 +50,35 @@ class VoitureController extends Controller
         $errors = [];
         // L'id de l'utilisateur
         $user_id = $_SESSION['user']['id'];
-
+        $immatriculation = "";
+        $dateImmatriculation = "";
+        $marque = "";
+        $modele = "";
+        $couleur = "";
         try {
             $voiture = new Voiture;
             $voitureRepository = new VoitureRepository;
+            $voitureValidator = new VoitureValidator;
             // Si le formulaire est envoyé, on hydrate l'objet Voiture avec les données passées
-            if(isset($_POST['driverInscription'])){
+            if (isset($_POST['driverInscription'])) {
                 var_dump($_POST);
                 $voiture->hydrate($_POST);
-                $voitureRepository->createCar($voiture, $user_id);
-
+                $immatriculation = $voiture->getImmatriculation();
+                $dateImmatriculation = $voiture->getDatePremiereImmatriculation();
+                $marque = $voiture->getMarque();
+                $modele = $voiture->getModele();
+                $couleur = $voiture->getCouleur();
+                // Pour valider s'il n'y a pas des erreurs dans le formulaire
+                $errors = $voitureValidator->newCarValidate($voiture);
+                // S'il n'y a pas des erreurs, on crée la voiture dans la basse des données
+                if (empty($errors)) {
+                    $voitureRepository->createCar($voiture, $user_id);
+                    echo ('registré');
+                } else {
+                    echo ('non registré');
+                }
             }
-            
+
             $voiture->getMarque();
         } catch (Exception $e) {
             $this->render("Errors/404", [
@@ -70,6 +88,14 @@ class VoitureController extends Controller
 
         $this->render(
             "Voiture/chauffeur-inscription",
+            [
+                "errors" => $errors,
+                "immatriculation" => $immatriculation,
+                "dateImmatriculation" => $dateImmatriculation,
+                "marque" => $marque,
+                "modele" => $modele,
+                "couleur" => $couleur
+            ]
         );
     }
 

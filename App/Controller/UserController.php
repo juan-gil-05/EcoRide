@@ -56,14 +56,12 @@ class UserController extends Controller
             $userRepository = new UserRepository();
             // Si le formulaire est envoyé, on hydrate l'objet User avec les données passées
             if (isset($_POST['singUp'])) {
-                var_dump($_POST);
                 $user->hydrate($_POST);
                 $pseudo = $user->getPseudo();
                 $mail = $user->getMail();
                 $password = $user->getPassword();
                 $roleId = $user->getRoleId();
                 $roleName = $userRepository->findRoleName($user->getRoleId());
-                var_dump($roleName);
                 // Pour hasher le mot de passe
                 $this->passwordHasher($user);
                 // Pour valider s'il n'y a pas des erreurs dans le formulaire

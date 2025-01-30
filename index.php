@@ -7,7 +7,7 @@ define('_ROOTPATH_', __DIR__);
  *  */ 
  
 session_set_cookie_params([
-    'lifetime' => 3600,
+    'lifetime' => 86400, //24 heures
     'path' => '/',
     'domain' => $_SERVER['SERVER_NAME'],
     'httponly' => true
