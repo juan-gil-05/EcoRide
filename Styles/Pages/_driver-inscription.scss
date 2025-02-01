@@ -16,10 +16,6 @@
       gap: 25px;
       align-items: center;
     }
-    // Pour afficher le message d'erreur
-    .invalid-tooltip {
-      display: block;
-    }
   }
   // les champs du formulaire pour ajouter le profil du chauffeur
   .preferences-form {
@@ -32,6 +28,17 @@
   }
 }
 
-.form-hidden {
+.hidden {
   display: none !important;
 }
+
+// Pour afficher le message d'erreur
+.invalid-tooltip {
+  display: block;
+}
+
+// Pour désactiver le clique sur la première partie du formulaire des préférence
+.no-pointer {
+  pointer-events: none;
+}
+

@@ -75,8 +75,7 @@ class AuthController extends Controller
                             "role" => $user->getRoleId(),
                         ];
                         if ($user->getRoleId() == 2 || $user->getRoleId() == 3) {
-                            // header('Location: ?controller=voiture&action=carInscription'); pour les tests
-                            header('Location: ?controller=preferences&action=preferencesInscription');
+                            header('Location: ?controller=voiture&action=carInscription');
                         } else {
                             // On envoie l'utilisateur vers la page d'accueil
                             header('location: ?controller=page&action=accueil');

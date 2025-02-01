@@ -12982,9 +12982,6 @@ html {
   gap: 25px;
   align-items: center;
 }
-.chauffeur .car-form .invalid-tooltip {
-  display: block;
-}
 .chauffeur .preferences-form {
   flex-direction: column;
   align-items: center;
@@ -12993,6 +12990,14 @@ html {
   background-color: #0063ac;
 }
 
-.form-hidden {
+.hidden {
   display: none !important;
+}
+
+.invalid-tooltip {
+  display: block;
+}
+
+.no-pointer {
+  pointer-events: none;
 }/*# sourceMappingURL=main.css.map */

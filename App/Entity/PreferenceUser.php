@@ -6,7 +6,7 @@ class PreferenceUser extends Entity
 {
     protected int $id;
     protected ?string $preference_personnelle = "";
-    protected string $preference_id;
+    protected ?string $preference_id = "";
     protected string $user_id;
 
     /**
@@ -48,7 +48,7 @@ class PreferenceUser extends Entity
     /**
      * Get the value of preference_id
      */
-    public function getPreferenceId(): string
+    public function getPreferenceId(): ?string
     {
         return $this->preference_id;
     }
@@ -56,7 +56,7 @@ class PreferenceUser extends Entity
     /**
      * Set the value of preference_id
      */
-    public function setPreferenceId(string $preference_id): self
+    public function setPreferenceId(?string $preference_id): self
     {
         $this->preference_id = $preference_id;
 

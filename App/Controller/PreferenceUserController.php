@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\PreferenceUser;
 use App\Repository\PreferenceUserRepository;
+use App\Security\PreferenceUserValidator;
 use Exception;
 
 class PreferenceUserController extends Controller
@@ -46,31 +47,35 @@ class PreferenceUserController extends Controller
 
         // Tableau d'erreurs
         $errors = [];
+        $errors2 = [];
         // L'id de l'utilisateur
         $user_id = $_SESSION['user']['id'];
 
         try {
             $preference = new PreferenceUser;
+            $preference2 = new PreferenceUser;
             $preferenceRepository = new PreferenceUserRepository;
+            $preferenceValidator = new PreferenceUserValidator;
             // Si le formulaire est envoyé, on hydrate l'objet Voiture avec les données passées
             if (isset($_POST['prefInscription1'])) {
                 $preference->hydrate($_POST);
+                // Pour la validation des erreurs
+                $errors = $preferenceValidator->newPreferenceValidator($preference);
                 // S'il n'y a pas des erreurs, on crée la voiture dans la basse des données
                 if (empty($errors)) {
                     $preferenceRepository->createPreference($preference, $user_id);
-                    echo('registro');
                 } else {
                     echo ('non registré');
                 }
             }
             if (isset($_POST['prefInscription2'])) {
-                $preference2 = new PreferenceUser;
                 $preference2->hydrate($_POST);
-                if (empty($errors)) {
+                $errors2 = $preferenceValidator->newPreferenceValidator($preference2);
+                if (empty($errors2)) {
                     $preferenceRepository->createPreference($preference2, $user_id);
-                    echo('registroX2');
+                    header('Location: ?controller=page&action=accueil');
                 } else {
-                    var_dump('no funciono');
+                    echo('non registré');
                 }
             }
         } catch (Exception $e) {
@@ -79,6 +84,11 @@ class PreferenceUserController extends Controller
             ]);
         }
 
-        $this->render("PreferencesUser/preferences-inscription");
+        $this->render("PreferencesUser/preferences-inscription", [
+            'errors' => $errors,
+            'errors2' => $errors2,
+            'preference' => $preference,
+            'preference2' => $preference2
+        ]);
     }
 }

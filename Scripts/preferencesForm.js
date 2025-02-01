@@ -4,5 +4,5 @@ let preferencesForm = document.getElementById('preferencesForm');
 let button = document.getElementById('btnPreferences')
 
 button.addEventListener('click', () => {
-    preferencesForm.classList.remove('form-hidden')
+    preferencesForm.classList.remove('hidden')
 })

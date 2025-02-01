@@ -74,9 +74,9 @@ require_once './Templates/header.php';
           <div class="invalid-tooltip position-static small-text"><?= $errors['roleEmpty'] ?></div>
         <?php } ?>
       </div>
-      <!-- Si l'utilisateur a un role chauffeur, alors, formulaire pour enregistrer la voiture et ses préférences -->
+      <!-- Si l'utilisateur a un role chauffeur, alors, formulaire pour enregistrer la photo -->
       <div class="mt-2 d-flex if-chauffeur non-chauffeur" id="driverForm">
-        <!-- la photo et les préférences du chauffeur -->
+        <!-- la photo du chauffeur -->
         <div class="d-flex flex-column gap-3 driver-form">
           <!-- Ajouter la photo -->
           <div>
