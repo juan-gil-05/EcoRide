@@ -1,13 +1,14 @@
 <?php
 // HEADER
 require_once './Templates/header.php';
+
 ?>
 
 <!-- main -->
 
 <section class="container mt-5 connection-form">
   <!-- Formulaire pour créer un compte utilisateur -->
-  <form method="post" class="d-flex flex-column">
+  <form method="post" class="d-flex flex-column" enctype="multipart/form-data">
     <!-- titre -->
     <h1 class="mb-4 text-center text-white headline-text">Créer un compte</h1>
 
@@ -82,6 +83,19 @@ require_once './Templates/header.php';
           <div>
             <label for="driverImage" class="form-label">Ajoutez votre photo du profil</label>
             <input type="file" name="photo" class="form-control" id="driverImage">
+            <!-- Si il y a des erreurs on affiche le message d'erreur -->
+            <?php if (isset($errors['fileEmpty'])) { ?>
+              <div class="invalid-tooltip position-static small-text"><?= $errors['fileEmpty'] ?></div>
+            <!-- S'il y a une erreur au moment de charger l'image -->
+            <?php } elseif (isset($errors['fileError'])) { ?>
+              <div class="invalid-tooltip position-static small-text"><?= $errors['fileError'] ?></div>
+            <!-- Si l'extention n'est pas valide -->
+            <?php } elseif (isset($errors['fileExtError'])) { ?>
+              <div class="invalid-tooltip position-static small-text"><?= $errors['fileExtError'] ?></div>
+            <!-- Si la taille est superieure à 2 Mo -->
+            <?php } elseif (isset($errors['fileSizeError'])) { ?>
+              <div class="invalid-tooltip position-static small-text"><?= $errors['fileSizeError'] ?></div>
+            <?php } ?>
           </div>
         </div>
       </div>

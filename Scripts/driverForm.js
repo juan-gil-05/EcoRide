@@ -5,14 +5,18 @@ let driverForm = document.getElementById("driverForm");
 // le select avec les roles des utilisateurs
 let roleSelect = document.getElementById("roleSelect");
 
-// Si l'utilisateur sélectionne le role chauffeur ou chauffeur/passager,
-// alors, on affiche le formulaire
-// sinon, on le masque
-roleSelect.addEventListener("change", () => {
+// Fonction pour afficher ou masquer le formulaire
+function updateFormVisibility() {
   if (roleSelect.value == "2" || roleSelect.value == "3") {
     driverForm.classList.remove("non-chauffeur");
   } else {
     driverForm.classList.add("non-chauffeur");
   }
-});
+}
+
+// Vérifier la sélection au chargement de la page
+document.addEventListener("DOMContentLoaded", updateFormVisibility);
+
+// Écouter les changements de sélection
+roleSelect.addEventListener("change", updateFormVisibility);
 

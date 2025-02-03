@@ -18,6 +18,20 @@ class UserRepository extends Repository
         return $query->execute();
     }
 
+    // Fonction pour créer un nouveau utilisateur chauffeur, pour ajouter la photo
+    public function createDriverUser(User $user)
+    {
+        $sql = ("INSERT INTO User (pseudo, mail, password, photo, role_id) VALUES (:pseudo,:mail,:mdp, :photo ,:role_id)");
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":pseudo", $user->getPseudo(), $this->pdo::PARAM_STR);
+        $query->bindValue(":mail", $user->getMail(), $this->pdo::PARAM_STR);
+        $query->bindValue(":mdp", $user->getPassword(), $this->pdo::PARAM_STR);
+        $query->bindValue(":photo", $user->getPhoto(), $this->pdo::PARAM_STR);
+        $query->bindValue(":role_id", $user->getRoleId(), $this->pdo::PARAM_STR);
+        return $query->execute();
+    }
+
+
     // Fonction pour trouver un utilisateur par son mail
     public function findOneByMail(string $mail)
     {

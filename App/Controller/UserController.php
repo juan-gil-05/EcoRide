@@ -68,15 +68,37 @@ class UserController extends Controller
                 $errors = $UserValidator->singUpValidate($user);
                 // S'il n'y a pas des erreurs, on crée l'utilisateur dans la basse des données
                 if (empty($errors)) {
-                    $userRepository->createUser($user);
-                    // On envoie l'utilisateur vers la page de connexion
-                    header('Location: ?controller=auth&action=logIn');
+                    // Si l'utilisateur est passager 
+                    if ($user->getRoleId() == "1") {
+                        $userRepository->createUser($user);
+                        // On envoie l'utilisateur vers la page de connexion
+                        header('Location: ?controller=auth&action=logIn');
+                    } elseif ($user->getRoleId() == "2" || $user->getRoleId() == "3") { // Si l'utilisateur est chauffeur
+                        // Pour enregistrer la photo dans l'attribut photo de l'objet User
+                        $user->setPhoto($_FILES['photo']['name']);
+                        // Pour valider s'il n'y a pas des erreurs dans le formulaire
+                        $errors = $UserValidator->UserPhotoValidate($user);
+                        if (empty($errors)) {
+                            $userRepository->createDriverUser($user);
+                            // On envoie l'utilisateur vers la page de connexion
+                            header('Location: ?controller=auth&action=logIn');
+                        }
+                    } else {
+                        echo ('error');
+                    }
                 }
             }
             // On affiche la page de création du compte, et on passe des params
             $this->render(
                 "User/sing-up",
-                ['errors' => $errors, 'pseudo' => $pseudo, 'password' => $password, 'mail' => $mail, 'roleName' => $roleName, 'roleId' => $roleId]
+                [
+                    'errors' => $errors,
+                    'pseudo' => $pseudo,
+                    'password' => $password,
+                    'mail' => $mail,
+                    'roleName' => $roleName,
+                    'roleId' => $roleId
+                ]
             );
         } catch (Exception $e) {
             $this->render("Errors/404", [

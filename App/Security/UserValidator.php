@@ -46,10 +46,10 @@ class UserValidator
         }
 
         // Si l'option du role est vide
-        if (empty($user->getRoleId())){
+        if (empty($user->getRoleId())) {
             $errors['roleEmpty'] = "Vous debez choisir un role";
         }
-        
+
         return $errors;
     }
 
@@ -77,5 +77,59 @@ class UserValidator
         } else {
             return false;
         }
+    }
+
+    // Fonction pour récuperer et valider la photo de l'utilsateur
+    public function UserPhotoValidate(User $user)
+    {
+        $errors = [];
+
+        if (isset($_FILES['photo'])) {
+            $fileName = $_FILES['photo']['name'];
+            $fileSize = $_FILES['photo']['size'];
+            $fileError = $_FILES['photo']['error'];
+            $fileTempName = $_FILES['photo']['tmp_name'];
+
+            // Pour séparer le nom du fichier selon le '.', afin de trouver l'extention du fichier
+            $fileExtension = explode(".", $fileName);
+            // Pour convertir l'extention du fichier en lower case
+            $fileExtLowerCase = strtolower(end($fileExtension));
+            // Les extentions des images qui sont acceptées
+            $fileExtAllowed = ["jpg", "jpeg", "png", "webp"];
+            // Pour définir le taille maxime des images
+            $maxFileSize = 2 * 1024 * 1024; // 2 MB
+
+            // Pour valider l'image selon des conditions
+            //S'il y a pas des erreurs,
+            if ($fileError === 0) {
+                // Si l'extention du fichier est acceptée,
+                if (in_array($fileExtLowerCase, $fileExtAllowed)) {
+                    // Si la taille de l'image est inferieure à 2 Mo
+                    if ($fileSize < $maxFileSize) {
+                        // Nouveau nom de l'image avec une unique id et l'extention de l'image
+                        $fileNewName = uniqid("", true) . "." . $fileExtLowerCase;
+                        // Le folder de déstination
+                        $folderDestination = './Uploads/User/' . $fileNewName;
+                        // Déplacement de l'image vers le folder avec les images des utilisateurs
+                        move_uploaded_file($fileTempName, $folderDestination);
+                    } else {
+                        $errors['fileSizeError'] = "L'image est trop grande. Taille maximale autorisée : 2 Mo";
+                    }
+                } else {
+                    $errors['fileExtError'] = "Format d'image non autorisé. Seuls les fichiers JPG, PNG ou WEBP sont acceptés";
+                }
+            } else {
+                $errors['fileError'] = "Erreur lors du téléchargement de l'image";
+            }
+
+            // Si l'utilisateur est un chauffeur et n'a pas choisi une photo, alors erreur
+            if ($user->getRoleId() == "2" || $user->getRoleId() == "3") {
+                if (empty($user->getPhoto())) {
+                    $errors['fileEmpty'] = "Vous debez choisir votre image d'utilisateur";
+                }
+            }
+        }
+
+        return $errors;
     }
 }
