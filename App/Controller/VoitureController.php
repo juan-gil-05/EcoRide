@@ -62,7 +62,6 @@ class VoitureController extends Controller
             $voiture = new Voiture;
             $voitureRepository = new VoitureRepository;
             $voitureValidator = new VoitureValidator;
-            $preference = new PreferenceUser;
             
             // Si le formulaire est envoyé, on hydrate l'objet Voiture avec les données passées
             if (isset($_POST['carInscription'])) {

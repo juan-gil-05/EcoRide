@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\UserRepository;
 use App\Entity\User;
+use App\Repository\VoitureRepository;
 use App\Security\UserValidator;
 use Exception;
 
@@ -55,6 +56,7 @@ class AuthController extends Controller
             if (isset($_POST['logIn'])) {
                 $userRepository = new UserRepository;
                 $userValidator = new UserValidator;
+                $voitureRepository = new VoitureRepository;
                 // on cherche l'utilisateur par son mail
                 $user = $userRepository->findOneByMail($_POST['mail']);
                 $mail = $user->getMail();
@@ -74,8 +76,17 @@ class AuthController extends Controller
                             "password" => $user->getPassword(),
                             "role" => $user->getRoleId(),
                         ];
+                        // Si l'utilisateur a le role du Chauffeur ou Passager-chaffeur,
+                        // On envoi l'user vers la page pour enregister une voiture
                         if ($user->getRoleId() == 2 || $user->getRoleId() == 3) {
-                            header('Location: ?controller=voiture&action=carInscription');
+                            // Si l'utilisateur a déjà enregistré des voitures, 
+                            // On envoi a la page d'accueil
+                            if ($voitureRepository->findCarByUserId($user->getId())) {
+                                header('location: ?controller=page&action=accueil');
+                            } else {
+                                header('Location: ?controller=voiture&action=carInscription');
+                                var_dump($user->getId());
+                            }
                         } else {
                             // On envoie l'utilisateur vers la page d'accueil
                             header('location: ?controller=page&action=accueil');

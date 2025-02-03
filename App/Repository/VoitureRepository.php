@@ -39,4 +39,20 @@ class VoitureRepository extends Repository
             return false;
         }
     }
+
+    // Fonction pour savoir si l'utilisateur a déjà une ou plusieurs voitures
+    public function findCarByUserId(int $userId): bool
+    {
+        $sql = ("SELECT Voiture.id FROM Voiture WHERE user_id = :user_id");
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(':user_id', $userId, $this->pdo::PARAM_INT);
+        $query->execute();
+        $voiture = $query->fetch($this->pdo::FETCH_ASSOC);
+
+        if ($voiture) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
