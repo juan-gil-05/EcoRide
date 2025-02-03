@@ -78,13 +78,12 @@ class UserController extends Controller
                         $user->setPhoto($_FILES['photo']['name']);
                         // Pour valider s'il n'y a pas des erreurs dans le formulaire
                         $errors = $UserValidator->UserPhotoValidate($user);
+                        // S'il n'y aps des erreur, on crée l'utilisateur avec la photo de profile
                         if (empty($errors)) {
                             $userRepository->createDriverUser($user);
                             // On envoie l'utilisateur vers la page de connexion
                             header('Location: ?controller=auth&action=logIn');
                         }
-                    } else {
-                        echo ('error');
                     }
                 }
             }

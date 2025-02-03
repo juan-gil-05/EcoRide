@@ -2,18 +2,19 @@
 <form method="post" class="d-flex flex-column chauffeur" id="preferencesForm">
     <div class="mt-1 d-flex gap-4 preferences-form content-text">
         <!-- Accepte des animaux ? -->
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 align-items-center">
             <label for="animalCheck" class="form-check-label content-text">J'accepte les animaux: </label>
             <input type="radio" class="form-check-input" name="preference_id" id="animalCheck" value="2"> <span class="text-white small-text">Oui</span>
             <input type="radio" class="form-check-input" name="preference_id" id="animalCheck" value="4"> <span class="text-white small-text">Non</span>
         </div>
+        <!-- S'il y a une erreur, on l'affiche à l'utilisateur -->
         <?php if (isset($errors2['preferenceIdEmpty'])) { ?>
             <div class="invalid-tooltip position-static small-text "><?= $errors2['preferenceIdEmpty'] ?></div>
         <?php } ?>
         <!-- Ajouter des préférences personnelles -->
         <div class="d-flex flex-column gap-2">
-            <label for="preference_personnelle">Ajoutez une nouvelle préférence: </label>
-            <input type="text" name="preference_personnelle" id="preference_personnelle">
+            <label for="preference_personnelle" class="content-text" class="form-label">Ajoutez une nouvelle préférence: </label>
+            <input type="text" name="preference_personnelle" id="preference_personnelle" class="form-control content-text">
         </div>
     </div>
     <!-- Button pour finaliser -->

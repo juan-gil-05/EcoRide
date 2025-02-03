@@ -42,3 +42,15 @@
   pointer-events: none;
 }
 
+// Medias queries pour les mobiles et tablets
+@media (max-width: "768px") {
+  .chauffeur {
+    .form-control,.form-select {
+      padding: 2px 0.75rem;
+    }
+    // Pour les input des préférences, les check boxes
+    .form-check-input{
+      margin-top: 0;
+    }
+  }
+}

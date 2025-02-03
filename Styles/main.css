@@ -13000,4 +13000,13 @@ html {
 
 .no-pointer {
   pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .chauffeur .form-control, .chauffeur .form-select {
+    padding: 2px 0.75rem;
+  }
+  .chauffeur .form-check-input {
+    margin-top: 0;
+  }
 }/*# sourceMappingURL=main.css.map */

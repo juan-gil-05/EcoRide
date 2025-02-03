@@ -41,6 +41,7 @@ class Controller
                         $controller = new VoitureController();
                         $controller->route();
                         break;
+                        // Appel du contrôleur preference
                     case 'preferences':
                         $controller = new PreferenceUserController();
                         $controller->route();

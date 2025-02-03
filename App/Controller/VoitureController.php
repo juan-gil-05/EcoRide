@@ -62,7 +62,6 @@ class VoitureController extends Controller
             $voiture = new Voiture;
             $voitureRepository = new VoitureRepository;
             $voitureValidator = new VoitureValidator;
-            
             // Si le formulaire est envoyé, on hydrate l'objet Voiture avec les données passées
             if (isset($_POST['carInscription'])) {
                 $voiture->hydrate($_POST);
@@ -76,10 +75,9 @@ class VoitureController extends Controller
                 // S'il n'y a pas des erreurs, on crée la voiture dans la basse des données
                 if (empty($errors)) {
                     $voitureRepository->createCar($voiture, $user_id);
+                    // On evoi vers la page pour enregistrer les préférences
                     header('Location: ?controller=preferences&action=preferencesInscription');
-                } else {
-                    echo ('non registré');
-                }
+                } 
             }
 
             $voiture->getMarque();

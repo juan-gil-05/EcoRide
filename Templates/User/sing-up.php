@@ -17,10 +17,10 @@ require_once './Templates/header.php';
     <div class="d-flex flex-column align-items-center content-text gap-3">
       <!-- Pseudo -->
       <div class="form-floating">
-        <input type="text" name="pseudo" class="form-control
+        <input type="text" name="pseudo" class="form-control content-text
                 <?= (isset($errors['pseudoEmpty'])) ? "is-invalid" : "" ?>"
           id="floatingInput" placeholder="juanes" value="<?= $pseudo ?>">
-        <label for="floatingPseudo">Pseudo</label>
+        <label for="floatingPseudo" class="content-text">Pseudo</label>
         <!-- Si il y a des erreurs on affiche le message d'erreur -->
         <?php if (isset($errors['pseudoEmpty'])) { ?>
           <div class="invalid-tooltip position-static small-text"><?= $errors['pseudoEmpty'] ?></div>
@@ -28,9 +28,10 @@ require_once './Templates/header.php';
       </div>
       <!-- E-mail -->
       <div class="form-floating">
-        <input type="email" class="form-control <?= (isset($errors['mailEmpty'])) || (isset($errors['mailUsed'])) ? "is-invalid" : "" ?>"
+        <input type="email" class="form-control content-text
+        <?= (isset($errors['mailEmpty'])) || (isset($errors['mailUsed'])) ? "is-invalid" : "" ?>"
           id="floatingMail" name="mail" placeholder="name@example.com" value="<?= $mail ?>">
-        <label for="floatingMail">Email address</label>
+        <label for="floatingMail" class="content-text">Email address</label>
         <!-- Si il y a des erreurs on affiche le message d'erreur -->
         <?php if (isset($errors['mailEmpty'])) { ?>
           <div class="invalid-tooltip position-static small-text"><?= $errors['mailEmpty'] ?></div>
@@ -41,9 +42,10 @@ require_once './Templates/header.php';
       </div>
       <!-- Mot de passe -->
       <div class="form-floating">
-        <input type="password" class="form-control <?= (isset($errors['passwordEmpty'])) || (isset($errors['passwordLen'])) || (isset($errors['passwordInfo'])) ? "is-invalid" : "" ?>"
+        <input type="password" class="form-control content-text
+        <?= (isset($errors['passwordEmpty'])) || (isset($errors['passwordLen'])) || (isset($errors['passwordInfo'])) ? "is-invalid" : "" ?>"
           id="floatingPassword" name="password" placeholder="Password" value="<?= $password ?>">
-        <label for="floatingPassword">Mot de passe</label>
+        <label for="floatingPassword" class="content-text">Mot de passe</label>
         <!-- message et button pour afficher le mot de passe -->
         <div class="show-password">
           <span class="text-white small-text" id="showPasswordText">Afficher le mot de passe</span>
@@ -64,7 +66,8 @@ require_once './Templates/header.php';
       <!-- Sélectionner le role -->
       <div class="mt-2">
         <label for="roleSelect" class="text-center text-white content-text">Je suis : </label>
-        <select class="form-select <?= (isset($errors['roleEmpty'])) ? "is-invalid" : "" ?>" name="role_id" id="roleSelect">
+        <select class="form-select content-text 
+        <?= (isset($errors['roleEmpty'])) ? "is-invalid" : "" ?>" name="role_id" id="roleSelect">
           <option value="<?= ($roleId) ? $roleId : "" ?>"><?= $roleName ?></option>
           <option value="1">Passager</option>
           <option value="2" class="driverRole">Chauffeur</option>
@@ -76,23 +79,23 @@ require_once './Templates/header.php';
         <?php } ?>
       </div>
       <!-- Si l'utilisateur a un role chauffeur, alors, formulaire pour enregistrer la photo -->
-      <div class="mt-2 d-flex if-chauffeur non-chauffeur" id="driverForm">
+      <div class="mt-2 d-flex if-chauffeur non-chauffeur content-text" id="driverForm">
         <!-- la photo du chauffeur -->
         <div class="d-flex flex-column gap-3 driver-form">
           <!-- Ajouter la photo -->
           <div>
             <label for="driverImage" class="form-label">Ajoutez votre photo du profil</label>
-            <input type="file" name="photo" class="form-control" id="driverImage">
+            <input type="file" name="photo" class="form-control content-text" id="driverImage">
             <!-- Si il y a des erreurs on affiche le message d'erreur -->
             <?php if (isset($errors['fileEmpty'])) { ?>
               <div class="invalid-tooltip position-static small-text"><?= $errors['fileEmpty'] ?></div>
-            <!-- S'il y a une erreur au moment de charger l'image -->
+              <!-- S'il y a une erreur au moment de charger l'image -->
             <?php } elseif (isset($errors['fileError'])) { ?>
               <div class="invalid-tooltip position-static small-text"><?= $errors['fileError'] ?></div>
-            <!-- Si l'extention n'est pas valide -->
+              <!-- Si l'extention n'est pas valide -->
             <?php } elseif (isset($errors['fileExtError'])) { ?>
               <div class="invalid-tooltip position-static small-text"><?= $errors['fileExtError'] ?></div>
-            <!-- Si la taille est superieure à 2 Mo -->
+              <!-- Si la taille est superieure à 2 Mo -->
             <?php } elseif (isset($errors['fileSizeError'])) { ?>
               <div class="invalid-tooltip position-static small-text"><?= $errors['fileSizeError'] ?></div>
             <?php } ?>

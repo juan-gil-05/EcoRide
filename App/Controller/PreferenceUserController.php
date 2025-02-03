@@ -56,26 +56,26 @@ class PreferenceUserController extends Controller
             $preference2 = new PreferenceUser;
             $preferenceRepository = new PreferenceUserRepository;
             $preferenceValidator = new PreferenceUserValidator;
-            // Si le formulaire est envoyé, on hydrate l'objet Voiture avec les données passées
+            // Si le preimère formulaire est envoyé, on hydrate l'objet Preference avec les données passées
             if (isset($_POST['prefInscription1'])) {
                 $preference->hydrate($_POST);
                 // Pour la validation des erreurs
                 $errors = $preferenceValidator->newPreferenceValidator($preference);
-                // S'il n'y a pas des erreurs, on crée la voiture dans la basse des données
+                // S'il n'y a pas des erreurs, on crée la préférence dans la basse des données
                 if (empty($errors)) {
                     $preferenceRepository->createPreference($preference, $user_id);
-                } else {
-                    echo ('non registré');
                 }
             }
+            // Si le deuxième formulaire est envoyé, on hydrate l'objet Preference avec les données passées
             if (isset($_POST['prefInscription2'])) {
                 $preference2->hydrate($_POST);
+                // Pour la validation des erreurs
                 $errors2 = $preferenceValidator->newPreferenceValidator($preference2);
+                // S'il n'y a pas des erreurs, on crée la préférence dans la basse des données
                 if (empty($errors2)) {
                     $preferenceRepository->createPreference($preference2, $user_id);
+                    // On envoi vers la page d'accueil
                     header('Location: ?controller=page&action=accueil');
-                } else {
-                    echo('non registré');
                 }
             }
         } catch (Exception $e) {
