@@ -62,6 +62,10 @@ require_once './Templates/header.php';
         </div>
       </form>
     </div>
+    <!-- Bouton pour visualiser les covoiturages de l'utilisateur -->
+    <div class="mt-5 text-center mes-covoiturages-btn content-text">
+      <a href="" class="btn btn-warning shadow-section">Mes covoiturages</a>
+    </div>
   </div>
   <!-- Section de les résultats de la récherche des covoiturages -->
   <div class="covoiturage-results">
@@ -73,14 +77,12 @@ require_once './Templates/header.php';
       <input
         type="text"
         placeholder="Lyon -> Paris"
-        class="shadow-section search-input"
-      />
+        class="shadow-section search-input" />
       <!-- Bouton pour afficher les filtres quand on est en mobile ou tablet -->
       <button
         class="btn btn-secondary filter-btn small-text"
         data-bs-toggle="modal"
-        data-bs-target="#filterModal"
-      >
+        data-bs-target="#filterModal">
         <i class="bi bi-filter"></i>Filtrer
       </button>
     </div>
@@ -90,8 +92,7 @@ require_once './Templates/header.php';
       id="filterModal"
       tabindex="-1"
       aria-labelledby="filterModalLabel"
-      aria-hidden="true"
-    >
+      aria-hidden="true">
       <!-- Contenu de la modal -->
       <div class="modal-dialog">
         <div class="modal-content">
@@ -155,15 +156,13 @@ require_once './Templates/header.php';
             <button
               type="button"
               class="btn btn-danger content-text text-white"
-              data-bs-dismiss="modal"
-            >
+              data-bs-dismiss="modal">
               Annuler
             </button>
             <!-- Bouton pour appliquer des filtres -->
             <button
               type="button"
-              class="btn btn-primary content-text text-white"
-            >
+              class="btn btn-primary content-text text-white">
               Appliquer
             </button>
           </div>
@@ -223,8 +222,7 @@ require_once './Templates/header.php';
           <!-- Photo -->
           <img
             src="../Assets/Img_page-vue-covoiturages/avatars/avatar1.webp"
-            alt="Image du chauffeur"
-          />
+            alt="Image du chauffeur" />
           <!-- Nom, prenom -->
           <p class="content-text">Azélie Joly</p>
         </div>
@@ -290,8 +288,7 @@ require_once './Templates/header.php';
           <!-- Photo -->
           <img
             src="../Assets/Img_page-vue-covoiturages/avatars/avatar1.webp"
-            alt="Image du chauffeur"
-          />
+            alt="Image du chauffeur" />
           <!-- Nom, prenom -->
           <p class="content-text">Azélie Joly</p>
         </div>
@@ -357,8 +354,7 @@ require_once './Templates/header.php';
           <!-- Photo -->
           <img
             src="../Assets/Img_page-vue-covoiturages/avatars/avatar1.webp"
-            alt="Image du chauffeur"
-          />
+            alt="Image du chauffeur" />
           <!-- Nom, prenom -->
           <p class="content-text">Azélie Joly</p>
         </div>

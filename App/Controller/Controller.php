@@ -2,9 +2,6 @@
 
 namespace App\Controller;
 // require_once './App/Controller/PageController.php';
-
-use App\Entity\PreferenceUser;
-use App\Entity\Voiture;
 use Exception;
 
 

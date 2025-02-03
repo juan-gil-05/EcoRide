@@ -12371,6 +12371,20 @@ html {
   color: #0063ac;
   opacity: 1;
 }
+.covoiturages .filter .mes-covoiturages-btn {
+  margin-top: 7%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.covoiturages .filter .mes-covoiturages-btn .btn {
+  width: 95%;
+  color: #4e4e4e;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 2%;
+  border: 1px solid #4e4e4e;
+}
 .covoiturages .covoiturage-results {
   width: 65%;
 }

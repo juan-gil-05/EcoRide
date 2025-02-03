@@ -81,6 +81,22 @@
         }
       }
     }
+
+    // Bouton pour visualiser les covoiturages de l'utilisateur
+    .mes-covoiturages-btn {
+      margin-top: 7%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      .btn {
+        width: 95%;
+        color: $dark;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding: 2%;
+        border: 1px solid $dark;
+      }
+    }
   }
   // Section des résultats des covoiturages
   .covoiturage-results {
