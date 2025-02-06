@@ -1,0 +1,26 @@
+.mes-covoiturages {
+  background-color: black;
+  position: relative;
+  height: 35vh;
+
+  //Ajout de l'image
+  &::before {
+    position: absolute;
+    content: "";
+    background-image: url("../../Assets/Img_page-mes-covoiturages/hero.webp"); // je l'ai fait comme ca -> (../../), car le main.css est dans un autre dossier (css)
+    background-position: center;
+    background-size: cover;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    filter: opacity(0.5) drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.2));
+  }
+
+  // Pour centre le texte et le bouton
+  .container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

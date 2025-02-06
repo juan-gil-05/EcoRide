@@ -64,7 +64,7 @@ require_once './Templates/header.php';
     </div>
     <!-- Bouton pour visualiser les covoiturages de l'utilisateur -->
     <div class="mt-5 text-center mes-covoiturages-btn content-text">
-      <a href="" class="btn btn-warning shadow-section">Mes covoiturages</a>
+      <a href="?controller=covoiturages&action=mesCovoiturages" class="btn btn-warning shadow-section">Mes covoiturages</a>
     </div>
   </div>
   <!-- Section de les résultats de la récherche des covoiturages -->

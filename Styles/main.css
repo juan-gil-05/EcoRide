@@ -13023,4 +13023,26 @@ html {
   .chauffeur .form-check-input {
     margin-top: 0;
   }
+}
+.mes-covoiturages {
+  background-color: black;
+  position: relative;
+  height: 35vh;
+}
+.mes-covoiturages::before {
+  position: absolute;
+  content: "";
+  background-image: url("../../Assets/Img_page-mes-covoiturages/hero.webp");
+  background-position: center;
+  background-size: cover;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  filter: opacity(0.5) drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.2));
+}
+.mes-covoiturages .container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }/*# sourceMappingURL=main.css.map */

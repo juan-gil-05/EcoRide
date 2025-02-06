@@ -16,9 +16,13 @@ class CovoiturageController extends Controller
                     case 'showAll':
                         $this->allCovoiturages();
                         break;
-                        // Action pour afficher un covoiturage specifique
+                        // Action pour afficher un covoiturage spécifique
                     case 'showOne':
                         $this->oneCovoiturage();
+                        break;
+                        // Action pour afficher tous les covoiturage de l'utilisateur
+                    case 'mesCovoiturages':
+                        $this->mesCovoiturages();
                         break;
                         // Si l'action passee dans l'url n'existe pas
                     default:
@@ -46,6 +50,7 @@ class CovoiturageController extends Controller
     {
         $this->render("Covoiturage/all-covoiturages");
     }
+
     /*
     Exemple d'appel depuis l'url
         ?controller=covoiturages&action=showOne
@@ -54,4 +59,14 @@ class CovoiturageController extends Controller
     {
         $this->render("Covoiturage/one-covoiturage");
     }
+
+    /*
+    Exemple d'appel depuis l'url
+        ?controller=covoiturages&action=mesCovoiturages
+    */
+    protected function mesCovoiturages()
+    {
+        $this->render("Covoiturage/mes-covoiturages");
+    }
+
 }
