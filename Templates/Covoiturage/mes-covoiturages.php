@@ -15,9 +15,9 @@ require_once './Templates/header.php';
                 <!-- titre -->
                 <h1 class="headline-text text-white">Mes covoiturages</h1>
                 <!-- Si l'utilsateur est chauffeur, alors, 
-                     on affiche le bouton vers la page pour saisir un nouveau covoiturage -->
+                on affiche le bouton vers la page pour saisir un nouveau covoiturage -->
                 <?php if (Security::isChauffeur()) { ?>
-                    <a href="#" class="btn btn-light mt-3 text-black">Créer un nouveau covoiturage</a>
+                    <a href="?controller=covoiturages&action=createCovoiturage" class="btn btn-light mt-3 text-black">Créer un nouveau covoiturage</a>
                 <?php } ?>
             </div>
         </div>

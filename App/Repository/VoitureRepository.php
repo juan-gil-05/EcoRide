@@ -55,4 +55,21 @@ class VoitureRepository extends Repository
             return false;
         }
     }
+
+    // Fonction pour récupérer tous les voitures d'un utilisateur
+    public function findAllCarsByUserId(int $userId): array
+    {
+        $sql = ("SELECT Voiture.id, Voiture.marque, Voiture.modele, Voiture.immatriculation FROM Voiture WHERE user_id = :user_id");
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(':user_id', $userId, $this->pdo::PARAM_INT);
+        $query->execute();
+        $voiture = $query->fetchAll($this->pdo::FETCH_ASSOC);
+
+        if ($voiture) {
+            return $voiture;
+        } else {
+            return false;
+        }
+    }
+
 }

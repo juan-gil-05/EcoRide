@@ -7,14 +7,14 @@ use DateTime;
 class Covoiturage extends Entity
 {
     protected int $id;
-    protected int $nb_place_disponible;
-    protected float $prix;
-    protected DateTime $date_heure_depart;
-    protected DateTime $date_heure_arrivee;
+    protected ?int $nb_place_disponible = 0;
+    protected ?float $prix = 0;
+    protected ?DateTime $date_heure_depart = null;
+    protected ?DateTime $date_heure_arrivee = null;
     protected string $adresse_depart;
     protected string $adresse_arrivee;
     protected int $voiture_id;
-    protected int $statut_id;
+    protected ?int $statut_id = 1;
 
 
     /**
@@ -38,7 +38,7 @@ class Covoiturage extends Entity
     /**
      * Get the value of nb_place_disponible
      */
-    public function getNbPlaceDisponible(): int
+    public function getNbPlaceDisponible(): ?int
     {
         return $this->nb_place_disponible;
     }
@@ -46,17 +46,16 @@ class Covoiturage extends Entity
     /**
      * Set the value of nb_place_disponible
      */
-    public function setNbPlaceDisponible(int $nb_place_disponible): self
+    public function setNbPlaceDisponible(?int $nb_place_disponible): self
     {
         $this->nb_place_disponible = $nb_place_disponible;
-
         return $this;
     }
 
     /**
      * Get the value of prix
      */
-    public function getPrix(): float
+    public function getPrix(): ?float
     {
         return $this->prix;
     }
@@ -64,7 +63,7 @@ class Covoiturage extends Entity
     /**
      * Set the value of prix
      */
-    public function setPrix(float $prix): self
+    public function setPrix(?float $prix): self
     {
         $this->prix = $prix;
 
@@ -74,7 +73,7 @@ class Covoiturage extends Entity
     /**
      * Get the value of date_heure_depart
      */
-    public function getDateHeureDepart(): DateTime
+    public function getDateHeureDepart(): ?DateTime
     {
         return $this->date_heure_depart;
     }
@@ -82,7 +81,7 @@ class Covoiturage extends Entity
     /**
      * Set the value of date_heure_depart
      */
-    public function setDateHeureDepart(DateTime $date_heure_depart): self
+    public function setDateHeureDepart(?DateTime $date_heure_depart): self
     {
         $this->date_heure_depart = $date_heure_depart;
 
@@ -92,7 +91,7 @@ class Covoiturage extends Entity
     /**
      * Get the value of date_heure_arrivee
      */
-    public function getDateHeureArrivee(): DateTime
+    public function getDateHeureArrivee(): ?DateTime
     {
         return $this->date_heure_arrivee;
     }
@@ -100,7 +99,7 @@ class Covoiturage extends Entity
     /**
      * Set the value of date_heure_arrivee
      */
-    public function setDateHeureArrivee(DateTime $date_heure_arrivee): self
+    public function setDateHeureArrivee(?DateTime $date_heure_arrivee): self
     {
         $this->date_heure_arrivee = $date_heure_arrivee;
 
@@ -164,7 +163,7 @@ class Covoiturage extends Entity
     /**
      * Get the value of statut_id
      */
-    public function getStatutId(): int
+    public function getStatutId(): ?int
     {
         return $this->statut_id;
     }
@@ -172,7 +171,7 @@ class Covoiturage extends Entity
     /**
      * Set the value of statut_id
      */
-    public function setStatutId(int $statut_id): self
+    public function setStatutId(?int $statut_id): self
     {
         $this->statut_id = $statut_id;
 

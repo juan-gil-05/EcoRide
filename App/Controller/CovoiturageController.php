@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Covoiturage;
+use App\Repository\CovoiturageRepository;
+use App\Repository\VoitureRepository;
+use App\Security\CovoiturageValidator;
 use Exception;
 
 class CovoiturageController extends Controller
@@ -23,6 +27,10 @@ class CovoiturageController extends Controller
                         // Action pour afficher tous les covoiturage de l'utilisateur
                     case 'mesCovoiturages':
                         $this->mesCovoiturages();
+                        break;
+                        // Action pour afficher le formulaire de création d'un covoiturage
+                    case 'createCovoiturage':
+                        $this->createCovoiturage();
                         break;
                         // Si l'action passee dans l'url n'existe pas
                     default:
@@ -69,4 +77,52 @@ class CovoiturageController extends Controller
         $this->render("Covoiturage/mes-covoiturages");
     }
 
+    /*
+    Exemple d'appel depuis l'url
+        ?controller=covoiturages&action=createCovoiturage
+    */
+    // Function pour créer un nouveau covoiturage
+    protected function createCovoiturage()
+    {
+        $errors = [];
+        $covoiturage = new Covoiturage;
+        $covoiturageRepository = new CovoiturageRepository;
+        $covoiturageValidator = new CovoiturageValidator;
+        $voitureRepository = new VoitureRepository;
+
+        // L'id de l'utilsateur
+        $user_id = $_SESSION['user']['id'];
+        // Variable qui contient toutes les voitures de l'utilisateur connecté
+        $cars = $voitureRepository->findAllCarsByUserId($user_id);
+
+        try {
+
+            if (isset($_POST['createCovoiturage'])) {
+                var_dump($_POST);
+                $covoiturage->hydrate($_POST);
+                echo '<br>';
+                echo '<br>';
+                var_dump($covoiturage);
+                $errors = $covoiturageValidator->createCovoiturageValidate($covoiturage);
+
+
+                if (empty($errors)) {
+                    $covoiturageRepository->createCovoiturage($covoiturage);
+                    echo 'ok';
+                } else {
+                    echo 'no funciono';
+                }
+            }
+
+            $this->render(
+                "Covoiturage/create-covoiturages",
+                [
+                    "errors" => $errors,
+                    "cars" => $cars,
+                ]
+            );
+        } catch (Exception $e) {
+            $this->render("Errors/404", ["error" => $e->getMessage()]);
+        }
+    }
 }
