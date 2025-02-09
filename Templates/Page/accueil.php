@@ -8,13 +8,14 @@ use App\Security\Security;
 <!-- main -->
 <?php if (Security::isLogged()) { ?>
   <h3>bienvenue <br><?php var_dump($_SESSION['user']) ?></h3>
+  <?php if (Security::isPassager()) { ?>
+    <h3>Vous êtes passager<br></h3>
+  <?php } elseif (Security::isChauffeur()) { ?>
+    <h3>Vous êtes chauffeur<br></h3>
+  <?php } ?>
 <?php } ?>
 
-<?php if (Security::isPassager()) { ?>
-  <h3>Vous êtes passager<br></h3>
-<?php } elseif (Security::isChauffeur()) { ?>
-  <h3>Vous êtes chauffeur<br></h3>
-<?php } ?>
+
 <!-- Section qui contient le slogan et la barre de recherche des covoiturages -->
 <section>
   <div class="slogan">

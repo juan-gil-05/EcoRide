@@ -53,15 +53,18 @@ class VoitureController extends Controller
         $errors = [];
         // L'id de l'utilisateur
         $user_id = $_SESSION['user']['id'];
+        // Varibles pour autocompléter le formulaire
         $immatriculation = "";
         $dateImmatriculation = "";
         $marque = "";
         $modele = "";
         $couleur = "";
+
         try {
             $voiture = new Voiture;
             $voitureRepository = new VoitureRepository;
             $voitureValidator = new VoitureValidator;
+
             // Si le formulaire est envoyé, on hydrate l'objet Voiture avec les données passées
             if (isset($_POST['carInscription'])) {
                 $voiture->hydrate($_POST);
@@ -75,12 +78,17 @@ class VoitureController extends Controller
                 // S'il n'y a pas des erreurs, on crée la voiture dans la basse des données
                 if (empty($errors)) {
                     $voitureRepository->createCar($voiture, $user_id);
-                    // On evoi vers la page pour enregistrer les préférences
-                    header('Location: ?controller=preferences&action=preferencesInscription');
-                } 
+                    // Pour trouver tous les voitures de l'utilisateur
+                    $cars = $voitureRepository->findAllCarsByUserId($user_id);
+                    // Si l'utilisateur a 2 ou plus de 2 voitures, alors on envoi vers la page d'accueil
+                    if (count($cars) >= 2) {
+                        header('Location: ?controller=page&action=accueil');
+                    } else {
+                        // On evoi vers la page pour enregistrer les préférences
+                        header('Location: ?controller=preferences&action=preferencesInscription');
+                    }
+                }
             }
-
-            $voiture->getMarque();
         } catch (Exception $e) {
             $this->render("Errors/404", [
                 'error' => $e->getMessage()
@@ -99,5 +107,4 @@ class VoitureController extends Controller
             ]
         );
     }
-
 }

@@ -7,37 +7,42 @@ use App\Entity\Covoiturage;
 class CovoiturageValidator
 {
 
-    public function createCovoiturageValidate(Covoiturage $covoiturage)
+    public function createCovoiturageValidate(Covoiturage $covoiturage) : array
     {
+        // Tableau d'erreurs
         $errors = [];
 
-
-
+        // Si le champ est vide
         if(empty($covoiturage->getDateHeureDepart())){
-            $errors['dateTimeEmpty'] = "Ce champ est obligatoire";
+            $errors['dateTimeDepartEmpty'] = "Ce champ est obligatoire";
         }
-
+        
+        // Si le champ est vide
         if(empty($covoiturage->getDateHeureArrivee())){
-            $errors['dateTimeEmpty'] = "Ce champ est obligatoire";
+            $errors['dateTimeArriveeEmpty'] = "Ce champ est obligatoire";
         }
 
-
+        // Si le champ est vide
         if(empty($covoiturage->getAdresseDepart())){
-            $errors['adresseEmpty'] = "Ce champ est obligatoire";
+            $errors['adresseDepartEmpty'] = "Ce champ est obligatoire";
         }
 
+        // Si le champ est vide
         if(empty($covoiturage->getAdresseArrivee())){
-            $errors['adresseEmpty'] = "Ce champ est obligatoire";
+            $errors['adresseArriveeEmpty'] = "Ce champ est obligatoire";
         }
 
+        // Si le champ est vide
         if(empty($covoiturage->getNbPlaceDisponible())){
             $errors['nbPlaceEmpty'] = "Ce champ est obligatoire";
         }
 
+        // Si le champ est vide
         if(empty($covoiturage->getPrix())){
             $errors['prixEmpty'] = "Vous debez choisir un prix";
         }
 
+        // Si le champ est vide
         if(empty($covoiturage->getVoitureId())){
             $errors['voitureEmpty'] = "Vous debez choisir une voiture";
         }

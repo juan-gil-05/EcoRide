@@ -84,6 +84,7 @@ class CovoiturageController extends Controller
     // Function pour créer un nouveau covoiturage
     protected function createCovoiturage()
     {
+        // Tableau des erreurs
         $errors = [];
         $covoiturage = new Covoiturage;
         $covoiturageRepository = new CovoiturageRepository;
@@ -94,23 +95,31 @@ class CovoiturageController extends Controller
         $user_id = $_SESSION['user']['id'];
         // Variable qui contient toutes les voitures de l'utilisateur connecté
         $cars = $voitureRepository->findAllCarsByUserId($user_id);
+        // Variables de chaque champ du formulaire
+        $dateTimeDepart = "";
+        $dateTimeArrivee = "";
+        $adresseDepart = "";
+        $adresseArrivee = "";
+        $nbPlaceDisponibles = "";
+        $prix = "";
 
         try {
 
             if (isset($_POST['createCovoiturage'])) {
-                var_dump($_POST);
                 $covoiturage->hydrate($_POST);
-                echo '<br>';
-                echo '<br>';
-                var_dump($covoiturage);
+                $dateTimeDepart = $covoiturage->getDateHeureDepart();
+                $dateTimeArrivee = $covoiturage->getDateHeureArrivee();
+                $adresseDepart = $covoiturage->getAdresseDepart();
+                $adresseArrivee = $covoiturage->getAdresseArrivee();
+                $nbPlaceDisponibles = $covoiturage->getNbPlaceDisponible();
+                $prix = $covoiturage->getPrix();
+                // Pour valider les erreurs du formulaire
                 $errors = $covoiturageValidator->createCovoiturageValidate($covoiturage);
-
-
+                // S'il n'y a pas des erreurs, on crée le covoiturage dans la basse des données
                 if (empty($errors)) {
                     $covoiturageRepository->createCovoiturage($covoiturage);
-                    echo 'ok';
-                } else {
-                    echo 'no funciono';
+                    // On envoi vers la page de mes covoiturages 
+                    header('Location: ?controller=covoiturages&action=mesCovoiturages');
                 }
             }
 
@@ -119,6 +128,12 @@ class CovoiturageController extends Controller
                 [
                     "errors" => $errors,
                     "cars" => $cars,
+                    "dateTimeDepart" => $dateTimeDepart,
+                    "dateTimeArrivee" => $dateTimeArrivee,
+                    "adresseDepart" => $adresseDepart,
+                    "adresseArrivee" => $adresseArrivee,
+                    "nbPlaceDisponibles" => $nbPlaceDisponibles,
+                    "prix" => $prix
                 ]
             );
         } catch (Exception $e) {

@@ -45,6 +45,41 @@
     .non-chauffeur {
       display: none !important;
     }
+
+    // Style pour le formulaire de création des covoiturages
+    .covoiturage-form {
+      .covoiturage-form-div {
+        justify-content: space-between;
+        width: 75%;
+        // Tous les champs du formulaire de l'utilisateur
+        div {
+          width: 46%;
+          label {
+            color: $white;
+            font-weight: 500;
+          }
+          input{
+            color: $dark;
+            background-color: $light;
+          }
+          .invalid-tooltip {
+            width: 100%;
+          }
+          // Lien pour enregistrer une nouvelle voiture
+          a {
+            text-align: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+          }
+        }
+        // div qui cotient la séléctionne des voitures et le lien pour en enregistrer une nouvelle
+        .car-selector {
+          width: 100%;
+          position: relative;
+        }
+      }
+    }
   }
   // pour le message d'erreur
   .if-form-error {
