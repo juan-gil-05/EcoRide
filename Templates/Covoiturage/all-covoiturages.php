@@ -62,7 +62,7 @@ require_once './Templates/header.php';
         </div>
       </form>
     </div>
-    <!-- Bouton pour visualiser les covoiturages de l'utilisateur -->
+    <!-- Bouton pour visualiser les covoiturages de l'utilisateur en mode desktop -->
     <div class="mt-5 text-center mes-covoiturages-btn content-text">
       <a href="?controller=covoiturages&action=mesCovoiturages" class="btn btn-warning shadow-section">Mes covoiturages</a>
     </div>
@@ -170,8 +170,16 @@ require_once './Templates/header.php';
       </div>
     </div>
 
-    <!-- Le jour et la date du covoiturage -->
-    <h2 class="subtitle-text">Dimanche, 25 Nov.</h2>
+    <!-- Le jour et la date du covoiturage, et le bouton pour visualiser les covoiturages de l'utilisateur -->
+    <div class="d-flex align-items-center mt-3 mb-3 justify-content-between">
+      <!-- Le jour et la date du covoiturage -->
+      <h2 class="subtitle-text">Dimanche, 25 Nov.</h2>
+  
+      <!-- Bouton pour visualiser les covoiturages de l'utilisateur en mode mobile -->
+      <div class="text-center mes-covoiturages-btn-mobile content-text">
+        <a href="?controller=covoiturages&action=mesCovoiturages" class="btn btn-warning shadow-section">Mes covoiturages</a>
+      </div>
+    </div>
 
     <!-- Les cartes avec les résultats des tous les covoiturages -->
     <div class="travel-card">

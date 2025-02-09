@@ -17,7 +17,8 @@ require_once './Templates/header.php';
                 <!-- Si l'utilsateur est connecté et a le rôle du chauffeur, alors, 
                 on affiche le bouton vers la page pour saisir un nouveau covoiturage -->
                 <?php if (Security::isLogged() && Security::isChauffeur()) { ?>
-                    <a href="?controller=covoiturages&action=createCovoiturage" class="btn btn-light mt-3 text-black">Créer un nouveau covoiturage</a>
+                    <a href="?controller=covoiturages&action=createCovoiturage"
+                        class="btn btn-light mt-3 text-black content-text fw-medium">Créer un nouveau covoiturage</a>
                 <?php } ?>
             </div>
         </div>

@@ -3,11 +3,11 @@
 require_once './Templates/header.php';
 ?>
 
-<section class="container mt-5 connection-form">
+<section class="container mt-4 connection-form">
     <!-- Formulaire pour créer un un nouveau covoiturage -->
     <form method="post" class="d-flex flex-column ">
         <!-- titre -->
-        <h1 class="mb-5 text-center text-white headline-text">Créer un nouveau covoiturage</h1>
+        <h1 class="mb-4 text-center text-white headline-text">Créer un nouveau covoiturage</h1>
 
         <!-- Tous les champs du formulaire de l'utilisateur -->
         <div class="d-flex flex-column gap-4 align-items-center covoiturage-form">

@@ -132,6 +132,11 @@
       margin-top: 3%;
       margin-bottom: 3%;
     }
+    // Bouton pour visualiser les covoiturages de l'utilisateur en mode mobile,
+    // en mode desktop on le cache
+    .mes-covoiturages-btn-mobile {
+      display: none;
+    }
     // Pour les cartes avec les covoiturages
     .travel-card {
       padding: 25px 0 10px;
@@ -267,6 +272,21 @@
     // Pour soupprimer la section de filtres
     .filter {
       display: none;
+    }
+    // Bouton pour visualiser les covoiturages de l'utilisateur en mode mobile,
+    .mes-covoiturages-btn-mobile {
+      display: flex !important;
+      width: 45%;
+      justify-content: flex-end;
+      .btn {
+        font-size: 0.5rem !important;
+        width: 70%;
+        color: $dark;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding: 3%;
+        border: 1px solid #4e4e4e;
+      }
     }
     // Section des résultats des covoiturages
     .covoiturage-results {

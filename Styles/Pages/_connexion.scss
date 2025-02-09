@@ -58,7 +58,7 @@
             color: $white;
             font-weight: 500;
           }
-          input{
+          input {
             color: $dark;
             background-color: $light;
           }
@@ -102,6 +102,22 @@
 
     .lien {
       margin-top: 50px !important;
+    }
+    // Style pour le formulaire de création des covoiturages
+    .covoiturage-form {
+      gap: 1.1rem !important;
+      .covoiturage-form-div {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.1rem;
+        div {
+          width: 100% !important;
+          .form-control,
+          .form-select {
+            padding: 2px 0.75rem;
+          }
+        }
+      }
     }
   }
 }
