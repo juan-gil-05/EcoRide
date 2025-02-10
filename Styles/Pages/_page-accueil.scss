@@ -22,7 +22,7 @@
     align-items: center;
     padding-top: 40px;
     // Style du formulaire de recherche des covoiturage
-    form {
+    div {
       width: 40%;
       position: relative;
       div {
@@ -49,11 +49,11 @@
     // style du boutton de la barre de recherche
     .search-btn {
       width: 85%;
-    }
-    button {
-      width: 100%;
-      color: white;
-      height: 60px;
+      button {
+        width: 100%;
+        color: white;
+        height: 60px;
+      }
     }
   }
 }
@@ -129,7 +129,7 @@
         width: 40%;
       }
       // Style du formulaire de recherche des covoiturage
-      form {
+      div {
         width: 80%;
         // Style des icons de la barre de recherche
         i {
@@ -146,10 +146,10 @@
       // style du boutton de la barre de recherche
       .search-btn {
         width: 90%;
-      }
-      button {
-        height: 37px;
-        font-size: 0.8rem !important;
+        button {
+          height: 37px;
+          font-size: 0.8rem !important;
+        }
       }
     }
   }

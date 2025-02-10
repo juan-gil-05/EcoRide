@@ -12137,21 +12137,21 @@ html {
   align-items: center;
   padding-top: 40px;
 }
-.slogan .d-flex form {
+.slogan .d-flex div {
   width: 40%;
   position: relative;
 }
-.slogan .d-flex form div {
+.slogan .d-flex div div {
   width: 100%;
 }
-.slogan .d-flex form i {
+.slogan .d-flex div i {
   margin-right: 13px;
   color: #0063ac;
   position: absolute;
   left: 15px;
   top: 13px;
 }
-.slogan .d-flex form input {
+.slogan .d-flex div input {
   border: 1px solid #4e4e4e;
   border-radius: 10px;
   background-color: #f5f5f5;
@@ -12162,7 +12162,7 @@ html {
 .slogan .d-flex .search-btn {
   width: 85%;
 }
-.slogan .d-flex button {
+.slogan .d-flex .search-btn button {
   width: 100%;
   color: white;
   height: 60px;
@@ -12233,14 +12233,14 @@ html {
   .slogan .d-flex .date {
     width: 40%;
   }
-  .slogan .d-flex form {
+  .slogan .d-flex div {
     width: 80%;
   }
-  .slogan .d-flex form i {
+  .slogan .d-flex div i {
     top: 9px;
     font-size: 10px;
   }
-  .slogan .d-flex form input {
+  .slogan .d-flex div input {
     padding-left: 32px;
     height: 32px;
     font-size: 0.6rem !important;
@@ -12248,7 +12248,7 @@ html {
   .slogan .d-flex .search-btn {
     width: 90%;
   }
-  .slogan .d-flex button {
+  .slogan .d-flex .search-btn button {
     height: 37px;
     font-size: 0.8rem !important;
   }

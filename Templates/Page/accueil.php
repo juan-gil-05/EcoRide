@@ -7,13 +7,15 @@ use App\Security\Security;
 
 <!-- main -->
 <?php if (Security::isLogged()) { ?>
-  <h3>bienvenue <br><?php var_dump($_SESSION['user']) ?></h3>
+  <h3>bienvenue <?php echo ($_SESSION['user']['pseudo']) ?></h3>
   <?php if (Security::isPassager()) { ?>
     <h3>Vous êtes passager<br></h3>
   <?php } elseif (Security::isChauffeur()) { ?>
     <h3>Vous êtes chauffeur<br></h3>
   <?php } ?>
 <?php } ?>
+
+<?php (isset($_GET['search'])) ? var_dump($_GET) : "" ?>
 
 
 <!-- Section qui contient le slogan et la barre de recherche des covoiturages -->
@@ -26,39 +28,39 @@ use App\Security\Security;
     </h2>
     <!-- Bar de recherche des covoiturages -->
     <div class="search-bar container">
-      <!-- les 2 premiers formulaires de la recherche (Départ & Arrivé) -->
-      <div class="content-text d-flex">
-        <form action="">
+      <!-- Formulaire pour réaliser la recherche -->
+      <form method="get">
+        <!-- les adresses de départ et d'arrivée -->
+        <div class="d-flex">
+          <!-- adresses de départ -->
           <div>
             <!-- Icon -->
             <i class="bi bi-record-circle"></i>
             <input type="text" name="" id="" placeholder="Adresse de départ" />
           </div>
-        </form>
-        <form action="">
+          <!-- adresses d'arrivée -->
           <div>
             <!-- Icon -->
             <i class="bi bi-geo-alt-fill"></i>
             <input type="text" name="" id="" placeholder="Adresse d’arrivée" />
           </div>
-        </form>
-      </div>
-      <!-- le 3 formulaire de la recherche (Date) -->
-      <div class="content-text d-flex">
-        <form action="" class="date">
-          <div>
+        </div>
+        <!-- La date -->
+        <div class="d-flex">
+          <!-- La date -->
+          <div class="date">
             <!-- Icon -->
             <i class="bi bi-calendar2-week-fill"></i>
             <input type="text" name="" id="" placeholder="Aujourd’hui" />
           </div>
-        </form>
-      </div>
-      <!-- Boutton de recherche -->
-      <div class="d-flex">
-        <div class="search-btn">
-          <button class="btn btn-primary subtitle-text">Rechercher</button>
         </div>
-      </div>
+        <!-- Boutton de recherche -->
+        <div class="d-flex">
+          <!-- Le boutton -->
+          <div class="search-btn">
+            <button class="btn btn-primary subtitle-text" type="submit" name="search">Rechercher</button>
+          </div>
+      </form>
     </div>
   </div>
 </section>
