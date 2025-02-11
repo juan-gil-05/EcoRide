@@ -24,4 +24,21 @@ class CovoiturageRepository extends Repository
         $query->bindValue(":statut_id", $covoiturage->getStatutId(), $this->pdo::PARAM_INT);
         return $query->execute();
     }
+
+    // Fonction pour checher des covoiturages
+    public function searchCovoiturage(string $dateDepart, string $adresseDepart, string $adresseArrivee): array
+    {
+        $sql = ("SELECT * FROM Covoiturage
+                WHERE date_heure_depart LIKE :dateDepart AND 
+                adresse_depart LIKE :adresseDepart AND
+                adresse_arrivee LIKE :adresseArrivee
+                ");
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":dateDepart", "%$dateDepart%", $this->pdo::PARAM_STR);
+        $query->bindValue(":adresseDepart", "%$adresseDepart%", $this->pdo::PARAM_STR);
+        $query->bindValue(":adresseArrivee", "%$adresseArrivee%", $this->pdo::PARAM_STR);
+        $query->execute();
+
+        return $query->fetchAll($this->pdo::FETCH_ASSOC);
+    }
 }

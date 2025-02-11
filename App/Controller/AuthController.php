@@ -85,7 +85,7 @@ class AuthController extends Controller
                                 header('location: ?controller=page&action=accueil');
                             } else {
                                 // Envois vers la page pour enregistrer une voiture
-                                header('Location: ?controller=voiture&action=carInscription');
+                                header('location: ?controller=voiture&action=carInscription');
                             }
                         } else { // Si l'user n'est pas chauffeur mais passager, alors ...
                             // On envoie l'utilisateur vers la page d'accueil

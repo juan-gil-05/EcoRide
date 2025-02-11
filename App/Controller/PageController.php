@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Covoiturage;
+use App\Repository\CovoiturageRepository;
+use App\Security\CovoiturageValidator;
 use Exception;
 
 class PageController extends Controller
@@ -41,6 +44,55 @@ class PageController extends Controller
     // Fonction pour afficher la page d'accueil
     protected function accueil()
     {
-        $this->render("Page/accueil");
+        // Fonction de la barre de recherche pour chercher des covoiturages
+        $this->searchCovoiturage();
+        $this->render(
+            "Page/accueil",
+            [
+                'dateDepart' => $this->searchCovoiturage()[0],
+                'adresseDepart' => $this->searchCovoiturage()[1],
+                'adresseArrivee' => $this->searchCovoiturage()[2],
+                'errors' => $this->searchCovoiturage()[3]
+            ]
+        );
+    }
+
+    // Fonction de la barre de recherche
+    protected function searchCovoiturage()
+    {
+        $covoiturage = new Covoiturage;
+        $covoiturageRepository = new CovoiturageRepository;
+        $covoiturageValidator = new CovoiturageValidator;
+        $errors = [];
+        // Variables pour contenir les données du formulaire
+        $dateDepart = "";
+        $adresseDepart = "";
+        $adresseArrivee = "";
+
+        // Si on envoi le formulaire de recherche, ....
+        if (isset($_GET['search'])) {
+            // On Hydrate l'objet de la classe Covoiturage
+            $covoiturage->hydrate($_GET);
+            // On enregistre les valeurs passées dans le formulaire dans nos variables
+            //si le champ de la date n'est pas vide, alors on le récupére, sinon, on le laisse vide
+            $dateDepart = (!empty($_GET['date_heure_depart'])) ? $covoiturage->getDateHeureDepart()->format('Y-m-d') : "";
+            $adresseDepart = $covoiturage->getAdresseDepart();
+            $adresseArrivee = $covoiturage->getAdresseArrivee();
+            // Fonction du repository pour chercher avec les donées passées 
+            $results = $covoiturageRepository->searchCovoiturage($dateDepart, $adresseDepart, $adresseArrivee);
+            // Pour Vérifier les erreurs dans le formulaire
+            $errors =  $covoiturageValidator->searchCovoiturageValidate($dateDepart, $adresseDepart, $adresseArrivee);
+            // S'il n'y a pas des erreurs, on affiche les résultats 
+            if (empty($errors)) {
+                if ($results) {
+                    //var_dump($results);
+                    header('location: ?controller=covoiturages&action=showAll');
+                } else {
+                    echo 'Rien';
+                }
+            }
+        }
+
+        return [$dateDepart, $adresseDepart, $adresseArrivee, $errors];
     }
 }

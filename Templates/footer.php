@@ -27,6 +27,7 @@
 <script src="../Scripts/showPassword.js"></script>
 <script src="../Scripts/driverForm.js"></script>
 <script src="../Scripts/preferencesForm.js"></script>
+<script src="../Scripts/searchCovoiturage.js"></script>
 </body>
 
 </html>

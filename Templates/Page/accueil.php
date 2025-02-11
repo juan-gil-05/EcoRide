@@ -15,34 +15,43 @@ use App\Security\Security;
   <?php } ?>
 <?php } ?>
 
-<?php (isset($_GET['search'])) ? var_dump($_GET) : "" ?>
-
 
 <!-- Section qui contient le slogan et la barre de recherche des covoiturages -->
 <section>
-  <div class="slogan">
+  <div class="slogan" id="slogan">
     <!-- Slogan du site -->
     <h2 class="subtitle-text text-white">
       Voyagez avec EcoRide <br />
       le covoiturage écologique à votre portée.
     </h2>
     <!-- Bar de recherche des covoiturages -->
-    <div class="search-bar container">
+    <div class="search-bar container" id="searchBar">
       <!-- Formulaire pour réaliser la recherche -->
-      <form method="get">
+      <form method="get" >
         <!-- les adresses de départ et d'arrivée -->
         <div class="d-flex">
           <!-- adresses de départ -->
           <div>
             <!-- Icon -->
             <i class="bi bi-record-circle"></i>
-            <input type="text" name="" id="" placeholder="Adresse de départ" />
+            <input type="text" name="adresse_depart" id="" placeholder="Adresse de départ"
+              value="<?= $adresseDepart ?>"
+              class="form-control content-text <?= (isset($errors['adresseDepartEmpty'])) ? "is-invalid" : "" ?>" />
+            <!-- Si il y a des erreurs on affiche le message d'erreur -->
+            <?php if (isset($errors['adresseDepartEmpty'])) { ?>
+              <div class="invalid-tooltip position-static small-text"><?= $errors['adresseDepartEmpty'] ?></div>
+            <?php } ?>
           </div>
           <!-- adresses d'arrivée -->
           <div>
             <!-- Icon -->
             <i class="bi bi-geo-alt-fill"></i>
-            <input type="text" name="" id="" placeholder="Adresse d’arrivée" />
+            <input type="text" name="adresse_arrivee" id="" placeholder="Adresse d’arrivée"
+              value="<?= $adresseArrivee ?>"
+              class="form-control content-text <?= (isset($errors['adresseArriveeEmpty'])) ? "is-invalid" : "" ?>" />
+            <?php if (isset($errors['adresseArriveeEmpty'])) { ?>
+              <div class="invalid-tooltip position-static small-text"><?= $errors['adresseArriveeEmpty'] ?></div>
+            <?php } ?>
           </div>
         </div>
         <!-- La date -->
@@ -51,7 +60,12 @@ use App\Security\Security;
           <div class="date">
             <!-- Icon -->
             <i class="bi bi-calendar2-week-fill"></i>
-            <input type="text" name="" id="" placeholder="Aujourd’hui" />
+            <input type="date" name="date_heure_depart" id="" value="<?= $dateDepart ?>"
+              class="form-control content-text <?= (isset($errors['dateDepartEmpty'])) ? "is-invalid" : "" ?>" />
+            <!-- Si il y a des erreurs on affiche le message d'erreur -->
+            <?php if (isset($errors['dateDepartEmpty'])) { ?>
+              <div class="invalid-tooltip position-static small-text"><?= $errors['dateDepartEmpty'] ?></div>
+            <?php } ?>
           </div>
         </div>
         <!-- Boutton de recherche -->
