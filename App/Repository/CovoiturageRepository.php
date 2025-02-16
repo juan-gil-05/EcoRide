@@ -61,7 +61,7 @@ class CovoiturageRepository extends Repository
     // Fonction pour checher les covoiturages avec son energie ID
     public function searchCovoiturageWithDriver(int $CovoiturageId): array
     {
-        $sql = ("SELECT User.pseudo, User.photo, Covoiturage.id as covoiturage_id
+        $sql = ("SELECT User.pseudo, User.photo_uniqId, Covoiturage.id as covoiturage_id
                 FROM Covoiturage
                 INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
                 INNER JOIN User ON Voiture.user_id = User.id

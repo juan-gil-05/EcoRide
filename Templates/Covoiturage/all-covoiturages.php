@@ -205,7 +205,7 @@ require_once './Templates/header.php';
             <!-- déscriptions -->
             <div class="travel-description content-text">
               <!-- Lieu de départ -->
-              <div><?= $covoiturage['adresse_depart'] ?></div>
+              <div class="text-capitalize"><?= $covoiturage['adresse_depart'] ?></div>
               <!-- Places disponibles -->
               <div>
                 <!-- Icon -->
@@ -222,7 +222,7 @@ require_once './Templates/header.php';
                   </span></p>
               </div>
               <!-- Lieu d'arrivée -->
-              <div><?= $covoiturage['adresse_arrivee'] ?></div>
+              <div class="text-capitalize"><?= $covoiturage['adresse_arrivee'] ?></div>
             </div>
             <!-- Prix -->
             <div class="travel-price subtitle-text">
@@ -237,9 +237,13 @@ require_once './Templates/header.php';
           <div class="driver-profile">
             <!-- Photo et prenom/nom -->
             <div class="driver-img">
-              <!-- Photo -->
+              <!-- Photo, s'il n'y a pas, on affiche l'image par defaut-->
               <img
-                src="../Assets/Img_page-vue-covoiturages/avatars/avatar1.webp"
+                src="../../Uploads/User/<?=
+                (!empty($driversByCovoiturageId[$covoiturage['id']]['photo_uniqId']))
+                ? $driversByCovoiturageId[$covoiturage['id']]['photo_uniqId']
+                : "../../Assets/Img_page-vue-covoiturages/driver-default.png"
+                ?>"
                 alt="Image du chauffeur" />
               <!-- Nom, prenom -->
               <p class="content-text"><?= $driversByCovoiturageId[$covoiturage['id']]['pseudo'] ?></p>
