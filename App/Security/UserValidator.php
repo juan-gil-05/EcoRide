@@ -108,6 +108,8 @@ class UserValidator
                     if ($fileSize < $maxFileSize) {
                         // Nouveau nom de l'image avec une unique id et l'extention de l'image
                         $fileNewName = uniqid("", true) . "." . $fileExtLowerCase;
+                        // On passe le uniqId de la photo à l'objet User
+                        $user->setPhotoUniqId($fileNewName);
                         // Le folder de déstination
                         $folderDestination = './Uploads/User/' . $fileNewName;
                         // Déplacement de l'image vers le folder avec les images des utilisateurs

@@ -11,6 +11,7 @@ class User extends Entity
     protected string $mail = "";
     protected string $password = "";
     protected ?string $photo = "";
+    protected ?string $photo_uniqId = "";
     protected ?string $role_id = "";
     
     /**
@@ -135,6 +136,24 @@ class User extends Entity
     public function setRoleId(?string $role_id): self
     {
         $this->role_id = $role_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of photo_uniqId
+     */
+    public function getPhotoUniqId(): ?string
+    {
+        return $this->photo_uniqId;
+    }
+
+    /**
+     * Set the value of photo_uniqId
+     */
+    public function setPhotoUniqId(?string $photo_uniqId): self
+    {
+        $this->photo_uniqId = $photo_uniqId;
 
         return $this;
     }

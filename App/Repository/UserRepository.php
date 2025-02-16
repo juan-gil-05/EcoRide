@@ -21,12 +21,14 @@ class UserRepository extends Repository
     // Fonction pour créer un nouveau utilisateur chauffeur, pour ajouter la photo
     public function createDriverUser(User $user)
     {
-        $sql = ("INSERT INTO User (pseudo, mail, password, photo, role_id) VALUES (:pseudo,:mail,:mdp, :photo ,:role_id)");
+        $sql = ("INSERT INTO User (pseudo, mail, password, photo, photo_uniqId, role_id) 
+        VALUES (:pseudo, :mail, :mdp, :photo, :photo_uniqId, :role_id)");
         $query = $this->pdo->prepare($sql);
         $query->bindValue(":pseudo", $user->getPseudo(), $this->pdo::PARAM_STR);
         $query->bindValue(":mail", $user->getMail(), $this->pdo::PARAM_STR);
         $query->bindValue(":mdp", $user->getPassword(), $this->pdo::PARAM_STR);
         $query->bindValue(":photo", $user->getPhoto(), $this->pdo::PARAM_STR);
+        $query->bindValue(":photo_uniqId", $user->getPhotoUniqId(), $this->pdo::PARAM_STR);
         $query->bindValue(":role_id", $user->getRoleId(), $this->pdo::PARAM_STR);
         return $query->execute();
     }
