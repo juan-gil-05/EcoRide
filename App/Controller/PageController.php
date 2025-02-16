@@ -58,7 +58,7 @@ class PageController extends Controller
     }
 
     // Fonction de la barre de recherche
-    protected function searchCovoiturage()
+    public function searchCovoiturage()
     {
         $covoiturage = new Covoiturage;
         $covoiturageRepository = new CovoiturageRepository;
@@ -79,13 +79,17 @@ class PageController extends Controller
             $adresseDepart = $covoiturage->getAdresseDepart();
             $adresseArrivee = $covoiturage->getAdresseArrivee();
             // Fonction du repository pour chercher avec les donées passées 
-            $results = $covoiturageRepository->searchCovoiturage($dateDepart, $adresseDepart, $adresseArrivee);
+            $covoiturages = $covoiturageRepository->searchCovoiturage($dateDepart, $adresseDepart, $adresseArrivee);
             // Pour Vérifier les erreurs dans le formulaire
             $errors =  $covoiturageValidator->searchCovoiturageValidate($dateDepart, $adresseDepart, $adresseArrivee);
-            // S'il n'y a pas des erreurs, on affiche les résultats 
+            // S'il n'y a pas des erreurs, ....
             if (empty($errors)) {
-                if ($results) {
-                    //var_dump($results);
+                // Si on trouve des résultats,
+                // on envoi vers la page de tous les covoiturages et on affiche les résultats 
+                if ($covoiturages) {
+                    // pour enregistrer les covoiturages trouvés dans une session, 
+                    // afin de pouvoir passer les donées ver une nouvelle page 
+                    $_SESSION['covoiturages'] = $covoiturages;
                     header('location: ?controller=covoiturages&action=showAll');
                 } else {
                     echo 'Rien';

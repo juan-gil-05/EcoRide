@@ -194,17 +194,13 @@
         // Le prix
         .travel-price {
           display: flex;
-          // Les euros
+          // Les crédits
           .headline-text {
             font-weight: 500;
           }
-          // Les céntimes
-          .content-text {
-            margin-top: 15px;
-          }
           // Icon
           i {
-            margin-left: 4px;
+            margin-left: 5px;
           }
         }
       }
@@ -343,16 +339,11 @@
           }
           // Le prix
           .travel-price {
-            // Pour les euros et l'icon d'euro
+            // Pour les crédits et l'icon du crédit
             > p:first-child,
             i {
               font-size: 1.1rem !important;
               font-weight: 600;
-            }
-            // Pour les centimes
-            .content-text {
-              font-size: 0.6rem !important;
-              margin-top: 9px;
             }
           }
         }

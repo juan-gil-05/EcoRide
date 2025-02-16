@@ -12496,11 +12496,8 @@ html {
 .covoiturages .covoiturage-results .travel-card .travel-content .travel-price .headline-text {
   font-weight: 500;
 }
-.covoiturages .covoiturage-results .travel-card .travel-content .travel-price .content-text {
-  margin-top: 15px;
-}
 .covoiturages .covoiturage-results .travel-card .travel-content .travel-price i {
-  margin-left: 4px;
+  margin-left: 5px;
 }
 .covoiturages .covoiturage-results .travel-card .driver-profile {
   display: flex;
@@ -12614,10 +12611,6 @@ html {
   .covoiturages .covoiturage-results .travel-card .travel-content .travel-price i {
     font-size: 1.1rem !important;
     font-weight: 600;
-  }
-  .covoiturages .covoiturage-results .travel-card .travel-content .travel-price .content-text {
-    font-size: 0.6rem !important;
-    margin-top: 9px;
   }
   .covoiturages .covoiturage-results .travel-card .driver-profile .driver-img {
     gap: 10px;
