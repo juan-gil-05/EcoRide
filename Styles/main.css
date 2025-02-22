@@ -12707,9 +12707,6 @@ html {
 .covoiturage-info .trip-info .trip-header .trip-price .headline-text {
   font-weight: 500;
 }
-.covoiturage-info .trip-info .trip-header .trip-price .content-text {
-  margin-top: 15px;
-}
 .covoiturage-info .trip-info .trip-header .trip-price i {
   margin-left: 4px;
 }

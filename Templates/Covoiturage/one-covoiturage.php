@@ -9,16 +9,14 @@ require_once './Templates/header.php';
   <div class="trip-info">
     <!-- Header -->
     <div class="trip-header shadow-section">
-      <!--Titre-->
-      <h3 class="subtitle-text">Dimanche, 25 Nov.</h3>
+      <!-- Le jour et la date du covoiturage -->
+      <h3 class="subtitle-text"><?= $dayName . ", " . $dayNumber . " " . $monthName ?></h3>
       <!-- Prix -->
       <div class="trip-price">
-        <!-- Euros -->
-        <p class="headline-text">30,</p>
-        <!-- Céntimes -->
-        <p class="content-text">15</p>
+        <!-- Crédits -->
+        <p class="headline-text"><?= $covoiturageDetail['prix'] ?></p>
         <!-- Icon -->
-        <i class="bi bi-currency-euro headline-text"></i>
+        <i class="bi bi-c-circle headline-text"></i>
       </div>
     </div>
     <!-- Body -->
@@ -28,20 +26,20 @@ require_once './Templates/header.php';
         <!--Les hueres-->
         <div class="time content-text">
           <!-- Heure de départ -->
-          <p>06:10</p>
+          <p><?= $heureDepart ?></p>
           <!-- Icon d'une fleche  -->
           <i class="bi bi-arrow-down"></i>
           <!-- Heure d'arrivée -->
-          <p>09:50</p>
+          <p><?= $heureArrivee ?></p>
         </div>
         <!--Les lieus et la durée-->
         <div class="places small-text">
           <!-- Lieu de départ -->
-          <p>Lyon, France</p>
+          <p class="text-capitalize"><?= $covoiturageDetail['adresse_depart'] ?></p>
           <!-- Durée du trajet -->
-          <div>Durée: <span>3h40</span></div>
+          <div>Durée: <span><?= $dureeCovoiturage->format('%HH%I') ?></span></div>
           <!-- Lieu d'arrivée -->
-          <p>Paris, France</p>
+          <p class="text-capitalize"><?= $covoiturageDetail['adresse_arrivee'] ?></p>
         </div>
       </div>
       <!--Les descriptions du covoiturage-->
@@ -51,58 +49,60 @@ require_once './Templates/header.php';
           <div>
             <!-- Icon -->
             <i class="bi bi-car-front-fill"></i>
-            <p>Places disponibles : <span>1</span></p>
+            <p>Places disponibles : <span><?= $covoiturageDetail['nb_place_disponible'] ?></span></p>
           </div>
           <!-- Voyage Écologique -->
           <div>
             <!-- Icon -->
             <i class="bi bi-tree-fill"></i>
-            <p>Voyage Écologique : <span>Oui</span></p>
+            <p>Voyage Écologique : <span><?= ($carInfo['energie'] == "Électrique") ? "Oui" : "Non" ?></span></p>
           </div>
           <!-- Énergie utilisée -->
           <div>
             <!-- Icon -->
             <i class="bi bi-lightning-charge-fill"></i>
-            <p>Énergie utilisée : <span>Électrique</span></p>
+            <p>Énergie utilisée : <span class="text-capitalize"><?= $carInfo['energie'] ?></span></p>
           </div>
           <!-- Marque du véhicule -->
           <div>
             <!-- Icon -->
             <i class="fa-solid fa-car-side"></i>
-            <p>Marque du véhicule : <span>CITROËN</span></p>
+            <p>Marque du véhicule : <span class="text-capitalize"><?= $carInfo['marque'] ?></span></p>
           </div>
           <!-- Modèle du véhicule -->
           <div>
             <!-- Icon -->
             <i class="fa-solid fa-car-on"></i>
-            <p>Modèle du véhicule : <span>Ë-C4</span></p>
+            <p>Modèle du véhicule : <span class="text-capitalize"><?= $carInfo['modele'] ?></span></p>
           </div>
         </div>
       </div>
     </div>
     <!-- Bouton pour participer au covoiturage -->
     <div class="participation-btn content-text">
-        <button class="btn btn-warning shadow-section">participer</button>
+      <button class="btn btn-warning shadow-section">participer</button>
     </div>
   </div>
   <!-- Information du chauffeur -->
   <div class="driver-info shadow-section">
     <!-- La photo, le prenom/nom et la note du chauffuer -->
     <div class="driver-header">
-      <!-- Photo -->
+      <!-- Photo, s'il n'y a pas, on affiche l'image par defaut-->
       <img
-        src="../Assets/Img_page-vue-covoiturages/avatars/avatar1.webp"
-        alt="Image du chauffeur"
-        class="shadow-section"
-      />
+        src="../../Uploads/User/<?=
+                                (!empty($driver['photo_uniqId']))
+                                  ? $driver['photo_uniqId']
+                                  : "../../Assets/Img_page-vue-covoiturages/driver-default.png"
+                                ?>"
+        alt="Image du chauffeur" />
       <!-- Nom, prenom -->
-      <p class="subtitle-text">Azélie Joly</p>
+      <p class="subtitle-text text-capitalize"><?= $driver['pseudo'] ?></p>
       <!-- Note -->
       <div class="content-text driver-note">
         <!-- Icon -->
         <i class="bi bi-star-fill"></i>
         <!-- La note -->
-        <p>4,8</p>
+        <p>- / 5</p>
       </div>
     </div>
     <!-- Section des préférences au chauffeur -->
@@ -111,12 +111,36 @@ require_once './Templates/header.php';
       <h2 class="subtitle-text">Mes préférences</h2>
       <!-- List des préférences -->
       <ul class="small-text">
-        <li><span>Fumeur / non-fumeur :</span> Non-fumeur uniquement.</li>
-        <li><span>Animal / pas d’animal :</span> Animaux acceptés.</li>
-        <li>
-          <span>Musique :</span> Je propose de la musique pop, mais je peux
-          couper la musique si nécessaire.
+        <!-- Accepte ou pas les fumeurs? -->
+        <li><span>Fumeur / non-fumeur :</span>
+          <!-- Si dans l'array existe la préférence fumeur, alors le chauffeur accepte les fumeurs -->
+          <!-- Si dans l'array existe la préférence non_fumeur, alors le chauffeur n'accepte pas les fumeurs  -->
+          <?php if (in_array("Fumeur", $preferences)) {
+            echo 'J\'accepte les fumeurs';
+          } elseif (in_array("Non_fumeur", $preferences)) {
+            echo 'Je n\'accepte les fumeurs';
+          } ?>
         </li>
+        <!-- Accepte ou pas les animaux? -->
+        <li><span>Animal / pas d’animal :</span>
+          <!-- Si dans l'array existe la préférence animal, alors le chauffeur accepte les animaux -->
+          <!-- Si dans l'array existe la préférence non_animal, alors le chauffeur n'accepte pas les animaux -->
+          <?php if (in_array("Animal", $preferences)) {
+            echo 'J\'accepte les animaux';
+          } elseif (in_array("Non_animal", $preferences)) {
+            echo 'Je n\'accepte pas les animaux';
+          } ?>
+        </li>
+        <!-- Préférences Personnelles -->
+        <?php foreach ($preferencesPersonnelles as $personnelle) { ?>
+          <!-- on parcours le tableau pour récupérer chaque préférence, -->
+          <!-- on fait une liste pour chaque préférence, si n'est pas vide -->
+          <?php if (!empty($personnelle)) { ?>
+            <li>
+              <p><?=ucfirst($personnelle)?></p>
+            </li>
+          <?php } ?>
+        <?php } ?>
       </ul>
     </div>
     <!-- Les avis du chauffeur -->

@@ -26,7 +26,7 @@ class CovoiturageRepository extends Repository
     }
 
     // Fonction pour checher des covoiturages
-    public function searchCovoiturage(string $dateDepart, string $adresseDepart, string $adresseArrivee): array
+    public function searchCovoiturageByDateAndAdresse(string $dateDepart, string $adresseDepart, string $adresseArrivee): array
     {
         $sql = ("SELECT * FROM Covoiturage
                 WHERE date_heure_depart LIKE :dateDepart AND 
@@ -59,7 +59,7 @@ class CovoiturageRepository extends Repository
     }
 
     // Fonction pour checher les covoiturages avec son energie ID
-    public function searchCovoiturageWithDriver(int $CovoiturageId): array
+    public function searchCovoiturageWithAllDrivers(int $CovoiturageId): array
     {
         $sql = ("SELECT User.pseudo, User.photo_uniqId, Covoiturage.id as covoiturage_id
                 FROM Covoiturage
@@ -74,4 +74,47 @@ class CovoiturageRepository extends Repository
         return $query->fetchAll($this->pdo::FETCH_ASSOC);
     }
 
+    // Fonction pour checher le covoiturage par son ID
+    public function searchCovoiturageDetailById(int $CovoiturageId): array
+    {
+        $sql = ("SELECT * FROM Covoiturage
+                WHERE Covoiturage.id = :CovoiturageId;
+            ");
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":CovoiturageId", $CovoiturageId, $this->pdo::PARAM_INT);
+        $query->execute();
+
+        return $query->fetch($this->pdo::FETCH_ASSOC);
+    }
+
+    // Fonction pour checher le chauffeur par l'ID du covoiturage
+    public function searchCovoiturageWithDriver(int $CovoiturageId): array
+    {
+        $sql = ("SELECT User.pseudo, User.id, User.photo_uniqId, Covoiturage.id as covoiturage_id
+                FROM Covoiturage
+                INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
+                INNER JOIN User ON Voiture.user_id = User.id
+                WHERE Covoiturage.id = :CovoiturageId;
+                ");
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":CovoiturageId", $CovoiturageId, $this->pdo::PARAM_INT);
+        $query->execute();
+
+        return $query->fetch($this->pdo::FETCH_ASSOC);
+    }
+
+    // Fonction pour les détaille de la voiture par l'ID du covoiturage
+    public function searchCovoiturageWithCarInfoById(int $CovoiturageId): array
+    {
+        $sql = ("SELECT Voiture.marque, Voiture.modele, Energie.libelle as energie
+                FROM Covoiturage
+                INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
+                INNER JOIN Energie ON Voiture.energie_id = Energie.id
+                WHERE Covoiturage.id = :coviturageId;
+                ");
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":coviturageId", $CovoiturageId, $this->pdo::PARAM_INT);
+        $query->execute();
+        return $query->fetch($this->pdo::FETCH_ASSOC);
+    }
 }

@@ -78,7 +78,7 @@ require_once './Templates/header.php';
       <input
         type="text"
         placeholder="<?= $adresseDepart . ' -> ' . $adresseArrivee ?>"
-        class="shadow-section search-input" />
+        class="shadow-section search-input text-capitalize" />
       <!-- Bouton pour afficher les filtres quand on est en mobile ou tablet -->
       <button
         class="btn btn-secondary filter-btn small-text"
@@ -233,17 +233,17 @@ require_once './Templates/header.php';
             </div>
           </div>
 
-          <!-- Profil du chauffeur-->
+          <!-- Profil du chauffeur et bouton de détail-->
           <div class="driver-profile">
             <!-- Photo et prenom/nom -->
             <div class="driver-img">
               <!-- Photo, s'il n'y a pas, on affiche l'image par defaut-->
               <img
                 src="../../Uploads/User/<?=
-                (!empty($driversByCovoiturageId[$covoiturage['id']]['photo_uniqId']))
-                ? $driversByCovoiturageId[$covoiturage['id']]['photo_uniqId']
-                : "../../Assets/Img_page-vue-covoiturages/driver-default.png"
-                ?>"
+                                        (!empty($driversByCovoiturageId[$covoiturage['id']]['photo_uniqId']))
+                                          ? $driversByCovoiturageId[$covoiturage['id']]['photo_uniqId']
+                                          : "../../Assets/Img_page-vue-covoiturages/driver-default.png"
+                                        ?>"
                 alt="Image du chauffeur" />
               <!-- Nom, prenom -->
               <p class="content-text"><?= $driversByCovoiturageId[$covoiturage['id']]['pseudo'] ?></p>
@@ -253,16 +253,20 @@ require_once './Templates/header.php';
               <!-- Icon -->
               <i class="bi bi-star-fill"></i>
               <!-- La note -->
-              <p>4,8</p>
+              <p>- / 5</p>
             </div>
             <!-- Bouton pour voir plus en détail le covoiturage -->
             <div class="content-text">
-              <a href="?controller=covoiturages&action=showOne"><button class="btn btn-warning">Détail</button></a>
+              <a href="?controller=covoiturages&action=showOne&id=<?=$covoiturage['id']?>"><button class="btn btn-warning">Détail</button></a>
             </div>
           </div>
         </div>
-    <?php  }
-    }
+      <?php  }
+    } else { ?>
+      <h3 class="text-center headline-text">
+        <a class="text-white" href="?controller=page&action=accueil">Chercher un covoiturage</a>  
+      </h3>
+    <?php }
     ?>
 
   </div>

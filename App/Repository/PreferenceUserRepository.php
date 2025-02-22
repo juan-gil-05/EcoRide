@@ -18,4 +18,20 @@ class PreferenceUserRepository extends Repository
         $query->bindValue(":user_id", $user_id, $this->pdo::PARAM_INT);
         return $query->execute();
     }
+
+    // Fonction pour chercher les péférences du chauffeur
+    public function searchPreferencesByDriverId(int $driverId): array
+    {
+        // On utilise le 'DISTINCT' pour récupérer q'une fois la valeur libelle, si elle est répétée
+        $sql = ('SELECT DISTINCT Preference.libelle, User_Preferences.preference_personnelle as personnelle
+                FROM User_Preferences
+                INNER JOIN User ON User_Preferences.user_id = User.id
+                INNER JOIN Preference ON User_Preferences.preference_id = Preference.id
+                WHERE User.id = :driverId');
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":driverId", $driverId, $this->pdo::PARAM_INT);
+        $query->execute();
+
+        return $query->fetchAll($this->pdo::FETCH_ASSOC);
+    }
 }

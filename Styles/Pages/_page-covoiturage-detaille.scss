@@ -23,13 +23,9 @@
       // Pour le prix du covoiturage
       .trip-price {
         display: flex;
-        // Les euros
+        // Les crédits
         .headline-text {
           font-weight: 500;
-        }
-        // Les céntimes
-        .content-text {
-          margin-top: 15px;
         }
         // Icon
         i {
@@ -131,6 +127,7 @@
       }
     }
   }
+
   // Infomation du chauffeur
   .driver-info {
     padding: 15px 3%;

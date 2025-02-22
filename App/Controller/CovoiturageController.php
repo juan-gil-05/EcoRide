@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Covoiturage;
 use App\Repository\CovoiturageRepository;
+use App\Repository\PreferenceUserRepository;
 use App\Repository\VoitureRepository;
 use App\Security\CovoiturageValidator;
 use DateTime;
@@ -62,6 +63,16 @@ class CovoiturageController extends Controller
         // S'il n'y a pas, on laisse un tableau vide
         $covoiturages = $_SESSION['covoiturages'] ?? [];
         $covoiturageRepository = new CovoiturageRepository;
+
+        // Variables que l'on va utiliser dans la vue
+        $covoiturage = "";
+        $dayName = "";
+        $dayNumber = "";
+        $monthName = "";
+        $adresseDepart = "";
+        $adresseArrivee = "";
+        $driversByCovoiturageId = [];
+        $energieByCovoiturageId = [];
 
 
         // Si on a des covoiturages dans la session
@@ -122,7 +133,7 @@ class CovoiturageController extends Controller
                 }
 
                 // Fonction du repository pour récupérer les covoiturages avec ses chauffeurs
-                $driversInfo = $covoiturageRepository->searchCovoiturageWithDriver($covoiturageId);
+                $driversInfo = $covoiturageRepository->searchCovoiturageWithAllDrivers($covoiturageId);
                 // foreach pour parcourir les résultats 
                 foreach ($driversInfo as $driverInfo) {
                     // Array qui contient pour l'id de chaque covoiturage les données trouvées 
@@ -143,7 +154,6 @@ class CovoiturageController extends Controller
                 "adresseArrivee" => $adresseArrivee,
                 "driversByCovoiturageId" => $driversByCovoiturageId,
                 "energieByCovoiturageId" => $energieByCovoiturageId
-
             ]
         );
     }
@@ -153,9 +163,108 @@ class CovoiturageController extends Controller
     Exemple d'appel depuis l'url
         ?controller=covoiturages&action=showOne
     */
+    // Fonction pour afficher les détails du covoiturage
     protected function oneCovoiturage()
     {
-        $this->render("Covoiturage/one-covoiturage");
+        // On récupére l'id du covoiturage passée dans l'url
+        $covoiturageId = $_GET['id'];
+
+        // Appel des repositories
+        $covoiturageRepository = new CovoiturageRepository;
+        $preferenceUserRepository = new PreferenceUserRepository;
+
+        // Pour récupérer les détailles du covoiturage
+        $covoiturageDetail = $covoiturageRepository->searchCovoiturageDetailById($covoiturageId);
+        // Pour récupérer les détailles du chauffeur
+        $driver = $covoiturageRepository->searchCovoiturageWithDriver($covoiturageId);
+
+        // On récupére l'adresse et l'heure de départ du covoiturage
+        $dateTimeDepart = $covoiturageDetail['date_heure_depart'];
+        // On crée un objet DateTime pour l'adresse et l'heure de départ du covoiturage
+        $dateTimeDepart = new DateTime();
+        // Tableau avec les noms des jours de la semaine en francais
+        $weekDayFrench =
+            [
+                'Monday' => 'Lundi',
+                'Tuesday' => 'Mardi',
+                'Wednesday' => 'Mercredi',
+                'Thursday' => 'Jeudi',
+                'Friday' => 'Vendredi',
+                'Saturday' => 'Samedi',
+                'Sunday' => 'Dimanche',
+            ];
+        // Tableau avec les noms des mois de l'année en francais
+        $monthNameFrench =
+            [
+                'January' => 'Janvier',
+                'February' => 'Février',
+                'March' => 'Mars',
+                'April' => 'Avril',
+                'May' => 'Mai',
+                'June' => 'Juin',
+                'July' => 'Juillet',
+                'August' => 'Août',
+                'September' => 'Septembre',
+                'October' => 'Octobre',
+                'November' => 'Novembre',
+                'December' => 'Décembre',
+            ];
+        // Pour récupérer le nom du jour en francais
+        $dayName = $weekDayFrench[$dateTimeDepart->format('l')];
+        // Pour récupérer le nombre du jour 
+        $dayNumber = $dateTimeDepart->format('d');
+        // Pour récupérer le nom du mois en francais
+        $monthName = $monthNameFrench[$dateTimeDepart->format('F')];
+        // Pour récupérer l'adresse du départ
+        $adresseDepart = $covoiturageDetail['adresse_depart'];
+        // Pour récupérer l'adresse d'arrivée'
+        $adresseArrivee = $covoiturageDetail['adresse_arrivee'];
+
+        // On utilise la fonction substr pour afficher juste les heures et les minutes
+        // L'heure de départ
+        $heureDepart = substr($covoiturageDetail['date_heure_depart'], 11, 5);
+        // L'heure d'arrivée
+        $heureArrivee = substr($covoiturageDetail['date_heure_arrivee'], 11, 5);
+
+        // Pour convertir les heures en Objets DateTime et en suit
+        $heure1 = new DateTime($heureDepart);
+        $heure2 = new DateTime($heureArrivee);
+        // Pour calculer la durée cu covoiturage, utilise la fonction diff de l'objet DateTime
+        $dureeCovoiturage = $heure1->diff($heure2);
+
+        // L'id du chauffeur
+        $driverId = $driver['id'];
+
+        // Pour récupérer les préférences du chauffeur
+        $driverPreferences = $preferenceUserRepository->searchPreferencesByDriverId($driverId);
+
+        // Fonction array_map pour récupérer uniquement les values des libelles dans un nouveau array
+        $preferences = array_map(fn($pref) => $pref['libelle'],$driverPreferences);      
+        // Fonction array_map pour récupérer uniquement les values des préférences personnelles dans un nouveau array
+        $preferencesPersonnelles = array_map(fn($pref) => $pref['personnelle'],$driverPreferences);            
+        
+        // Pour récupérer les détailles de la voiture du covoiturage
+        $carInfo = $covoiturageRepository->searchCovoiturageWithCarInfoById($covoiturageId);
+
+
+        $this->render(
+            "Covoiturage/one-covoiturage",
+            [
+                'covoiturageDetail' => $covoiturageDetail,
+                "dayName" => $dayName,
+                "dayNumber" => $dayNumber,
+                "monthName" => $monthName,
+                "adresseDepart" => $adresseDepart,
+                "adresseArrivee" => $adresseArrivee,
+                "heureDepart" => $heureDepart,
+                "heureArrivee" => $heureArrivee,
+                "dureeCovoiturage" => $dureeCovoiturage,
+                "driver" => $driver,
+                "preferences" => $preferences,
+                "preferencesPersonnelles" => $preferencesPersonnelles,
+                "carInfo" => $carInfo
+            ]
+        );
     }
 
     /*

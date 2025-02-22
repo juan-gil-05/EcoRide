@@ -79,7 +79,7 @@ class PageController extends Controller
             $adresseDepart = $covoiturage->getAdresseDepart();
             $adresseArrivee = $covoiturage->getAdresseArrivee();
             // Fonction du repository pour chercher avec les donées passées 
-            $covoiturages = $covoiturageRepository->searchCovoiturage($dateDepart, $adresseDepart, $adresseArrivee);
+            $covoiturages = $covoiturageRepository->searchCovoiturageByDateAndAdresse($dateDepart, $adresseDepart, $adresseArrivee);
             // Pour Vérifier les erreurs dans le formulaire
             $errors =  $covoiturageValidator->searchCovoiturageValidate($dateDepart, $adresseDepart, $adresseArrivee);
             // S'il n'y a pas des erreurs, ....
