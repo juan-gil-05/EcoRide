@@ -37,7 +37,18 @@ require_once './Templates/header.php';
           <!-- Lieu de départ -->
           <p class="text-capitalize"><?= $covoiturageDetail['adresse_depart'] ?></p>
           <!-- Durée du trajet -->
-          <div>Durée: <span><?= $dureeCovoiturage->format('%HH%I') ?></span></div>
+          <div>Durée:
+            <span>
+              <?=$dureeCovoiturage->format('%Hh%I')?>
+            </span>
+          </div>
+          <?php if ($jours != 0) { ?>
+            <div>
+              <span class="fw-normal">
+                <?= "+ ".$jours." Jours" ?>
+              </span>
+            </div>
+          <?php } ?>
           <!-- Lieu d'arrivée -->
           <p class="text-capitalize"><?= $covoiturageDetail['adresse_arrivee'] ?></p>
         </div>
@@ -137,7 +148,7 @@ require_once './Templates/header.php';
           <!-- on fait une liste pour chaque préférence, si n'est pas vide -->
           <?php if (!empty($personnelle)) { ?>
             <li>
-              <p><?=ucfirst($personnelle)?></p>
+              <p><?= ucfirst($personnelle) ?></p>
             </li>
           <?php } ?>
         <?php } ?>

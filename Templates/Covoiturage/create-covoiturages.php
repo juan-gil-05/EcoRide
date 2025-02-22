@@ -17,7 +17,6 @@ require_once './Templates/header.php';
                 <div>
                     <label for="dateTimeDepart" class="form-label content-text">Date et heure de départ:</label>
                     <input type="datetime-local" name="date_heure_depart" id="dateTimeDepart"
-
                         value="<?= (!empty($dateTimeDepart)) ? $dateTimeDepart->format("Y-m-d H:i") : ''; ?>"
                         class="form-control content-text <?= (isset($errors['dateTimeDepartEmpty'])) ? "is-invalid" : "" ?>">
                     <!-- Si il y a des erreurs on affiche le message d'erreur -->

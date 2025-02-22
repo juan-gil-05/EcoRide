@@ -12845,6 +12845,7 @@ html {
 }
 .covoiturage-info .driver-info .preferences ul {
   margin-bottom: 0;
+  padding-left: 0;
 }
 .covoiturage-info .driver-info .preferences ul li {
   margin-bottom: 5%;

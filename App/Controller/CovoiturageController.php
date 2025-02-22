@@ -79,10 +79,9 @@ class CovoiturageController extends Controller
         if (!empty($covoiturages)) {
             // On parcourt le tableau pour trouver chaque covoiturage
             foreach ($covoiturages as $covoiturage) {
-                // On récupére l'adresse et l'heure de départ du covoiturage
-                $dateTimeDepart = $covoiturage['date_heure_depart'];
-                // On crée un objet DateTime pour l'adresse et l'heure de départ du covoiturage
-                $dateTimeDepart = new DateTime();
+                // On récupére l'adresse et l'heure de départ du covoiturage et
+                // On crée un objet DateTime
+                $dateTimeDepart = new DateTime($covoiturage['date_heure_depart']);
                 // Tableau avec les noms des jours de la semaine en francais
                 $weekDayFrench =
                     [
@@ -122,7 +121,6 @@ class CovoiturageController extends Controller
                 $adresseArrivee = $covoiturage['adresse_arrivee'];
                 // Pour récupérer l'id de chaque covoiturage
                 $covoiturageId = $covoiturage['id'];
-
 
                 // Fonction du repository pour récupérer les covoiturages avec ses énergies utilisées, (Électrique, Diesel, .....)
                 $energies = $covoiturageRepository->searchCovoiturageWithEnergieId($covoiturageId);
@@ -178,10 +176,10 @@ class CovoiturageController extends Controller
         // Pour récupérer les détailles du chauffeur
         $driver = $covoiturageRepository->searchCovoiturageWithDriver($covoiturageId);
 
-        // On récupére l'adresse et l'heure de départ du covoiturage
-        $dateTimeDepart = $covoiturageDetail['date_heure_depart'];
-        // On crée un objet DateTime pour l'adresse et l'heure de départ du covoiturage
-        $dateTimeDepart = new DateTime();
+        // On récupére l'adresse et l'heure de départ du covoiturage et
+        // On crée un objet DateTime
+        $dateTimeDepart = new DateTime($covoiturageDetail['date_heure_depart']);
+
         // Tableau avec les noms des jours de la semaine en francais
         $weekDayFrench =
             [
@@ -227,10 +225,18 @@ class CovoiturageController extends Controller
         $heureArrivee = substr($covoiturageDetail['date_heure_arrivee'], 11, 5);
 
         // Pour convertir les heures en Objets DateTime et en suit
-        $heure1 = new DateTime($heureDepart);
-        $heure2 = new DateTime($heureArrivee);
-        // Pour calculer la durée cu covoiturage, utilise la fonction diff de l'objet DateTime
-        $dureeCovoiturage = $heure1->diff($heure2);
+        $depart = new DateTime($covoiturageDetail['date_heure_depart']);
+        $arrivee = new DateTime($covoiturageDetail['date_heure_arrivee']);
+
+        // Pour calculer la durée du covoiturage, on utilise la fonction diff de l'objet DateTime
+        $dureeCovoiturage = $depart->diff($arrivee);
+        // Variable qui contient le jours de différence entre chaque date
+        $jours = $dureeCovoiturage->days;
+        // Si le jours est égal a 0, mais les deux date sont differentes, alors,
+        // C'est un jour de différence
+        if ($jours == 0 && $depart->format("Y-m-d") != $arrivee->format("Y-m-d")) {
+            $jours = 1;
+        }
 
         // L'id du chauffeur
         $driverId = $driver['id'];
@@ -239,10 +245,10 @@ class CovoiturageController extends Controller
         $driverPreferences = $preferenceUserRepository->searchPreferencesByDriverId($driverId);
 
         // Fonction array_map pour récupérer uniquement les values des libelles dans un nouveau array
-        $preferences = array_map(fn($pref) => $pref['libelle'],$driverPreferences);      
+        $preferences = array_map(fn($pref) => $pref['libelle'], $driverPreferences);
         // Fonction array_map pour récupérer uniquement les values des préférences personnelles dans un nouveau array
-        $preferencesPersonnelles = array_map(fn($pref) => $pref['personnelle'],$driverPreferences);            
-        
+        $preferencesPersonnelles = array_map(fn($pref) => $pref['personnelle'], $driverPreferences);
+
         // Pour récupérer les détailles de la voiture du covoiturage
         $carInfo = $covoiturageRepository->searchCovoiturageWithCarInfoById($covoiturageId);
 
@@ -259,6 +265,7 @@ class CovoiturageController extends Controller
                 "heureDepart" => $heureDepart,
                 "heureArrivee" => $heureArrivee,
                 "dureeCovoiturage" => $dureeCovoiturage,
+                "jours" => $jours,
                 "driver" => $driver,
                 "preferences" => $preferences,
                 "preferencesPersonnelles" => $preferencesPersonnelles,
