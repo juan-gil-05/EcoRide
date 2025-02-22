@@ -7,13 +7,15 @@ use App\Security\Security;
 
 <!-- main -->
 <?php if (Security::isLogged()) { ?>
-  <h3>bienvenue <?php echo ($_SESSION['user']['pseudo']) ?></h3>
+  <h4>bienvenue <?php echo ($_SESSION['user']['pseudo']) ?></h4>
   <?php if (Security::isPassager()) { ?>
-    <h3>Vous êtes passager<br></h3>
+    <h4>Vous êtes passager<br></h4>
   <?php } elseif (Security::isChauffeur()) { ?>
-    <h3>Vous êtes chauffeur<br></h3>
+    <h4>Vous êtes chauffeur<br></h4>
   <?php } ?>
 <?php } ?>
+
+
 
 
 <!-- Section qui contient le slogan et la barre de recherche des covoiturages -->
@@ -27,7 +29,7 @@ use App\Security\Security;
     <!-- Bar de recherche des covoiturages -->
     <div class="search-bar container" id="searchBar">
       <!-- Formulaire pour réaliser la recherche -->
-      <form method="get" >
+      <form method="get">
         <!-- les adresses de départ et d'arrivée -->
         <div class="d-flex">
           <!-- adresses de départ -->
@@ -68,6 +70,18 @@ use App\Security\Security;
             <?php } ?>
           </div>
         </div>
+        <!-- Si la variable covoiturageCloser n'est pas vide, c'est à dire qu'on
+        n'a pas trouvé un covoiturage dans la date indiquée par l'utilisateur,
+        alors, on affiche le message pour proposer au visiteur de modifier sa date 
+        de voyage à la date du premier itinéraire le plus proche. -->
+        <?php if (!empty($covoiturageCloser)) { ?>
+          <div class="alert alert-warning p-2 m-0 border border-dark" id="covoiturageNotFound">
+            <!-- Affichage du message avec la date du covoiturage plus proche -->
+            <p class="small-text mb-0">Désolé, aucun covoiturage n'est disponible à cette date.
+              <br> Cependant, nous avons trouvé une alternative proche : <?= $newDateDepart->format("d-m-Y") ?>. Souhaitez-vous la consulter ?
+            </p>
+          </div>
+        <?php } ?>
         <!-- Boutton de recherche -->
         <div class="d-flex">
           <!-- Le boutton -->
@@ -77,6 +91,7 @@ use App\Security\Security;
       </form>
     </div>
   </div>
+
 </section>
 <!-- Sections des descriptions de l'entreprise -->
 <!-- Première description-->

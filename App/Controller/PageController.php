@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Covoiturage;
 use App\Repository\CovoiturageRepository;
 use App\Security\CovoiturageValidator;
+use DateTime;
 use Exception;
 
 class PageController extends Controller
@@ -52,7 +53,9 @@ class PageController extends Controller
                 'dateDepart' => $this->searchCovoiturage()[0],
                 'adresseDepart' => $this->searchCovoiturage()[1],
                 'adresseArrivee' => $this->searchCovoiturage()[2],
-                'errors' => $this->searchCovoiturage()[3]
+                'errors' => $this->searchCovoiturage()[3],
+                'covoiturageCloser' => $this->searchCovoiturage()[4],
+                'newDateDepart' => $this->searchCovoiturage()[5]
             ]
         );
     }
@@ -68,6 +71,8 @@ class PageController extends Controller
         $dateDepart = "";
         $adresseDepart = "";
         $adresseArrivee = "";
+        $covoiturageCloser = null;
+        $newDateDepart = null;
 
         // Si on envoi le formulaire de recherche, ....
         if (isset($_GET['search'])) {
@@ -91,12 +96,55 @@ class PageController extends Controller
                     // afin de pouvoir passer les donées ver une nouvelle page 
                     $_SESSION['covoiturages'] = $covoiturages;
                     header('location: ?controller=covoiturages&action=showAll');
-                } else {
-                    echo 'Rien';
+                } // Si on ne trouve pas des covoiturages, alors
+                else {
+                    // On appel la fonction pour chercher le covoiturage le plus proche à la date donnée par l'user
+                    $this->searchCloserCovoiturage($dateDepart, $covoiturageRepository, $adresseDepart, $adresseArrivee);
+                    // On enregistre les données dans la session
+                    $covoiturageCloser = $_SESSION['covoiturageCloser'];
+                    // On instance un objet DateTime, pour la nouvelle date à proposer à l'utilisateur
+                    $newDateDepart = new DateTime($covoiturageCloser['date_heure_depart']);
                 }
             }
         }
+        return [$dateDepart, $adresseDepart, $adresseArrivee, $errors, $covoiturageCloser, $newDateDepart];
+    }
 
-        return [$dateDepart, $adresseDepart, $adresseArrivee, $errors];
+    // Fonction pour chercher le covoiturage le plus proche à la date donnée par l'user
+    protected function searchCloserCovoiturage(string $dateDepart, CovoiturageRepository $covoiturageRepository, string $adresseDepart, string $adresseArrivee)
+    {
+        // On instance un objet DateTime pour la date donnée par l'utilisateur
+        $dateSerched = new DateTime($dateDepart);
+        // Pour récupérer le timestamp de cette date 
+        $dateSerchedTimestamp = $dateSerched->getTimestamp();
+
+        // Fonction pour chercher tous les covoiturages selon les adresse de départ et d'arrivée
+        $allCovoiturages = $covoiturageRepository->searchAllCovoituragerByAdresse($adresseDepart, $adresseArrivee);
+
+        // Variable qui va contenir le covoiturage plus proche trouvé
+        $covoiturageCloser = null;
+        // Variable qui contient le int maximum possible
+        $maxDifference = PHP_INT_MAX;
+
+        // On parcourt le tableau avec les covoiturages trouvés
+        foreach ($allCovoiturages as $covoiturage) {
+            // On instance un objet DateTime pour les dates de tous les covoiturages trouvés
+            $dateFound = new DateTime($covoiturage['date_heure_depart']);
+            // Pour récupérer le timestamp de chaque date 
+            $dateDepartTimestamp = $dateFound->getTimestamp();
+
+            // On récupere la difference en timestamp de chaque date avec la date donées par l'user
+            $difference = abs($dateDepartTimestamp - $dateSerchedTimestamp);
+
+            // Si la difference est mineur à la difference précédente, alors, on change la valeur de la même
+            // et on change la valeur de le covoiturage plus proche par rapport à la date 
+            if ($difference < $maxDifference) {
+                $maxDifference = $difference;
+                $covoiturageCloser = $covoiturage;
+            }
+        }
+        // pour enregistrer les covoiturages trouvés dans une session, 
+        // afin de pouvoir passer les donées ver une nouvelle page 
+        return $_SESSION['covoiturageCloser'] = $covoiturageCloser;
     }
 }

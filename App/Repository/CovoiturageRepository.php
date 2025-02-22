@@ -117,4 +117,18 @@ class CovoiturageRepository extends Repository
         $query->execute();
         return $query->fetch($this->pdo::FETCH_ASSOC);
     }
+
+    // Fonction pour chercher tous les covoiturages selon les adresse de départ et d'arrivée
+    public function searchAllCovoituragerByAdresse(string $adresseDepart, string $adresseArrivee): array
+    {
+        $sql = ("SELECT * FROM Covoiturage
+                WHERE adresse_depart = :adresseDepart && adresse_arrivee = :adresseArrivee;");
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":adresseDepart", $adresseDepart, $this->pdo::PARAM_STR);
+        $query->bindValue(":adresseArrivee", $adresseArrivee, $this->pdo::PARAM_STR);
+        $query->execute();
+
+        return $query->fetchAll($this->pdo::FETCH_ASSOC);
+    }
+
 }
