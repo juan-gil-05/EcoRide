@@ -131,4 +131,24 @@ class CovoiturageRepository extends Repository
         return $query->fetchAll($this->pdo::FETCH_ASSOC);
     }
 
+    // Fonction pour checher que des covoiturages écologiques
+    public function searchEcoCovoiturageByDateAndAdresse(string $dateDepart, string $adresseDepart, string $adresseArrivee): array
+    {
+        $sql = ("SELECT Covoiturage.* FROM Covoiturage
+                INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
+                INNER JOIN Energie ON Voiture.energie_id = Energie.id
+                WHERE date_heure_depart LIKE :dateDepart AND 
+                adresse_depart LIKE :adresseDepart AND
+                adresse_arrivee LIKE :adresseArrivee AND
+                Energie.id = 1
+                ");
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":dateDepart", "%$dateDepart%", $this->pdo::PARAM_STR);
+        $query->bindValue(":adresseDepart", "%$adresseDepart%", $this->pdo::PARAM_STR);
+        $query->bindValue(":adresseArrivee", "%$adresseArrivee%", $this->pdo::PARAM_STR);
+        $query->execute();
+
+        return $query->fetchAll($this->pdo::FETCH_ASSOC);
+    }
+
 }

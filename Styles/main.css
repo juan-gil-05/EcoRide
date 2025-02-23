@@ -12366,10 +12366,9 @@ html {
 .covoiturages .filter .filter-body form div i {
   color: #4e4e4e;
 }
-.covoiturages .filter .filter-body form div .bi-circle,
-.covoiturages .filter .filter-body form div .bi-circle-fill {
-  margin-left: 15px;
-  color: #0063ac;
+.covoiturages .filter .filter-body form div .form-check-input {
+  width: 20px;
+  border-radius: 50%;
   cursor: pointer;
 }
 .covoiturages .filter .filter-body form div label {
@@ -12645,10 +12644,9 @@ html {
   .modal-content .modal-body .filter-body div i {
     color: #4e4e4e;
   }
-  .modal-content .modal-body .filter-body div .bi-circle,
-  .modal-content .modal-body .filter-body div .bi-circle-fill {
-    margin-left: 15px;
-    color: #0063ac;
+  .modal-content .modal-body .filter-body div .form-check-input {
+    width: 20px;
+    border-radius: 50%;
     cursor: pointer;
   }
   .modal-content .modal-body .filter-body div label {
@@ -12659,6 +12657,7 @@ html {
     border: solid 1px #0063ac;
     max-width: 30%;
     height: 20px;
+    margin-top: 0;
   }
   .modal-content .modal-body .filter-body .note-filter {
     display: flex;

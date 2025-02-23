@@ -122,6 +122,7 @@ class CovoiturageController extends Controller
                 // Pour récupérer l'id de chaque covoiturage
                 $covoiturageId = $covoiturage['id'];
 
+
                 // Fonction du repository pour récupérer les covoiturages avec ses énergies utilisées, (Électrique, Diesel, .....)
                 $energies = $covoiturageRepository->searchCovoiturageWithEnergieId($covoiturageId);
                 // foreach pour parcourir les résultats 
@@ -138,7 +139,22 @@ class CovoiturageController extends Controller
                     $driversByCovoiturageId[$covoiturage['id']] = $driverInfo;
                 }
             }
+
+            // Si le filtre des covoiturages ecologiques est choisi
+            if (isset($_POST['ecologique'])) {
+                // Pour convertir la date en objet DateTime
+                $dateDepart = new DateTime($covoiturage['date_heure_depart']);
+                // Fonction pour chercher uniquements les covoiturages écologiques par les adresses de départ, arrivées et la date
+                $covoituragesEcologiques = $covoiturageRepository->searchEcoCovoiturageByDateAndAdresse($dateDepart->format("Y-m-d"), $adresseDepart, $adresseArrivee);
+                // Le nouveaux valeurs de la varible $covoiturage seront les covoiturages trouvés
+                $covoiturages = $covoituragesEcologiques;
+                // On parcourt le tableua pour récuperer chaque covoiturage trouvé
+                foreach ($covoituragesEcologiques as $covoiturageEcologique) {
+                    $covoiturage = $covoiturageEcologique;
+                }
+            }
         }
+
 
         $this->render(
             "Covoiturage/all-covoiturages",

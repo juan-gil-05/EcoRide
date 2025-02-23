@@ -1,6 +1,12 @@
 <?php
 // HEADER
 require_once './Templates/header.php';
+
+// var_dump($_POST);
+// var_dump($covoiturages);
+// var_dump($_SESSION['covoiturages'][0]);
+// var_dump($_SESSION['covoiturages'][0]['id']);
+// var_dump($energieByCovoiturageId[$_SESSION['covoiturages'][0]['id']]['energie_id']);
 ?>
 
 
@@ -18,15 +24,15 @@ require_once './Templates/header.php';
     <!-- Le corp de la section de filtres -->
     <div class="filter-body content-text shadow-section">
       <!-- Formulaire pour les filtres de la section des covoiturages -->
-      <form action="">
+      <form method="post">
         <!-- Filtre du Voyage Écologique -->
         <div>
           <!-- Icon du filtre -->
           <i class="bi bi-tree"></i>
           <!-- Nom du filtre -->
           <label for="">Voyage Écologique</label>
-          <!-- Filtre -->
-          <i class="bi bi-circle"></i>
+          <!-- Le filtre -->
+          <input class="form-check-input" type="checkbox" <?= (!empty($_POST['ecologique'])) ? "checked" : "" ?> name="ecologique" onchange="this.form.submit()" />
         </div>
         <!-- Filtre du Prix maximum -->
         <div>
@@ -68,6 +74,7 @@ require_once './Templates/header.php';
       <a href="?controller=covoiturages&action=mesCovoiturages" class="btn btn-warning shadow-section">Mes covoiturages</a>
     </div>
   </div>
+
   <!-- Section de les résultats de la récherche des covoiturages -->
   <div class="covoiturage-results">
     <!-- Barre de recherche des covoiturages -->
@@ -106,7 +113,7 @@ require_once './Templates/header.php';
           <!-- Body de la modal -->
           <div class="modal-body">
             <!-- Formulaire pour les filtres de la section des covoiturages -->
-            <form action="" class="filter-body content-text">
+            <form method="post" class="filter-body content-text">
               <!-- Filtre du Voyage Écologique -->
               <div>
                 <!-- Icon du filtre -->
@@ -114,7 +121,7 @@ require_once './Templates/header.php';
                 <!-- Nom du filtre -->
                 <label for="">Voyage Écologique</label>
                 <!-- Filtre -->
-                <i class="bi bi-circle"></i>
+                <input class="form-check-input" type="checkbox" <?= (!empty($_POST['ecologique'])) ? "checked" : "" ?> name="ecologique" onchange="this.form.submit()" />
               </div>
               <!-- Filtre du Prix maximum -->
               <div>
@@ -181,8 +188,6 @@ require_once './Templates/header.php';
         <a href="?controller=covoiturages&action=mesCovoiturages" class="btn btn-warning shadow-section">Mes covoiturages</a>
       </div>
     </div>
-
-
 
     <!-- Les cartes avec les résultats de tous les covoiturages -->
     <?php
@@ -257,14 +262,14 @@ require_once './Templates/header.php';
             </div>
             <!-- Bouton pour voir plus en détail le covoiturage -->
             <div class="content-text">
-              <a href="?controller=covoiturages&action=showOne&id=<?=$covoiturage['id']?>"><button class="btn btn-warning">Détail</button></a>
+              <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturage['id'] ?>"><button class="btn btn-warning">Détail</button></a>
             </div>
           </div>
         </div>
       <?php  }
     } else { ?>
       <h3 class="text-center headline-text">
-        <a class="text-white" href="?controller=page&action=accueil">Chercher un covoiturage</a>  
+        <a class="text-white" href="?controller=page&action=accueil">Chercher un covoiturage</a>
       </h3>
     <?php }
     ?>

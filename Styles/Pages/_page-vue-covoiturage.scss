@@ -38,10 +38,9 @@
             color: $dark;
           }
           // Pour le filtre du Voyage Écologique
-          .bi-circle,
-          .bi-circle-fill {
-            margin-left: 15px;
-            color: $secondary;
+          .form-check-input {
+            width: 20px;
+            border-radius: 50%;
             cursor: pointer;
           }
           // Pour eloigner les labels des icons
@@ -399,10 +398,9 @@
             color: $dark;
           }
           // Pour le filtre du Voyage Écologique
-          .bi-circle,
-          .bi-circle-fill {
-            margin-left: 15px;
-            color: $secondary;
+          .form-check-input {
+            width: 20px;
+            border-radius: 50%;
             cursor: pointer;
           }
           // Pour eloigner les labels des icons
@@ -415,6 +413,7 @@
             border: solid 1px $secondary;
             max-width: 30%;
             height: 20px;
+            margin-top: 0;
           }
         }
         // Pour le filtre de la note du chauffeur

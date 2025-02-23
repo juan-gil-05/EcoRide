@@ -1,15 +1,3 @@
-// Event pour remplir le circle du filtre du voyage écologique quand on le clique
-// Ajout de la classe "bi-circle-fill" au clique
-const circleCheck = document.querySelectorAll(".bi-circle");
-circleCheck.forEach((circle) =>
-  circle.addEventListener("click", function () {
-    this.classList.toggle("bi-circle");
-    this.classList.toggle("bi-circle-fill");
-  })
-);
-
-//-------------------------------------------------------------------------------------------------------------------
-
 // On récupere tous les étoiles du filtre de la note du chauffeur
 const allStar = document.querySelectorAll(".star");
 // Event pour rémplir les étoiles au clique
