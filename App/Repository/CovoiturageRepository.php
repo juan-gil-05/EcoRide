@@ -69,23 +69,29 @@ class CovoiturageRepository extends Repository
     }
 
     // Fonction pour checher que des covoiturages écologiques
-    public function searchEcoCovoiturageByDateAndAdresse(string $dateDepart, string $adresseDepart, string $adresseArrivee): array
+    public function filterSearchCovoiturage(string $dateDepart, string $adresseDepart, string $adresseArrivee, 
+                                            ?int $energiId = null, ?int $maxPrice = null): array
     {
         $sql = ("SELECT Covoiturage.* FROM Covoiturage
                 INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
                 INNER JOIN Energie ON Voiture.energie_id = Energie.id
                 WHERE date_heure_depart LIKE :dateDepart AND 
                 adresse_depart LIKE :adresseDepart AND
-                adresse_arrivee LIKE :adresseArrivee AND
-                Energie.id = 1
+                adresse_arrivee LIKE :adresseArrivee
                 ");
+
+        (!empty($energiId)) ? $sql .= " AND  Energie.id = :energiId" : null;
+        (!empty($maxPrice)) ? $sql .= " AND  prix <= :price" : null;
+
         $query = $this->pdo->prepare($sql);
         $query->bindValue(":dateDepart", "%$dateDepart%", $this->pdo::PARAM_STR);
         $query->bindValue(":adresseDepart", "%$adresseDepart%", $this->pdo::PARAM_STR);
         $query->bindValue(":adresseArrivee", "%$adresseArrivee%", $this->pdo::PARAM_STR);
+        
+        (!empty($energiId)) ? $query->bindValue(":energiId", $energiId, $this->pdo::PARAM_INT) : null;
+        (!empty($maxPrice)) ? $query->bindValue(":price", $maxPrice, $this->pdo::PARAM_INT) : null;
         $query->execute();
 
         return $query->fetchAll($this->pdo::FETCH_ASSOC);
     }
-
 }

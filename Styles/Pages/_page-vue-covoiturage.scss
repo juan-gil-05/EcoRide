@@ -54,6 +54,14 @@
             max-width: 30%;
             height: 20px;
           }
+          // Style pour le bouton de filtrer
+          .filter-btn-input {
+            margin-left: 0;
+            border: solid 1px #0063ac;
+            max-width: 100%;
+            height: auto;
+            color: $light;
+          }
         }
         // Pour le filtre de la note du chauffeur
         .note-filter {

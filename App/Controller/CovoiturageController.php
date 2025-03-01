@@ -66,13 +66,12 @@ class CovoiturageController extends Controller
 
         // Variables que l'on va utiliser dans la vue
         $covoiturage = "";
-        $dayName = "";
-        $dayNumber = "";
-        $monthName = "";
         $adresseDepart = "";
         $adresseArrivee = "";
         $driversByCovoiturageId = [];
         $energieByCovoiturageId = [];
+        $ecologique = null;
+        $maxPrice = null;
 
 
         // Si on a des covoiturages dans la session
@@ -104,17 +103,31 @@ class CovoiturageController extends Controller
                 }
             }
 
-            // Si le filtre des covoiturages ecologiques est choisi
-            if (isset($_POST['ecologique'])) {
+            // Si l'utilisateur applique des filtres à la recherche 
+            if (isset($_POST['filter'])) {
                 // Pour convertir la date en objet DateTime
                 $dateDepart = new DateTime($covoiturage['date_heure_depart']);
-                // Fonction pour chercher uniquements les covoiturages écologiques par les adresses de départ, arrivées et la date
-                $covoituragesEcologiques = $covoiturageRepository->searchEcoCovoiturageByDateAndAdresse($dateDepart->format("Y-m-d"), $adresseDepart, $adresseArrivee);
-                // Le nouveaux valeurs de la varible $covoiturage seront les covoiturages trouvés
-                $covoiturages = $covoituragesEcologiques;
-                // On parcourt le tableua pour récuperer chaque covoiturage trouvé
-                foreach ($covoituragesEcologiques as $covoiturageEcologique) {
-                    $covoiturage = $covoiturageEcologique;
+                // Pour formater la date
+                $dateDepartFormated = $dateDepart->format("Y-m-d");
+                // Le prix maximal donné
+                $maxPrice = ($_POST['maxPrice']) ? $_POST['maxPrice'] : null;
+                // Si c'est écologique ou pas. 1 puisque les covoiturages écologiques utilisent des voitures avec l'énergie id 1 = éléctrique
+                $ecologique = (isset($_POST['ecologique'])) ? 1 : null;
+
+                // On appel la fonction du repository et on le passe les params du filtre
+                $covoituragesMaxPrice = $covoiturageRepository->filterSearchCovoiturage(
+                    $dateDepartFormated,
+                    $adresseDepart,
+                    $adresseArrivee,
+                    $ecologique,
+                    $maxPrice
+                );
+ 
+                // Le nouveaux valeurs de la varible $covoiturage seront les covoiturages trouvés après appliqué les filtres
+                $covoiturages = $covoituragesMaxPrice;
+                // On parcourt le tableau pour récuperer chaque covoiturage trouvé
+                foreach ($covoituragesMaxPrice as $covoiturageMaxPrice) {
+                    $covoiturage = $covoiturageMaxPrice;
                 }
             }
         }
@@ -131,7 +144,8 @@ class CovoiturageController extends Controller
                 "adresseDepart" => $dateTimeCovoiturage[3],
                 "adresseArrivee" => $dateTimeCovoiturage[4],
                 "driversByCovoiturageId" => $driversByCovoiturageId,
-                "energieByCovoiturageId" => $energieByCovoiturageId
+                "energieByCovoiturageId" => $energieByCovoiturageId,
+                "maxPrice" => $maxPrice
             ]
         );
     }

@@ -32,16 +32,16 @@ require_once './Templates/header.php';
           <!-- Nom du filtre -->
           <label for="">Voyage Écologique</label>
           <!-- Le filtre -->
-          <input class="form-check-input" type="checkbox" <?= (!empty($_POST['ecologique'])) ? "checked" : "" ?> name="ecologique" onchange="this.form.submit()" />
+          <input class="form-check-input" type="checkbox" name="ecologique" <?= (!empty($_POST['ecologique'])) ? "checked" : "" ?> />
         </div>
         <!-- Filtre du Prix maximum -->
         <div>
           <!-- Icon du filtre -->
-          <i class="bi bi-cash"></i>
+          <i class="bi bi-c-circle"></i>
           <!-- Nom du filtre -->
-          <label for="">Prix maximum</label>
+          <label for="price">Prix maximum</label>
           <!-- Filtre -->
-          <input type="number" />
+          <input type="number" name="maxPrice" id="price" value="<?= $maxPrice ?>"/>
         </div>
         <!-- Filtre de la Durée maximum -->
         <div>
@@ -53,7 +53,7 @@ require_once './Templates/header.php';
           <input type="time" class="small-text" />
         </div>
         <!-- Filtre de la Note minimal -->
-        <div class="note-filter">
+        <div class="note-filter mb-1">
           <!-- Icon du filtre -->
           <i class="bi bi-star"></i>
           <!-- Nom du filtre -->
@@ -66,6 +66,10 @@ require_once './Templates/header.php';
             <i class="bi bi-star-fill star"></i>
             <i class="bi bi-star-fill star"></i>
           </div>
+        </div>
+        <!-- Bouton pour filtrer -->
+        <div class="w-100 d-flex justify-content-center small-text">
+          <input class="btn btn-secondary filter-btn-input" type="submit" value="Appliquer" name="filter"> 
         </div>
       </form>
     </div>
@@ -121,16 +125,16 @@ require_once './Templates/header.php';
                 <!-- Nom du filtre -->
                 <label for="">Voyage Écologique</label>
                 <!-- Filtre -->
-                <input class="form-check-input" type="checkbox" <?= (!empty($_POST['ecologique'])) ? "checked" : "" ?> name="ecologique" onchange="this.form.submit()" />
+                <input class="form-check-input" type="checkbox" <?= (!empty($_POST['ecologique'])) ? "checked" : "" ?> name="ecologique"/>
               </div>
               <!-- Filtre du Prix maximum -->
               <div>
                 <!-- Icon du filtre -->
-                <i class="bi bi-cash"></i>
+                <i class="bi bi-c-circle"></i>
                 <!-- Nom du filtre -->
-                <label for="">Prix maximum</label>
+                <label for="price">Prix maximum</label>
                 <!-- Filtre -->
-                <input type="number" />
+                <input type="number" name="maxPrice" id="price" value="<?= $maxPrice ?>"/>
               </div>
               <!-- Filtre de la Durée maximum -->
               <div>
@@ -156,23 +160,23 @@ require_once './Templates/header.php';
                   <i class="bi bi-star-fill star"></i>
                 </div>
               </div>
+              <!-- Footer de la modal -->
+              <div class="modal-footer mb-0">
+                <!-- Bouton pour annuler l'ajout des filtres -->
+                <button
+                  type="button"
+                  class="btn btn-danger content-text text-white"
+                  data-bs-dismiss="modal">
+                  Annuler
+                </button>
+                <!-- Bouton pour appliquer des filtres -->
+                <button
+                  type="submit"
+                  class="btn btn-secondary content-text text-white" name="filter">
+                  Appliquer
+                </button>
+              </div>
             </form>
-          </div>
-          <!-- Footer de la modal -->
-          <div class="modal-footer">
-            <!-- Bouton pour annuler l'ajout des filtres -->
-            <button
-              type="button"
-              class="btn btn-danger content-text text-white"
-              data-bs-dismiss="modal">
-              Annuler
-            </button>
-            <!-- Bouton pour appliquer des filtres -->
-            <button
-              type="button"
-              class="btn btn-primary content-text text-white">
-              Appliquer
-            </button>
           </div>
         </div>
       </div>
