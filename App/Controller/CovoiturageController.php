@@ -79,52 +79,16 @@ class CovoiturageController extends Controller
         if (!empty($covoiturages)) {
             // On parcourt le tableau pour trouver chaque covoiturage
             foreach ($covoiturages as $covoiturage) {
-                // On récupére l'adresse et l'heure de départ du covoiturage et
-                // On crée un objet DateTime
-                $dateTimeDepart = new DateTime($covoiturage['date_heure_depart']);
-                // Tableau avec les noms des jours de la semaine en francais
-                $weekDayFrench =
-                    [
-                        'Monday' => 'Lundi',
-                        'Tuesday' => 'Mardi',
-                        'Wednesday' => 'Mercredi',
-                        'Thursday' => 'Jeudi',
-                        'Friday' => 'Vendredi',
-                        'Saturday' => 'Samedi',
-                        'Sunday' => 'Dimanche',
-                    ];
-                // Tableau avec les noms des mois de l'année en francais
-                $monthNameFrench =
-                    [
-                        'January' => 'Janvier',
-                        'February' => 'Février',
-                        'March' => 'Mars',
-                        'April' => 'Avril',
-                        'May' => 'Mai',
-                        'June' => 'Juin',
-                        'July' => 'Juillet',
-                        'August' => 'Août',
-                        'September' => 'Septembre',
-                        'October' => 'Octobre',
-                        'November' => 'Novembre',
-                        'December' => 'Décembre',
-                    ];
-                // Pour récupérer le nom du jour en francais
-                $dayName = $weekDayFrench[$dateTimeDepart->format('l')];
-                // Pour récupérer le nombre du jour 
-                $dayNumber = $dateTimeDepart->format('d');
-                // Pour récupérer le nom du mois en francais
-                $monthName = $monthNameFrench[$dateTimeDepart->format('F')];
-                // Pour récupérer l'adresse du départ
-                $adresseDepart = $covoiturage['adresse_depart'];
-                // Pour récupérer l'adresse d'arrivée'
-                $adresseArrivee = $covoiturage['adresse_arrivee'];
+
+                // on appel la fonction qui formate les dates des covoiturages
+                $dateTimeCovoiturage = $this->dateTimeCovoiturage($covoiturage);
+
                 // Pour récupérer l'id de chaque covoiturage
                 $covoiturageId = $covoiturage['id'];
 
 
                 // Fonction du repository pour récupérer les covoiturages avec ses énergies utilisées, (Électrique, Diesel, .....)
-                $energies = $covoiturageRepository->searchCovoiturageWithEnergieId($covoiturageId);
+                $energies = $covoiturageRepository->searchCovoiturageDetailsbyId($covoiturageId);
                 // foreach pour parcourir les résultats 
                 foreach ($energies as $energie) {
                     // Array qui contient pour l'id de chaque covoiturage les données trouvées 
@@ -132,7 +96,7 @@ class CovoiturageController extends Controller
                 }
 
                 // Fonction du repository pour récupérer les covoiturages avec ses chauffeurs
-                $driversInfo = $covoiturageRepository->searchCovoiturageWithAllDrivers($covoiturageId);
+                $driversInfo = $covoiturageRepository->searchCovoiturageDetailsbyId($covoiturageId);
                 // foreach pour parcourir les résultats 
                 foreach ($driversInfo as $driverInfo) {
                     // Array qui contient pour l'id de chaque covoiturage les données trouvées 
@@ -161,11 +125,11 @@ class CovoiturageController extends Controller
             [
                 "covoiturages" => $covoiturages,
                 "covoiturage" => $covoiturage,
-                "dayName" => $dayName,
-                "dayNumber" => $dayNumber,
-                "monthName" => $monthName,
-                "adresseDepart" => $adresseDepart,
-                "adresseArrivee" => $adresseArrivee,
+                "dayName" => $dateTimeCovoiturage[0],
+                "dayNumber" => $dateTimeCovoiturage[1],
+                "monthName" => $dateTimeCovoiturage[2],
+                "adresseDepart" => $dateTimeCovoiturage[3],
+                "adresseArrivee" => $dateTimeCovoiturage[4],
                 "driversByCovoiturageId" => $driversByCovoiturageId,
                 "energieByCovoiturageId" => $energieByCovoiturageId
             ]
@@ -180,82 +144,30 @@ class CovoiturageController extends Controller
     // Fonction pour afficher les détails du covoiturage
     protected function oneCovoiturage()
     {
-        // On récupére l'id du covoiturage passée dans l'url
-        $covoiturageId = $_GET['id'];
-
         // Appel des repositories
         $covoiturageRepository = new CovoiturageRepository;
         $preferenceUserRepository = new PreferenceUserRepository;
 
+        // On récupére l'id du covoiturage passée dans l'url
+        $covoiturageId = $_GET['id'];
+
         // Pour récupérer les détailles du covoiturage
-        $covoiturageDetail = $covoiturageRepository->searchCovoiturageDetailById($covoiturageId);
+        $covoiturageDetail = $covoiturageRepository->searchCovoiturageDetailsById($covoiturageId);
+        $covoiturageDetail = $covoiturageDetail[0];
+
         // Pour récupérer les détailles du chauffeur
-        $driver = $covoiturageRepository->searchCovoiturageWithDriver($covoiturageId);
+        $driver = $covoiturageRepository->searchCovoiturageDetailsById($covoiturageId);
+        $driver = $driver[0];
 
-        // On récupére l'adresse et l'heure de départ du covoiturage et
-        // On crée un objet DateTime
-        $dateTimeDepart = new DateTime($covoiturageDetail['date_heure_depart']);
-
-        // Tableau avec les noms des jours de la semaine en francais
-        $weekDayFrench =
-            [
-                'Monday' => 'Lundi',
-                'Tuesday' => 'Mardi',
-                'Wednesday' => 'Mercredi',
-                'Thursday' => 'Jeudi',
-                'Friday' => 'Vendredi',
-                'Saturday' => 'Samedi',
-                'Sunday' => 'Dimanche',
-            ];
-        // Tableau avec les noms des mois de l'année en francais
-        $monthNameFrench =
-            [
-                'January' => 'Janvier',
-                'February' => 'Février',
-                'March' => 'Mars',
-                'April' => 'Avril',
-                'May' => 'Mai',
-                'June' => 'Juin',
-                'July' => 'Juillet',
-                'August' => 'Août',
-                'September' => 'Septembre',
-                'October' => 'Octobre',
-                'November' => 'Novembre',
-                'December' => 'Décembre',
-            ];
-        // Pour récupérer le nom du jour en francais
-        $dayName = $weekDayFrench[$dateTimeDepart->format('l')];
-        // Pour récupérer le nombre du jour 
-        $dayNumber = $dateTimeDepart->format('d');
-        // Pour récupérer le nom du mois en francais
-        $monthName = $monthNameFrench[$dateTimeDepart->format('F')];
-        // Pour récupérer l'adresse du départ
-        $adresseDepart = $covoiturageDetail['adresse_depart'];
-        // Pour récupérer l'adresse d'arrivée'
-        $adresseArrivee = $covoiturageDetail['adresse_arrivee'];
-
-        // On utilise la fonction substr pour afficher juste les heures et les minutes
-        // L'heure de départ
-        $heureDepart = substr($covoiturageDetail['date_heure_depart'], 11, 5);
-        // L'heure d'arrivée
-        $heureArrivee = substr($covoiturageDetail['date_heure_arrivee'], 11, 5);
-
-        // Pour convertir les heures en Objets DateTime et en suit
-        $depart = new DateTime($covoiturageDetail['date_heure_depart']);
-        $arrivee = new DateTime($covoiturageDetail['date_heure_arrivee']);
-
-        // Pour calculer la durée du covoiturage, on utilise la fonction diff de l'objet DateTime
-        $dureeCovoiturage = $depart->diff($arrivee);
-        // Variable qui contient le jours de différence entre chaque date
-        $jours = $dureeCovoiturage->days;
-        // Si le jours est égal a 0, mais les deux date sont differentes, alors,
-        // C'est un jour de différence
-        if ($jours == 0 && $depart->format("Y-m-d") != $arrivee->format("Y-m-d")) {
-            $jours = 1;
-        }
+        // Pour récupérer les détailles de la voiture du covoiturage
+        $carInfo = $covoiturageRepository->searchCovoiturageDetailsById($covoiturageId);
+        $carInfo = $carInfo[0];
 
         // L'id du chauffeur
-        $driverId = $driver['id'];
+        $driverId = $covoiturageDetail['user_id'];
+
+        // on appel la fonction qui formate les dates et les heures des covoiturages
+        $dateTimeCovoiturage = $this->dateTimeCovoiturage($covoiturageDetail);
 
         // Pour récupérer les préférences du chauffeur
         $driverPreferences = $preferenceUserRepository->searchPreferencesByDriverId($driverId);
@@ -265,23 +177,19 @@ class CovoiturageController extends Controller
         // Fonction array_map pour récupérer uniquement les values des préférences personnelles dans un nouveau array
         $preferencesPersonnelles = array_map(fn($pref) => $pref['personnelle'], $driverPreferences);
 
-        // Pour récupérer les détailles de la voiture du covoiturage
-        $carInfo = $covoiturageRepository->searchCovoiturageWithCarInfoById($covoiturageId);
-
-
         $this->render(
             "Covoiturage/one-covoiturage",
             [
                 'covoiturageDetail' => $covoiturageDetail,
-                "dayName" => $dayName,
-                "dayNumber" => $dayNumber,
-                "monthName" => $monthName,
-                "adresseDepart" => $adresseDepart,
-                "adresseArrivee" => $adresseArrivee,
-                "heureDepart" => $heureDepart,
-                "heureArrivee" => $heureArrivee,
-                "dureeCovoiturage" => $dureeCovoiturage,
-                "jours" => $jours,
+                "dayName" => $dateTimeCovoiturage[0],
+                "dayNumber" => $dateTimeCovoiturage[1],
+                "monthName" => $dateTimeCovoiturage[2],
+                "adresseDepart" => $dateTimeCovoiturage[3],
+                "adresseArrivee" => $dateTimeCovoiturage[4],
+                "heureDepart" => $dateTimeCovoiturage[5],
+                "heureArrivee" => $dateTimeCovoiturage[6],
+                "dureeCovoiturage" => $dateTimeCovoiturage[7],
+                "jours" => $dateTimeCovoiturage[8],
                 "driver" => $driver,
                 "preferences" => $preferences,
                 "preferencesPersonnelles" => $preferencesPersonnelles,
@@ -362,5 +270,84 @@ class CovoiturageController extends Controller
         } catch (Exception $e) {
             $this->render("Errors/404", ["error" => $e->getMessage()]);
         }
+    }
+
+
+    // Fonction pour formater les dates des covoiturages
+    protected function dateTimeCovoiturage(array $covoiturageDetail)
+    {
+        // On récupére l'adresse et l'heure de départ du covoiturage et
+        // On crée un objet DateTime
+        $dateTimeDepart = new DateTime($covoiturageDetail['date_heure_depart']);
+
+        // Tableau avec les noms des jours de la semaine en francais
+        $weekDayFrench =
+            [
+                'Monday' => 'Lundi',
+                'Tuesday' => 'Mardi',
+                'Wednesday' => 'Mercredi',
+                'Thursday' => 'Jeudi',
+                'Friday' => 'Vendredi',
+                'Saturday' => 'Samedi',
+                'Sunday' => 'Dimanche',
+            ];
+        // Tableau avec les noms des mois de l'année en francais
+        $monthNameFrench =
+            [
+                'January' => 'Janvier',
+                'February' => 'Février',
+                'March' => 'Mars',
+                'April' => 'Avril',
+                'May' => 'Mai',
+                'June' => 'Juin',
+                'July' => 'Juillet',
+                'August' => 'Août',
+                'September' => 'Septembre',
+                'October' => 'Octobre',
+                'November' => 'Novembre',
+                'December' => 'Décembre',
+            ];
+        // Pour récupérer le nom du jour en francais
+        $dayName = $weekDayFrench[$dateTimeDepart->format('l')];
+        // Pour récupérer le nombre du jour 
+        $dayNumber = $dateTimeDepart->format('d');
+        // Pour récupérer le nom du mois en francais
+        $monthName = $monthNameFrench[$dateTimeDepart->format('F')];
+        // Pour récupérer l'adresse du départ
+        $adresseDepart = $covoiturageDetail['adresse_depart'];
+        // Pour récupérer l'adresse d'arrivée'
+        $adresseArrivee = $covoiturageDetail['adresse_arrivee'];
+
+        // On utilise la fonction substr pour afficher juste les heures et les minutes
+        // L'heure de départ
+        $heureDepart = substr($covoiturageDetail['date_heure_depart'], 11, 5);
+        // L'heure d'arrivée
+        $heureArrivee = substr($covoiturageDetail['date_heure_arrivee'], 11, 5);
+
+        // Pour convertir les heures en Objets DateTime et en suit
+        $depart = new DateTime($covoiturageDetail['date_heure_depart']);
+        $arrivee = new DateTime($covoiturageDetail['date_heure_arrivee']);
+
+        // Pour calculer la durée du covoiturage, on utilise la fonction diff de l'objet DateTime
+        $dureeCovoiturage = $depart->diff($arrivee);
+        // Variable qui contient le jours de différence entre chaque date
+        $jours = $dureeCovoiturage->days;
+        // Si le jours est égal a 0, mais les deux date sont differentes, alors,
+        // C'est un jour de différence
+        if ($jours == 0 && $depart->format("Y-m-d") != $arrivee->format("Y-m-d")) {
+            $jours = 1;
+        }
+
+        return [
+            $dayName,
+            $dayNumber,
+            $monthName,
+            $adresseDepart,
+            $adresseArrivee,
+            $heureDepart,
+            $heureArrivee,
+            $dureeCovoiturage,
+            $jours
+        ];
     }
 }

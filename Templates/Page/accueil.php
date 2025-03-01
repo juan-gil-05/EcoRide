@@ -15,9 +15,6 @@ use App\Security\Security;
   <?php } ?>
 <?php } ?>
 
-
-
-
 <!-- Section qui contient le slogan et la barre de recherche des covoiturages -->
 <section>
   <div class="slogan" id="slogan">
@@ -70,16 +67,23 @@ use App\Security\Security;
             <?php } ?>
           </div>
         </div>
-        <!-- Si la variable covoiturageCloser n'est pas vide, c'est à dire qu'on
-        n'a pas trouvé un covoiturage dans la date indiquée par l'utilisateur,
-        alors, on affiche le message pour proposer au visiteur de modifier sa date 
-        de voyage à la date du premier itinéraire le plus proche. -->
+        <!-- Si la variable covoiturageCloser n'est pas vide, c'est à dire qu'on n'a pas trouvé un covoiturage 
+        dans la date indiquée par l'utilisateur, alors, on affiche le message pour proposer au visiteur de modifier 
+        sa date de voyage à la date du premier itinéraire le plus proche. -->
         <?php if (!empty($covoiturageCloser)) { ?>
           <div class="alert alert-warning p-2 m-0 border border-dark" id="covoiturageNotFound">
             <!-- Affichage du message avec la date du covoiturage plus proche -->
             <p class="small-text mb-0">Désolé, aucun covoiturage n'est disponible à cette date.
               <br> Cependant, nous avons trouvé une alternative proche : <?= $newDateDepart->format("d-m-Y") ?>. Souhaitez-vous la consulter ?
             </p>
+          </div>
+          <!-- Si la variable noCovoiturageFoundMsg n'est pas vide, c'est à dire qu'on n'a pas trouvé un covoiturage 
+        avec les données indiquée par l'utilisateur, alors, on affiche le message pour informer qu'il n'existe pas des
+        covoiturages avec ces adresses. -->
+        <?php } elseif (!empty($noCovoiturageFoundMsg)) { ?>
+          <div class="alert alert-danger p-2 m-0 border border-dark" id="covoiturageNotFound">
+            <!-- Affichage du message -->
+            <p class="small-text mb-0"><?= $noCovoiturageFoundMsg ?></p>
           </div>
         <?php } ?>
         <!-- Boutton de recherche -->

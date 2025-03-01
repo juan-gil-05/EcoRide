@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Covoiturage;
 use App\Repository\CovoiturageRepository;
+use App\Repository\Repository;
 use App\Security\CovoiturageValidator;
 use DateTime;
 use Exception;
@@ -55,13 +56,14 @@ class PageController extends Controller
                 'adresseArrivee' => $this->searchCovoiturage()[2],
                 'errors' => $this->searchCovoiturage()[3],
                 'covoiturageCloser' => $this->searchCovoiturage()[4],
-                'newDateDepart' => $this->searchCovoiturage()[5]
+                'newDateDepart' => $this->searchCovoiturage()[5],
+                'noCovoiturageFoundMsg' => $this->searchCovoiturage()[6]
             ]
         );
     }
 
     // Fonction de la barre de recherche
-    public function searchCovoiturage()
+    protected function searchCovoiturage()
     {
         $covoiturage = new Covoiturage;
         $covoiturageRepository = new CovoiturageRepository;
@@ -73,6 +75,7 @@ class PageController extends Controller
         $adresseArrivee = "";
         $covoiturageCloser = null;
         $newDateDepart = null;
+        $noCovoiturageFoundMsg = "";
 
         // Si on envoi le formulaire de recherche, ....
         if (isset($_GET['search'])) {
@@ -83,8 +86,8 @@ class PageController extends Controller
             $dateDepart = (!empty($_GET['date_heure_depart'])) ? $covoiturage->getDateHeureDepart()->format('Y-m-d') : "";
             $adresseDepart = $covoiturage->getAdresseDepart();
             $adresseArrivee = $covoiturage->getAdresseArrivee();
-            // Fonction du repository pour chercher avec les donées passées 
-            $covoiturages = $covoiturageRepository->searchCovoiturageByDateAndAdresse($dateDepart, $adresseDepart, $adresseArrivee);
+            // Fonction pour chercher avec les donées passées 
+            $covoiturages = $covoiturageRepository->searchCovoiturageByDateAndAdresse($adresseDepart, $adresseArrivee, $dateDepart);
             // Pour Vérifier les erreurs dans le formulaire
             $errors =  $covoiturageValidator->searchCovoiturageValidate($dateDepart, $adresseDepart, $adresseArrivee);
             // S'il n'y a pas des erreurs, ....
@@ -96,18 +99,26 @@ class PageController extends Controller
                     // afin de pouvoir passer les donées ver une nouvelle page 
                     $_SESSION['covoiturages'] = $covoiturages;
                     header('location: ?controller=covoiturages&action=showAll');
-                } // Si on ne trouve pas des covoiturages, alors
+                } // Si on ne trouve pas des covoiturages dans la date passée, alors
                 else {
                     // On appel la fonction pour chercher le covoiturage le plus proche à la date donnée par l'user
-                    $this->searchCloserCovoiturage($dateDepart, $covoiturageRepository, $adresseDepart, $adresseArrivee);
-                    // On enregistre les données dans la session
-                    $covoiturageCloser = $_SESSION['covoiturageCloser'];
-                    // On instance un objet DateTime, pour la nouvelle date à proposer à l'utilisateur
-                    $newDateDepart = new DateTime($covoiturageCloser['date_heure_depart']);
+                    $searchCloser = $this->searchCloserCovoiturage($dateDepart, $covoiturageRepository, $adresseDepart, $adresseArrivee);
+                    // si on trouve des covoiturages proche à la date donnée
+                    if(!empty($searchCloser)){
+                        // On enregistre les données dans la session
+                        $covoiturageCloser = $_SESSION['covoiturageCloser'];
+                        // On instance un objet DateTime, pour la nouvelle date à proposer à l'utilisateur
+                        $newDateDepart = new DateTime($covoiturageCloser['date_heure_depart']);
+                    } // Si on ne trouve pas de covoiturages avec les données passées
+                    else {
+                        // On passe le message qui va s'afficher à l'utlisateur
+                        $noCovoiturageFoundMsg = "Désolé, aucun covoiturage n'a été trouvé pour ces adresses.
+                        <br> Essayez de modifier votre recherche ou de choisir un autre point de départ ou d'arrivée.";
+                    }
                 }
             }
         }
-        return [$dateDepart, $adresseDepart, $adresseArrivee, $errors, $covoiturageCloser, $newDateDepart];
+        return [$dateDepart, $adresseDepart, $adresseArrivee, $errors, $covoiturageCloser, $newDateDepart, $noCovoiturageFoundMsg];
     }
 
     // Fonction pour chercher le covoiturage le plus proche à la date donnée par l'user
@@ -119,7 +130,8 @@ class PageController extends Controller
         $dateSerchedTimestamp = $dateSerched->getTimestamp();
 
         // Fonction pour chercher tous les covoiturages selon les adresse de départ et d'arrivée
-        $allCovoiturages = $covoiturageRepository->searchAllCovoituragerByAdresse($adresseDepart, $adresseArrivee);
+        // $allCovoiturages = $covoiturageRepository->searchAllCovoituragesByAdresse($adresseDepart, $adresseArrivee);
+        $allCovoiturages = $covoiturageRepository->searchCovoiturageByDateAndAdresse($adresseDepart, $adresseArrivee);
 
         // Variable qui va contenir le covoiturage plus proche trouvé
         $covoiturageCloser = null;
@@ -147,4 +159,5 @@ class PageController extends Controller
         // afin de pouvoir passer les donées ver une nouvelle page 
         return $_SESSION['covoiturageCloser'] = $covoiturageCloser;
     }
+
 }
