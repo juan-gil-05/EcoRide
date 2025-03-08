@@ -70,7 +70,7 @@ class CovoiturageRepository extends Repository
 
     // Fonction pour checher que des covoiturages écologiques
     public function filterSearchCovoiturage(string $dateDepart, string $adresseDepart, string $adresseArrivee, 
-                                            ?int $energiId = null, ?int $maxPrice = null): array
+                                            ?int $energiId = null, ?int $maxPrice = null, ?int $maxDuration = null): array
     {
         $sql = ("SELECT Covoiturage.* FROM Covoiturage
                 INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
@@ -80,16 +80,19 @@ class CovoiturageRepository extends Repository
                 adresse_arrivee LIKE :adresseArrivee
                 ");
 
+        // Si on passe des paramètres des filtres, on les ajout au query sql
         (!empty($energiId)) ? $sql .= " AND  Energie.id = :energiId" : null;
         (!empty($maxPrice)) ? $sql .= " AND  prix <= :price" : null;
+        (!empty($maxDuration)) ? $sql .= " AND  TIMESTAMPDIFF(HOUR, date_heure_depart, date_heure_arrivee) <= :maxDuration" : null;
 
         $query = $this->pdo->prepare($sql);
         $query->bindValue(":dateDepart", "%$dateDepart%", $this->pdo::PARAM_STR);
         $query->bindValue(":adresseDepart", "%$adresseDepart%", $this->pdo::PARAM_STR);
         $query->bindValue(":adresseArrivee", "%$adresseArrivee%", $this->pdo::PARAM_STR);
-        
+        // Si on passe des paramètres des filtres, on fait les bindValue
         (!empty($energiId)) ? $query->bindValue(":energiId", $energiId, $this->pdo::PARAM_INT) : null;
         (!empty($maxPrice)) ? $query->bindValue(":price", $maxPrice, $this->pdo::PARAM_INT) : null;
+        (!empty($maxDuration)) ? $query->bindValue(":maxDuration", $maxDuration, $this->pdo::PARAM_INT) : null;
         $query->execute();
 
         return $query->fetchAll($this->pdo::FETCH_ASSOC);

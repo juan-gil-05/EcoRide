@@ -72,6 +72,7 @@ class CovoiturageController extends Controller
         $energieByCovoiturageId = [];
         $ecologique = null;
         $maxPrice = null;
+        $maxDuration = null;
 
 
         // Si on a des covoiturages dans la session
@@ -114,13 +115,18 @@ class CovoiturageController extends Controller
                 // Si c'est écologique ou pas. 1 puisque les covoiturages écologiques utilisent des voitures avec l'énergie id 1 = éléctrique
                 $ecologique = (isset($_POST['ecologique'])) ? 1 : null;
 
+
+                $maxDuration = (!empty($_POST['maxDuration'])) ? $_POST['maxDuration'] : null;
+
+
                 // On appel la fonction du repository et on le passe les params du filtre
                 $covoituragesMaxPrice = $covoiturageRepository->filterSearchCovoiturage(
                     $dateDepartFormated,
                     $adresseDepart,
                     $adresseArrivee,
                     $ecologique,
-                    $maxPrice
+                    $maxPrice,
+                    $maxDuration
                 );
  
                 // Le nouveaux valeurs de la varible $covoiturage seront les covoiturages trouvés après appliqué les filtres
@@ -145,7 +151,8 @@ class CovoiturageController extends Controller
                 "adresseArrivee" => $dateTimeCovoiturage[4],
                 "driversByCovoiturageId" => $driversByCovoiturageId,
                 "energieByCovoiturageId" => $energieByCovoiturageId,
-                "maxPrice" => $maxPrice
+                "maxPrice" => $maxPrice,
+                "maxDuration" => $maxDuration
             ]
         );
     }
@@ -346,6 +353,7 @@ class CovoiturageController extends Controller
         $dureeCovoiturage = $depart->diff($arrivee);
         // Variable qui contient le jours de différence entre chaque date
         $jours = $dureeCovoiturage->days;
+
         // Si le jours est égal a 0, mais les deux date sont differentes, alors,
         // C'est un jour de différence
         if ($jours == 0 && $depart->format("Y-m-d") != $arrivee->format("Y-m-d")) {

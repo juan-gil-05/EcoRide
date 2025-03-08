@@ -1,12 +1,6 @@
 <?php
 // HEADER
 require_once './Templates/header.php';
-
-// var_dump($_POST);
-// var_dump($covoiturages);
-// var_dump($_SESSION['covoiturages'][0]);
-// var_dump($_SESSION['covoiturages'][0]['id']);
-// var_dump($energieByCovoiturageId[$_SESSION['covoiturages'][0]['id']]['energie_id']);
 ?>
 
 
@@ -41,16 +35,16 @@ require_once './Templates/header.php';
           <!-- Nom du filtre -->
           <label for="price">Prix maximum</label>
           <!-- Filtre -->
-          <input type="number" name="maxPrice" id="price" value="<?= $maxPrice ?>"/>
+          <input type="number" name="maxPrice" id="price" value="<?= $maxPrice ?>" />
         </div>
         <!-- Filtre de la Durée maximum -->
         <div>
           <!-- Icon du filtre -->
           <i class="bi bi-clock"></i>
           <!-- Nom du filtre -->
-          <label for="">Durée maximum</label>
+          <label for="Duration">Durée maximale</label>
           <!-- Filtre -->
-          <input type="time" class="small-text" />
+          <input type="number" class="small-text" name="maxDuration" id="Duration" value="<?= $maxDuration ?>" />
         </div>
         <!-- Filtre de la Note minimal -->
         <div class="note-filter mb-1">
@@ -69,7 +63,7 @@ require_once './Templates/header.php';
         </div>
         <!-- Bouton pour filtrer -->
         <div class="w-100 d-flex justify-content-center small-text">
-          <input class="btn btn-secondary filter-btn-input" type="submit" value="Appliquer" name="filter"> 
+          <input class="btn btn-secondary filter-btn-input" type="submit" value="Appliquer" name="filter">
         </div>
       </form>
     </div>
@@ -125,7 +119,7 @@ require_once './Templates/header.php';
                 <!-- Nom du filtre -->
                 <label for="">Voyage Écologique</label>
                 <!-- Filtre -->
-                <input class="form-check-input" type="checkbox" <?= (!empty($_POST['ecologique'])) ? "checked" : "" ?> name="ecologique"/>
+                <input class="form-check-input" type="checkbox" <?= (!empty($_POST['ecologique'])) ? "checked" : "" ?> name="ecologique" />
               </div>
               <!-- Filtre du Prix maximum -->
               <div>
@@ -134,7 +128,7 @@ require_once './Templates/header.php';
                 <!-- Nom du filtre -->
                 <label for="price">Prix maximum</label>
                 <!-- Filtre -->
-                <input type="number" name="maxPrice" id="price" value="<?= $maxPrice ?>"/>
+                <input type="number" name="maxPrice" id="price" value="<?= $maxPrice ?>" />
               </div>
               <!-- Filtre de la Durée maximum -->
               <div>
@@ -273,7 +267,7 @@ require_once './Templates/header.php';
       <?php  }
     } else { ?>
       <h3 class="text-center headline-text">
-        <a class="text-white" href="?controller=page&action=accueil">Chercher un covoiturage</a>
+        <a class="text-white" href="?controller=page&action=accueil">Pas de covoiturages</a>
       </h3>
     <?php }
     ?>
