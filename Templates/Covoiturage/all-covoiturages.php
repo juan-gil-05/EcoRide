@@ -260,7 +260,7 @@ require_once './Templates/header.php';
             </div>
             <!-- Bouton pour voir plus en détail le covoiturage -->
             <div class="content-text">
-              <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturage['id'] ?>"><button class="btn btn-warning">Détail</button></a>
+              <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>"><button class="btn btn-warning">Détail</button></a>
             </div>
           </div>
         </div>

@@ -18,23 +18,23 @@ class CovoiturageController extends Controller
         try {
             if (isset($_GET['action'])) {
                 switch ($_GET['action']) {
-                        // Action pour afficher tous les covoiturages
+                    // Action pour afficher tous les covoiturages
                     case 'showAll':
                         $this->allCovoiturages();
                         break;
-                        // Action pour afficher un covoiturage spécifique
+                    // Action pour afficher un covoiturage spécifique
                     case 'showOne':
                         $this->oneCovoiturage();
                         break;
-                        // Action pour afficher tous les covoiturage de l'utilisateur
+                    // Action pour afficher tous les covoiturage de l'utilisateur
                     case 'mesCovoiturages':
                         $this->mesCovoiturages();
                         break;
-                        // Action pour afficher le formulaire de création d'un covoiturage
+                    // Action pour afficher le formulaire de création d'un covoiturage
                     case 'createCovoiturage':
                         $this->createCovoiturage();
                         break;
-                        // Si l'action passee dans l'url n'existe pas
+                    // Si l'action passee dans l'url n'existe pas
                     default:
                         throw new Exception("Cette action n'existe pas: " . $_GET['action']);
                         break;
@@ -85,7 +85,8 @@ class CovoiturageController extends Controller
 
                 // Pour récupérer l'id de chaque covoiturage
                 $covoiturageId = $covoiturage['id'];
-
+                // Pour crypter l'id du covoiturage avant de l'envoyer dans l'url pour afficher les détails de chaque covoiturage 
+                $covoiturageEncryptId[$covoiturage['id']] =  $this->encryptUrlParameter($covoiturage['id']);
 
                 // Fonction du repository pour récupérer les covoiturages avec ses énergies utilisées, (Électrique, Diesel, .....)
                 $energies = $covoiturageRepository->searchCovoiturageDetailsbyId($covoiturageId);
@@ -114,10 +115,8 @@ class CovoiturageController extends Controller
                 $maxPrice = ($_POST['maxPrice']) ? $_POST['maxPrice'] : null;
                 // Si c'est écologique ou pas. 1 puisque les covoiturages écologiques utilisent des voitures avec l'énergie id 1 = éléctrique
                 $ecologique = (isset($_POST['ecologique'])) ? 1 : null;
-
-
+                // Pour la durée maximum du voyage
                 $maxDuration = (!empty($_POST['maxDuration'])) ? $_POST['maxDuration'] : null;
-
 
                 // On appel la fonction du repository et on le passe les params du filtre
                 $covoituragesMaxPrice = $covoiturageRepository->filterSearchCovoiturage(
@@ -128,7 +127,7 @@ class CovoiturageController extends Controller
                     $maxPrice,
                     $maxDuration
                 );
- 
+
                 // Le nouveaux valeurs de la varible $covoiturage seront les covoiturages trouvés après appliqué les filtres
                 $covoiturages = $covoituragesMaxPrice;
                 // On parcourt le tableau pour récuperer chaque covoiturage trouvé
@@ -137,7 +136,6 @@ class CovoiturageController extends Controller
                 }
             }
         }
-
 
         $this->render(
             "Covoiturage/all-covoiturages",
@@ -152,7 +150,8 @@ class CovoiturageController extends Controller
                 "driversByCovoiturageId" => $driversByCovoiturageId,
                 "energieByCovoiturageId" => $energieByCovoiturageId,
                 "maxPrice" => $maxPrice,
-                "maxDuration" => $maxDuration
+                "maxDuration" => $maxDuration,
+                "covoiturageEncryptId" => $covoiturageEncryptId
             ]
         );
     }
@@ -169,8 +168,8 @@ class CovoiturageController extends Controller
         $covoiturageRepository = new CovoiturageRepository;
         $preferenceUserRepository = new PreferenceUserRepository;
 
-        // On récupére l'id du covoiturage passée dans l'url
-        $covoiturageId = $_GET['id'];
+        // On récupére l'id du covoiturage passée dans l'url et on le décrypte 
+        $covoiturageId = $this->decryptUrlParameter($_GET['id']);
 
         // Pour récupérer les détailles du covoiturage
         $covoiturageDetail = $covoiturageRepository->searchCovoiturageDetailsById($covoiturageId);
@@ -371,5 +370,38 @@ class CovoiturageController extends Controller
             $dureeCovoiturage,
             $jours
         ];
+    }
+
+    // Fonction pour crypter un paramètre passé dans l'url avec l'algorithme ASE (Advanced Encryption Standard)
+    protected function encryptUrlParameter($id)
+    {
+        // Clé pour crypter et décrypter 
+        $key = "JkgDDiB3KTxGiDBPBYGObdzFPzyiVJ8g";
+        // Parce qu'on utilise le CBC (Cipher Block Chaining) qui a besoin d'un 'Initialization Vector'
+        $IV = random_bytes(16); // 16 bytes car on utilise 128 bites
+        // On crypte avec la fonction openssl
+        $encrypted = openssl_encrypt($id, "AES-128-CBC", $key, 0, $IV); 
+        // Variable qui joint le 'Initialization Vector' avec le paramètre crypté et fait un encode 
+        $base64Encoded = base64_encode($IV . $encrypted);
+        // finallement, on change les symbole '+' et '/' pour éviter des erreurs au moment de décripter le IV
+        return strtr($base64Encoded, '+/', '-_');
+    }
+
+    // Fonction pour décryper un paramètre passé dans l'url avec l'algorithme ASE (Advanced Encryption Standard)
+    protected function decryptUrlParameter($encryptedParam)
+    {
+        // Clé pour crypter et décrypter 
+        $key = "JkgDDiB3KTxGiDBPBYGObdzFPzyiVJ8g";
+        // on change les symbole '-' et '_' pour éviter les erreurs
+        $base64Decoded = strtr($encryptedParam, '-_', '+/');
+        // fonction pour decoder le param
+        $decodedParam = base64_decode($base64Decoded);
+        // Pour séparer le IV du param, (les 16 premières chiffres)
+        $IV = substr($decodedParam, 0, 16);
+        // Pour récuperer le param, (les chiffres après la 16ème chiffre)
+        $encrypted = substr($decodedParam, 16);
+        // On décripte avec la fonction openssl
+        $decrypted = openssl_decrypt($encrypted, "AES-128-CBC", $key, 0, $IV);
+        return $decrypted;
     }
 }
