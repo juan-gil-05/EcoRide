@@ -74,6 +74,7 @@ class AuthController extends Controller
                             "pseudo" => $user->getPseudo(),
                             "mail" => $user->getMail(),
                             "password" => $user->getPassword(),
+                            "credits" => $user->getNbCredits(),
                             "role" => $user->getRoleId(),
                         ];
                         // Si l'utilisateur a le role du Chauffeur ou Passager-chaffeur,

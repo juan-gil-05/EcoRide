@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\CovoiturageRepository;
 use App\Repository\UserRepository;
 use App\Security\UserValidator;
 use Exception;
@@ -15,11 +16,14 @@ class UserController extends Controller
         try {
             if (isset($_GET['action'])) {
                 switch ($_GET['action']) {
-                        // Action pour créer un compte utilisateur
+                    // Action pour créer un compte utilisateur
                     case 'singUp':
                         $this->singUp();
                         break;
-                        // Si l'action passée dans l'url n'existe pas
+                    // Si l'action passée dans l'url n'existe pas
+                    case 'profil':
+                        $this->profil();
+                        break;
                     default:
                         throw new Exception("Cette action n'existe pas: " . $_GET['action']);
                         break;
@@ -115,5 +119,35 @@ class UserController extends Controller
         } else {
             return false;
         }
+    }
+
+    /*
+    Exemple d'appel depuis l'url
+        ?controller=user&action=profil
+    */
+    // Fonction pour afficher le profil de l'utilisateur
+    protected function profil()
+    {
+        $userRepository = new UserRepository;
+        // Pour récuperer le mail de l'utilisateur qui est connecté
+        $userMail = $_SESSION['user']['mail'];
+        // Fonction pour trouver l'information de l'utilisateur par son mail
+        $user =  $userRepository->findOneByMail($userMail);
+
+        // Variables de l'user
+        $userPseudo = $user->getPseudo();
+        $userMail = $user->getMail();
+        $userCredits = $user->getNbCredits();
+        $photoUniqueId = $user->getPhotoUniqId();
+
+        $this->render(
+            "User/profil",
+            [
+                "pseudo" => $userPseudo,
+                "mail" => $userMail,
+                "credits" => $userCredits,
+                "photoUniqueId" => $photoUniqueId
+            ]
+        );
     }
 }

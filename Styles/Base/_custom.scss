@@ -66,6 +66,10 @@ a{
   color: $dark !important;
   text-decoration: none !important;
 }
+// Pour suprimmer le style par defaut des listes
+ul{
+  list-style: none;
+}
 
 //-------------------------------------------------------------------------------
 // Import du Bootstrap pour sass

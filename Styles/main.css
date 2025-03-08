@@ -56,6 +56,10 @@ a {
   text-decoration: none !important;
 }
 
+ul {
+  list-style: none;
+}
+
 /*!
  * Bootstrap  v5.3.3 (https://getbootstrap.com/)
  * Copyright 2011-2024 The Bootstrap Authors
@@ -13131,4 +13135,53 @@ html {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+.profil-section {
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  gap: 30px;
+  margin-top: 3rem;
+}
+.profil-section .user-image {
+  width: 10vw;
+}
+
+.driver-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  border-radius: 0 0 15px 15px;
+  padding-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+  .profil-section {
+    padding: 30px;
+    gap: 15px;
+    margin-top: 2rem;
+    flex-direction: column;
+  }
+  .profil-section .user-image {
+    width: 25vw;
+  }
+  .driver-info {
+    padding-bottom: 21px;
+    width: 90%;
+  }
+  .driver-info div {
+    margin-top: 20px !important;
+  }
+  .driver-info a {
+    height: 35px;
+    font-size: 0.8rem !important;
+  }
+  .btn-deconnexion {
+    height: 35px;
+    font-size: 0.8rem !important;
+  }
 }/*# sourceMappingURL=main.css.map */

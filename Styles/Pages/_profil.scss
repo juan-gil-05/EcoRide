@@ -1,0 +1,56 @@
+// Section avec l'info de l'utilisateur
+.profil-section {
+  background-color: $light;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  gap: 30px;
+  margin-top: 3rem;
+  // Photo
+  .user-image {
+    width: 10vw;
+  }
+}
+// Info du chauffeur
+.driver-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $light;
+  border-radius: 0 0 15px 15px;
+  padding-bottom: 30px;
+}
+
+// Pour les responsive
+@media (max-width: "768px") {
+  // Section avec l'info de l'utilisateur
+  .profil-section {
+    padding: 30px;
+    gap: 15px;
+    margin-top: 2rem;
+    flex-direction: column;
+    // Photo
+    .user-image {
+      width: 25vw;
+    }
+  }
+  // Info du chauffeur
+  .driver-info {
+    padding-bottom: 21px;
+    width: 90%;
+    div {
+      margin-top: 20px !important;
+    }
+    // Les boutons pour voir les préférences et les voitures 
+    a {
+      height: 35px;
+      font-size: 0.8rem !important;
+    }
+  }
+  // Bouton pour se déconnecter
+  .btn-deconnexion {
+    height: 35px;
+    font-size: 0.8rem !important;
+  }
+}

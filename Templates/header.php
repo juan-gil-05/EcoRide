@@ -62,9 +62,9 @@ use App\Security\Security;
                         <!-- On verifie si l'utilisateur est connecté ou pas pour afficher le message indicat -->
                         <li class="nav-item">
                             <?php if (Security::islogged()) { ?>
-                                <a class="nav-link" href="?controller=auth&action=logOut">Deconnexion</a>
+                                <a class="nav-link" href="?controller=user&action=profil">Mon profil<i class="ms-2 bi bi-person-circle"></i></a>
                             <?php } else { ?>
-                                <a class="nav-link" href="?controller=auth&action=logIn">Connexion</a>
+                                <a class="nav-link" href="?controller=auth&action=logIn">Se connecter</a>
                             <?php } ?>
                         </li>
                     </ul>
