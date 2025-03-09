@@ -65,9 +65,14 @@ require_once './Templates/header.php';
                                     <span class="fw-semibold">Immatriculation = </span><?= $car['immatriculation'] ?>
                                 </li>
                             <?php } ?>
+                            <!-- Bouton pour ajouter une nouvelle voiture -->
                             <li class="new-car-icon">
-                                <i class="bi bi-plus-circle-fill" type data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Tooltip on left"></i>
-                                <p class="small-text" >Ajouter une voiture</p>
+                                <!-- Icon avec le lien vers la page pour ajouter une voiture -->
+                                <a href="?controller=voiture&action=carInscription">
+                                    <i class="bi bi-plus-circle-fill"></i>
+                                </a>
+                                <!-- Placeholder -->
+                                <p class="small-text">Ajouter une voiture</p>
                             </li>
                         </ul>
                     </div>

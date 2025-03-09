@@ -13203,7 +13203,7 @@ html {
   cursor: pointer;
   font-size: 2rem;
 }
-.driver-info .accordion .accordion-body ul .new-car-icon i:hover + p {
+.driver-info .accordion .accordion-body ul .new-car-icon a:hover + p {
   visibility: visible;
   opacity: 1;
 }
