@@ -57,7 +57,7 @@ class VoitureRepository extends Repository
     }
 
     // Fonction pour récupérer tous les voitures d'un utilisateur
-    public function findAllCarsByUserId(int $userId): array
+    public function findAllCarsByUserId(int $userId)
     {
         $sql = ("SELECT Voiture.id, Voiture.marque, Voiture.modele, Voiture.immatriculation FROM Voiture WHERE user_id = :user_id");
         $query = $this->pdo->prepare($sql);

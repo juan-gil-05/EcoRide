@@ -13153,10 +13153,33 @@ html {
 .driver-info {
   display: flex;
   justify-content: center;
-  align-items: center;
   background-color: #f5f5f5;
   border-radius: 0 0 15px 15px;
   padding-bottom: 30px;
+  gap: 15px;
+}
+.driver-info .accordion {
+  width: 40%;
+}
+.driver-info .accordion .accordion-button {
+  background-color: #ede42b;
+  color: #4e4e4e;
+}
+.driver-info .accordion .accordion-button:focus {
+  box-shadow: none;
+}
+.driver-info .accordion .accordion-body ul {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-left: 0;
+}
+.driver-info .accordion .accordion-body ul li {
+  background-color: #f5f5f5;
+  color: #4e4e4e;
+  padding: 10px;
+  border-radius: 5px;
+  padding-left: 15px;
 }
 
 @media (max-width: 768px) {
@@ -13167,18 +13190,17 @@ html {
     flex-direction: column;
   }
   .profil-section .user-image {
-    width: 25vw;
+    width: 20vw;
   }
   .driver-info {
-    padding-bottom: 21px;
-    width: 90%;
+    flex-direction: column;
+    padding-bottom: 25px;
   }
-  .driver-info div {
-    margin-top: 20px !important;
+  .driver-info .accordion {
+    width: 100%;
   }
-  .driver-info a {
-    height: 35px;
-    font-size: 0.8rem !important;
+  .driver-info .accordion .accordion-button {
+    padding: 10px;
   }
   .btn-deconnexion {
     height: 35px;

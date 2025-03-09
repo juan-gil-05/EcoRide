@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\CovoiturageRepository;
 use App\Repository\UserRepository;
+use App\Repository\VoitureRepository;
 use App\Security\UserValidator;
+use App\Security\VoitureValidator;
 use Exception;
 
 class UserController extends Controller
@@ -129,6 +131,9 @@ class UserController extends Controller
     protected function profil()
     {
         $userRepository = new UserRepository;
+        $carRepository = new VoitureRepository;
+
+        $userId = $_SESSION['user']['id'];
         // Pour récuperer le mail de l'utilisateur qui est connecté
         $userMail = $_SESSION['user']['mail'];
         // Fonction pour trouver l'information de l'utilisateur par son mail
@@ -140,13 +145,16 @@ class UserController extends Controller
         $userCredits = $user->getNbCredits();
         $photoUniqueId = $user->getPhotoUniqId();
 
+        $allCars = $carRepository->findAllCarsByUserId($userId);
+
         $this->render(
             "User/profil",
             [
                 "pseudo" => $userPseudo,
                 "mail" => $userMail,
                 "credits" => $userCredits,
-                "photoUniqueId" => $photoUniqueId
+                "photoUniqueId" => $photoUniqueId,
+                "allCars" => $allCars
             ]
         );
     }
