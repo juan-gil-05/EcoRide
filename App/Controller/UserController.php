@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\CovoiturageRepository;
+use App\Repository\PreferenceUserRepository;
 use App\Repository\UserRepository;
 use App\Repository\VoitureRepository;
 use App\Security\UserValidator;
@@ -132,6 +133,7 @@ class UserController extends Controller
     {
         $userRepository = new UserRepository;
         $carRepository = new VoitureRepository;
+        $preferenceRepository = new PreferenceUserRepository;
 
         $userId = $_SESSION['user']['id'];
         // Pour récuperer le mail de l'utilisateur qui est connecté
@@ -145,7 +147,16 @@ class UserController extends Controller
         $userCredits = $user->getNbCredits();
         $photoUniqueId = $user->getPhotoUniqId();
 
+        // Fonction pour chercher toutes les voitures par l'id de l'utilisateur
         $allCars = $carRepository->findAllCarsByUserId($userId);
+
+        // Fonction pour chercher touts les préférences par l'id de l'utilisateur
+        $allPreferences = $preferenceRepository->searchPreferencesByDriverId($userId);
+
+        // Fonction array_map pour récupérer uniquement les values des libelles dans un nouveau array
+        $preferences = array_map(fn($pref) => $pref['libelle'], $allPreferences);
+        // Fonction array_map pour récupérer uniquement les values des préférences personnelles dans un nouveau array
+        $preferencesPersonnelles = array_map(fn($pref) => $pref['personnelle'], $allPreferences);
 
         $this->render(
             "User/profil",
@@ -154,7 +165,9 @@ class UserController extends Controller
                 "mail" => $userMail,
                 "credits" => $userCredits,
                 "photoUniqueId" => $photoUniqueId,
-                "allCars" => $allCars
+                "allCars" => $allCars,
+                "preferences" => $preferences,
+                "preferencesPersonnelles" => $preferencesPersonnelles,
             ]
         );
     }

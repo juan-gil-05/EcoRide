@@ -14,7 +14,7 @@
 }
 
 // Info du chauffeur
-.driver-info {
+.driver-info-profil {
   display: flex;
   justify-content: center;
   background-color: $light;
@@ -32,14 +32,14 @@
       }
     }
     .accordion-body {
-      // Liste des voitures
+      // Liste des voitures et préférences
       ul {
         display: flex;
         flex-direction: column;
         gap: 15px;
         padding-left: 0;
         margin-bottom: 0;
-        // La liste avec tous les voitures
+        // La liste avec tous les voitures et tous les préférences
         li {
           background-color: $light;
           color: $dark;
@@ -47,8 +47,8 @@
           border-radius: 5px;
           padding-left: 15px;
         }
-        // L'icon pour ajouter une nouvelle voiture
-        .new-car-icon {
+        // L'icon pour ajouter une nouvelle voiture ou une nouvelle préférence
+        .add-icon {
           display: flex;
           justify-content: flex-start;
           align-items: center;
@@ -64,7 +64,7 @@
             transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out; // Transition pour afficher le text
             opacity: 0; 
           }
-          // L'icon d'ajouter une nouvelle voiture
+          // L'icon d'ajouter
           i {
             color: $secondary;
             cursor: pointer;
@@ -79,6 +79,10 @@
           &:has(i:hover){
             background-color: $light;
           }
+        }
+        // Pour cacher le formualire de création d'une nouvelle préférence
+        .hidden{
+            display: none;
         }
       }
     }
@@ -99,7 +103,7 @@
     }
   }
   // Info du chauffeur
-  .driver-info {
+  .driver-info-profil {
     flex-direction: column;
     padding-bottom: 25px;
     .accordion {

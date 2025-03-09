@@ -27,7 +27,7 @@ require_once './Templates/header.php';
 
 <!-- Section pour les chauffeurs avec les préférences et les voitures -->
 <?php if (Security::isChauffeur()) { ?>
-    <section class="driver-info container content-text pt-2">
+    <section class="driver-info-profil container content-text pt-2">
         <!-- Les préférences -->
         <div class="accordion" id="preferenceAccordion">
             <div class="accordion-item">
@@ -40,7 +40,62 @@ require_once './Templates/header.php';
                 <!-- body -->
                 <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#preferenceAccordion">
                     <div class="accordion-body">
-                        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                        <!-- Liste des préférences -->
+                        <ul>
+                            <!-- Accepte ou pas les fumeurs? -->
+                            <li>
+                                <!-- Si dans l'array existe la préférence fumeur, alors le chauffeur accepte les fumeurs -->
+                                <!-- Si dans l'array existe la préférence non_fumeur, alors le chauffeur n'accepte pas les fumeurs  -->
+                                <?php if (in_array("Fumeur", $preferences)) {
+                                    echo 'J\'accepte les fumeurs';
+                                } elseif (in_array("Non_fumeur", $preferences)) {
+                                    echo 'Je n\'accepte les fumeurs';
+                                } ?>
+                            </li>
+                            <!-- Accepte ou pas les animaux? -->
+                            <li>
+                                <!-- Si dans l'array existe la préférence animal, alors le chauffeur accepte les animaux -->
+                                <!-- Si dans l'array existe la préférence non_animal, alors le chauffeur n'accepte pas les animaux -->
+                                <?php if (in_array("Animal", $preferences)) {
+                                    echo 'J\'accepte les animaux';
+                                } elseif (in_array("Non_animal", $preferences)) {
+                                    echo 'Je n\'accepte pas les animaux';
+                                } ?>
+                            </li>
+                            <!-- Préférences Personnelles -->
+                            <?php foreach ($preferencesPersonnelles as $personnelle) { ?>
+                                <!-- on parcours le tableau pour récupérer chaque préférence, -->
+                                <!-- on fait une liste pour chaque préférence, si n'est pas vide -->
+                                <?php if (!empty($personnelle)) { ?>
+                                    <li>
+                                        <p class="mb-0"><?= ucfirst($personnelle) ?></p>
+                                    </li>
+                                <?php } ?>
+                            <?php } ?>
+                            <!-- Bouton pour ajouter une nouvelle préférence -->
+                            <li class="add-icon">
+                                <!-- Icon avec le lien vers la page pour ajouter une préférence -->
+                                <a id="newPrefIcon">
+                                    <i class="bi bi-plus-circle-fill"></i>
+                                </a>
+                                <!-- Placeholder -->
+                                <p class="small-text">Ajouter une préférence</p>
+                            </li>
+                            <!-- Formulaire pour enregistrer une nouvelle préférence -->
+                            <!-- à la base il est caché -->
+                            <li id="personalPreference" class="hidden d-flex justify-content-center">
+                                <!-- L'action c'est le controller PreferenceUser -->
+                                <form action="?controller=preferences&action=preferencesInscription" method="post" class="d-flex flex-column gap-2">
+                                    <!-- L'input text -->
+                                    <textarea name="preference_personnelle" class="form-control" required></textarea>
+                                    <!-- Input invisible pour envoyer un param fictif à la base de données
+                                     à fin de pouvoir réaliser la requête sql -->
+                                    <input type="text" name="preference_id" value="1" hidden>
+                                    <!-- bouton pour envoyer le fomulaire -->
+                                    <button type="submit" class="btn btn-secondary" name="newPersonalPreference">Ajouter</button>
+                                </form>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -66,7 +121,7 @@ require_once './Templates/header.php';
                                 </li>
                             <?php } ?>
                             <!-- Bouton pour ajouter une nouvelle voiture -->
-                            <li class="new-car-icon">
+                            <li class="add-icon">
                                 <!-- Icon avec le lien vers la page pour ajouter une voiture -->
                                 <a href="?controller=voiture&action=carInscription">
                                     <i class="bi bi-plus-circle-fill"></i>
@@ -81,7 +136,6 @@ require_once './Templates/header.php';
         </div>
     </section>
 <?php } ?>
-
 
 <!-- Boutton pour se deconnecter -->
 <div class="d-flex justify-content-center mt-5">

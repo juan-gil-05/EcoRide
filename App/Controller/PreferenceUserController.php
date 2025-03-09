@@ -15,11 +15,11 @@ class PreferenceUserController extends Controller
         try {
             if (isset($_GET['action'])) {
                 switch ($_GET['action']) {
-                        // Action pour créer les préférences du chauffeur
+                    // Action pour créer les préférences du chauffeur
                     case 'preferencesInscription':
                         $this->preferencesInscription();
                         break;
-                        // Si l'action passée dans l'url n'existe pas
+                    // Si l'action passée dans l'url n'existe pas
                     default:
                         throw new Exception("Cette action n'existe pas: " . $_GET['action']);
                         break;
@@ -41,10 +41,9 @@ class PreferenceUserController extends Controller
     Exemple d'appel depuis l'url
         ?controller=preferences&action=preferencesInscription
     */
-
+    // Fonction pour enregistrer une nouvelle préférence
     public function preferencesInscription()
     {
-
         // Tableau d'erreurs
         $errors = [];
         $errors2 = [];
@@ -61,7 +60,7 @@ class PreferenceUserController extends Controller
                 $preference->hydrate($_POST);
                 // Pour la validation des erreurs
                 $errors = $preferenceValidator->newPreferenceValidator($preference);
-                // S'il n'y a pas des erreurs, on crée la préférence dans la basse des données
+                // S'il n'y a pas des erreurs, on crée la préférence dans la base des données
                 if (empty($errors)) {
                     $preferenceRepository->createPreference($preference, $user_id);
                 }
@@ -71,13 +70,25 @@ class PreferenceUserController extends Controller
                 $preference2->hydrate($_POST);
                 // Pour la validation des erreurs
                 $errors2 = $preferenceValidator->newPreferenceValidator($preference2);
-                // S'il n'y a pas des erreurs, on crée la préférence dans la basse des données
+                // S'il n'y a pas des erreurs, on crée la préférence dans la base des données
                 if (empty($errors2)) {
                     $preferenceRepository->createPreference($preference2, $user_id);
                     // On envoi vers la page d'accueil
                     header('Location: ?controller=page&action=accueil');
                 }
             }
+
+            // Pour enregistrer une nouvelle préférence personnelle
+            $personalPreference = new PreferenceUser;
+            if (isset($_POST['newPersonalPreference'])) {
+                // On hydrate l'objet avec les données passées
+                $personalPreference->hydrate($_POST);
+                // Pour la créer dans la base de données 
+                $preferenceRepository->createPreference($personalPreference, $user_id);
+                // On envoi vers la page d'accueil
+                header('Location: ?controller=page&action=accueil');
+            }
+            
         } catch (Exception $e) {
             $this->render("Errors/404", [
                 'error' => $e->getMessage()
