@@ -29,7 +29,7 @@ require_once './Templates/header.php';
 <?php if (Security::isChauffeur()) { ?>
     <section class="driver-info container content-text pt-2">
         <!-- Les préférences -->
-        <div class="accordion" id="accordionExample">
+        <div class="accordion" id="preferenceAccordion">
             <div class="accordion-item">
                 <!-- Header -->
                 <h2 class="accordion-header">
@@ -38,7 +38,7 @@ require_once './Templates/header.php';
                     </button>
                 </h2>
                 <!-- body -->
-                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#preferenceAccordion">
                     <div class="accordion-body">
                         <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
                     </div>
@@ -46,7 +46,7 @@ require_once './Templates/header.php';
             </div>
         </div>
         <!-- Les voitures -->
-        <div class="accordion" id="accordionExample2">
+        <div class="accordion" id="carAccordion">
             <div class="accordion-item">
                 <!-- Header -->
                 <h2 class="accordion-header">
@@ -55,16 +55,20 @@ require_once './Templates/header.php';
                     </button>
                 </h2>
                 <!-- Body -->
-                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample2">
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#carAccordion">
                     <div class="accordion-body">
-                        <!-- list avec tous les voitures -->
+                        <!-- liste avec tous les voitures -->
                         <ul>
-                            <?php foreach($allCars as $car){ ?>
+                            <?php foreach ($allCars as $car) { ?>
                                 <li><span class="fw-semibold">Marque = </span><?= $car['marque'] ?><br>
                                     <span class="fw-semibold">Modèle = </span><?= $car['modele'] ?><br>
                                     <span class="fw-semibold">Immatriculation = </span><?= $car['immatriculation'] ?>
                                 </li>
                             <?php } ?>
+                            <li class="new-car-icon">
+                                <i class="bi bi-plus-circle-fill" type data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Tooltip on left"></i>
+                                <p class="small-text" >Ajouter une voiture</p>
+                            </li>
                         </ul>
                     </div>
                 </div>
