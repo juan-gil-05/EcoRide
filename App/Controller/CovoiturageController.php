@@ -7,6 +7,7 @@ use App\Repository\CovoiturageRepository;
 use App\Repository\PreferenceUserRepository;
 use App\Repository\VoitureRepository;
 use App\Security\CovoiturageValidator;
+use App\Security\Security;
 use DateTime;
 use Exception;
 
@@ -73,6 +74,8 @@ class CovoiturageController extends Controller
         $ecologique = null;
         $maxPrice = null;
         $maxDuration = null;
+        $dateTimeCovoiturage = [null, null, null, null, null];
+        $covoiturageEncryptId = null;
 
 
         // Si on a des covoiturages dans la session
@@ -197,6 +200,19 @@ class CovoiturageController extends Controller
         // Fonction array_map pour récupérer uniquement les values des préférences personnelles dans un nouveau array
         $preferencesPersonnelles = array_map(fn($pref) => $pref['personnelle'], $driverPreferences);
 
+        // Varible pour savoir si l'utilisateur est connecté ou pas
+        $isNotLogged = false;
+
+        // Si l'utilisateur veut participer dans un covoiturage
+        if(isset($_POST['participate'])){
+            // si l'user n'est pas connecté, on change la variable pour passer l'info à la vue
+            if(!Security::isLogged()){
+                $isNotLogged = true;
+            }
+
+        }
+
+
         $this->render(
             "Covoiturage/one-covoiturage",
             [
@@ -213,7 +229,8 @@ class CovoiturageController extends Controller
                 "driver" => $driver,
                 "preferences" => $preferences,
                 "preferencesPersonnelles" => $preferencesPersonnelles,
-                "carInfo" => $carInfo
+                "carInfo" => $carInfo,
+                "isNotLogged" => $isNotLogged
             ]
         );
     }

@@ -20,7 +20,7 @@ require_once './Templates/header.php';
         <ul class="mb-0 d-flex flex-column gap-2">
             <li> <span class="fw-medium">Pseudo = </span><?= $pseudo ?></li>
             <li><span class="fw-medium">E-mail = </span><?= $mail ?></li>
-            <li><span class="fw-medium">Vous avez = </span><?= $credits ?> crédits</li>
+            <li><span class="fw-medium">Vos crédits = </span><?= $credits ?></li>
         </ul>
     </div>
 </section>
@@ -138,7 +138,7 @@ require_once './Templates/header.php';
 <?php } ?>
 
 <!-- Boutton pour se deconnecter -->
-<div class="d-flex justify-content-center mt-5">
+<div class="d-flex justify-content-center mt-5 mb-5">
     <a href="?controller=auth&action=logOut" class="btn btn-danger text-light btn-deconnexion">Se deconnecter</a>
 </div>
 

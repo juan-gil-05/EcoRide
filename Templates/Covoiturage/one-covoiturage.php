@@ -39,13 +39,13 @@ require_once './Templates/header.php';
           <!-- Durée du trajet -->
           <div>Durée:
             <span>
-              <?=$dureeCovoiturage->format('%Hh%I')?>
+              <?= $dureeCovoiturage->format('%Hh%I') ?>
             </span>
           </div>
           <?php if ($jours != 0) { ?>
             <div>
               <span class="fw-normal">
-                <?= "+ ".$jours." Jours" ?>
+                <?= "+ " . $jours . " Jours" ?>
               </span>
             </div>
           <?php } ?>
@@ -91,8 +91,24 @@ require_once './Templates/header.php';
     </div>
     <!-- Bouton pour participer au covoiturage -->
     <div class="participation-btn content-text">
-      <button class="btn btn-warning shadow-section">participer</button>
+      <!-- Formulaire pour participer au covoiturage  -->
+      <form action="" method="post" class="w-100 d-flex justify-content-center">
+        <input type="submit" class="btn btn-warning shadow-section" value="participer" name="participate">
+      </form>
     </div>
+    <!-- Si l'utilisateur n'est pas connecté, alors, on affiche un message 
+    et on propose de se connecter ou créer un compte -->
+    <?php if ($isNotLogged) { ?>
+      <div class="alert alert-danger mt-3 content-text" role="alert">
+        <p><strong>Attention :</strong> Vous devez être connecté pour participer à ce trajet.</p>
+        <!-- Liens pour se connecter ou créer un compte  -->
+        <div class="d-flex gap-3 justify-content-center text-white">
+          <a href="?controller=auth&action=logIn">Se connecter</a>
+          <p> | </p>
+          <a href="?controller=user&action=singUp">S'inscrire</a>
+        </div>
+      </div>
+    <?php } ?>
   </div>
   <!-- Information du chauffeur -->
   <div class="driver-info shadow-section">
