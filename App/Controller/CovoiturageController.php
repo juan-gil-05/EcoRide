@@ -200,17 +200,8 @@ class CovoiturageController extends Controller
         // Fonction array_map pour récupérer uniquement les values des préférences personnelles dans un nouveau array
         $preferencesPersonnelles = array_map(fn($pref) => $pref['personnelle'], $driverPreferences);
 
-        // Varible pour savoir si l'utilisateur est connecté ou pas
-        $isNotLogged = false;
-
-        // Si l'utilisateur veut participer dans un covoiturage
-        if(isset($_POST['participate'])){
-            // si l'user n'est pas connecté, on change la variable pour passer l'info à la vue
-            if(!Security::isLogged()){
-                $isNotLogged = true;
-            }
-
-        }
+        // Fonction pour participer au covoiturage
+        $participateToCovoiturage = $this->participateToCovoiturage($covoiturageDetail);
 
 
         $this->render(
@@ -230,7 +221,11 @@ class CovoiturageController extends Controller
                 "preferences" => $preferences,
                 "preferencesPersonnelles" => $preferencesPersonnelles,
                 "carInfo" => $carInfo,
-                "isNotLogged" => $isNotLogged
+                "isNotLogged" => $participateToCovoiturage[0],
+                "noDisponiblePlaces" => $participateToCovoiturage[1],
+                "noEnoughCredits" => $participateToCovoiturage[2],
+                "covoituragePrice" => $participateToCovoiturage[3],
+                "userCredits" => $participateToCovoiturage[4]
             ]
         );
     }
@@ -397,7 +392,7 @@ class CovoiturageController extends Controller
         // Parce qu'on utilise le CBC (Cipher Block Chaining) qui a besoin d'un 'Initialization Vector'
         $IV = random_bytes(16); // 16 bytes car on utilise 128 bites
         // On crypte avec la fonction openssl
-        $encrypted = openssl_encrypt($id, "AES-128-CBC", $key, 0, $IV); 
+        $encrypted = openssl_encrypt($id, "AES-128-CBC", $key, 0, $IV);
         // Variable qui joint le 'Initialization Vector' avec le paramètre crypté et fait un encode 
         $base64Encoded = base64_encode($IV . $encrypted);
         // finallement, on change les symbole '+' et '/' pour éviter des erreurs au moment de décripter le IV
@@ -420,5 +415,47 @@ class CovoiturageController extends Controller
         // On décripte avec la fonction openssl
         $decrypted = openssl_decrypt($encrypted, "AES-128-CBC", $key, 0, $IV);
         return $decrypted;
+    }
+
+    // Fonction pour participer au covoiturage
+    protected function participateToCovoiturage(array $covoiturageDetail): array
+    {
+        // Variable pour savoir si l'utilisateur est connecté ou pas
+        $isNotLogged = false;
+        // Variable pour savoir si le covoiturage a des places disponibles
+        $noDisponiblePlaces = false;
+        // Variable pour savoir si l'utilisateur possède assez des crédits pour participer au covoiturage
+        $noEnoughCredits = false;
+        // Les places disponibles dans le covoiturage
+        $disponiblePlaces = $covoiturageDetail['nb_place_disponible'];
+        // le prix du covoiturage
+        $covoituragePrice = $covoiturageDetail['prix'];
+        // Les crédits de l'utilisateur
+        $userCredits = isset($_SESSION['user']['credits']) ? $_SESSION['user']['credits'] : null;
+
+        // Si l'utilisateur veut participer dans un covoiturage
+        if (isset($_POST['participate'])) {
+            // Si l'user n'est pas connecté, on change la variable pour passer l'info à la vue
+            if (!Security::isLogged()) {
+                $isNotLogged = true;
+            }
+            // S'il n'y a pas des places disponibles, on change la variable pour passer l'info à la vue
+            if ($disponiblePlaces == 0) {
+                $noDisponiblePlaces = true;
+            }
+            // Si l'utilisateur ne possède pas assez des crédits pour participer au covoiturage
+            if ($userCredits < $covoituragePrice) {
+                $noEnoughCredits = true;
+            }
+        }
+
+        return
+            [
+                $isNotLogged,
+                $noDisponiblePlaces,
+                $noEnoughCredits,
+                $covoituragePrice,
+                $userCredits
+            ];
     }
 }

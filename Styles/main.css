@@ -12790,6 +12790,7 @@ html {
   width: 100%;
   display: flex;
   justify-content: center;
+  flex-direction: column;
 }
 .covoiturage-info .trip-info .participation-btn .btn {
   width: 95%;

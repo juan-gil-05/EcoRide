@@ -95,20 +95,31 @@ require_once './Templates/header.php';
       <form action="" method="post" class="w-100 d-flex justify-content-center">
         <input type="submit" class="btn btn-warning shadow-section" value="participer" name="participate">
       </form>
-    </div>
-    <!-- Si l'utilisateur n'est pas connecté, alors, on affiche un message 
-    et on propose de se connecter ou créer un compte -->
-    <?php if ($isNotLogged) { ?>
-      <div class="alert alert-danger mt-3 content-text" role="alert">
-        <p><strong>Attention :</strong> Vous devez être connecté pour participer à ce trajet.</p>
-        <!-- Liens pour se connecter ou créer un compte  -->
-        <div class="d-flex gap-3 justify-content-center text-white">
-          <a href="?controller=auth&action=logIn">Se connecter</a>
-          <p> | </p>
-          <a href="?controller=user&action=singUp">S'inscrire</a>
+      <!-- Si l'utilisateur n'est pas connecté, alors, on affiche un message 
+      et on propose de se connecter ou créer un compte -->
+      <?php if ($isNotLogged) { ?>
+        <div class="alert alert-danger mt-3 content-text" role="alert">
+          <p><strong>Attention :</strong> Vous devez être connecté pour participer à ce trajet.</p>
+          <!-- Liens pour se connecter ou créer un compte  -->
+          <div class="d-flex gap-3 justify-content-center text-white">
+            <a href="?controller=auth&action=logIn">Se connecter</a>
+            <p> | </p>
+            <a href="?controller=user&action=singUp">S'inscrire</a>
+          </div>
         </div>
-      </div>
-    <?php } ?>
+      <!-- Si le covoiturage n'a plus des places disponibles-->
+      <?php } elseif ($noDisponiblePlaces) { ?>
+        <div class="alert alert-danger mt-3 content-text" role="alert">
+          <strong>🚫 Trajet complet !</strong> Il n\'y a plus de places disponibles.
+        </div>
+      <!-- Si l'utilisateur ne possède pas assez des crédits pour participer au covoiturage-->
+      <?php } elseif ($noEnoughCredits) { ?>
+        <div class="alert alert-danger mt-3 content-text" role="alert">
+          <strong>💰 Crédits insuffisants !</strong>
+          Vous avez besoin de <?=$covoituragePrice?> crédits pour participer, mais vous n'avez que <?=$userCredits?> crédits.
+        </div>
+      <?php } ?>
+    </div>
   </div>
   <!-- Information du chauffeur -->
   <div class="driver-info shadow-section">

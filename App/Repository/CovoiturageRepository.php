@@ -52,7 +52,7 @@ class CovoiturageRepository extends Repository
     public function searchCovoiturageDetailsById(int $CovoiturageId): array
     {
         $sql = ("SELECT Covoiturage.*, Covoiturage.id as covoiturage_id,
-                User.pseudo, User.photo_uniqId, User.id as user_id,
+                User.pseudo, User.photo_uniqId, User.nb_credits, User.id as user_id,
                 Voiture.marque, Voiture.modele, 
                 Energie.id as energie_id, Energie.libelle as energie
                 FROM Covoiturage
