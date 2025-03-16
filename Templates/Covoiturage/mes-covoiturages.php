@@ -1,12 +1,12 @@
 <?php
 // HEADER
-
 use App\Security\Security;
 
 require_once './Templates/header.php';
 ?>
 
 <!-- Main -->
+<!-- Section avec le hero, et le bouton pour créer un nouveau covoiturage si l'user est chauffer -->
 <section class="text-center mes-covoiturages">
     <!-- Contient le titre et le bouton -->
     <div class="container">
@@ -23,6 +23,18 @@ require_once './Templates/header.php';
             </div>
         </div>
     </div>
+</section>
+<!-- Pour afficher le message de succès quand l'user participe dans un covoiturage -->
+<section>
+    <?php if (isset($_SESSION['successParticipation'])) { ?>
+        <div class="alert alert-success alert-dismissible fade show content-text" role="alert">
+            Votre participation au covoiturage a été enregistrée avec succès !
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php 
+    // Après d'avoir afficher le message, on supprime la session
+    unset($_SESSION['successParticipation']);
+    } ?>
 </section>
 
 <?php

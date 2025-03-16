@@ -460,9 +460,14 @@ class CovoiturageController extends Controller
             $doubleConfirmation = true;
             // Si l'utilisateur confirme sa participation au covoiturage
             if (isset($_POST['participate'])) {
-                echo "success";
+                // On crée cette session pour pouvoir afficher le message de succès dans la page de mes covoiturages
+                $_SESSION['successParticipation'] = true;
                 // On appele la fonction du repository pour enregistrer les données dans la BDD
-                $covoiturageRepository->participateToCovoiturage($userId, $covoiturageId);
+                // $covoiturageRepository->participateToCovoiturage($userId, $covoiturageId);
+                
+                // on envoi ver la page de mes covoiturages, ou on affiche le message de succès et on affiche tous les covoiturages
+                // dans lequels l'utilisateur participe
+                header('Location: ?controller=covoiturages&action=mesCovoiturages');
             }
         }
 
