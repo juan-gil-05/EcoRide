@@ -12791,6 +12791,7 @@ html {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  align-items: center;
 }
 .covoiturage-info .trip-info .participation-btn .btn {
   width: 95%;
@@ -12799,6 +12800,19 @@ html {
   font-weight: bold;
   padding: 2%;
   border: 1px solid #4e4e4e;
+}
+.covoiturage-info .trip-info .modal .modal-content {
+  border-radius: 10px;
+}
+.covoiturage-info .trip-info .modal .modal-content div,
+.covoiturage-info .trip-info .modal .modal-content .form {
+  border-radius: 10px;
+}
+.covoiturage-info .trip-info .modal .btn-close {
+  position: absolute;
+  right: 2%;
+  z-index: 1;
+  top: 5%;
 }
 .covoiturage-info .driver-info {
   padding: 15px 3%;

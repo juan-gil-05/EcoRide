@@ -89,36 +89,59 @@ require_once './Templates/header.php';
         </div>
       </div>
     </div>
-    <!-- Bouton pour participer au covoiturage -->
+    <!-- Bouton pour participer au covoiturage, le bouton ouvre la modale -->
     <div class="participation-btn content-text">
-      <!-- Formulaire pour participer au covoiturage  -->
-      <form action="" method="post" class="w-100 d-flex justify-content-center">
-        <input type="submit" class="btn btn-warning shadow-section" value="participer" name="participate">
-      </form>
-      <!-- Si l'utilisateur n'est pas connecté, alors, on affiche un message 
-      et on propose de se connecter ou créer un compte -->
-      <?php if ($isNotLogged) { ?>
-        <div class="alert alert-danger mt-3 content-text" role="alert">
-          <p><strong>Attention :</strong> Vous devez être connecté pour participer à ce trajet.</p>
-          <!-- Liens pour se connecter ou créer un compte  -->
-          <div class="d-flex gap-3 justify-content-center text-white">
-            <a href="?controller=auth&action=logIn">Se connecter</a>
-            <p> | </p>
-            <a href="?controller=user&action=singUp">S'inscrire</a>
-          </div>
+      <button class="btn btn-warning shadow-section" id="participationBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Participer
+      </button>
+    </div>
+    <!-- Modal avec les messages d'erreur ou la confirmation pour participer au covoiturage -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <!-- Le contenu de la modal -->
+        <div class="modal-content">
+          <!-- Bouton pour fermer la modal -->
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <!-- Si l'utilisateur n'est pas connecté, alors, on affiche un message 
+            et on propose de se connecter ou créer un compte -->
+          <?php if (!isset($_SESSION['user'])) { ?>
+            <div class="alert alert-danger mb-0 p-5 content-text" role="alert">
+              <p class="mb-4"><strong>Attention :</strong> Vous devez être connecté pour participer à ce trajet.</p>
+              <!-- Liens pour se connecter ou créer un compte  -->
+              <div class="d-flex gap-3 justify-content-center align-items-center text-white">
+                <a href="?controller=auth&action=logIn" class="btn btn-light content-text ">Se connecter</a>
+                <p class="mb-0"> | </p>
+                <a href="?controller=user&action=singUp" class="btn btn-light content-text ">S'inscrire</a>
+              </div>
+            </div>
+            <!-- Si le covoiturage n'a plus des places disponibles-->
+          <?php } elseif ($noDisponiblePlaces) { ?>
+            <div class="alert alert-danger mb-0 p-5 content-text" role="alert">
+              <strong>🚫 Trajet complet !</strong> Il n\'y a plus de places disponibles.
+            </div>
+            <!-- Si l'utilisateur ne possède pas assez des crédits pour participer au covoiturage-->
+          <?php } elseif ($noEnoughCredits) { ?>
+            <div class="alert alert-danger mb-0 p-5 content-text" role="alert">
+              <strong>💰 Crédits insuffisants !</strong>
+              Vous avez besoin de <?= $covoituragePrice ?> crédits pour participer, mais vous n'avez que <?= $userCredits ?> crédits.
+            </div>
+          <?php } elseif ($doubleConfirmation) { ?>
+            <!-- Formulaire pour participer au covoiturage  -->
+            <form method="post" class="w-100 d-flex align-items-center flex-column gap-4 p-5 mb-0 bg-light form" id="participateForm">
+              <!-- Input cache pour passer les donnes dans la requête sql -->
+              <input type="text" name="user_id" hidden value="<?= (isset($_SESSION['user']['id'])) ? $_SESSION['user']['id'] : "" ?>">
+              <!-- Input cache pour passer les donnes dans la requête sql -->
+              <input type="text" name="covoiturage_id" hidden value="<?= $covoiturageDetail['id'] ?>">
+              <label class="content-text text-center fw-medium">Voulez-vous confirmer votre participation et l’utilisation de <?= $covoituragePrice ?> crédits ?</label>
+              <!-- Boutons pour confirmer ou annuler -->
+              <div class="d-flex gap-3 justify-content-center">
+                <button type="button" value="" class="btn btn-danger shadow-section text-light content-text" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
+                <input type="submit" class="btn btn-primary shadow-section text-white content-text" value="Confirmer" name="participate">
+              </div>
+            </form>
+          <?php } ?>
         </div>
-      <!-- Si le covoiturage n'a plus des places disponibles-->
-      <?php } elseif ($noDisponiblePlaces) { ?>
-        <div class="alert alert-danger mt-3 content-text" role="alert">
-          <strong>🚫 Trajet complet !</strong> Il n\'y a plus de places disponibles.
-        </div>
-      <!-- Si l'utilisateur ne possède pas assez des crédits pour participer au covoiturage-->
-      <?php } elseif ($noEnoughCredits) { ?>
-        <div class="alert alert-danger mt-3 content-text" role="alert">
-          <strong>💰 Crédits insuffisants !</strong>
-          Vous avez besoin de <?=$covoituragePrice?> crédits pour participer, mais vous n'avez que <?=$userCredits?> crédits.
-        </div>
-      <?php } ?>
+      </div>
     </div>
   </div>
   <!-- Information du chauffeur -->

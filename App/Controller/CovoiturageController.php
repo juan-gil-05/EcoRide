@@ -201,7 +201,7 @@ class CovoiturageController extends Controller
         $preferencesPersonnelles = array_map(fn($pref) => $pref['personnelle'], $driverPreferences);
 
         // Fonction pour participer au covoiturage
-        $participateToCovoiturage = $this->participateToCovoiturage($covoiturageDetail);
+        $participateToCovoiturage = $this->participateToCovoiturage($covoiturageDetail, $covoiturageRepository);
 
 
         $this->render(
@@ -225,7 +225,8 @@ class CovoiturageController extends Controller
                 "noDisponiblePlaces" => $participateToCovoiturage[1],
                 "noEnoughCredits" => $participateToCovoiturage[2],
                 "covoituragePrice" => $participateToCovoiturage[3],
-                "userCredits" => $participateToCovoiturage[4]
+                "userCredits" => $participateToCovoiturage[4],
+                "doubleConfirmation" => $participateToCovoiturage[5]
             ]
         );
     }
@@ -418,7 +419,7 @@ class CovoiturageController extends Controller
     }
 
     // Fonction pour participer au covoiturage
-    protected function participateToCovoiturage(array $covoiturageDetail): array
+    protected function participateToCovoiturage(array $covoiturageDetail, CovoiturageRepository $covoiturageRepository): array
     {
         // Variable pour savoir si l'utilisateur est connecté ou pas
         $isNotLogged = false;
@@ -426,6 +427,9 @@ class CovoiturageController extends Controller
         $noDisponiblePlaces = false;
         // Variable pour savoir si l'utilisateur possède assez des crédits pour participer au covoiturage
         $noEnoughCredits = false;
+        // Variable pour afficher le modal avec la confirmation de participation au covoiturage
+        $doubleConfirmation = false;
+
         // Les places disponibles dans le covoiturage
         $disponiblePlaces = $covoiturageDetail['nb_place_disponible'];
         // le prix du covoiturage
@@ -433,21 +437,36 @@ class CovoiturageController extends Controller
         // Les crédits de l'utilisateur
         $userCredits = isset($_SESSION['user']['credits']) ? $_SESSION['user']['credits'] : null;
 
-        // Si l'utilisateur veut participer dans un covoiturage
-        if (isset($_POST['participate'])) {
-            // Si l'user n'est pas connecté, on change la variable pour passer l'info à la vue
-            if (!Security::isLogged()) {
-                $isNotLogged = true;
-            }
-            // S'il n'y a pas des places disponibles, on change la variable pour passer l'info à la vue
-            if ($disponiblePlaces == 0) {
-                $noDisponiblePlaces = true;
-            }
-            // Si l'utilisateur ne possède pas assez des crédits pour participer au covoiturage
-            if ($userCredits < $covoituragePrice) {
-                $noEnoughCredits = true;
+        $userId = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
+        $covoiturageId = $covoiturageDetail['id'];
+
+        // Si l'user n'est pas connecté, on change la variable pour passer l'info à la vue
+        if (!Security::isLogged()) {
+            $isNotLogged = true;
+        } // S'il n'y a pas des places disponibles, on change la variable pour passer l'info à la vue
+        elseif ($disponiblePlaces == 0) {
+            $noDisponiblePlaces = true;
+        } // S'il n'y a pas des places disponibles, on change la variable pour passer l'info à la vue  
+        elseif ($disponiblePlaces == 0) {
+            $noDisponiblePlaces = true;
+        } // Si l'utilisateur ne possède pas assez des crédits pour participer au covoiturage  
+        elseif ($userCredits < $covoituragePrice) {
+            $noEnoughCredits = true;
+        }
+
+        // Si ces tous ces params sont faux, l'utilisateur peut participer de ce covoiturage
+        if ($isNotLogged == false && $noDisponiblePlaces == false && $noEnoughCredits == false) {
+            // On affiche la modal avec la confirmation de participation au covoiturage
+            $doubleConfirmation = true;
+            // Si l'utilisateur confirme sa participation au covoiturage
+            if (isset($_POST['participate'])) {
+                echo "success";
+                // On appele la fonction du repository pour enregistrer les données dans la BDD
+                $covoiturageRepository->participateToCovoiturage($userId, $covoiturageId);
             }
         }
+
+
 
         return
             [
@@ -455,7 +474,8 @@ class CovoiturageController extends Controller
                 $noDisponiblePlaces,
                 $noEnoughCredits,
                 $covoituragePrice,
-                $userCredits
+                $userCredits,
+                $doubleConfirmation
             ];
     }
 }

@@ -69,9 +69,14 @@ class CovoiturageRepository extends Repository
     }
 
     // Fonction pour checher que des covoiturages écologiques
-    public function filterSearchCovoiturage(string $dateDepart, string $adresseDepart, string $adresseArrivee, 
-                                            ?int $energiId = null, ?int $maxPrice = null, ?int $maxDuration = null): array
-    {
+    public function filterSearchCovoiturage(
+        string $dateDepart,
+        string $adresseDepart,
+        string $adresseArrivee,
+        ?int $energiId = null,
+        ?int $maxPrice = null,
+        ?int $maxDuration = null
+    ): array {
         $sql = ("SELECT Covoiturage.* FROM Covoiturage
                 INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
                 INNER JOIN Energie ON Voiture.energie_id = Energie.id
@@ -96,5 +101,16 @@ class CovoiturageRepository extends Repository
         $query->execute();
 
         return $query->fetchAll($this->pdo::FETCH_ASSOC);
+    }
+
+    // Fonction pour enregistrer la participation à un covoiturage
+    public function participateToCovoiturage(int $userId, int $covoiturageId)
+    {
+        $sql = "INSERT INTO User_Covoiturages (user_id, covoiturage_id)
+                VALUES (:userId, :covoiturageId)";
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":userId", $userId, $this->pdo::PARAM_INT);
+        $query->bindValue(":covoiturageId", $covoiturageId, $this->pdo::PARAM_INT);
+        return $query->execute();
     }
 }

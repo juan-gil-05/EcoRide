@@ -118,6 +118,7 @@
       display: flex;
       justify-content: center;
       flex-direction: column;
+      align-items: center;
       .btn {
         width: 95%;
         color: $dark;
@@ -125,6 +126,24 @@
         font-weight: bold;
         padding: 2%;
         border: 1px solid $dark;
+      }
+    }
+    // Modal avec les messages d'erreur ou la confirmation pour participer au covoiturage
+    .modal {
+      // Le contenu de la modal
+      .modal-content {
+        border-radius: 10px;
+        div,
+        .form {
+          border-radius: 10px;
+        }
+      }
+      // Bouton pour fermer la modal
+      .btn-close {
+        position: absolute;
+        right: 2%;
+        z-index: 1;
+        top: 5%;
       }
     }
   }
