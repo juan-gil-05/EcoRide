@@ -33,12 +33,12 @@ require_once './Templates/header.php';
             <div class="accordion-item">
                 <!-- Header -->
                 <h2 class="accordion-header">
-                    <button class="accordion-button collapsed content-text fw-semibold text-capitalize" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                    <button class="accordion-button collapsed content-text fw-semibold text-capitalize" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePreferences" aria-expanded="false" aria-controls="collapsePreferences">
                         Mes préférences
                     </button>
                 </h2>
                 <!-- body -->
-                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#preferenceAccordion">
+                <div id="collapsePreferences" class="accordion-collapse collapse" data-bs-parent="#preferenceAccordion">
                     <div class="accordion-body">
                         <!-- Liste des préférences -->
                         <ul>
@@ -105,12 +105,12 @@ require_once './Templates/header.php';
             <div class="accordion-item">
                 <!-- Header -->
                 <h2 class="accordion-header">
-                    <button class="accordion-button collapsed content-text fw-semibold text-capitalize" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <button class="accordion-button collapsed content-text fw-semibold text-capitalize" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCars" aria-expanded="false" aria-controls="collapseCars">
                         Mes voitures
                     </button>
                 </h2>
                 <!-- Body -->
-                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#carAccordion">
+                <div id="collapseCars" class="accordion-collapse collapse" data-bs-parent="#carAccordion">
                     <div class="accordion-body">
                         <!-- liste avec tous les voitures -->
                         <ul>

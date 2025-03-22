@@ -68,6 +68,23 @@ class CovoiturageRepository extends Repository
         return $query->fetchAll($this->pdo::FETCH_ASSOC);
     }
 
+    // Fonction pour checher les détails des covoiturages par l'user ID
+    public function searchCovoiturageDetailsByUserId(int $userId): array
+    {
+        $sql = ("SELECT Covoiturage.id, Covoiturage.date_heure_depart, Covoiturage.date_heure_arrivee, Covoiturage.adresse_depart, Covoiturage.adresse_arrivee,
+                User.pseudo, User.photo_uniqId
+                FROM Covoiturage
+                INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
+                INNER JOIN User ON Voiture.user_id = User.id
+                WHERE User.id = :userId;
+                ");
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":userId", $userId, $this->pdo::PARAM_INT);
+        $query->execute();
+
+        return $query->fetchAll($this->pdo::FETCH_ASSOC);
+    }
+
     // Fonction pour checher que des covoiturages écologiques
     public function filterSearchCovoiturage(
         string $dateDepart,

@@ -35,7 +35,7 @@ require_once './Templates/header.php';
           <!-- Nom du filtre -->
           <label for="price">Prix maximum</label>
           <!-- Filtre -->
-          <input type="number" name="maxPrice" id="price" value="<?= $maxPrice ?>" />
+          <input type="number" class="small-text form-control d-inline" name="maxPrice" id="price" value="<?= $maxPrice ?>" />
         </div>
         <!-- Filtre de la Durée maximum -->
         <div>
@@ -44,7 +44,7 @@ require_once './Templates/header.php';
           <!-- Nom du filtre -->
           <label for="Duration">Durée maximale</label>
           <!-- Filtre -->
-          <input type="number" class="small-text" name="maxDuration" id="Duration" value="<?= $maxDuration ?>" />
+          <input type="number" class="small-text form-control d-inline" name="maxDuration" id="Duration" value="<?= $maxDuration ?>"/>
         </div>
         <!-- Filtre de la Note minimal -->
         <div class="note-filter mb-1">

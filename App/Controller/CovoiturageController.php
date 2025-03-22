@@ -237,7 +237,35 @@ class CovoiturageController extends Controller
     */
     protected function mesCovoiturages()
     {
-        $this->render("Covoiturage/mes-covoiturages");
+        $covoiturageRepository = new CovoiturageRepository;
+
+        $userId = ($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
+        // Pour chercher les covoiturages du chauffeur
+        $covoituragesAsDriver = $covoiturageRepository->searchCovoiturageDetailsByUserId($userId);
+
+        // Pour parcourir les covoiturages du chauffeur
+        foreach ($covoituragesAsDriver as $covoiturage) {
+            // Pour récupérer l'id de chaque covoiturage
+            $covoiturageId = $covoiturage['id'];
+            // Pour crypter l'id du covoiturage avant de l'envoyer dans l'url pour afficher les détails de chaque covoiturage 
+            $covoiturageEncryptId[$covoiturageId] =  $this->encryptUrlParameter($covoiturageId);
+            // on appel la fonction qui formate les dates des covoiturages
+            $dateTimeCovoiturage = $this->dateTimeCovoiturage($covoiturage);
+            $dayName[$covoiturageId] = $dateTimeCovoiturage[0];
+            $dayNumber[$covoiturageId] = $dateTimeCovoiturage[1];
+            $monthName[$covoiturageId] = $dateTimeCovoiturage[2];
+        }
+
+        $this->render(
+            "Covoiturage/mes-covoiturages",
+            [
+                "covoituragesAsDriver" => $covoituragesAsDriver,
+                "covoiturageEncryptId" => $covoiturageEncryptId,
+                "dayName" => $dayName,
+                "dayNumber" => $dayNumber,
+                "monthName" => $monthName,
+            ]
+        );
     }
 
     /*
@@ -464,15 +492,12 @@ class CovoiturageController extends Controller
                 $_SESSION['successParticipation'] = true;
                 // On appele la fonction du repository pour enregistrer les données dans la BDD
                 // $covoiturageRepository->participateToCovoiturage($userId, $covoiturageId);
-                
+
                 // on envoi ver la page de mes covoiturages, ou on affiche le message de succès et on affiche tous les covoiturages
                 // dans lequels l'utilisateur participe
                 header('Location: ?controller=covoiturages&action=mesCovoiturages');
             }
         }
-
-
-
         return
             [
                 $isNotLogged,

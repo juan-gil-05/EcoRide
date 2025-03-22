@@ -1,4 +1,5 @@
-.mes-covoiturages {
+// Le Hero de la page avec un text et le bouton pour créer un nouveau covoiturage
+.mes-covoiturages-hero {
   background-color: black;
   position: relative;
   height: 35vh;
@@ -22,5 +23,49 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+  }
+}
+// Les 'accordion' avec les covoiturages de l'user
+.accordion {
+  .accordion-body {
+    ul {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      padding-left: 0;
+      // La liste avec tous les covoiturages
+      li {
+        background-color: $light;
+        padding: 15px;
+        border-radius: 5px;
+        // Le jour et le mois du covoiturage
+        .covoiturage-day-month {
+          padding: 10px;
+          background-color: $secondary;
+          color: $light;
+          border-radius: 50px;
+        }
+        // L'info du covoiturage
+        .covoiturage-info-list {
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+          text-transform: capitalize;
+          p {
+            margin-bottom: 0;
+          }
+          .covoiturage-date-time {
+            text-align: center;
+          }
+        }
+        // Bouton pour voir les détail des covoiturages
+        .detail-btn-div {
+          .detail-btn {
+            border: 0.3px solid #4e4e4e;
+            color: #4e4e4e;
+          }
+        }
+      }
+    }
   }
 }
