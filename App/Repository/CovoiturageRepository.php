@@ -85,7 +85,7 @@ class CovoiturageRepository extends Repository
         return $query->fetchAll($this->pdo::FETCH_ASSOC);
     }
 
-    // Fonction pour checher que des covoiturages écologiques
+    // Fonction pour checher uniquement les covoiturages écologiques
     public function filterSearchCovoiturage(
         string $dateDepart,
         string $adresseDepart,
@@ -129,5 +129,20 @@ class CovoiturageRepository extends Repository
         $query->bindValue(":userId", $userId, $this->pdo::PARAM_INT);
         $query->bindValue(":covoiturageId", $covoiturageId, $this->pdo::PARAM_INT);
         return $query->execute();
+    }
+
+    // Fonction pour chercher les covoiturages auxquels l'utilisateur participe
+    public function searchCovoiturageParticipateByUserId(int $userId)
+    {
+        $sql = "SELECT Covoiturage.id, Covoiturage.date_heure_depart, Covoiturage.date_heure_arrivee,
+                Covoiturage.adresse_depart, Covoiturage.adresse_arrivee
+                FROM User_Covoiturages 
+                INNER JOIN Covoiturage ON User_Covoiturages.covoiturage_id = Covoiturage.id 
+                WHERE user_id = :userId";
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":userId", $userId, $this->pdo::PARAM_INT);
+        $query->execute();
+
+        return $query->fetchAll($this->pdo::FETCH_ASSOC);
     }
 }

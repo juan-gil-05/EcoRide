@@ -256,10 +256,25 @@ class CovoiturageController extends Controller
             $monthName[$covoiturageId] = $dateTimeCovoiturage[2];
         }
 
+        $covoiturageaAsPassager = $covoiturageRepository->searchCovoiturageParticipateByUserId($userId);
+
+        foreach ($covoiturageaAsPassager as $covoiturage) {
+            // Pour récupérer l'id de chaque covoiturage
+            $covoiturageId = $covoiturage['id'];
+            // Pour crypter l'id du covoiturage avant de l'envoyer dans l'url pour afficher les détails de chaque covoiturage 
+            $covoiturageEncryptId[$covoiturageId] =  $this->encryptUrlParameter($covoiturageId);
+            // on appel la fonction qui formate les dates des covoiturages
+            $dateTimeCovoiturage = $this->dateTimeCovoiturage($covoiturage);
+            $dayName[$covoiturageId] = $dateTimeCovoiturage[0];
+            $dayNumber[$covoiturageId] = $dateTimeCovoiturage[1];
+            $monthName[$covoiturageId] = $dateTimeCovoiturage[2];
+        }
+
         $this->render(
             "Covoiturage/mes-covoiturages",
             [
                 "covoituragesAsDriver" => $covoituragesAsDriver,
+                "covoiturageaAsPassager" => $covoiturageaAsPassager,
                 "covoiturageEncryptId" => $covoiturageEncryptId,
                 "dayName" => $dayName,
                 "dayNumber" => $dayNumber,
@@ -491,10 +506,10 @@ class CovoiturageController extends Controller
                 // On crée cette session pour pouvoir afficher le message de succès dans la page de mes covoiturages
                 $_SESSION['successParticipation'] = true;
                 // On appele la fonction du repository pour enregistrer les données dans la BDD
-                // $covoiturageRepository->participateToCovoiturage($userId, $covoiturageId);
+                $covoiturageRepository->participateToCovoiturage($userId, $covoiturageId);
 
-                // on envoi ver la page de mes covoiturages, ou on affiche le message de succès et on affiche tous les covoiturages
-                // dans lequels l'utilisateur participe
+                /* on envoi ver la page de mes covoiturages, oú on affiche le message de succès et on affiche tous les covoiturages
+                auxquels l'utilisateur participe */
                 header('Location: ?controller=covoiturages&action=mesCovoiturages');
             }
         }

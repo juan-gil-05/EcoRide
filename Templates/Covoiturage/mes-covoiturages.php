@@ -52,7 +52,35 @@ require_once './Templates/header.php';
                 <div class="accordion-body">
                     <!-- Liste avec les covoiturages -->
                     <ul>
+                        <?php foreach ($covoiturageaAsPassager as $covoiturage) { ?>
+                            <li class="content-text">
+                                <!-- Le jour et le mois du covoiturage -->
+                                <div class="fw-medium covoiturage-day-month mb-4">
+                                    <p class="mb-0 text-center"><?= $dayName[$covoiturage['id']] . ", " . $dayNumber[$covoiturage['id']] . " " . $monthName[$covoiturage['id']] ?></p>
+                                </div>
+                                <!-- Les heures et adresses de départ et d'arrivée-->
+                                <div class="covoiturage-info-list">
+                                    <!-- Les heures -->
+                                    <div class="covoiturage-date-time">
+                                        <p class="fw-semibold">Départ</p>
+                                        <p><?= $covoiturage['adresse_depart'] ?></p>
+                                        <p><?= substr($covoiturage['date_heure_depart'], 11, 5) ?></p>
+                                    </div>
+                                    <i class="bi bi-arrow-right"></i>
+                                    <!-- Les adresses -->
+                                    <div class="covoiturage-date-time">
+                                        <p class="fw-semibold">Arrivée</p>
+                                        <p><?= $covoiturage['adresse_arrivee'] ?></p>
+                                        <p><?= substr($covoiturage['date_heure_arrivee'], 11, 5) ?></p>
+                                    </div>
+                                </div>
+                                <!-- Bouton pour voir plus en détail le covoiturage -->
+                                <div class="detail-btn-div content-text mt-4 d-flex justify-content-center">
+                                    <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>" class="btn btn-warning detail-btn">Détail</a>
+                                </div>
+                            </li>
 
+                        <?php } ?>
                     </ul>
                 </div>
             </div>
