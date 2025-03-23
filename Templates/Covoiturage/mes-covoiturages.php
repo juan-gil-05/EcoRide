@@ -77,7 +77,7 @@ require_once './Templates/header.php';
                                     </div>
                                     <!-- Bouton pour voir plus en détail le covoiturage -->
                                     <div class="detail-btn-div content-text mt-4 d-flex justify-content-center">
-                                        <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>" class="btn btn-warning detail-btn">Détail</a>
+                                        <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>" class="btn btn-warning detail-btn secondary-btn">Détail</a>
                                     </div>
                                 </li>
 
@@ -130,7 +130,7 @@ require_once './Templates/header.php';
                                     </div>
                                     <!-- Bouton pour voir plus en détail le covoiturage -->
                                     <div class="detail-btn-div content-text mt-4 d-flex justify-content-center">
-                                        <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>" class="btn btn-warning detail-btn">Détail</a>
+                                        <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>" class="btn btn-warning detail-btn secondary-btn">Détail</a>
                                     </div>
                                 </li>
 

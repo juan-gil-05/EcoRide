@@ -21,6 +21,9 @@ class PageController extends Controller
                     case 'accueil':
                         $this->accueil();
                         break;
+                    case 'contact':
+                        $this->contact();
+                        break;
                         // Si l'action passee dans l'url n'existe pas
                     default:
                         throw new Exception("Cette action n'existe pas: " . $_GET['action']);
@@ -61,7 +64,6 @@ class PageController extends Controller
             ]
         );
     }
-
     // Fonction de la barre de recherche
     protected function searchCovoiturage()
     {
@@ -120,7 +122,6 @@ class PageController extends Controller
         }
         return [$dateDepart, $adresseDepart, $adresseArrivee, $errors, $covoiturageCloser, $newDateDepart, $noCovoiturageFoundMsg];
     }
-
     // Fonction pour chercher le covoiturage le plus proche à la date donnée par l'user
     protected function searchCloserCovoiturage(string $dateDepart, CovoiturageRepository $covoiturageRepository, string $adresseDepart, string $adresseArrivee)
     {
@@ -159,5 +160,16 @@ class PageController extends Controller
         // afin de pouvoir passer les donées ver une nouvelle page 
         return $_SESSION['covoiturageCloser'] = $covoiturageCloser;
     }
+
+    /*
+    Exemple d'appel depuis l'url
+        ?controller=page&action=contact
+    */
+    // Fonction pour afficher la page de contact
+    protected function contact()
+    {
+        $this->render("Page/contact");
+    }
+
 
 }

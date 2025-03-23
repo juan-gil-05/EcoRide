@@ -44,7 +44,7 @@ require_once './Templates/header.php';
           <!-- Nom du filtre -->
           <label for="Duration">Durée maximale</label>
           <!-- Filtre -->
-          <input type="number" class="small-text form-control d-inline" name="maxDuration" id="Duration" value="<?= $maxDuration ?>"/>
+          <input type="number" class="small-text form-control d-inline" name="maxDuration" id="Duration" value="<?= $maxDuration ?>" />
         </div>
         <!-- Filtre de la Note minimal -->
         <div class="note-filter mb-1">
@@ -63,13 +63,13 @@ require_once './Templates/header.php';
         </div>
         <!-- Bouton pour filtrer -->
         <div class="w-100 d-flex justify-content-center small-text">
-          <input class="btn btn-secondary filter-btn-input" type="submit" value="Appliquer" name="filter">
+          <button class="btn btn-secondary text-white secondary-btn" type="submit" name="filter">Appliquer</button>
         </div>
       </form>
     </div>
     <!-- Bouton pour visualiser les covoiturages de l'utilisateur en mode desktop -->
     <div class="mt-5 text-center mes-covoiturages-btn content-text">
-      <a href="?controller=covoiturages&action=mesCovoiturages" class="btn btn-warning shadow-section">Mes covoiturages</a>
+      <a href="?controller=covoiturages&action=mesCovoiturages" class="btn btn-warning primary-btn shadow-section">Mes covoiturages</a>
     </div>
   </div>
 
@@ -260,7 +260,9 @@ require_once './Templates/header.php';
             </div>
             <!-- Bouton pour voir plus en détail le covoiturage -->
             <div class="content-text">
-              <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>"><button class="btn btn-warning">Détail</button></a>
+              <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>" class="btn btn-warning secondary-btn">
+                Détail
+              </a>
             </div>
           </div>
         </div>

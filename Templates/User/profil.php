@@ -139,7 +139,7 @@ require_once './Templates/header.php';
 
 <!-- Boutton pour se deconnecter -->
 <div class="d-flex justify-content-center mt-5 mb-5">
-    <a href="?controller=auth&action=logOut" class="btn btn-danger text-light btn-deconnexion">Se deconnecter</a>
+    <a href="?controller=auth&action=logOut" class="btn btn-danger text-light secondary-btn content-text">Se deconnecter</a>
 </div>
 
 <?php

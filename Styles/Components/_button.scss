@@ -1,0 +1,13 @@
+// Bouton principal
+.primary-btn {
+  color: $dark;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 2%;
+  border: 0.8px solid $dark;
+}
+// Bouton secondaire
+.secondary-btn {
+  color: $dark;
+  border: 0.3px solid $dark;
+}

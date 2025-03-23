@@ -91,7 +91,7 @@ require_once './Templates/header.php';
     </div>
     <!-- Bouton pour participer au covoiturage, le bouton ouvre la modale -->
     <div class="participation-btn content-text">
-      <button class="btn btn-warning shadow-section" id="participationBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+      <button class="btn btn-warning shadow-section primary-btn" id="participationBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         Participer
       </button>
     </div>
@@ -135,8 +135,8 @@ require_once './Templates/header.php';
               <label class="content-text text-center fw-medium">Voulez-vous confirmer votre participation et l’utilisation de <?= $covoituragePrice ?> crédits ?</label>
               <!-- Boutons pour confirmer ou annuler -->
               <div class="d-flex gap-3 justify-content-center">
-                <button type="button" value="" class="btn btn-danger shadow-section text-light content-text" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
-                <input type="submit" class="btn btn-primary shadow-section text-white content-text" value="Confirmer" name="participate">
+                <button type="button" value="" class="btn btn-danger shadow-section text-light content-text secondary-btn" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
+                <input type="submit" class="btn btn-primary shadow-section text-white content-text secondary-btn" value="Confirmer" name="participate">
               </div>
             </form>
           <?php } ?>

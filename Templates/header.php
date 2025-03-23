@@ -57,7 +57,7 @@ use App\Security\Security;
                             <a class="nav-link" href="?controller=covoiturages&action=showAll">Covoiturage</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Contact</a>
+                            <a class="nav-link" href="?controller=page&action=contact">Contact</a>
                         </li>
                         <!-- On verifie si l'utilisateur est connecté ou pas pour afficher le message indicat -->
                         <li class="nav-item">

@@ -12026,6 +12026,19 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.primary-btn {
+  color: #4e4e4e;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 2%;
+  border: 0.8px solid #4e4e4e;
+}
+
+.secondary-btn {
+  color: #4e4e4e;
+  border: 0.3px solid #4e4e4e;
+}
+
 body {
   background-color: #4caf50;
 }
@@ -12384,13 +12397,6 @@ html {
   max-width: 30%;
   height: 20px;
 }
-.covoiturages .filter .filter-body form div .filter-btn-input {
-  margin-left: 0;
-  border: solid 1px #0063ac;
-  max-width: 100%;
-  height: auto;
-  color: #f5f5f5;
-}
 .covoiturages .filter .filter-body form .note-filter {
   display: flex;
 }
@@ -12418,11 +12424,6 @@ html {
 }
 .covoiturages .filter .mes-covoiturages-btn .btn {
   width: 95%;
-  color: #4e4e4e;
-  text-transform: uppercase;
-  font-weight: bold;
-  padding: 2%;
-  border: 1px solid #4e4e4e;
 }
 .covoiturages .covoiturage-results {
   width: 65%;
@@ -12540,8 +12541,6 @@ html {
 }
 .covoiturages .covoiturage-results .travel-card .driver-profile .btn {
   width: 147px;
-  border: 0.3px solid #4e4e4e;
-  color: #4e4e4e;
 }
 .covoiturages .covoiturage-results .travel-card .driver-profile p {
   margin-bottom: 0;
@@ -12795,11 +12794,6 @@ html {
 }
 .covoiturage-info .trip-info .participation-btn .btn {
   width: 95%;
-  color: #4e4e4e;
-  text-transform: uppercase;
-  font-weight: bold;
-  padding: 2%;
-  border: 1px solid #4e4e4e;
 }
 .covoiturage-info .trip-info .modal .modal-content {
   border-radius: 10px;
@@ -13181,10 +13175,6 @@ html {
 .accordion .accordion-body ul li .covoiturage-info-list .covoiturage-date-time {
   text-align: center;
 }
-.accordion .accordion-body ul li .detail-btn-div .detail-btn {
-  border: 0.3px solid #4e4e4e;
-  color: #4e4e4e;
-}
 
 .profil-section {
   background-color: #f5f5f5;
@@ -13286,5 +13276,32 @@ html {
   .btn-deconnexion {
     height: 35px;
     font-size: 0.8rem !important;
+  }
+}
+.contact-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 15px;
+}
+.contact-div .contact-form {
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+}
+.contact-div .contact-form .user-info {
+  display: flex;
+  gap: 15px;
+}
+
+@media (max-width: 768px) {
+  .contact-div .contact-form {
+    gap: 10px;
+  }
+  .contact-div .contact-form .user-info {
+    gap: 10px;
+    flex-direction: column;
   }
 }/*# sourceMappingURL=main.css.map */

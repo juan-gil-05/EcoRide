@@ -1,0 +1,33 @@
+// Div qui contient le formulaire
+.contact-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $light;
+  padding: 20px;
+  border-radius: 15px;
+  // Formulaire pour envoyer le message
+  .contact-form {
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    // Pseudo et email
+    .user-info {
+      display: flex;
+      gap: 15px;
+    }
+  }
+}
+
+// Responsive
+@media(max-width: '768px') {
+  .contact-div {
+    .contact-form {
+      gap: 10px;
+      .user-info {
+        gap: 10px;
+        flex-direction: column;
+      }
+    }
+  }
+}

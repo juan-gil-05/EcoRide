@@ -54,14 +54,7 @@
             max-width: 30%;
             height: 20px;
           }
-          // Style pour le bouton de filtrer
-          .filter-btn-input {
-            margin-left: 0;
-            border: solid 1px #0063ac;
-            max-width: 100%;
-            height: auto;
-            color: $light;
-          }
+
         }
         // Pour le filtre de la note du chauffeur
         .note-filter {
@@ -97,11 +90,6 @@
       justify-content: center;
       .btn {
         width: 95%;
-        color: $dark;
-        text-transform: uppercase;
-        font-weight: bold;
-        padding: 2%;
-        border: 1px solid $dark;
       }
     }
   }
@@ -246,8 +234,6 @@
         // Le bouton pour plus de détail sur le covoiturage
         .btn {
           width: 147px;
-          border: 0.3px solid $dark;
-          color: $dark;
         }
         // Pour suprimmer la margin-bottom dans tous les textes en <p>
         p {

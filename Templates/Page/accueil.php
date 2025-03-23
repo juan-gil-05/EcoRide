@@ -90,7 +90,7 @@ use App\Security\Security;
         <div class="d-flex">
           <!-- Le boutton -->
           <div class="search-btn">
-            <button class="btn btn-primary subtitle-text" type="submit" name="search">Rechercher</button>
+            <button class="btn btn-primary primary-btn" type="submit" name="search">Rechercher</button>
           </div>
       </form>
     </div>
