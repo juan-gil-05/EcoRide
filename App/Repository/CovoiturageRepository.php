@@ -71,7 +71,8 @@ class CovoiturageRepository extends Repository
     // Fonction pour checher les détails des covoiturages par l'user ID
     public function searchCovoiturageDetailsByUserId(int $userId): array
     {
-        $sql = ("SELECT Covoiturage.id, Covoiturage.date_heure_depart, Covoiturage.date_heure_arrivee, Covoiturage.adresse_depart, Covoiturage.adresse_arrivee,
+        $sql = ("SELECT Covoiturage.id, Covoiturage.date_heure_depart, Covoiturage.date_heure_arrivee, 
+                Covoiturage.adresse_depart, Covoiturage.adresse_arrivee, Covoiturage.prix,
                 User.pseudo, User.photo_uniqId
                 FROM Covoiturage
                 INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
@@ -135,7 +136,7 @@ class CovoiturageRepository extends Repository
     public function searchCovoiturageParticipateByUserId(int $userId): array
     {
         $sql = "SELECT Covoiturage.id, Covoiturage.date_heure_depart, Covoiturage.date_heure_arrivee,
-                Covoiturage.adresse_depart, Covoiturage.adresse_arrivee
+                Covoiturage.adresse_depart, Covoiturage.adresse_arrivee, Covoiturage.prix
                 FROM User_Covoiturages 
                 INNER JOIN Covoiturage ON User_Covoiturages.covoiturage_id = Covoiturage.id 
                 WHERE user_id = :userId";
@@ -146,25 +147,54 @@ class CovoiturageRepository extends Repository
         return $query->fetchAll($this->pdo::FETCH_ASSOC);
     }
 
-    // Fonction pour enlever les credits du covoiturage, quand l'user confirme sa participation
-    public function updateUserCredits(int $covoituragePrice, int $userId): bool
+    /* Fonction pour enlever les credits du covoiturage, 
+    quand l'user participe à un covoiturage, ou quand l'user quitte le covoiturage
+    */
+    public function updateUserCredits(int $covoituragePrice, int $userId, bool $addition): bool
     {
+        // Si l'addition est 1 (true), alors on ajoute les credits, sinon on les enleve
         $sql = "UPDATE User 
-                SET nb_credits = if(nb_credits > 0, nb_credits - :covoituragePrice, false)
+                SET nb_credits = 
+                CASE
+                    WHEN :addition = 1 THEN nb_credits + :covoituragePrice
+                    WHEN nb_credits > 0 THEN nb_credits - :covoituragePrice
+                    ELSE false
+                END
                 WHERE id = :userId";
         $query = $this->pdo->prepare($sql);
+        $query->bindValue(":addition", $addition, $this->pdo::PARAM_BOOL);
         $query->bindValue(":covoituragePrice", $covoituragePrice, $this->pdo::PARAM_INT);
         $query->bindValue(":userId", $userId, $this->pdo::PARAM_INT);
         return $query->execute();
     }
 
-    // Fonction pour mettre à jour les nombres de places disponible du covoiturage, quand l'user confirme sa participation
-    public function updatePlacesDisponibles(int $covoiturageId)
+    /* Fonction pour mettre à jour les nombres de places disponible du covoiturage 
+    quand l'user participe à un covoiturage, ou quand l'user quitte le covoiturage
+    */
+    public function updatePlacesDisponibles(int $covoiturageId, bool $addition)
     {
+        // Si l'addition est 1 (true), alors on ajoute une place, sinon on enleve une place
         $sql = "UPDATE Covoiturage
-                SET nb_place_disponible = if(nb_place_disponible > 0, nb_place_disponible - 1, false)
-                WHERE id = :covoiturageId";
+            SET nb_place_disponible = 
+            CASE
+                WHEN :addition = 1 THEN nb_place_disponible + 1
+                WHEN nb_place_disponible > 0 THEN nb_place_disponible - 1
+                ELSE false
+            END
+            WHERE id = :covoiturageId";
         $query = $this->pdo->prepare($sql);
+        $query->bindValue(":addition", $addition, $this->pdo::PARAM_BOOL);
+        $query->bindValue(":covoiturageId", $covoiturageId, $this->pdo::PARAM_INT);
+        return $query->execute();
+    }
+
+    // Fonction pour enlever l'user du covoiturage, quand l'user quitte le covoiturage
+    public function quitCovoiturage(int $userId, int $covoiturageId)
+    {
+        $sql = "DELETE FROM User_Covoiturages
+                WHERE user_id = :userId AND covoiturage_id = :covoiturageId";
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":userId", $userId, $this->pdo::PARAM_INT);
         $query->bindValue(":covoiturageId", $covoiturageId, $this->pdo::PARAM_INT);
         return $query->execute();
     }

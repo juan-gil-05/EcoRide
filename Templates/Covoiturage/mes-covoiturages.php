@@ -25,8 +25,8 @@ require_once './Templates/header.php';
     </div>
 </section>
 
-<!-- Pour afficher le message de succès quand l'user participe dans un covoiturage -->
-<?php if (isset($_SESSION['successParticipation'])) { ?>
+<!-- Pour afficher les message de succès quand l'user participe dans un covoiturage, ou annule sa participation -->
+<?php if (!empty($_SESSION['successParticipation'])) { ?>
     <div class="alert alert-success alert-dismissible fade show content-text container" role="alert">
         Votre participation au covoiturage a été enregistrée avec succès !
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -75,16 +75,26 @@ require_once './Templates/header.php';
                                             <p><?= substr($covoiturage['date_heure_arrivee'], 11, 5) ?></p>
                                         </div>
                                     </div>
-                                    <!-- Bouton pour voir plus en détail le covoiturage -->
-                                    <div class="detail-btn-div content-text mt-4 d-flex justify-content-center">
-                                        <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>" class="btn btn-warning detail-btn secondary-btn">Détail</a>
+                                    <!-- Bouton pour voir plus en détail le covoiturage et pour le quitter -->
+                                    <div class="detail-btn-div content-text mt-4 d-flex justify-content-evenly">
+                                        <!-- Formulaire pour quitter le covoiturage -->
+                                        <form method="post" class="mb-0">
+                                            <!-- input invisible pour envoyer l'id du covoiturage, de l'user dans le formulaire et le prix-->
+                                            <input type="hidden" name="user_id" value="<?= $_SESSION['user']['id'] ?>">
+                                            <input type="hidden" name="covoiturage_id" value="<?= $covoiturage['id'] ?>">
+                                            <input type="hidden" name="covoiturage_price" value="<?= $covoiturage['prix'] ?>">
+                                            <!-- Bouton pour envoyer le formulaire -->
+                                            <button type="submit" name="quitCovoiturage" class="btn btn-danger secondary-btn text-light">Quitter</button>
+                                        </form>
+                                        <!-- Bouton pour voir les détails du covoiturage -->
+                                        <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>" class="btn btn-warning secondary-btn">Détail</a>
                                     </div>
                                 </li>
 
                             <?php } ?>
                         </ul>
                     <?php } else { ?>
-                        <p class="mb-0 fw-medium" >Aucun covoiturage pour le moment</p>
+                        <p class="mb-0 fw-medium">Aucun covoiturage pour le moment</p>
                     <?php } ?>
                 </div>
             </div>

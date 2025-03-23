@@ -281,6 +281,26 @@ class CovoiturageController extends Controller
             $monthName[$covoiturageId] = $dateTimeCovoiturage[2];
         }
 
+        // Si l'utilisateur quitte le covoiturage
+        if(isset($_POST['quitCovoiturage'])){
+            // L'id du covoiturage et de l'utilisateur
+            $covoiturageId = $_POST['covoiturage_id'];
+            $userId = $_POST['user_id'];
+            // Pour récupérer le prix de chaque covoiturage
+            $covoituragePrice = $_POST['covoiturage_price'];
+            // Fonction pour quitter le covoiturage
+            $covoiturageRepository->quitCovoiturage($userId, $covoiturageId);
+
+            // Pour mettre à jour les places disponibles du covoiturage
+            $covoiturageRepository->updatePlacesDisponibles($covoiturageId, true);
+
+            // Pour mettre à jour les crédits de l'utilisateur
+            $covoiturageRepository->updateUserCredits($covoituragePrice, $userId, true);
+
+            // On récharge la page
+            header('Location: ?controller=covoiturages&action=mesCovoiturages');
+        }
+
         $this->render(
             "Covoiturage/mes-covoiturages",
             [
@@ -525,10 +545,10 @@ class CovoiturageController extends Controller
                 $covoiturageRepository->participateToCovoiturage($userId, $covoiturageId);
 
                 // On appele la fonction pour mettre à jour les crédits de l'utilisateur
-                $covoiturageRepository->updateUserCredits($covoituragePrice, $userId);
+                $covoiturageRepository->updateUserCredits($covoituragePrice, $userId, false);
 
                 // On appele la fonction pour mettre à jour les nombres de places disponibles du covoiturage
-                $covoiturageRepository->updatePlacesDisponibles($covoiturageId);
+                $covoiturageRepository->updatePlacesDisponibles($covoiturageId, false);
 
                 /* on envoi ver la page de mes covoiturages, oú on affiche le message de succès et on affiche tous les covoiturages
                 auxquels l'utilisateur participe */
