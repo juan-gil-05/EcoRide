@@ -8,7 +8,6 @@ use App\Security\Security;
 <!-- main -->
 <?php if (Security::isLogged()) { ?>
   <h4>bienvenue <?= $_SESSION['user']['pseudo'] ?></h4>
-  <h4>Voici vos crédits actuels <?= $_SESSION['user']['credits'] ?></h4>
   <?php if (Security::isPassager()) { ?>
     <h4>Vous êtes passager<br></h4>
   <?php } elseif (Security::isChauffeur()) { ?>

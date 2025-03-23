@@ -6,7 +6,7 @@ class User extends Entity
 {
     protected ?int $id = null;
     // A la création du compte, l’utilisateur bénéficie de 20 crédits.
-    protected int $nb_credits = 20;
+    protected int $nb_credits;
     protected string $pseudo = "";
     protected string $mail = "";
     protected string $password = "";

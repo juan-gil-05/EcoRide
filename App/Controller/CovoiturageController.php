@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Covoiturage;
 use App\Repository\CovoiturageRepository;
 use App\Repository\PreferenceUserRepository;
+use App\Repository\UserRepository;
 use App\Repository\VoitureRepository;
 use App\Security\CovoiturageValidator;
 use App\Security\Security;
@@ -170,6 +171,7 @@ class CovoiturageController extends Controller
         // Appel des repositories
         $covoiturageRepository = new CovoiturageRepository;
         $preferenceUserRepository = new PreferenceUserRepository;
+        $userRepository = new UserRepository;
 
         // On récupére l'id du covoiturage passée dans l'url et on le décrypte 
         $covoiturageId = $this->decryptUrlParameter($_GET['id']);
@@ -201,7 +203,7 @@ class CovoiturageController extends Controller
         $preferencesPersonnelles = array_map(fn($pref) => $pref['personnelle'], $driverPreferences);
 
         // Fonction pour participer au covoiturage
-        $participateToCovoiturage = $this->participateToCovoiturage($covoiturageDetail, $covoiturageRepository);
+        $participateToCovoiturage = $this->participateToCovoiturage($covoiturageDetail, $covoiturageRepository, $userRepository);
 
 
         $this->render(
@@ -237,7 +239,14 @@ class CovoiturageController extends Controller
     */
     protected function mesCovoiturages()
     {
+        // Appel du repository
         $covoiturageRepository = new CovoiturageRepository;
+
+        // Initialisation des variables
+        $covoiturageEncryptId = null;
+        $dayName = null;
+        $dayNumber = null;
+        $monthName = null;
 
         $userId = ($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
         // Pour chercher les covoiturages du chauffeur
@@ -256,8 +265,10 @@ class CovoiturageController extends Controller
             $monthName[$covoiturageId] = $dateTimeCovoiturage[2];
         }
 
+        // Pour chercher les covoiturages du passager
         $covoiturageaAsPassager = $covoiturageRepository->searchCovoiturageParticipateByUserId($userId);
 
+        // Pour parcourir les covoiturages du passager
         foreach ($covoiturageaAsPassager as $covoiturage) {
             // Pour récupérer l'id de chaque covoiturage
             $covoiturageId = $covoiturage['id'];
@@ -462,7 +473,7 @@ class CovoiturageController extends Controller
     }
 
     // Fonction pour participer au covoiturage
-    protected function participateToCovoiturage(array $covoiturageDetail, CovoiturageRepository $covoiturageRepository): array
+    protected function participateToCovoiturage(array $covoiturageDetail, CovoiturageRepository $covoiturageRepository, UserRepository $userRepository): array
     {
         // Variable pour savoir si l'utilisateur est connecté ou pas
         $isNotLogged = false;
@@ -477,10 +488,15 @@ class CovoiturageController extends Controller
         $disponiblePlaces = $covoiturageDetail['nb_place_disponible'];
         // le prix du covoiturage
         $covoituragePrice = $covoiturageDetail['prix'];
-        // Les crédits de l'utilisateur
-        $userCredits = isset($_SESSION['user']['credits']) ? $_SESSION['user']['credits'] : null;
-
+        // L'id de l'utilisateur
         $userId = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
+        // Le mail de l'utilisateur
+        $userMail = isset($_SESSION['user']['mail']) ? $_SESSION['user']['mail'] : null;
+        // On cherche l'utilisateur par son mail
+        $user = $userRepository->findOneByMail($userMail);
+        // Les crédits de l'utilisateur
+        $userCredits = $user->getNbCredits();
+        // $userCredits = isset($_SESSION['user']['credits']) ? $_SESSION['user']['credits'] : null;
         $covoiturageId = $covoiturageDetail['id'];
 
         // Si l'user n'est pas connecté, on change la variable pour passer l'info à la vue
@@ -497,7 +513,7 @@ class CovoiturageController extends Controller
             $noEnoughCredits = true;
         }
 
-        // Si ces tous ces params sont faux, l'utilisateur peut participer de ce covoiturage
+        // Si tous ces params sont faux, l'utilisateur peut participer au covoiturage
         if ($isNotLogged == false && $noDisponiblePlaces == false && $noEnoughCredits == false) {
             // On affiche la modal avec la confirmation de participation au covoiturage
             $doubleConfirmation = true;
@@ -507,6 +523,12 @@ class CovoiturageController extends Controller
                 $_SESSION['successParticipation'] = true;
                 // On appele la fonction du repository pour enregistrer les données dans la BDD
                 $covoiturageRepository->participateToCovoiturage($userId, $covoiturageId);
+
+                // On appele la fonction pour mettre à jour les crédits de l'utilisateur
+                $covoiturageRepository->updateUserCredits($covoituragePrice, $userId);
+
+                // On appele la fonction pour mettre à jour les nombres de places disponibles du covoiturage
+                $covoiturageRepository->updatePlacesDisponibles($covoiturageId);
 
                 /* on envoi ver la page de mes covoiturages, oú on affiche le message de succès et on affiche tous les covoiturages
                 auxquels l'utilisateur participe */

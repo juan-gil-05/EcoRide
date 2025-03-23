@@ -117,7 +117,7 @@ require_once './Templates/header.php';
             <!-- Si le covoiturage n'a plus des places disponibles-->
           <?php } elseif ($noDisponiblePlaces) { ?>
             <div class="alert alert-danger mb-0 p-5 content-text" role="alert">
-              <strong>🚫 Trajet complet !</strong> Il n\'y a plus de places disponibles.
+              <strong>🚫 Trajet complet !</strong> Il n'y a plus de places disponibles.
             </div>
             <!-- Si l'utilisateur ne possède pas assez des crédits pour participer au covoiturage-->
           <?php } elseif ($noEnoughCredits) { ?>

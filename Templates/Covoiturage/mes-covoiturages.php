@@ -50,90 +50,97 @@ require_once './Templates/header.php';
             <!-- body -->
             <div id="collapseParticipe" class="accordion-collapse collapse" data-bs-parent="#preferenceAccordion">
                 <div class="accordion-body">
-                    <!-- Liste avec les covoiturages -->
-                    <ul>
-                        <?php foreach ($covoiturageaAsPassager as $covoiturage) { ?>
-                            <li class="content-text">
-                                <!-- Le jour et le mois du covoiturage -->
-                                <div class="fw-medium covoiturage-day-month mb-4">
-                                    <p class="mb-0 text-center"><?= $dayName[$covoiturage['id']] . ", " . $dayNumber[$covoiturage['id']] . " " . $monthName[$covoiturage['id']] ?></p>
-                                </div>
-                                <!-- Les heures et adresses de départ et d'arrivée-->
-                                <div class="covoiturage-info-list">
-                                    <!-- Les heures -->
-                                    <div class="covoiturage-date-time">
-                                        <p class="fw-semibold">Départ</p>
-                                        <p><?= $covoiturage['adresse_depart'] ?></p>
-                                        <p><?= substr($covoiturage['date_heure_depart'], 11, 5) ?></p>
+                    <?php if ($covoiturageaAsPassager) { ?>
+                        <!-- Liste avec les covoiturages -->
+                        <ul>
+                            <?php foreach ($covoiturageaAsPassager as $covoiturage) { ?>
+                                <li class="content-text">
+                                    <!-- Le jour et le mois du covoiturage -->
+                                    <div class="fw-medium covoiturage-day-month mb-4">
+                                        <p class="mb-0 text-center"><?= $dayName[$covoiturage['id']] . ", " . $dayNumber[$covoiturage['id']] . " " . $monthName[$covoiturage['id']] ?></p>
                                     </div>
-                                    <i class="bi bi-arrow-right"></i>
-                                    <!-- Les adresses -->
-                                    <div class="covoiturage-date-time">
-                                        <p class="fw-semibold">Arrivée</p>
-                                        <p><?= $covoiturage['adresse_arrivee'] ?></p>
-                                        <p><?= substr($covoiturage['date_heure_arrivee'], 11, 5) ?></p>
+                                    <!-- Les heures et adresses de départ et d'arrivée-->
+                                    <div class="covoiturage-info-list">
+                                        <!-- Les heures -->
+                                        <div class="covoiturage-date-time">
+                                            <p class="fw-semibold">Départ</p>
+                                            <p><?= $covoiturage['adresse_depart'] ?></p>
+                                            <p><?= substr($covoiturage['date_heure_depart'], 11, 5) ?></p>
+                                        </div>
+                                        <i class="bi bi-arrow-right"></i>
+                                        <!-- Les adresses -->
+                                        <div class="covoiturage-date-time">
+                                            <p class="fw-semibold">Arrivée</p>
+                                            <p><?= $covoiturage['adresse_arrivee'] ?></p>
+                                            <p><?= substr($covoiturage['date_heure_arrivee'], 11, 5) ?></p>
+                                        </div>
                                     </div>
-                                </div>
-                                <!-- Bouton pour voir plus en détail le covoiturage -->
-                                <div class="detail-btn-div content-text mt-4 d-flex justify-content-center">
-                                    <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>" class="btn btn-warning detail-btn">Détail</a>
-                                </div>
-                            </li>
+                                    <!-- Bouton pour voir plus en détail le covoiturage -->
+                                    <div class="detail-btn-div content-text mt-4 d-flex justify-content-center">
+                                        <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>" class="btn btn-warning detail-btn">Détail</a>
+                                    </div>
+                                </li>
 
-                        <?php } ?>
-                    </ul>
+                            <?php } ?>
+                        </ul>
+                    <?php } else { ?>
+                        <p class="mb-0 fw-medium" >Aucun covoiturage pour le moment</p>
+                    <?php } ?>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Les covoiturages auxquels l'user conduit -->
-    <div class="accordion" id="carAccordion">
-        <div class="accordion-item">
-            <!-- Header -->
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed content-text fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDrive" aria-expanded="false" aria-controls="collapseDrive">
-                    Mes covoiturages en tant que chauffeur
-                </button>
-            </h2>
-            <!-- Body -->
-            <div id="collapseDrive" class="accordion-collapse collapse" data-bs-parent="#carAccordion">
-                <div class="accordion-body">
-                    <!-- Liste avec les covoiturages -->
-                    <ul>
-                        <?php foreach ($covoituragesAsDriver as $covoiturage) { ?>
-                            <li class="content-text">
-                                <!-- Le jour et le mois du covoiturage -->
-                                <div class="fw-medium covoiturage-day-month mb-4">
-                                    <p class="mb-0 text-center"><?= $dayName[$covoiturage['id']] . ", " . $dayNumber[$covoiturage['id']] . " " . $monthName[$covoiturage['id']] ?></p>
-                                </div>
-                                <!-- Les heures et adresses de départ et d'arrivée-->
-                                <div class="covoiturage-info-list">
-                                    <!-- Les heures -->
-                                    <div class="covoiturage-date-time">
-                                        <p class="fw-semibold">Départ</p>
-                                        <p><?= $covoiturage['adresse_depart'] ?></p>
-                                        <p><?= substr($covoiturage['date_heure_depart'], 11, 5) ?></p>
+    <!-- Si l'utilisateur est chauffeur, alors on affiche les covoiturages auxquels il conduit -->
+    <?php if (Security::isChauffeur()) { ?>
+        <!-- Les covoiturages auxquels l'user conduit -->
+        <div class="accordion" id="carAccordion">
+            <div class="accordion-item">
+                <!-- Header -->
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed content-text fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDrive" aria-expanded="false" aria-controls="collapseDrive">
+                        Mes covoiturages en tant que chauffeur
+                    </button>
+                </h2>
+                <!-- Body -->
+                <div id="collapseDrive" class="accordion-collapse collapse" data-bs-parent="#carAccordion">
+                    <div class="accordion-body">
+                        <!-- Liste avec les covoiturages -->
+                        <ul>
+                            <?php foreach ($covoituragesAsDriver as $covoiturage) { ?>
+                                <li class="content-text">
+                                    <!-- Le jour et le mois du covoiturage -->
+                                    <div class="fw-medium covoiturage-day-month mb-4">
+                                        <p class="mb-0 text-center"><?= $dayName[$covoiturage['id']] . ", " . $dayNumber[$covoiturage['id']] . " " . $monthName[$covoiturage['id']] ?></p>
                                     </div>
-                                    <i class="bi bi-arrow-right"></i>
-                                    <!-- Les adresses -->
-                                    <div class="covoiturage-date-time">
-                                        <p class="fw-semibold">Arrivée</p>
-                                        <p><?= $covoiturage['adresse_arrivee'] ?></p>
-                                        <p><?= substr($covoiturage['date_heure_arrivee'], 11, 5) ?></p>
+                                    <!-- Les heures et adresses de départ et d'arrivée-->
+                                    <div class="covoiturage-info-list">
+                                        <!-- Les heures -->
+                                        <div class="covoiturage-date-time">
+                                            <p class="fw-semibold">Départ</p>
+                                            <p><?= $covoiturage['adresse_depart'] ?></p>
+                                            <p><?= substr($covoiturage['date_heure_depart'], 11, 5) ?></p>
+                                        </div>
+                                        <i class="bi bi-arrow-right"></i>
+                                        <!-- Les adresses -->
+                                        <div class="covoiturage-date-time">
+                                            <p class="fw-semibold">Arrivée</p>
+                                            <p><?= $covoiturage['adresse_arrivee'] ?></p>
+                                            <p><?= substr($covoiturage['date_heure_arrivee'], 11, 5) ?></p>
+                                        </div>
                                     </div>
-                                </div>
-                                <!-- Bouton pour voir plus en détail le covoiturage -->
-                                <div class="detail-btn-div content-text mt-4 d-flex justify-content-center">
-                                    <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>" class="btn btn-warning detail-btn">Détail</a>
-                                </div>
-                            </li>
+                                    <!-- Bouton pour voir plus en détail le covoiturage -->
+                                    <div class="detail-btn-div content-text mt-4 d-flex justify-content-center">
+                                        <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>" class="btn btn-warning detail-btn">Détail</a>
+                                    </div>
+                                </li>
 
-                        <?php } ?>
-                    </ul>
+                            <?php } ?>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    <?php } ?>
 </section>
 
 

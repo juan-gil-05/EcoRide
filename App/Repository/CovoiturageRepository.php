@@ -132,7 +132,7 @@ class CovoiturageRepository extends Repository
     }
 
     // Fonction pour chercher les covoiturages auxquels l'utilisateur participe
-    public function searchCovoiturageParticipateByUserId(int $userId)
+    public function searchCovoiturageParticipateByUserId(int $userId): array
     {
         $sql = "SELECT Covoiturage.id, Covoiturage.date_heure_depart, Covoiturage.date_heure_arrivee,
                 Covoiturage.adresse_depart, Covoiturage.adresse_arrivee
@@ -144,5 +144,28 @@ class CovoiturageRepository extends Repository
         $query->execute();
 
         return $query->fetchAll($this->pdo::FETCH_ASSOC);
+    }
+
+    // Fonction pour enlever les credits du covoiturage, quand l'user confirme sa participation
+    public function updateUserCredits(int $covoituragePrice, int $userId): bool
+    {
+        $sql = "UPDATE User 
+                SET nb_credits = if(nb_credits > 0, nb_credits - :covoituragePrice, false)
+                WHERE id = :userId";
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":covoituragePrice", $covoituragePrice, $this->pdo::PARAM_INT);
+        $query->bindValue(":userId", $userId, $this->pdo::PARAM_INT);
+        return $query->execute();
+    }
+
+    // Fonction pour mettre à jour les nombres de places disponible du covoiturage, quand l'user confirme sa participation
+    public function updatePlacesDisponibles(int $covoiturageId)
+    {
+        $sql = "UPDATE Covoiturage
+                SET nb_place_disponible = if(nb_place_disponible > 0, nb_place_disponible - 1, false)
+                WHERE id = :covoiturageId";
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":covoiturageId", $covoiturageId, $this->pdo::PARAM_INT);
+        return $query->execute();
     }
 }

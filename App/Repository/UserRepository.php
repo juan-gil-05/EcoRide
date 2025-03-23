@@ -33,7 +33,6 @@ class UserRepository extends Repository
         return $query->execute();
     }
 
-
     // Fonction pour trouver un utilisateur par son mail
     public function findOneByMail(string $mail)
     {
@@ -44,7 +43,7 @@ class UserRepository extends Repository
         $user = $query->fetch($this->pdo::FETCH_ASSOC);
 
         // Si on trouve un utilisateur, alors, on hydrate la classe de l'utilisateur avec celui trouvé
-        if($user){
+        if ($user) {
             return User::createAndHydrate($user);
         } else {
             return false;
@@ -60,13 +59,10 @@ class UserRepository extends Repository
         $roleName = $query->execute();
         $roleName = $query->fetch($this->pdo::FETCH_ASSOC);
 
-        if($roleName){
+        if ($roleName) {
             return $roleName['libelle'];
         } else {
             return false;
         }
     }
-
-
-
 }
