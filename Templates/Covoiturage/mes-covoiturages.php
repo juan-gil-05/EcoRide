@@ -84,7 +84,7 @@ require_once './Templates/header.php';
                                             <input type="hidden" name="covoiturage_id" value="<?= $covoiturage['id'] ?>">
                                             <input type="hidden" name="covoiturage_price" value="<?= $covoiturage['prix'] ?>">
                                             <!-- Bouton pour envoyer le formulaire -->
-                                            <button type="submit" name="quitCovoiturage" class="btn btn-danger secondary-btn text-light">Quitter</button>
+                                            <button type="submit" name="quitCovoiturageAsPassager" class="btn btn-danger secondary-btn text-light">Quitter</button>
                                         </form>
                                         <!-- Bouton pour voir les détails du covoiturage -->
                                         <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>" class="btn btn-warning secondary-btn">Détail</a>
@@ -139,8 +139,17 @@ require_once './Templates/header.php';
                                         </div>
                                     </div>
                                     <!-- Bouton pour voir plus en détail le covoiturage -->
-                                    <div class="detail-btn-div content-text mt-4 d-flex justify-content-center">
-                                        <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>" class="btn btn-warning detail-btn secondary-btn">Détail</a>
+                                    <div class="detail-btn-div content-text mt-4 d-flex justify-content-evenly">
+                                        <!-- Formulaire pour quitter le covoiturage -->
+                                        <form method="post" class="mb-0">
+                                            <!-- input invisible pour envoyer l'id et le prix du covoiturage dans le formulaire-->
+                                            <input type="hidden" name="covoiturage_id" value="<?= $covoiturage['id'] ?>">
+                                            <input type="hidden" name="covoiturage_price" value="<?= $covoiturage['prix'] ?>">
+                                            <!-- Bouton pour envoyer le formulaire -->
+                                            <button type="submit" name="deleteCovoiturageAsDriver" class="btn btn-danger secondary-btn text-light">Supprimer</button>
+                                        </form>
+                                        <!-- Bouton pour voir les détails du covoiturage -->
+                                        <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>" class="btn btn-warning secondary-btn">Détail</a>
                                     </div>
                                 </li>
 

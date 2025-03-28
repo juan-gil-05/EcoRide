@@ -189,7 +189,7 @@ class CovoiturageRepository extends Repository
     }
 
     // Fonction pour enlever l'user du covoiturage, quand l'user quitte le covoiturage
-    public function quitCovoiturage(int $userId, int $covoiturageId)
+    public function quitCovoiturageAsPassager(int $userId, int $covoiturageId)
     {
         $sql = "DELETE FROM User_Covoiturages
                 WHERE user_id = :userId AND covoiturage_id = :covoiturageId";
@@ -197,5 +197,28 @@ class CovoiturageRepository extends Repository
         $query->bindValue(":userId", $userId, $this->pdo::PARAM_INT);
         $query->bindValue(":covoiturageId", $covoiturageId, $this->pdo::PARAM_INT);
         return $query->execute();
+    }
+
+    // Fonction pour enlever le covoiturage, quand l'user chauffeur quitte le covoiturage
+    public function deleteCovoiturageAsDriver(int $covoiturageId)
+    {
+        $sql = "DELETE FROM Covoiturage
+                WHERE id = :covoiturageId";
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":covoiturageId", $covoiturageId, $this->pdo::PARAM_INT);
+        return $query->execute();
+    }
+
+    // Fonction pour chercher les participants d'un covoiturage par le covoiturage ID
+    public function searchCovoiturageParticipantsByCovoiturageId(int $covoiturageId): array
+    {
+        $sql = "SELECT user_id
+                FROM User_Covoiturages
+                WHERE covoiturage_id = :covoiturageId";
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":covoiturageId", $covoiturageId, $this->pdo::PARAM_INT);
+        $query->execute();
+
+        return $query->fetchAll($this->pdo::FETCH_ASSOC);
     }
 }

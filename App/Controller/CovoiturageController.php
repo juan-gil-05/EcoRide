@@ -282,14 +282,14 @@ class CovoiturageController extends Controller
         }
 
         // Si l'utilisateur quitte le covoiturage
-        if(isset($_POST['quitCovoiturage'])){
+        if (isset($_POST['quitCovoiturageAsPassager'])) {
             // L'id du covoiturage et de l'utilisateur
             $covoiturageId = $_POST['covoiturage_id'];
             $userId = $_POST['user_id'];
             // Pour récupérer le prix de chaque covoiturage
             $covoituragePrice = $_POST['covoiturage_price'];
             // Fonction pour quitter le covoiturage
-            $covoiturageRepository->quitCovoiturage($userId, $covoiturageId);
+            $covoiturageRepository->quitCovoiturageAsPassager($userId, $covoiturageId);
 
             // Pour mettre à jour les places disponibles du covoiturage
             $covoiturageRepository->updatePlacesDisponibles($covoiturageId, true);
@@ -300,6 +300,30 @@ class CovoiturageController extends Controller
             // On récharge la page
             header('Location: ?controller=covoiturages&action=mesCovoiturages');
         }
+
+        // Si le chauffeur supprime le covoiturage
+        if (isset($_POST['deleteCovoiturageAsDriver'])) {
+            // L'id du covoiturage et de l'utilisateur
+            $covoiturageId = $_POST['covoiturage_id'];
+            // Pour récupérer le prix de chaque covoiturage
+            $covoituragePrice = $_POST['covoiturage_price'];
+
+            // Pour récupérer tous les participants du covoiturage
+            $participants = $covoiturageRepository->searchCovoiturageParticipantsByCovoiturageId($covoiturageId);
+            // Pour mettre à jour les crédits de chaque passager
+            foreach ($participants as $passager) {
+                $passagerId = $passager['user_id'];
+                $covoiturageRepository->updateUserCredits($covoituragePrice, $passagerId, true);
+            }
+
+            // Fonction pour supprimer le covoiturage
+            $covoiturageRepository->deleteCovoiturageAsDriver($covoiturageId);
+
+            // On récharge la page
+            header('Location: ?controller=covoiturages&action=mesCovoiturages');
+        }
+
+
 
         $this->render(
             "Covoiturage/mes-covoiturages",
