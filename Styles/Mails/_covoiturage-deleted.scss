@@ -1,0 +1,18 @@
+// le contenu du mail
+.mail-content {
+  p,
+  li {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+
+    li:first-child {
+      margin-top: 0;
+    }
+  }
+}

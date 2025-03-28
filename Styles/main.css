@@ -12133,6 +12133,20 @@ html {
   margin-right: 15px;
 }
 
+.mail-content p,
+.mail-content li {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+}
+.mail-content ul {
+  list-style: none;
+  padding-left: 0;
+}
+.mail-content ul li:first-child {
+  margin-top: 0;
+}
+
 .slogan {
   text-align: center;
   background-color: #4caf50;
