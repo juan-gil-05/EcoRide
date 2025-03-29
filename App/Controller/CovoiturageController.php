@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use App\Repository\VoitureRepository;
 use App\Security\CovoiturageValidator;
 use App\Security\Security;
+use App\Tools\SendMail;
 use DateTime;
 use Exception;
 
@@ -282,48 +283,10 @@ class CovoiturageController extends Controller
         }
 
         // Si l'utilisateur quitte le covoiturage
-        if (isset($_POST['quitCovoiturageAsPassager'])) {
-            // L'id du covoiturage et de l'utilisateur
-            $covoiturageId = $_POST['covoiturage_id'];
-            $userId = $_POST['user_id'];
-            // Pour récupérer le prix de chaque covoiturage
-            $covoituragePrice = $_POST['covoiturage_price'];
-            // Fonction pour quitter le covoiturage
-            $covoiturageRepository->quitCovoiturageAsPassager($userId, $covoiturageId);
-
-            // Pour mettre à jour les places disponibles du covoiturage
-            $covoiturageRepository->updatePlacesDisponibles($covoiturageId, true);
-
-            // Pour mettre à jour les crédits de l'utilisateur
-            $covoiturageRepository->updateUserCredits($covoituragePrice, $userId, true);
-
-            // On récharge la page
-            header('Location: ?controller=covoiturages&action=mesCovoiturages');
-        }
+        $this->leaveCovoiturage();
 
         // Si le chauffeur supprime le covoiturage
-        if (isset($_POST['deleteCovoiturageAsDriver'])) {
-            // L'id du covoiturage et de l'utilisateur
-            $covoiturageId = $_POST['covoiturage_id'];
-            // Pour récupérer le prix de chaque covoiturage
-            $covoituragePrice = $_POST['covoiturage_price'];
-
-            // Pour récupérer tous les participants du covoiturage
-            $participants = $covoiturageRepository->searchCovoiturageParticipantsByCovoiturageId($covoiturageId);
-            // Pour mettre à jour les crédits de chaque passager
-            foreach ($participants as $passager) {
-                $passagerId = $passager['user_id'];
-                $covoiturageRepository->updateUserCredits($covoituragePrice, $passagerId, true);
-            }
-
-            // Fonction pour supprimer le covoiturage
-            $covoiturageRepository->deleteCovoiturageAsDriver($covoiturageId);
-
-            // On récharge la page
-            header('Location: ?controller=covoiturages&action=mesCovoiturages');
-        }
-
-
+        $this->cancelCovoiturage();
 
         $this->render(
             "Covoiturage/mes-covoiturages",
@@ -591,6 +554,87 @@ class CovoiturageController extends Controller
     }
 
 
+    // Fonction si l'utilisateur quitte le covoiturage
+    public function leaveCovoiturage()
+    {
+        // Appel du repository
+        $covoiturageRepository = new CovoiturageRepository;
 
-    
+        if (isset($_POST['quitCovoiturageAsPassager'])) {
+            // L'id du covoiturage et de l'utilisateur
+            $covoiturageId = $_POST['covoiturage_id'];
+            $userId = $_POST['user_id'];
+            // Pour récupérer le prix de chaque covoiturage
+            $covoituragePrice = $_POST['covoiturage_price'];
+            // Fonction pour quitter le covoiturage
+            $covoiturageRepository->quitCovoiturageAsPassager($userId, $covoiturageId);
+
+            // Pour mettre à jour les places disponibles du covoiturage
+            $covoiturageRepository->updatePlacesDisponibles($covoiturageId, true);
+
+            // Pour mettre à jour les crédits de l'utilisateur
+            $covoiturageRepository->updateUserCredits($covoituragePrice, $userId, true);
+
+            // On récharge la page
+            header('Location: ?controller=covoiturages&action=mesCovoiturages');
+        }
+    }
+
+
+    // Fonction pour annuler le covoiturage
+    public function cancelCovoiturage()
+    {
+        // Appel du repository
+        $covoiturageRepository = new CovoiturageRepository;
+
+        // Le sujet et le modèle du mail
+        $mailSubject = 'Annulation de votre covoiturage';
+        $mailBody = 'covoiturage-deleted.php';
+
+        // Si le chauffeur supprime le covoiturage
+        if (isset($_POST['deleteCovoiturageAsDriver'])) {
+            // L'id du covoiturage et de l'utilisateur
+            $covoiturageId = $_POST['covoiturage_id'];
+            // Pour récupérer le prix de chaque covoiturage
+            $covoituragePrice = $_POST['covoiturage_price'];
+
+            // Pour récupérer les détailles du covoiturage
+            $covoiturageDetail = $covoiturageRepository->searchCovoiturageDetailsById($covoiturageId);
+            foreach ($covoiturageDetail as $covoiturage) {
+                // Les date et les adresses du covoiturage
+                $covoiturageDepart = ucfirst($covoiturage['adresse_depart']);
+                $covoiturageArrivee = ucfirst($covoiturage['adresse_arrivee']);
+                $covoiturageDateDepart = new DateTime($covoiturage['date_heure_depart']);
+            }
+
+            // Pour récupérer tous les participants du covoiturage et le pseudo du chauffeur
+            $participants = $covoiturageRepository->searchCovoiturageParticipantsByCovoiturageId($covoiturageId);
+            foreach ($participants as $passager) {
+                // Id et mail des passagers
+                $passagerId = $passager['user_id'];
+                $passagerMail = $passager['passager_mail'];
+                $driverPseudo = ucfirst($passager['driver_pseudo']); // Pseudo du chauffeur
+
+                // Les paramètres pour envoyer le mail
+                $mailParams = [
+                    "covoiturageDepart" => $covoiturageDepart,
+                    "covoiturageArrivee" => $covoiturageArrivee,
+                    "covoiturageDateDepart" => $covoiturageDateDepart->format('d-m-Y'), // Pour formater la date
+                    "driverPseudo" => $driverPseudo
+                ];
+
+                // Pour mettre à jour les crédits de chaque passager
+                $covoiturageRepository->updateUserCredits($covoituragePrice, $passagerId, true);
+
+                // On appele la fonction pour envoyer un mail à chaque passager
+                SendMail::sendMailToPassagers($passagerMail, $mailSubject, $mailBody, $mailParams);
+            }
+
+            // Fonction pour supprimer le covoiturage dans la base des données
+            $covoiturageRepository->deleteCovoiturageAsDriver($covoiturageId);
+
+            // On récharge la page
+            header('Location: ?controller=covoiturages&action=mesCovoiturages');
+        }
+    }
 }

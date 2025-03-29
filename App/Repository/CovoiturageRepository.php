@@ -208,12 +208,16 @@ class CovoiturageRepository extends Repository
         $query->bindValue(":covoiturageId", $covoiturageId, $this->pdo::PARAM_INT);
         return $query->execute();
     }
-
-    // Fonction pour chercher les participants d'un covoiturage par le covoiturage ID
+ 
+    // Fonction pour chercher les participants d'un covoiturage par le covoiturage ID, et le pseudo du chauffeur
     public function searchCovoiturageParticipantsByCovoiturageId(int $covoiturageId): array
     {
-        $sql = "SELECT user_id
+        $sql = "SELECT User_Covoiturages.user_id, passager.mail as passager_mail, driver.pseudo as driver_pseudo
                 FROM User_Covoiturages
+                INNER JOIN User as passager ON User_Covoiturages.user_id = passager.id
+                INNER JOIN Covoiturage ON User_Covoiturages.covoiturage_id = Covoiturage.id
+                INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
+                INNER JOIN User as driver ON Voiture.user_id = driver.id
                 WHERE covoiturage_id = :covoiturageId";
         $query = $this->pdo->prepare($sql);
         $query->bindValue(":covoiturageId", $covoiturageId, $this->pdo::PARAM_INT);

@@ -13,14 +13,14 @@ require 'vendor/autoload.php';
 
 class SendMail
 {
-    public static function sendMailToPassagers($to, $subject, $message)
+    public static function sendMailToPassagers($to, $subject, $templateMail, $params)
     {
         // Instantiation de la classe PHPMailer
         $mail = new PHPMailer(true);
 
         try {
             // Configuration du serveur SMTP
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
             $mail->isSMTP();                                            // Envoyer le mail via SMTP
             $mail->SMTPAuth   = true;                                   // Activer l'authentification SMTP
             $mail->Host       = 'smtp.gmail.com';                       // Spécifier le host SMTP
@@ -31,26 +31,31 @@ class SendMail
 
 
             // Expediteur et Destinataire
-            $mail->setFrom('testecoride8@gmail.com', 'Chauffeur');       // Qui ENVOIE le mail
-            $mail->addAddress('testecoride8@gmail.com', 'Passager');     // Qui REÇOIT le mail
+            $mail->setFrom('testecoride8@gmail.com', 'EcoRide');       // Qui ENVOIE le mail
+            $mail->addAddress($to, 'Passager');                          // Qui REÇOIT le mail
 
 
             //Content
             $mail->isHTML(true);                                  // Activer le format HTML
-            $mail->Subject = 'Annulation de votre covoiturage';   // Sujet du mail
+            $mail->Subject = $subject;                             // Sujet du mail
 
-            // Lire le contenu du fichier mail.html
-            $file = fopen('mail.html', 'r'); // ouvrir le fichier
-            $content = fread($file, filesize('mail.html')); // lire le fichier
-            $content = trim($content); // supprimer les espaces
-            fclose($file); // fermer le fichier
+            // Chemin du modèle du mail
+            $templatePath = _ROOTPATH_ . "/Templates/Mails/" . $templateMail;
 
+            // Exécution de PHP dans le fichier template
+            ob_start();
+            extract($params);  // Extraire les variables du tableau params
+            include $templatePath; // Inclure le fichier template (le code PHP sera exécuté)
+            $content = ob_get_clean(); // Récupérer le contenu du fichier template
+
+            // Le contenu du mail
             $mail->Body = $content;
 
+            // Envoi du mail
             $mail->send();
-            echo 'Message envoyé';
+
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            echo "Error dans l'envoie du mail. Mailer Error: {$mail->ErrorInfo}";
         }
     }
 }
