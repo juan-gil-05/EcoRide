@@ -1,30 +1,18 @@
-<!-- Pour afficher les message de succès quand l'user participe dans un covoiturage, ou annule sa participation -->
-<?php if (!empty($_SESSION['successParticipation'])) { ?>
-    <script>
-        // On affiche le message de succès
-        Swal.fire({
-            title: '<?= $_SESSION['successParticipation'] ?>',
-            icon: "success",
-        }).then(() => {
-            // on envoi ver la page de mes covoiturages et on affiche tous les covoiturages auxquels l'utilisateur participe 
-            window.location.href = "?controller=covoiturages&action=mesCovoiturages"
-        })
-    </script>
-<?php
-    // Après d'avoir afficher le message, on supprime la session
-    unset($_SESSION['successParticipation']);
-} elseif (!empty($_SESSION['covoiturageDeletedMsg'])) { ?>
-    <script>
-        // On affiche le message de succès
-        Swal.fire({
-            title: '<?= $_SESSION['covoiturageDeletedMsg'] ?>',
-            icon: "success",
-        }).then(() => {
-            // on envoi ver la page de mes covoiturages
-            window.location.href = "?controller=covoiturages&action=mesCovoiturages"
-        })
-    </script>
-<?php }
-// Après d'avoir afficher le message, on supprime la session
-unset($_SESSION['covoiturageDeletedMsg']);
-?>
+ <!-- Pour afficher les messages d'information avec SweetAlert quand l'utilisateur fait une action, 
+ par exemple : quand il ajoute un covoiturage, quand il modifie un covoiturage, quand il supprime un covoiturage, etc...
+ -->
+ <?php if (!empty($_SESSION['message_to_User']) && $_SESSION['message_code'] != "") { ?>
+     <script>
+         // On affiche le message
+         Swal.fire({
+             title: '<?= $_SESSION['message_to_User'] ?>',
+             icon: '<?= $_SESSION['message_code'] ?>',
+         }).then(() => {
+             // Pour recharger la page
+             window.location.href = window.location.pathname + window.location.search;
+         })
+     </script>
+ <?php
+        // Après d'avoir afficher le message, on supprime la session
+        unset($_SESSION['status']);
+    } ?>
