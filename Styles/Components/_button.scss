@@ -11,3 +11,10 @@
   color: $dark;
   border: 0.3px solid $dark;
 }
+
+// Bouton pour les messages de SweetAlert
+.swal-btn {
+  color: $light !important;
+  background-color: $secondary !important;
+  border: 0.3px solid $dark !important;
+}

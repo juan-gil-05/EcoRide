@@ -573,8 +573,9 @@ class CovoiturageController extends Controller
             // Pour mettre à jour les crédits de l'utilisateur
             $covoiturageRepository->updateUserCredits($covoituragePrice, $userId, true);
 
-            // On récharge la page
-            header('Location: ?controller=covoiturages&action=mesCovoiturages');
+            // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+            $_SESSION['message_to_User'] = "Votre participation à ce covoiturage a été annulée.";
+            $_SESSION['message_code'] = "success";
         }
     }
 
@@ -625,14 +626,14 @@ class CovoiturageController extends Controller
                 // $covoiturageRepository->updateUserCredits($covoituragePrice, $passagerId, true);
 
                 // On appele la fonction pour envoyer un mail à chaque passager
-                SendMail::sendMailToPassagers($passagerMail, $mailSubject, $mailBody, $mailParams);
+                // SendMail::sendMailToPassagers($passagerMail, $mailSubject, $mailBody, $mailParams);
             }
 
             // Fonction pour supprimer le covoiturage dans la base des données
             // $covoiturageRepository->deleteCovoiturageAsDriver($covoiturageId);
 
             // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
-            $_SESSION['message_to_User'] = "Covoiturage annulé et mail envoyés aux participants";
+            $_SESSION['message_to_User'] = "Covoiturage annulé. Les participants ont été informés par e-mail.";
             $_SESSION['message_code'] = "info";
         }
     }

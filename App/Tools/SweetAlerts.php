@@ -6,6 +6,12 @@
          // On affiche le message
          Swal.fire({
              title: '<?= $_SESSION['message_to_User'] ?>',
+             // Les classes css pour le style du message
+             customClass: {
+                 popup: 'bg-light',
+                 title: 'content-text text-dark',
+                 confirmButton: 'swal-btn small-text',
+             },
              icon: '<?= $_SESSION['message_code'] ?>',
          }).then(() => {
              // Pour recharger la page
@@ -14,5 +20,5 @@
      </script>
  <?php
         // Après d'avoir afficher le message, on supprime la session
-        unset($_SESSION['status']);
+        unset($_SESSION['message_to_User']);
     } ?>
