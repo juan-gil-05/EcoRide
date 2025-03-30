@@ -25,16 +25,7 @@ require_once './Templates/header.php';
     </div>
 </section>
 
-<!-- Pour afficher les message de succès quand l'user participe dans un covoiturage, ou annule sa participation -->
-<?php if (!empty($_SESSION['successParticipation'])) { ?>
-    <div class="alert alert-success alert-dismissible fade show content-text container" role="alert">
-        Votre participation au covoiturage a été enregistrée avec succès !
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-<?php
-    // Après d'avoir afficher le message, on supprime la session
-    unset($_SESSION['successParticipation']);
-} ?>
+
 
 <!-- Section avec la liste des covoiturages auxquels l'user participe, et auxquels l'user conduit -->
 <section class="container mt-4 mb-5">

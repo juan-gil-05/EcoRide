@@ -53,7 +53,6 @@ class SendMail
 
             // Envoi du mail
             $mail->send();
-
         } catch (Exception $e) {
             echo "Error dans l'envoie du mail. Mailer Error: {$mail->ErrorInfo}";
         }

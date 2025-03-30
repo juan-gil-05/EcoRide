@@ -24,10 +24,15 @@ use App\Security\Security;
 
     <!--Import des styles-->
     <link rel="stylesheet" href="./Styles/main.css" />
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.min.css" rel="stylesheet">
     <title>EcoRide</title>
 </head>
 
 <body>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.min.js"></script>
+
     <header>
         <!--Navbar du site-->
         <nav class="navbar navbar-expand-lg bg-light header">

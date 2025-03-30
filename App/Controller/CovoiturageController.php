@@ -527,7 +527,7 @@ class CovoiturageController extends Controller
             // Si l'utilisateur confirme sa participation au covoiturage
             if (isset($_POST['participate'])) {
                 // On crée cette session pour pouvoir afficher le message de succès dans la page de mes covoiturages
-                $_SESSION['successParticipation'] = true;
+                $_SESSION['successParticipation'] = ' Votre participation au covoiturage a été enregistrée avec succès !';
                 // On appele la fonction du repository pour enregistrer les données dans la BDD
                 $covoiturageRepository->participateToCovoiturage($userId, $covoiturageId);
 
@@ -536,10 +536,6 @@ class CovoiturageController extends Controller
 
                 // On appele la fonction pour mettre à jour les nombres de places disponibles du covoiturage
                 $covoiturageRepository->updatePlacesDisponibles($covoiturageId, false);
-
-                /* on envoi ver la page de mes covoiturages, oú on affiche le message de succès et on affiche tous les covoiturages
-                auxquels l'utilisateur participe */
-                header('Location: ?controller=covoiturages&action=mesCovoiturages');
             }
         }
         return
@@ -624,17 +620,17 @@ class CovoiturageController extends Controller
                 ];
 
                 // Pour mettre à jour les crédits de chaque passager
-                $covoiturageRepository->updateUserCredits($covoituragePrice, $passagerId, true);
+                // $covoiturageRepository->updateUserCredits($covoituragePrice, $passagerId, true);
 
                 // On appele la fonction pour envoyer un mail à chaque passager
                 SendMail::sendMailToPassagers($passagerMail, $mailSubject, $mailBody, $mailParams);
             }
 
             // Fonction pour supprimer le covoiturage dans la base des données
-            $covoiturageRepository->deleteCovoiturageAsDriver($covoiturageId);
+            // $covoiturageRepository->deleteCovoiturageAsDriver($covoiturageId);
 
-            // On récharge la page
-            header('Location: ?controller=covoiturages&action=mesCovoiturages');
+            // On crée cette session pour pouvoir afficher le message de succès dans la page de mes covoiturages
+            $_SESSION['covoiturageDeletedMsg'] = "Covoiturage annulé et mail envoyés aux participants";
         }
     }
 }

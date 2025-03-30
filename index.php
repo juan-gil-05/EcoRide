@@ -25,3 +25,8 @@ use App\Controller\Controller;
 
 $controller = new Controller();
 $controller->route();
+
+// Fichier pour afficher les messages d'information à l'utilisateur
+require_once './App/Tools/SweetAlerts.php'; 
+
+
