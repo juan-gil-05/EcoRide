@@ -626,7 +626,7 @@ class CovoiturageController extends Controller
                 // $covoiturageRepository->updateUserCredits($covoituragePrice, $passagerId, true);
 
                 // On appele la fonction pour envoyer un mail à chaque passager
-                // SendMail::sendMailToPassagers($passagerMail, $mailSubject, $mailBody, $mailParams);
+                SendMail::sendMailToPassagers($passagerMail, $mailSubject, $mailBody, $mailParams);
             }
 
             // Fonction pour supprimer le covoiturage dans la base des données

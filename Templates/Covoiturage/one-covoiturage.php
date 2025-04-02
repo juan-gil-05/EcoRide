@@ -91,12 +91,12 @@ require_once './Templates/header.php';
     </div>
     <!-- Bouton pour participer au covoiturage, le bouton ouvre la modale -->
     <div class="participation-btn content-text">
-      <button class="btn btn-warning shadow-section primary-btn" id="participationBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+      <button class="btn btn-warning shadow-section primary-btn" id="participationBtn" data-bs-toggle="modal" data-bs-target="#participateConfirmation">
         Participer
       </button>
     </div>
     <!-- Modal avec les messages d'erreur ou la confirmation pour participer au covoiturage -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="participateConfirmation" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="participateConfirmationLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <!-- Le contenu de la modal -->
         <div class="modal-content">

@@ -58,6 +58,24 @@
             text-align: center;
           }
         }
+        // Modal pour confirmer l'annulation du covoiturage
+        .modal {
+          // Le contenu de la modal
+          .modal-content {
+            border-radius: 10px;
+            div,
+            .form {
+              border-radius: 10px;
+            }
+          }
+          // Bouton pour fermer la modal
+          .btn-close {
+            position: absolute;
+            right: 2%;
+            z-index: 1;
+            top: 5%;
+          }
+        }
       }
     }
   }
