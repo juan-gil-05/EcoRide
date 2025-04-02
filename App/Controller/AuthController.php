@@ -16,15 +16,15 @@ class AuthController extends Controller
         try {
             if (isset($_GET['action'])) {
                 switch ($_GET['action']) {
-                        // Action pour se connecter
+                    // Action pour se connecter
                     case 'logIn':
                         $this->logIn();
                         break;
-                        // Action pour se deconnecter
+                    // Action pour se deconnecter
                     case 'logOut':
                         $this->logOut();
                         break;
-                        // Si l'action passée dans l'url n'existe pas
+                    // Si l'action passée dans l'url n'existe pas
                     default:
                         throw new Exception("Cette action n'existe pas: " . $_GET['action']);
                         break;
@@ -49,7 +49,7 @@ class AuthController extends Controller
     protected function logIn()
     {
         $errors = [];
-        $mail = "";
+        $userMail = "";
 
         try {
             // Si le formulaire est envoyé, on cherche l'utilisateur par son mail
@@ -59,12 +59,13 @@ class AuthController extends Controller
                 $voitureRepository = new VoitureRepository;
                 // on cherche l'utilisateur par son mail
                 $user = $userRepository->findOneByMail($_POST['mail']);
-                $mail = $user->getMail();
+                // On récupère le mail de l'utilisateur
+                $userMail = ($user) ? $user->getMail() : $_POST['mail'];
                 // Validation des erreurs dans le formulaire
-                $errors = $userValidator->logInValidate($user);
-                // S'il n'y a pas des erreurs et si le mot de passe est correct
+                $errors = $userValidator->logInValidate($userMail);
+                // S'il n'y a pas des erreurs ...
                 if (empty($errors)) {
-                    // Si le mot de passe est correct
+                    // Et si le mot de passe est correct ...
                     if ($user && $userValidator->passwordVerify($user)) {
                         // Pour générer l'id de la session
                         session_regenerate_id(true);
@@ -95,7 +96,7 @@ class AuthController extends Controller
                     else {
                         $errors['invalidUser'] = "Email ou mot de passe invalide";
                     }
-                }
+                } 
             }
         } catch (Exception $e) {
             $this->render("Errors/404", [
@@ -103,7 +104,7 @@ class AuthController extends Controller
             ]);
         }
         // On affiche la page de connexion, et on passe des params
-        $this->render("Auth/log-in", ['errors' => $errors, 'mail' => $mail]);
+        $this->render("Auth/log-in", ['errors' => $errors, 'mail' => $userMail]);
     }
 
     /*

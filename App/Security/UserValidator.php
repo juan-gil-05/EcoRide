@@ -56,13 +56,13 @@ class UserValidator
 
 
     // Fonction pour valider le formulaire de connexion
-    public function logInValidate(User $user): array
+    public function logInValidate(string $userMail): array
     {
         // Tableau d'erreurs 
         $errors = [];
 
         // Si le champ du mail est vide
-        if (empty($user->getMail())) {
+        if (empty($userMail)) {
             $errors['mail'] = "Vous devez mettre une adresse e-mail";
         }
 
