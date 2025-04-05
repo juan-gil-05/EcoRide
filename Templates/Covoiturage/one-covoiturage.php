@@ -114,6 +114,18 @@ require_once './Templates/header.php';
                 <a href="?controller=user&action=singUp" class="btn btn-light content-text ">S'inscrire</a>
               </div>
             </div>
+            <!-- Si l'utilisateur participe déjà au covoiturage -->
+          <?php } elseif ($isUserParticipant) { ?>
+            <div class="alert alert-danger mb-0 p-5 text-center content-text" role="alert">
+              <strong>Vous participez déjà à ce covoiturage.</strong><br>
+              Il n’est pas possible de s’inscrire plusieurs fois au même trajet.
+            </div>
+            <!-- Si l'utilisateur est le chauffeur du covoiturage -->
+          <?php } elseif ($isDriverInCovoiturage) { ?>
+            <div class="alert alert-danger mb-0 p-5 text-center content-text" role="alert">
+              <strong>Vous êtes le conducteur de ce covoiturage.</strong><br>
+              En tant que chauffeur, vous ne pouvez pas vous inscrire comme passager à votre propre trajet.
+            </div>
             <!-- Si le covoiturage n'a plus des places disponibles-->
           <?php } elseif ($noDisponiblePlaces) { ?>
             <div class="alert alert-danger mb-0 p-5 text-center content-text" role="alert">
@@ -124,12 +136,6 @@ require_once './Templates/header.php';
             <div class="alert alert-danger mb-0 p-5 text-center content-text" role="alert">
               <strong>💰 Crédits insuffisants !</strong>
               Vous avez besoin de <?= $covoituragePrice ?> crédits pour participer, mais vous n'avez que <?= $userCredits ?> crédits.
-            </div>
-            <!-- Si l'utilisateur participe déjà au covoiturage -->
-          <?php } elseif ($isUserParticipant) { ?>
-            <div class="alert alert-danger mb-0 p-5 text-center content-text" role="alert">
-              <strong>Vous participez déjà à ce covoiturage.</strong><br>
-              Il n’est pas possible de s’inscrire plusieurs fois au même trajet.
             </div>
             <!-- Pour afficher la modale de double confimation -->
           <?php } elseif ($doubleConfirmation) { ?>

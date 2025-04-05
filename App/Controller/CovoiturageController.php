@@ -231,6 +231,7 @@ class CovoiturageController extends Controller
                 "userCredits" => $participateToCovoiturage[4],
                 "doubleConfirmation" => $participateToCovoiturage[5],
                 "isUserParticipant" => $participateToCovoiturage[6],
+                "isDriverInCovoiturage" => $participateToCovoiturage[7],
             ]
         );
     }
@@ -491,6 +492,8 @@ class CovoiturageController extends Controller
         $noEnoughCredits = false;
         // Variable pour afficher le modal avec la confirmation de participation au covoiturage
         $doubleConfirmation = false;
+        // Variable pour savoir si l'utilisateur est le chauffeur du covoiturage  
+        $isDriverInCovoiturage = false;
 
         // Les places disponibles dans le covoiturage
         $disponiblePlaces = $covoiturageDetail['nb_place_disponible'];
@@ -512,19 +515,24 @@ class CovoiturageController extends Controller
         // Si l'user n'est pas connecté, on change la variable pour passer l'info à la vue
         if (!Security::isLogged()) {
             $isNotLogged = true;
+        } // Si l'utilisateur est le chauffeur du covoiturage
+        elseif (in_array($userId, $covoiturageDetail)) {
+            $isDriverInCovoiturage = true;
         } // S'il n'y a pas des places disponibles, on change la variable pour passer l'info à la vue
-        elseif ($disponiblePlaces == 0) {
-            $noDisponiblePlaces = true;
-        } // S'il n'y a pas des places disponibles, on change la variable pour passer l'info à la vue  
         elseif ($disponiblePlaces == 0) {
             $noDisponiblePlaces = true;
         } // Si l'utilisateur ne possède pas assez des crédits pour participer au covoiturage  
         elseif ($userCredits < $covoituragePrice) {
             $noEnoughCredits = true;
-        } 
+        }
+
 
         // Si tous ces params sont faux, l'utilisateur peut participer au covoiturage
-        if ($isNotLogged == false && $noDisponiblePlaces == false && $noEnoughCredits == false && $isUserParticipant == false) {
+        if (
+            $isNotLogged == false && $isUserParticipant == false
+            && $isDriverInCovoiturage == false && $noDisponiblePlaces == false
+            && $noEnoughCredits == false
+        ) {
             // On affiche la modal avec la confirmation de participation au covoiturage
             $doubleConfirmation = true;
             // Si l'utilisateur confirme sa participation au covoiturage
@@ -551,7 +559,8 @@ class CovoiturageController extends Controller
                 $covoituragePrice,
                 $userCredits,
                 $doubleConfirmation,
-                $isUserParticipant
+                $isUserParticipant,
+                $isDriverInCovoiturage
             ];
     }
 
