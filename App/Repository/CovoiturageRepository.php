@@ -225,4 +225,17 @@ class CovoiturageRepository extends Repository
 
         return $query->fetchAll($this->pdo::FETCH_ASSOC);
     }
+
+    // Fonction pour savoir si le l'utilisateur participe déjà à un covoiturage
+    public function isUserParticipant(int $userId, int $covoiturageId): bool
+    {
+        $sql = "SELECT id FROM User_Covoiturages
+                WHERE user_id = :userId AND covoiturage_id = :covoiturageId";
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":userId", $userId, $this->pdo::PARAM_INT);
+        $query->bindValue(":covoiturageId", $covoiturageId, $this->pdo::PARAM_INT);
+        $query->execute();
+
+        return $query->fetch() ? true : false; // Si le fetch renvoie une ligne, alors l'utilisateur participe déjà au covoiturage
+    }
 }

@@ -229,7 +229,8 @@ class CovoiturageController extends Controller
                 "noEnoughCredits" => $participateToCovoiturage[2],
                 "covoituragePrice" => $participateToCovoiturage[3],
                 "userCredits" => $participateToCovoiturage[4],
-                "doubleConfirmation" => $participateToCovoiturage[5]
+                "doubleConfirmation" => $participateToCovoiturage[5],
+                "isUserParticipant" => $participateToCovoiturage[6],
             ]
         );
     }
@@ -503,8 +504,10 @@ class CovoiturageController extends Controller
         $user = $userRepository->findOneByMail($userMail);
         // Les crédits de l'utilisateur
         $userCredits = $user->getNbCredits();
-        // $userCredits = isset($_SESSION['user']['credits']) ? $_SESSION['user']['credits'] : null;
+        // L'id du covoiturage
         $covoiturageId = $covoiturageDetail['id'];
+        // On cherche si l'utilisateur participe déjà au covoiturage
+        $isUserParticipant = $covoiturageRepository->isUserParticipant($userId, $covoiturageId);
 
         // Si l'user n'est pas connecté, on change la variable pour passer l'info à la vue
         if (!Security::isLogged()) {
@@ -518,10 +521,10 @@ class CovoiturageController extends Controller
         } // Si l'utilisateur ne possède pas assez des crédits pour participer au covoiturage  
         elseif ($userCredits < $covoituragePrice) {
             $noEnoughCredits = true;
-        }
+        } 
 
         // Si tous ces params sont faux, l'utilisateur peut participer au covoiturage
-        if ($isNotLogged == false && $noDisponiblePlaces == false && $noEnoughCredits == false) {
+        if ($isNotLogged == false && $noDisponiblePlaces == false && $noEnoughCredits == false && $isUserParticipant == false) {
             // On affiche la modal avec la confirmation de participation au covoiturage
             $doubleConfirmation = true;
             // Si l'utilisateur confirme sa participation au covoiturage
@@ -547,7 +550,8 @@ class CovoiturageController extends Controller
                 $noEnoughCredits,
                 $covoituragePrice,
                 $userCredits,
-                $doubleConfirmation
+                $doubleConfirmation,
+                $isUserParticipant
             ];
     }
 

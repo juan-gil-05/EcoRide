@@ -105,7 +105,7 @@ require_once './Templates/header.php';
           <!-- Si l'utilisateur n'est pas connecté, alors, on affiche un message 
             et on propose de se connecter ou créer un compte -->
           <?php if (!isset($_SESSION['user'])) { ?>
-            <div class="alert alert-danger mb-0 p-5 content-text" role="alert">
+            <div class="alert alert-danger mb-0 p-5 text-center content-text" role="alert">
               <p class="mb-4"><strong>Attention :</strong> Vous devez être connecté pour participer à ce trajet.</p>
               <!-- Liens pour se connecter ou créer un compte  -->
               <div class="d-flex gap-3 justify-content-center align-items-center text-white">
@@ -116,18 +116,25 @@ require_once './Templates/header.php';
             </div>
             <!-- Si le covoiturage n'a plus des places disponibles-->
           <?php } elseif ($noDisponiblePlaces) { ?>
-            <div class="alert alert-danger mb-0 p-5 content-text" role="alert">
+            <div class="alert alert-danger mb-0 p-5 text-center content-text" role="alert">
               <strong>🚫 Trajet complet !</strong> Il n'y a plus de places disponibles.
             </div>
             <!-- Si l'utilisateur ne possède pas assez des crédits pour participer au covoiturage-->
           <?php } elseif ($noEnoughCredits) { ?>
-            <div class="alert alert-danger mb-0 p-5 content-text" role="alert">
+            <div class="alert alert-danger mb-0 p-5 text-center content-text" role="alert">
               <strong>💰 Crédits insuffisants !</strong>
               Vous avez besoin de <?= $covoituragePrice ?> crédits pour participer, mais vous n'avez que <?= $userCredits ?> crédits.
             </div>
+            <!-- Si l'utilisateur participe déjà au covoiturage -->
+          <?php } elseif ($isUserParticipant) { ?>
+            <div class="alert alert-danger mb-0 p-5 text-center content-text" role="alert">
+              <strong>Vous participez déjà à ce covoiturage.</strong><br>
+              Il n’est pas possible de s’inscrire plusieurs fois au même trajet.
+            </div>
+            <!-- Pour afficher la modale de double confimation -->
           <?php } elseif ($doubleConfirmation) { ?>
             <!-- Formulaire pour participer au covoiturage  -->
-            <form method="post" class="w-100 d-flex align-items-center flex-column gap-4 p-5 mb-0 bg-light form" id="participateForm">
+            <form method="post" class="w-100 d-flex align-items-center flex-column gap-4 p-5 text-center mb-0 bg-light form" id="participateForm">
               <!-- Input cache pour passer les donnes dans la requête sql -->
               <input type="text" name="user_id" hidden value="<?= (isset($_SESSION['user']['id'])) ? $_SESSION['user']['id'] : "" ?>">
               <!-- Input cache pour passer les donnes dans la requête sql -->
