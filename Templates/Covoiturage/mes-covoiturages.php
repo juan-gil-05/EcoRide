@@ -47,7 +47,7 @@ require_once './Templates/header.php';
                             <?php foreach ($covoiturageaAsPassager as $covoiturage) { ?>
                                 <li class="content-text">
                                     <!-- Le jour et le mois du covoiturage -->
-                                    <div class="fw-medium covoiturage-day-month mb-4">
+                                    <div class="fw-medium covoiturage-day-month">
                                         <p class="mb-0 text-center"><?= $dayName[$covoiturage['id']] . ", " . $dayNumber[$covoiturage['id']] . " " . $monthName[$covoiturage['id']] ?></p>
                                     </div>
                                     <!-- Les heures et adresses de départ et d'arrivée-->
@@ -67,7 +67,7 @@ require_once './Templates/header.php';
                                         </div>
                                     </div>
                                     <!-- Bouton pour voir plus en détail le covoiturage et pour le quitter -->
-                                    <div class="detail-btn-div content-text mt-4 d-flex justify-content-evenly">
+                                    <div class="covoiturage-btn-div d-flex justify-content-evenly">
                                         <!-- Bouton pour ouvrir la modale de confirmation -->
                                         <button class="btn btn-danger secondary-btn text-light" data-bs-toggle="modal" data-bs-target="#leaveCovoiturageModal<?= $covoiturage['id'] ?>">
                                             Quitter
@@ -128,7 +128,7 @@ require_once './Templates/header.php';
                             <?php foreach ($covoituragesAsDriver as $covoiturage) { ?>
                                 <li class="content-text">
                                     <!-- Le jour et le mois du covoiturage -->
-                                    <div class="fw-medium covoiturage-day-month mb-4">
+                                    <div class="fw-medium covoiturage-day-month">
                                         <p class="mb-0 text-center"><?= $dayName[$covoiturage['id']] . ", " . $dayNumber[$covoiturage['id']] . " " . $monthName[$covoiturage['id']] ?></p>
                                     </div>
                                     <!-- Les heures et adresses de départ et d'arrivée-->
@@ -148,7 +148,7 @@ require_once './Templates/header.php';
                                         </div>
                                     </div>
                                     <!-- Boutons pour annuler ou voir plus en détail le covoiturage -->
-                                    <div class="detail-btn-div content-text mt-4 d-flex justify-content-evenly">
+                                    <div class="covoiturage-btn-div d-flex justify-content-evenly">
                                         <!-- Bouton pour pour ouvrir la modal de confirmation -->
                                         <button class="btn btn-danger secondary-btn text-light" data-bs-toggle="modal" data-bs-target="#deleteCovoiturageModal<?= $covoiturage['id'] ?>">
                                             Supprimer
@@ -176,7 +176,10 @@ require_once './Templates/header.php';
                                             </div>
                                         </div>
                                         <!-- Bouton pour voir les détails du covoiturage -->
-                                        <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>" class="btn btn-warning secondary-btn">Détail</a>
+                                        <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>" 
+                                           class="btn btn-warning secondary-btn text-dark">Détail</a>
+                                        <!-- Bouton pour démarrer le covoiturage -->
+                                        <button class="btn btn-primary secondary-btn text-white">Démarrer</button>
                                     </div>
                                 </li>
                             <?php } ?>

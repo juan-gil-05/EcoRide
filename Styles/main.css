@@ -13162,6 +13162,11 @@ html {
   background-color: #f5f5f5;
   padding: 15px;
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 25px;
+  border: dashed 0.8px #4e4e4e;
 }
 .accordion .accordion-body ul li .covoiturage-day-month {
   padding: 10px;
@@ -13193,6 +13198,19 @@ html {
   right: 2%;
   z-index: 1;
   top: 5%;
+}
+.accordion .accordion-body ul li .covoiturage-btn-div {
+  border-top: solid 0.3px #4e4e4e;
+}
+.accordion .accordion-body ul li .covoiturage-btn-div .btn {
+  margin-top: 15px;
+  font-size: 1rem !important;
+}
+@media (max-width: 768px) {
+  .accordion .accordion-body ul li .covoiturage-btn-div .btn {
+    font-size: 0.6rem !important;
+    font-weight: 500;
+  }
 }
 
 .profil-section {

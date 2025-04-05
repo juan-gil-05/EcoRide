@@ -38,6 +38,12 @@
         background-color: $light;
         padding: 15px;
         border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 25px;
+        border: dashed 0.8px $dark;
+
         // Le jour et le mois du covoiturage
         .covoiturage-day-month {
           padding: 10px;
@@ -74,6 +80,19 @@
             right: 2%;
             z-index: 1;
             top: 5%;
+          }
+        }
+        // Le div avec les boutons pour annuler, voir le détail ou démarrer le covoiturage
+        .covoiturage-btn-div {
+          border-top: solid 0.3px $dark;
+          .btn {
+            margin-top: 15px;
+            font-size: 1rem !important;
+            // le Text Mobile
+            @media (max-width: "768px") {
+              font-size: 0.6rem !important;
+              font-weight: 500;
+            }
           }
         }
       }
