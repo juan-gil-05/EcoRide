@@ -28,6 +28,7 @@
 <script src="../Scripts/driverForm.js"></script>
 <script src="../Scripts/preferencesForm.js"></script>
 <script src="../Scripts/searchCovoiturage.js"></script>
+<script src="../Scripts/startCovoiturage.js"></script>
 </body>
 
 </html>

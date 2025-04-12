@@ -176,10 +176,17 @@ require_once './Templates/header.php';
                                             </div>
                                         </div>
                                         <!-- Bouton pour voir les détails du covoiturage -->
-                                        <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>" 
-                                           class="btn btn-warning secondary-btn text-dark">Détail</a>
+                                        <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>"
+                                            class="btn btn-warning secondary-btn text-dark">Détail</a>
                                         <!-- Bouton pour démarrer le covoiturage -->
-                                        <button class="btn btn-primary secondary-btn text-white">Démarrer</button>
+                                        <button id="startBtn<?= $covoiturage['id'] ?>" class="btn btn-primary secondary-btn text-white"
+                                            onclick="startCovoiturage(<?= $covoiturage['id'] ?>)">
+                                            Démarrer
+                                        </button>
+                                        <!-- Bouton pour marquer l'arrivée du covoiturage -->
+                                        <button id="arriveBtn<?= $covoiturage['id'] ?>" class="btn btn-primary secondary-btn text-white hidden">
+                                            Arrivée à destination
+                                        </button>
                                     </div>
                                 </li>
                             <?php } ?>

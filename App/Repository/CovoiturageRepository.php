@@ -238,4 +238,16 @@ class CovoiturageRepository extends Repository
 
         return $query->fetch() ? true : false; // Si le fetch renvoie une ligne, alors l'utilisateur participe déjà au covoiturage
     }
+
+    // Fonction pour changer le statut d'un covoiturage
+    public function updateCovoiturageStatut(int $covoiturageId, int $statutId) : bool
+    {
+        $sql = "UPDATE Covoiturage 
+                SET statut_id = :statutId
+                WHERE Covoiturage.id = :covoiturageId;";
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":statutId", $statutId, $this->pdo::PARAM_INT);
+        $query->bindValue(":covoiturageId", $covoiturageId, $this->pdo::PARAM_INT);
+        return $query->execute();
+    }
 }

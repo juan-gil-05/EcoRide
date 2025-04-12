@@ -290,6 +290,9 @@ class CovoiturageController extends Controller
         // Si le chauffeur supprime le covoiturage
         $this->cancelCovoiturage();
 
+        // Si l'utilisateur démarre le covoiturage
+        $this->startCovoiturage($covoiturageRepository);
+
         $this->render(
             "Covoiturage/mes-covoiturages",
             [
@@ -564,7 +567,6 @@ class CovoiturageController extends Controller
             ];
     }
 
-
     // Fonction si l'utilisateur quitte le covoiturage
     public function leaveCovoiturage()
     {
@@ -591,7 +593,6 @@ class CovoiturageController extends Controller
             $_SESSION['message_code'] = "success";
         }
     }
-
 
     // Fonction pour annuler le covoiturage
     public function cancelCovoiturage()
@@ -648,6 +649,25 @@ class CovoiturageController extends Controller
             // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
             $_SESSION['message_to_User'] = "Covoiturage annulé. Les participants ont été informés par e-mail.";
             $_SESSION['message_code'] = "info";
+        }
+    }
+
+    // Fonction pour démarrer le covoiturage
+    public function startCovoiturage(CovoiturageRepository $covoiturageRepository)
+    {
+        // Si le boutton "Démarrer" est cliqué
+        if (isset($_POST['startCovoiturage'])) {
+            // On récupere l'id du covoiturage envoié dans le fetch
+            $covoiturageId = $_POST['covoiturage_id'];
+
+            // On appel la fonction pour mettre à jour le statut du covoiturage
+            // 1 = Crée | 2 = Démarré | 3 = Arrivé | 4 = Validé | 5 = Annulé
+            $covoiturageRepository->updateCovoiturageStatut($covoiturageId, 2);
+
+            // Envoi de la réponse JSON pour la requête AJAX
+            echo (json_encode(['success' => true, 'id' => $covoiturageId]));
+            exit;
+
         }
     }
 }
