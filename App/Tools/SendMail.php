@@ -34,6 +34,9 @@ class SendMail
             $mail->setFrom('testecoride8@gmail.com', 'EcoRide');       // Qui ENVOIE le mail
             $mail->addAddress($to, 'Passager');                          // Qui REÇOIT le mail
 
+            // Encodage
+            $mail->CharSet = 'UTF-8'; 
+            $mail->Encoding = 'base64';
 
             //Content
             $mail->isHTML(true);                                  // Activer le format HTML

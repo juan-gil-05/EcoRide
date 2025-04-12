@@ -48,8 +48,9 @@ function arriveCovoiturage(id) {
                 // Afficher le bouton "Clôturé"
                 const finishBtn = document.getElementById("finishBtn" + id);
                 if (finishBtn) finishBtn.classList.remove("hidden");
-                console.log("Covoiturage terminé avec succès !");
-                
+                // Recharger la page pour afficher le message au chauffeur comme quoi le covoiturage un mail a été envoyé
+                // à tous les passagers pour les informer que le covoiturage est terminé               
+                location.reload();
             }
         })
         .catch(error => {

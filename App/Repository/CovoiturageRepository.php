@@ -212,7 +212,8 @@ class CovoiturageRepository extends Repository
     // Fonction pour chercher les participants d'un covoiturage par le covoiturage ID, et le pseudo du chauffeur
     public function searchCovoiturageParticipantsByCovoiturageId(int $covoiturageId): array
     {
-        $sql = "SELECT User_Covoiturages.user_id, passager.mail as passager_mail, driver.pseudo as driver_pseudo
+        $sql = "SELECT User_Covoiturages.user_id, passager.mail as passager_mail, passager.pseudo as passager_pseudo,
+                       driver.pseudo as driver_pseudo
                 FROM User_Covoiturages
                 INNER JOIN User as passager ON User_Covoiturages.user_id = passager.id
                 INNER JOIN Covoiturage ON User_Covoiturages.covoiturage_id = Covoiturage.id

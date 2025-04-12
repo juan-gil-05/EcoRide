@@ -296,7 +296,6 @@ class CovoiturageController extends Controller
         // Si le chauffeur indique avoir arrivé à la destination
         $this->arriveCovoiturage($covoiturageRepository);
 
-
         $this->render(
             "Covoiturage/mes-covoiturages",
             [
@@ -641,14 +640,14 @@ class CovoiturageController extends Controller
                 ];
 
                 // Pour mettre à jour les crédits de chaque passager
-                // $covoiturageRepository->updateUserCredits($covoituragePrice, $passagerId, true);
+                $covoiturageRepository->updateUserCredits($covoituragePrice, $passagerId, true);
 
                 // On appele la fonction pour envoyer un mail à chaque passager
                 SendMail::sendMailToPassagers($passagerMail, $mailSubject, $mailBody, $mailParams);
             }
 
             // Fonction pour supprimer le covoiturage dans la base des données
-            // $covoiturageRepository->deleteCovoiturageAsDriver($covoiturageId);
+            $covoiturageRepository->deleteCovoiturageAsDriver($covoiturageId);
 
             // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
             $_SESSION['message_to_User'] = "Covoiturage annulé. Les participants ont été informés par e-mail.";
@@ -686,9 +685,50 @@ class CovoiturageController extends Controller
             // 1 = Crée | 2 = Démarré | 3 = Arrivé | 4 = Validé | 5 = Annulé
             $covoiturageRepository->updateCovoiturageStatut($covoiturageId, 3);
 
+            // On appel la fonction pour envoyer un mail aux participants du covoiturage, afin de confirmer que le trajet s'est bien déroulé
+            $this->sendMailToValidateCovoiturage($covoiturageRepository, $covoiturageId);
+
             // Envoi de la réponse JSON pour la requête AJAX
             echo (json_encode(['success' => true, 'id' => $covoiturageId]));
             exit;
         }
+    }
+
+    // Fonction pour envoyer un mail aux participants du covoiturage quand le chauffeur indique que le covoiturage est terminé
+    public function sendMailToValidateCovoiturage(CovoiturageRepository $covoiturageRepository, int $covoiturageId)
+    {
+        // Le sujet et le modèle du mail
+        $mailSubject = 'Votre covoiturage est terminé – Merci de confirmer votre expérience';
+        $mailBody = 'covoiturage-finished.php';
+
+        // Pour récupérer les détailles du covoiturage
+        $covoiturageDetail = $covoiturageRepository->searchCovoiturageDetailsById($covoiturageId);
+        foreach ($covoiturageDetail as $covoiturage) {
+            // Les date du covoiturage
+            $covoiturageDateDepart = new DateTime($covoiturage['date_heure_depart']);
+        }
+
+        // Pour récupérer les participants du covoiturage
+        $participants = $covoiturageRepository->searchCovoiturageParticipantsByCovoiturageId($covoiturageId);
+        foreach ($participants as $passager) {
+            // Mail, pseudo des passagers et du chauffeur
+            $passagerPseudo = ucfirst($passager['passager_pseudo']);
+            $passagerMail = $passager['passager_mail'];
+            $driverPseudo = ucfirst($passager['driver_pseudo']); // Pseudo du chauffeur
+
+            // Les paramètres pour envoyer le mail
+            $mailParams = [
+                "passagerPseudo" => $passagerPseudo,
+                "covoiturageDateDepart" => $covoiturageDateDepart->format('d-m-Y'), // Pour formater la date
+                "driverPseudo" => $driverPseudo
+            ];
+
+            // On appele la fonction pour envoyer un mail à chaque passager
+            SendMail::sendMailToPassagers($passagerMail, $mailSubject, $mailBody, $mailParams);
+        }
+
+        // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+        $_SESSION['message_to_User'] = "Un email a été envoyé à tous les participants pour confirmer que le trajet s’est bien déroulé.<br>Leur retour permettra de valider définitivement votre covoiturage.";
+        $_SESSION['message_code'] = "success";
     }
 }
