@@ -13212,6 +13212,9 @@ html {
     font-weight: 500;
   }
 }
+.accordion .accordion-body ul li .covoiturage-btn-div .btn-dark {
+  cursor: not-allowed;
+}
 
 .profil-section {
   background-color: #f5f5f5;

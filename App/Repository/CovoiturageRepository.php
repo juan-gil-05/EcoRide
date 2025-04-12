@@ -72,7 +72,7 @@ class CovoiturageRepository extends Repository
     public function searchCovoiturageDetailsByUserId(int $userId): array
     {
         $sql = ("SELECT Covoiturage.id, Covoiturage.date_heure_depart, Covoiturage.date_heure_arrivee, 
-                Covoiturage.adresse_depart, Covoiturage.adresse_arrivee, Covoiturage.prix,
+                Covoiturage.adresse_depart, Covoiturage.adresse_arrivee, Covoiturage.prix, Covoiturage.statut_id,
                 User.pseudo, User.photo_uniqId
                 FROM Covoiturage
                 INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id

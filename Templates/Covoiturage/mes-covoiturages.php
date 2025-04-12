@@ -147,7 +147,7 @@ require_once './Templates/header.php';
                                             <p><?= substr($covoiturage['date_heure_arrivee'], 11, 5) ?></p>
                                         </div>
                                     </div>
-                                    <!-- Boutons pour annuler ou voir plus en détail le covoiturage -->
+                                    <!-- Tous les boutons d'action du covoiturage -->
                                     <div class="covoiturage-btn-div d-flex justify-content-evenly">
                                         <!-- Bouton pour pour ouvrir la modal de confirmation -->
                                         <button class="btn btn-danger secondary-btn text-light" data-bs-toggle="modal" data-bs-target="#deleteCovoiturageModal<?= $covoiturage['id'] ?>">
@@ -178,15 +178,49 @@ require_once './Templates/header.php';
                                         <!-- Bouton pour voir les détails du covoiturage -->
                                         <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>"
                                             class="btn btn-warning secondary-btn text-dark">Détail</a>
-                                        <!-- Bouton pour démarrer le covoiturage -->
-                                        <button id="startBtn<?= $covoiturage['id'] ?>" class="btn btn-primary secondary-btn text-white"
-                                            onclick="startCovoiturage(<?= $covoiturage['id'] ?>)">
-                                            Démarrer
-                                        </button>
-                                        <!-- Bouton pour marquer l'arrivée du covoiturage -->
-                                        <button id="arriveBtn<?= $covoiturage['id'] ?>" class="btn btn-primary secondary-btn text-white hidden">
-                                            Arrivée à destination
-                                        </button>
+                                        <!-- Boutons pour démarrer, arrivé à destination et clôturé le covoiturage -->
+                                        <!-- Les statuts d'un covoiturage : 
+                                         - 1 : Crée
+                                         - 2 : Démarré
+                                         - 3 : Arrivé
+                                         - 4 : Validé 
+                                        -->
+                                        <?php if ($covoiturage['statut_id'] == 1) { ?>
+                                            <button id="startBtn<?= $covoiturage['id'] ?>"
+                                                class="btn btn-primary secondary-btn text-white"
+                                                onclick="startCovoiturage(<?= $covoiturage['id'] ?>)">
+                                                Démarrer
+                                            </button>
+                                        <?php } else { ?>
+                                            <button id="startBtn<?= $covoiturage['id'] ?>"
+                                                class="btn btn-primary secondary-btn text-white hidden">
+                                                Démarrer
+                                            </button>
+                                        <?php } ?>
+                                        <?php if ($covoiturage['statut_id'] == 2) { ?>
+                                            <button id="arriveBtn<?= $covoiturage['id'] ?>"
+                                                class="btn btn-primary secondary-btn text-white"
+                                                onclick="arriveCovoiturage(<?= $covoiturage['id'] ?>)">
+                                                Arrivée à destination
+                                            </button>
+                                        <?php } else { ?>
+                                            <button id="arriveBtn<?= $covoiturage['id'] ?>"
+                                                class="btn btn-primary secondary-btn text-white hidden"
+                                                onclick="arriveCovoiturage(<?= $covoiturage['id'] ?>)">
+                                                Arrivée à destination
+                                            </button>
+                                        <?php } ?>
+                                        <?php if ($covoiturage['statut_id'] == 3) { ?>
+                                            <button id="finishBtn<?= $covoiturage['id'] ?>"
+                                                class="btn btn-dark secondary-btn text-white">
+                                                Clôturé
+                                            </button>
+                                        <?php } else { ?>
+                                            <button id="finishBtn<?= $covoiturage['id'] ?>"
+                                                class="btn btn-dark secondary-btn text-white hidden">
+                                                Clôturé
+                                            </button>
+                                        <?php } ?>
                                     </div>
                                 </li>
                             <?php } ?>

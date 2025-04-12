@@ -288,10 +288,14 @@ class CovoiturageController extends Controller
         $this->leaveCovoiturage();
 
         // Si le chauffeur supprime le covoiturage
-        $this->cancelCovoiturage();
+        $this->deleteCovoiturage();
 
-        // Si l'utilisateur démarre le covoiturage
+        // Si le chauffeur démarre le covoiturage
         $this->startCovoiturage($covoiturageRepository);
+
+        // Si le chauffeur indique avoir arrivé à la destination
+        $this->arriveCovoiturage($covoiturageRepository);
+
 
         $this->render(
             "Covoiturage/mes-covoiturages",
@@ -595,7 +599,7 @@ class CovoiturageController extends Controller
     }
 
     // Fonction pour annuler le covoiturage
-    public function cancelCovoiturage()
+    public function deleteCovoiturage()
     {
         // Appel du repository
         $covoiturageRepository = new CovoiturageRepository;
@@ -667,7 +671,24 @@ class CovoiturageController extends Controller
             // Envoi de la réponse JSON pour la requête AJAX
             echo (json_encode(['success' => true, 'id' => $covoiturageId]));
             exit;
+        }
+    }
 
+    // Fonction pour indiquer l'arrivée du covoiturage
+    public function arriveCovoiturage(CovoiturageRepository $covoiturageRepository)
+    {
+        // Si le boutton "Démarrer" est cliqué
+        if (isset($_POST['arriveCovoiturage'])) {
+            // On récupere l'id du covoiturage envoié dans le fetch
+            $covoiturageId = $_POST['covoiturage_id'];
+
+            // On appel la fonction pour mettre à jour le statut du covoiturage
+            // 1 = Crée | 2 = Démarré | 3 = Arrivé | 4 = Validé | 5 = Annulé
+            $covoiturageRepository->updateCovoiturageStatut($covoiturageId, 3);
+
+            // Envoi de la réponse JSON pour la requête AJAX
+            echo (json_encode(['success' => true, 'id' => $covoiturageId]));
+            exit;
         }
     }
 }

@@ -94,6 +94,10 @@
               font-weight: 500;
             }
           }
+          // Le bouton qu'indique que le covoiturage est clôturé puis qu'il est arrivé à destination
+          .btn-dark{
+            cursor: not-allowed;
+          }
         }
       }
     }
