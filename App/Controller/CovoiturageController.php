@@ -720,6 +720,8 @@ class CovoiturageController extends Controller
         foreach ($covoiturageDetail as $covoiturage) {
             // Les date du covoiturage
             $covoiturageDateDepart = new DateTime($covoiturage['date_heure_depart']);
+            // l'id du covoiturage chiffré
+            $covoiturageEncryptId[$covoiturage['covoiturage_id']] = $this->encryptUrlParameter($covoiturage['covoiturage_id']);
         }
 
         // Pour récupérer les participants du covoiturage
@@ -730,11 +732,10 @@ class CovoiturageController extends Controller
             $passagerEncryptId[$passager['passager_id']] =  $this->encryptUrlParameter($passager['passager_id']); // Id chiffré du passager
             $passagerMail = $passager['passager_mail'];
             $driverPseudo = ucfirst($passager['driver_pseudo']); // Pseudo du chauffeur
-            $driverEncryptId[$passager['driver_id']] =  $this->encryptUrlParameter($passager['driver_id']); // Id chiffré du passager
             // On crée le lien vers le site pour valider le covoiturage, avec les id chiffrés
             $linkToSite = "http://localhost:3000/index.php?controller=page&action=validateCovoiturage&passagerId=" .
                 $passagerEncryptId[$passager['passager_id']] .
-                "&driverId=" . $driverEncryptId[$passager['driver_id']];
+                "&covoiturageId=" . $covoiturageEncryptId[$covoiturage['covoiturage_id']];
 
             // Les paramètres pour envoyer le mail
             $mailParams = [
