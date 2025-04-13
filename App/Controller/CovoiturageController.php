@@ -470,7 +470,7 @@ class CovoiturageController extends Controller
     }
 
     // Fonction pour décryper un paramètre passé dans l'url avec l'algorithme ASE (Advanced Encryption Standard)
-    protected function decryptUrlParameter($encryptedParam)
+    public static function decryptUrlParameter($encryptedParam)
     {
         // Clé pour crypter et décrypter 
         $key = "JkgDDiB3KTxGiDBPBYGObdzFPzyiVJ8g";

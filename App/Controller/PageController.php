@@ -183,14 +183,15 @@ class PageController extends Controller
     // Fonction pour afficher la page dans laquelle le passager indique si le covoiturage s'est bien passé
     protected function validateCovoiturage()
     {
+        // On récupere les id passés dans l'url, et on les dechiffre
+        $passagerId = CovoiturageController::decryptUrlParameter($_GET['passagerId']);
+        $driverId = CovoiturageController::decryptUrlParameter($_GET['driverId']);
 
+        var_dump($passagerId);
+        var_dump($driverId);
         try {
             // Si on envoi le formulaire de validation du covoiturage, ....
             if (isset($_POST["validateCovoiturageForm"])) {
-                $passagerId = $_GET['passagerId'];
-                $driverId = $_GET['driverId'];
-                var_dump($passagerId);
-                var_dump($driverId);
                 // Si le passager indique que le covoiturage s'est bien passé
                 if ($_POST['questionRadio'] == "oui") {
                     var_dump('ok');
