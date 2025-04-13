@@ -202,11 +202,34 @@ class PageController extends Controller
                     $driverId = $covoiturageDetails[0]['user_id']; // l'id du chauffeur
 
                     // Fonction pour mettre à jour les crédits du chauffeur
-                    $covoiturageRepository->updateDriverCredits($covoituragePrice, $driverId);
+                    // $covoiturageRepository->updateDriverCredits($covoituragePrice, $driverId);
 
-                    var_dump('ok');
+                    // Variables pour enregistrer les détails de l'avis
+                    $avisTitle = $_POST['titre'];
+                    $avisDescription = $_POST['avis'];
+                    $avisNote = $_POST['note'];
+                    // Vérification si les champs de l'avis et de la note sont remplis
+                    $withAvisAndNote = !empty($avisTitle) && !empty($avisDescription) && !empty($avisNote);
+                    // Si le passager a rempli les champs de l'avis et de la note
+                    if ($withAvisAndNote) {
+                        // Fonction pour ajouter l'avis et la note du passager au chauffeur
+                        $covoiturageRepository->addAvisAndNote(
+                            $avisTitle,
+                            $avisDescription,
+                            $avisNote,
+                            false, // false pour indiquer que l'avis est en attente de validation par l'employé
+                            $passagerId,
+                            $driverId,
+                            $covoiturageId
+                        );
+                        var_dump('en base de donées');
+                    } else {
+                        var_dump('sans titre, description ou note');
+                    }
+                    
                 } // Si le passager indique que le covoiturage NE S'EST PAS bien passé
                 elseif ($_POST['questionRadio'] == "non") {
+                    var_dump($_POST);
                     var_dump('problem');
                 }
             }
