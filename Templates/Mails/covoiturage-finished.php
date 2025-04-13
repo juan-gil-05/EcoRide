@@ -31,7 +31,7 @@
         <li>✅ Confirmer que le trajet s’est bien déroulé</li>
         <li>✍🏽 Laisser un avis et une note sur le chauffeur (optionnel)</li>
     </ul>
-    <a href="http://localhost:3000/index.php?controller=page&action=validateCovoiturage&passagerId=<?=$passagerId?>&driverId=<?=$driverId?>">🔗 Accéder à mon espace</a>
+    <a href="<?= $linkToSite ?>"> 🔗 Accéder à mon espace </a>
     <p>
         ⚠️ Si vous avez rencontré un problème durant ce trajet, vous aurez la possibilité d’ajouter un commentaire.
         Un membre de notre équipe vous contactera rapidement afin de résoudre la situation.

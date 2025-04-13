@@ -90,7 +90,7 @@ class CovoiturageController extends Controller
 
                 // Pour récupérer l'id de chaque covoiturage
                 $covoiturageId = $covoiturage['id'];
-                // Pour crypter l'id du covoiturage avant de l'envoyer dans l'url pour afficher les détails de chaque covoiturage 
+                // Pour crypter l'id du covoiturage avant de l'envoyer dans l'url, afin d'afficher les détails de chaque covoiturage 
                 $covoiturageEncryptId[$covoiturage['id']] =  $this->encryptUrlParameter($covoiturage['id']);
 
                 // Fonction du repository pour récupérer les covoiturages avec ses énergies utilisées, (Électrique, Diesel, .....)
@@ -502,7 +502,7 @@ class CovoiturageController extends Controller
             $doubleConfirmation = false;
             // Variable pour savoir si l'utilisateur est le chauffeur du covoiturage  
             $isDriverInCovoiturage = false;
-    
+
             // Les places disponibles dans le covoiturage
             $disponiblePlaces = $covoiturageDetail['nb_place_disponible'];
             // le prix du covoiturage
@@ -519,7 +519,7 @@ class CovoiturageController extends Controller
             $covoiturageId = $covoiturageDetail['id'];
             // On cherche si l'utilisateur participe déjà au covoiturage
             $isUserParticipant = $covoiturageRepository->isUserParticipant($userId, $covoiturageId);
-    
+
             // Si l'user n'est pas connecté, on change la variable pour passer l'info à la vue
             if (!Security::isLogged()) {
                 $isNotLogged = true;
@@ -533,8 +533,8 @@ class CovoiturageController extends Controller
             elseif ($userCredits < $covoituragePrice) {
                 $noEnoughCredits = true;
             }
-    
-    
+
+
             // Si tous ces params sont faux, l'utilisateur peut participer au covoiturage
             if (
                 $isNotLogged == false && $isUserParticipant == false
@@ -548,13 +548,13 @@ class CovoiturageController extends Controller
                     // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
                     $_SESSION['message_to_User'] = ' Votre participation au covoiturage a été enregistrée avec succès !';
                     $_SESSION['message_code'] = "success";
-    
+
                     // On appele la fonction du repository pour enregistrer les données dans la BDD
                     $covoiturageRepository->participateToCovoiturage($userId, $covoiturageId);
-    
+
                     // On appele la fonction pour mettre à jour les crédits de l'utilisateur
                     $covoiturageRepository->updateUserCredits($covoituragePrice, $userId, false);
-    
+
                     // On appele la fonction pour mettre à jour les nombres de places disponibles du covoiturage
                     $covoiturageRepository->updatePlacesDisponibles($covoiturageId, false);
                 }
@@ -570,7 +570,7 @@ class CovoiturageController extends Controller
                     $isUserParticipant,
                     $isDriverInCovoiturage
                 ];
-        } else{
+        } else {
             return [
                 null,
                 null,
@@ -727,18 +727,21 @@ class CovoiturageController extends Controller
         foreach ($participants as $passager) {
             // Mail, pseudo des passagers et du chauffeur
             $passagerPseudo = ucfirst($passager['passager_pseudo']);
-            $passagerId = $passager['passager_id']; // Id du passager
+            $passagerEncryptId[$passager['passager_id']] =  $this->encryptUrlParameter($passager['passager_id']); // Id chiffré du passager
             $passagerMail = $passager['passager_mail'];
             $driverPseudo = ucfirst($passager['driver_pseudo']); // Pseudo du chauffeur
-            $driverId = $passager['driver_id']; // Id du chauffeur
+            $driverEncryptId[$passager['driver_id']] =  $this->encryptUrlParameter($passager['driver_id']); // Id chiffré du passager
+            // On crée le lien vers le site pour valider le covoiturage, avec les id chiffrés
+            $linkToSite = "http://localhost:3000/index.php?controller=page&action=validateCovoiturage&passagerId=" .
+                $passagerEncryptId[$passager['passager_id']] .
+                "&driverId=" . $driverEncryptId[$passager['driver_id']];
 
             // Les paramètres pour envoyer le mail
             $mailParams = [
                 "passagerPseudo" => $passagerPseudo,
-                "passagerId" => $passagerId,
                 "covoiturageDateDepart" => $covoiturageDateDepart->format('d-m-Y'), // Pour formater la date
                 "driverPseudo" => $driverPseudo,
-                "driverId" => $driverId,
+                "linkToSite" => $linkToSite
             ];
 
             // On appele la fonction pour envoyer un mail à chaque passager
