@@ -490,84 +490,98 @@ class CovoiturageController extends Controller
     // Fonction pour participer au covoiturage
     protected function participateToCovoiturage(array $covoiturageDetail, CovoiturageRepository $covoiturageRepository, UserRepository $userRepository): array
     {
-        // Variable pour savoir si l'utilisateur est connecté ou pas
-        $isNotLogged = false;
-        // Variable pour savoir si le covoiturage a des places disponibles
-        $noDisponiblePlaces = false;
-        // Variable pour savoir si l'utilisateur possède assez des crédits pour participer au covoiturage
-        $noEnoughCredits = false;
-        // Variable pour afficher le modal avec la confirmation de participation au covoiturage
-        $doubleConfirmation = false;
-        // Variable pour savoir si l'utilisateur est le chauffeur du covoiturage  
-        $isDriverInCovoiturage = false;
-
-        // Les places disponibles dans le covoiturage
-        $disponiblePlaces = $covoiturageDetail['nb_place_disponible'];
-        // le prix du covoiturage
-        $covoituragePrice = $covoiturageDetail['prix'];
-        // L'id de l'utilisateur
-        $userId = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
-        // Le mail de l'utilisateur
-        $userMail = isset($_SESSION['user']['mail']) ? $_SESSION['user']['mail'] : null;
-        // On cherche l'utilisateur par son mail
-        $user = $userRepository->findOneByMail($userMail);
-        // Les crédits de l'utilisateur
-        $userCredits = $user->getNbCredits();
-        // L'id du covoiturage
-        $covoiturageId = $covoiturageDetail['id'];
-        // On cherche si l'utilisateur participe déjà au covoiturage
-        $isUserParticipant = $covoiturageRepository->isUserParticipant($userId, $covoiturageId);
-
-        // Si l'user n'est pas connecté, on change la variable pour passer l'info à la vue
-        if (!Security::isLogged()) {
-            $isNotLogged = true;
-        } // Si l'utilisateur est le chauffeur du covoiturage
-        elseif (in_array($userId, $covoiturageDetail)) {
-            $isDriverInCovoiturage = true;
-        } // S'il n'y a pas des places disponibles, on change la variable pour passer l'info à la vue
-        elseif ($disponiblePlaces == 0) {
-            $noDisponiblePlaces = true;
-        } // Si l'utilisateur ne possède pas assez des crédits pour participer au covoiturage  
-        elseif ($userCredits < $covoituragePrice) {
-            $noEnoughCredits = true;
-        }
-
-
-        // Si tous ces params sont faux, l'utilisateur peut participer au covoiturage
-        if (
-            $isNotLogged == false && $isUserParticipant == false
-            && $isDriverInCovoiturage == false && $noDisponiblePlaces == false
-            && $noEnoughCredits == false
-        ) {
-            // On affiche la modal avec la confirmation de participation au covoiturage
-            $doubleConfirmation = true;
-            // Si l'utilisateur confirme sa participation au covoiturage
-            if (isset($_POST['participate'])) {
-                // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
-                $_SESSION['message_to_User'] = ' Votre participation au covoiturage a été enregistrée avec succès !';
-                $_SESSION['message_code'] = "success";
-
-                // On appele la fonction du repository pour enregistrer les données dans la BDD
-                $covoiturageRepository->participateToCovoiturage($userId, $covoiturageId);
-
-                // On appele la fonction pour mettre à jour les crédits de l'utilisateur
-                $covoiturageRepository->updateUserCredits($covoituragePrice, $userId, false);
-
-                // On appele la fonction pour mettre à jour les nombres de places disponibles du covoiturage
-                $covoiturageRepository->updatePlacesDisponibles($covoiturageId, false);
+        // Si l'utilisateur est connecté, on peut participer au covoiturage
+        if (Security::isLogged()) {
+            // Variable pour savoir si l'utilisateur est connecté ou pas
+            $isNotLogged = false;
+            // Variable pour savoir si le covoiturage a des places disponibles
+            $noDisponiblePlaces = false;
+            // Variable pour savoir si l'utilisateur possède assez des crédits pour participer au covoiturage
+            $noEnoughCredits = false;
+            // Variable pour afficher le modal avec la confirmation de participation au covoiturage
+            $doubleConfirmation = false;
+            // Variable pour savoir si l'utilisateur est le chauffeur du covoiturage  
+            $isDriverInCovoiturage = false;
+    
+            // Les places disponibles dans le covoiturage
+            $disponiblePlaces = $covoiturageDetail['nb_place_disponible'];
+            // le prix du covoiturage
+            $covoituragePrice = $covoiturageDetail['prix'];
+            // L'id de l'utilisateur
+            $userId = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
+            // Le mail de l'utilisateur
+            $userMail = isset($_SESSION['user']['mail']) ? $_SESSION['user']['mail'] : null;
+            // On cherche l'utilisateur par son mail
+            $user = $userRepository->findOneByMail($userMail);
+            // Les crédits de l'utilisateur
+            $userCredits = $user->getNbCredits();
+            // L'id du covoiturage
+            $covoiturageId = $covoiturageDetail['id'];
+            // On cherche si l'utilisateur participe déjà au covoiturage
+            $isUserParticipant = $covoiturageRepository->isUserParticipant($userId, $covoiturageId);
+    
+            // Si l'user n'est pas connecté, on change la variable pour passer l'info à la vue
+            if (!Security::isLogged()) {
+                $isNotLogged = true;
+            } // Si l'utilisateur est le chauffeur du covoiturage
+            elseif (in_array($userId, $covoiturageDetail)) {
+                $isDriverInCovoiturage = true;
+            } // S'il n'y a pas des places disponibles, on change la variable pour passer l'info à la vue
+            elseif ($disponiblePlaces == 0) {
+                $noDisponiblePlaces = true;
+            } // Si l'utilisateur ne possède pas assez des crédits pour participer au covoiturage  
+            elseif ($userCredits < $covoituragePrice) {
+                $noEnoughCredits = true;
             }
-        }
-        return
-            [
-                $isNotLogged,
-                $noDisponiblePlaces,
-                $noEnoughCredits,
-                $covoituragePrice,
-                $userCredits,
-                $doubleConfirmation,
-                $isUserParticipant,
-                $isDriverInCovoiturage
+    
+    
+            // Si tous ces params sont faux, l'utilisateur peut participer au covoiturage
+            if (
+                $isNotLogged == false && $isUserParticipant == false
+                && $isDriverInCovoiturage == false && $noDisponiblePlaces == false
+                && $noEnoughCredits == false
+            ) {
+                // On affiche la modal avec la confirmation de participation au covoiturage
+                $doubleConfirmation = true;
+                // Si l'utilisateur confirme sa participation au covoiturage
+                if (isset($_POST['participate'])) {
+                    // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+                    $_SESSION['message_to_User'] = ' Votre participation au covoiturage a été enregistrée avec succès !';
+                    $_SESSION['message_code'] = "success";
+    
+                    // On appele la fonction du repository pour enregistrer les données dans la BDD
+                    $covoiturageRepository->participateToCovoiturage($userId, $covoiturageId);
+    
+                    // On appele la fonction pour mettre à jour les crédits de l'utilisateur
+                    $covoiturageRepository->updateUserCredits($covoituragePrice, $userId, false);
+    
+                    // On appele la fonction pour mettre à jour les nombres de places disponibles du covoiturage
+                    $covoiturageRepository->updatePlacesDisponibles($covoiturageId, false);
+                }
+            }
+            return
+                [
+                    $isNotLogged,
+                    $noDisponiblePlaces,
+                    $noEnoughCredits,
+                    $covoituragePrice,
+                    $userCredits,
+                    $doubleConfirmation,
+                    $isUserParticipant,
+                    $isDriverInCovoiturage
+                ];
+        } else{
+            return [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
             ];
+        }
     }
 
     // Fonction si l'utilisateur quitte le covoiturage
@@ -713,14 +727,18 @@ class CovoiturageController extends Controller
         foreach ($participants as $passager) {
             // Mail, pseudo des passagers et du chauffeur
             $passagerPseudo = ucfirst($passager['passager_pseudo']);
+            $passagerId = $passager['passager_id']; // Id du passager
             $passagerMail = $passager['passager_mail'];
             $driverPseudo = ucfirst($passager['driver_pseudo']); // Pseudo du chauffeur
+            $driverId = $passager['driver_id']; // Id du chauffeur
 
             // Les paramètres pour envoyer le mail
             $mailParams = [
                 "passagerPseudo" => $passagerPseudo,
+                "passagerId" => $passagerId,
                 "covoiturageDateDepart" => $covoiturageDateDepart->format('d-m-Y'), // Pour formater la date
-                "driverPseudo" => $driverPseudo
+                "driverPseudo" => $driverPseudo,
+                "driverId" => $driverId,
             ];
 
             // On appele la fonction pour envoyer un mail à chaque passager

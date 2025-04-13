@@ -17,14 +17,19 @@ class PageController extends Controller
         try {
             if (isset($_GET['action'])) {
                 switch ($_GET['action']) {
-                        // Action pour afficher la page d'accueil
+                    // Action pour afficher la page d'accueil
                     case 'accueil':
                         $this->accueil();
                         break;
+                    // Action pour afficher la page de contact
                     case 'contact':
                         $this->contact();
                         break;
-                        // Si l'action passee dans l'url n'existe pas
+                    // Action pour afficher la page dans laquelle le passager indique si le covoiturage s'est bien passé
+                    case 'validateCovoiturage':
+                        $this->validateCovoiturage();
+                        break;
+                    // Si l'action passee dans l'url n'existe pas
                     default:
                         throw new Exception("Cette action n'existe pas: " . $_GET['action']);
                         break;
@@ -106,7 +111,7 @@ class PageController extends Controller
                     // On appel la fonction pour chercher le covoiturage le plus proche à la date donnée par l'user
                     $searchCloser = $this->searchCloserCovoiturage($dateDepart, $covoiturageRepository, $adresseDepart, $adresseArrivee);
                     // si on trouve des covoiturages proche à la date donnée
-                    if(!empty($searchCloser)){
+                    if (!empty($searchCloser)) {
                         // On enregistre les données dans la session
                         $covoiturageCloser = $_SESSION['covoiturageCloser'];
                         // On instance un objet DateTime, pour la nouvelle date à proposer à l'utilisateur
@@ -171,5 +176,36 @@ class PageController extends Controller
         $this->render("Page/contact");
     }
 
+    /*
+    Exemple d'appel depuis l'url
+        ?controller=page&action=validateCovoiturage
+    */
+    // Fonction pour afficher la page dans laquelle le passager indique si le covoiturage s'est bien passé
+    protected function validateCovoiturage()
+    {
 
+        try {
+            // Si on envoi le formulaire de validation du covoiturage, ....
+            if (isset($_POST["validateCovoiturageForm"])) {
+                $passagerId = $_GET['passagerId'];
+                $driverId = $_GET['driverId'];
+                var_dump($passagerId);
+                var_dump($driverId);
+                // Si le passager indique que le covoiturage s'est bien passé
+                if ($_POST['questionRadio'] == "oui") {
+                    var_dump('ok');
+                } // Si le passager indique que le covoiturage NE S'EST PAS bien passé
+                elseif ($_POST['questionRadio'] == "non") {
+                    var_dump('problem');
+                }
+            }
+        } catch (Exception $e) {
+            $this->render("Errors/404", [
+                'error' => $e->getMessage()
+            ]);
+        }
+
+
+        $this->render("Page/validate-covoiturage");
+    }
 }

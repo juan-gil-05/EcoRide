@@ -208,12 +208,12 @@ class CovoiturageRepository extends Repository
         $query->bindValue(":covoiturageId", $covoiturageId, $this->pdo::PARAM_INT);
         return $query->execute();
     }
- 
+
     // Fonction pour chercher les participants d'un covoiturage par le covoiturage ID, et le pseudo du chauffeur
     public function searchCovoiturageParticipantsByCovoiturageId(int $covoiturageId): array
     {
-        $sql = "SELECT User_Covoiturages.user_id, passager.mail as passager_mail, passager.pseudo as passager_pseudo,
-                       driver.pseudo as driver_pseudo
+        $sql = "SELECT User_Covoiturages.user_id, passager.mail as passager_mail, passager.pseudo as passager_pseudo, passager.id as passager_id,
+                       driver.pseudo as driver_pseudo, driver.id as driver_id
                 FROM User_Covoiturages
                 INNER JOIN User as passager ON User_Covoiturages.user_id = passager.id
                 INNER JOIN Covoiturage ON User_Covoiturages.covoiturage_id = Covoiturage.id
@@ -241,7 +241,7 @@ class CovoiturageRepository extends Repository
     }
 
     // Fonction pour changer le statut d'un covoiturage
-    public function updateCovoiturageStatut(int $covoiturageId, int $statutId) : bool
+    public function updateCovoiturageStatut(int $covoiturageId, int $statutId): bool
     {
         $sql = "UPDATE Covoiturage 
                 SET statut_id = :statutId
@@ -249,6 +249,20 @@ class CovoiturageRepository extends Repository
         $query = $this->pdo->prepare($sql);
         $query->bindValue(":statutId", $statutId, $this->pdo::PARAM_INT);
         $query->bindValue(":covoiturageId", $covoiturageId, $this->pdo::PARAM_INT);
+        return $query->execute();
+    }
+
+    // Fonction pour ajouter un avis et une note au covoiturage
+    public function addAvisAndNote(string $titre, string $avis, int $note, bool $statut, int $userId): bool
+    {
+        $sql = "INSERT INTO Avis (titre, avis, note, statut, user_id)
+                VALUES (:titre, :avis, :note, 0, :userId);";
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":titre", $titre, $this->pdo::PARAM_STR);
+        $query->bindValue(":avis", $avis, $this->pdo::PARAM_STR);
+        $query->bindValue(":note", $note, $this->pdo::PARAM_INT);
+        $query->bindValue(":statut", $statut, $this->pdo::PARAM_BOOL);
+        $query->bindValue(":userId", $userId, $this->pdo::PARAM_INT);
         return $query->execute();
     }
 }

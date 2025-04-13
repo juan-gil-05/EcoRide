@@ -23,12 +23,13 @@
 <!--Import du JS du Bootstrap-->
 <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Import du JS -->
-<script src="../Scripts/covoituragesfilter.js"></script>
+<script src="../Scripts/driverNote.js"></script>
 <script src="../Scripts/showPassword.js"></script>
 <script src="../Scripts/driverForm.js"></script>
 <script src="../Scripts/preferencesForm.js"></script>
 <script src="../Scripts/searchCovoiturage.js"></script>
 <script src="../Scripts/startCovoiturage.js"></script>
+<script src="../Scripts/validateCovoiturage.js"></script>
 </body>
 
 </html>
