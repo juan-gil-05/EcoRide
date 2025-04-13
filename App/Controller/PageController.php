@@ -196,9 +196,14 @@ class PageController extends Controller
             if (isset($_POST["validateCovoiturageForm"])) {
                 // Si le passager indique que le covoiturage s'est bien passé
                 if ($_POST['questionRadio'] == "oui") {
+                    // On récupere les détails du covoiturage
                     $covoiturageDetails = $covoiturageRepository->searchCovoiturageDetailsById($covoiturageId);
-                    var_dump($covoiturageDetails[0]['prix']);
-                    var_dump($covoiturageDetails[0]['user_id']);
+                    $covoituragePrice = $covoiturageDetails[0]['prix']; // prix du covoiturage
+                    $driverId = $covoiturageDetails[0]['user_id']; // l'id du chauffeur
+
+                    // Fonction pour mettre à jour les crédits du chauffeur
+                    $covoiturageRepository->updateDriverCredits($covoituragePrice, $driverId);
+
                     var_dump('ok');
                 } // Si le passager indique que le covoiturage NE S'EST PAS bien passé
                 elseif ($_POST['questionRadio'] == "non") {
