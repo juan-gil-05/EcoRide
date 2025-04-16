@@ -32,7 +32,7 @@ require_once './Templates/header.php';
             </div>
         </div>
         <!-- Pour donner une note au chauffuer -->
-        <div class="driver-note form-div">
+        <div class="driver-note form-div" id="driverNote">
             <!-- Le label et le text de '(facultatif)' -->
             <div>
                 <label class="form-label" for="">Donner une note au chauffeur</label>
@@ -56,7 +56,7 @@ require_once './Templates/header.php';
             <?php } ?>
         </div>
         <!-- Pour laisser un avis -->
-        <div class="driver-comment form-div">
+        <div class="driver-comment form-div" id="driverComment">
             <!-- Le label et le text de '(facultatif)' -->
             <div>
                 <label class="form-label" for="">Laisser votre avis</label>

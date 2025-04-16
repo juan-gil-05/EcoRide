@@ -13387,28 +13387,45 @@ html {
   overflow: hidden;
   transition: max-height 0.4s ease, opacity 0.4s ease;
   flex-basis: 100%;
+  position: absolute;
 }
 .covoiturage-form-validate .good-travel .comment-about-travel.show {
   max-height: 200px;
   opacity: 1;
+  position: relative;
 }
-.covoiturage-form-validate .driver-note label {
+.covoiturage-form-validate .driver-note,
+.covoiturage-form-validate .driver-comment {
+  position: absolute;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+  flex-basis: 100%;
+}
+.covoiturage-form-validate .driver-note label,
+.covoiturage-form-validate .driver-comment label {
   margin-left: 10px;
 }
-.covoiturage-form-validate .driver-note .note-stars {
+.covoiturage-form-validate .driver-note .note-stars,
+.covoiturage-form-validate .driver-comment .note-stars {
   margin-left: 15px;
   gap: 10px;
   cursor: pointer;
 }
-.covoiturage-form-validate .driver-note .note-stars i {
+.covoiturage-form-validate .driver-note .note-stars i,
+.covoiturage-form-validate .driver-comment .note-stars i {
   color: #4e4e4e;
   opacity: 0.3;
   cursor: pointer;
 }
-.covoiturage-form-validate .driver-note .note-stars .active-star {
+.covoiturage-form-validate .driver-note .note-stars .active-star,
+.covoiturage-form-validate .driver-comment .note-stars .active-star {
   color: #0063ac;
   opacity: 1;
 }
-.covoiturage-form-validate .driver-comment {
-  flex-direction: column;
+.covoiturage-form-validate .show {
+  max-height: 500px;
+  opacity: 1;
+  position: relative;
 }/*# sourceMappingURL=main.css.map */
