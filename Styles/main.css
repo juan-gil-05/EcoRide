@@ -13354,14 +13354,14 @@ html {
   border-radius: 15px;
   padding: 3rem 10rem;
 }
-.covoiturage-form-validate div {
+.covoiturage-form-validate .form-div {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
 }
-.covoiturage-form-validate div .form-label {
+.covoiturage-form-validate .form-div .form-label {
   margin-bottom: 0;
   font-weight: 600;
 }

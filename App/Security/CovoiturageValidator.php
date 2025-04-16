@@ -70,4 +70,24 @@ class CovoiturageValidator
 
         return $errors;
     }
+
+    public function validateCovoiturageFinished(string $avisTitle, string $avisDescription, $avisNote)
+    {
+        // Tableau d'erreurs
+        $errors = [];
+
+        if(empty($avisTitle)){
+            $errors['avisTitleEmpty'] = "Vous devez choisir un titre";
+        }
+        if(empty($avisDescription)){
+            $errors['avisDescriptionEmpty'] = "Vous devez choisir une description";
+        }
+        if(empty($avisNote)){
+            $errors['avisNoteEmpty'] = "Pour laisser un avis, vous devez choisir une note";
+        }
+
+        return $errors;
+    }
+
+
 }

@@ -190,7 +190,21 @@ class PageController extends Controller
             var_dump($passagerId);
             var_dump($covoiturageId);
 
+            // On appel le repository pour la classe Covoiturage
             $covoiturageRepository = new CovoiturageRepository;
+            // Pour valider le fomulaire de l'avis et la note
+            $covoiturageValidator = new CovoiturageValidator;
+            // Pour enregistrer les erreurs du formulaire
+            $errors = [];
+
+            // Variables pour enregistrer les détails de l'avis et la note
+            $avisTitle =  "";
+            $avisDescription = "";
+            $avisNote = null;
+            $questionRadioYes = false;
+            $questionRadioNo = false;
+            $driverNoteArray = [];
+
 
             // Si on envoi le formulaire de validation du covoiturage, ....
             if (isset($_POST["validateCovoiturageForm"])) {
@@ -200,6 +214,8 @@ class PageController extends Controller
                     $covoiturageDetails = $covoiturageRepository->searchCovoiturageDetailsById($covoiturageId);
                     $covoituragePrice = $covoiturageDetails[0]['prix']; // prix du covoiturage
                     $driverId = $covoiturageDetails[0]['user_id']; // l'id du chauffeur
+                    $questionRadioYes = ($_POST['questionRadio'] == "oui"); // pour savoir si le passager a répondu oui ou non à la question
+                    $questionRadioNo = ($_POST['questionRadio'] == "non"); // pour savoir si le passager a répondu oui ou non à la question
 
                     // Fonction pour mettre à jour les crédits du chauffeur
                     // $covoiturageRepository->updateDriverCredits($covoituragePrice, $driverId);
@@ -208,10 +224,19 @@ class PageController extends Controller
                     $avisTitle = $_POST['titre'];
                     $avisDescription = $_POST['avis'];
                     $avisNote = $_POST['note'];
-                    // Vérification si les champs de l'avis et de la note sont remplis
-                    $withAvisAndNote = !empty($avisTitle) && !empty($avisDescription) && !empty($avisNote);
+                    // Validation des champs de l'avis et de la note
+                    $errors = $covoiturageValidator->validateCovoiturageFinished($avisTitle, $avisDescription, $avisNote);
+
+                    // La note du chauffeur
+                    $driverNote = $_POST['note'];
+                    // on transforme la note du chauffeur en un tableau d'entier
+                    $driverNoteInt = (int)$driverNote;
+                    for ($i = 1; $i <= $driverNoteInt; $i++) {
+                        $driverNoteArray[] = $i;
+                    }
+
                     // Si le passager a rempli les champs de l'avis et de la note
-                    if ($withAvisAndNote) {
+                    if (empty($errors)) {
                         // Fonction pour ajouter l'avis et la note du passager au chauffeur
                         $covoiturageRepository->addAvisAndNote(
                             $avisTitle,
@@ -224,9 +249,9 @@ class PageController extends Controller
                         );
                         var_dump('en base de donées');
                     } else {
-                        var_dump('sans titre, description ou note');
+                        var_dump($_POST);
+                        echo('sans titre, description ou note');
                     }
-                    
                 } // Si le passager indique que le covoiturage NE S'EST PAS bien passé
                 elseif ($_POST['questionRadio'] == "non") {
                     var_dump($_POST);
@@ -240,6 +265,16 @@ class PageController extends Controller
         }
 
 
-        $this->render("Page/validate-covoiturage");
+        $this->render(
+            "Page/validate-covoiturage",
+            [
+                "errors" => $errors,
+                "avisTitle" => $avisTitle,
+                "avisDescription" => $avisDescription,
+                "questionRadioYes" => $questionRadioYes,
+                "questionRadioNo" => $questionRadioNo,
+                "driverNoteArray" => $driverNoteArray,
+            ]
+        );
     }
 }
