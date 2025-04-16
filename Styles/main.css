@@ -13412,4 +13412,18 @@ html {
 .covoiturage-form-validate .driver-comment .note-stars .active-star {
   color: #0063ac;
   opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .covoiturage-form-validate {
+    gap: 1rem;
+    padding: 1.5rem 1rem;
+  }
+  .covoiturage-form-validate .form-div {
+    gap: 0.5rem;
+  }
+  .covoiturage-form-validate .good-travel .checkbox-group {
+    flex-direction: row;
+    gap: 10px;
+  }
 }/*# sourceMappingURL=main.css.map */

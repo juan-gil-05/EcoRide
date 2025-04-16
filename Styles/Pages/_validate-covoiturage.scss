@@ -66,6 +66,7 @@
         label {
             margin-left: 10px;
         }
+
         // Style pour chaque étoile
         .note-stars {
             margin-left: 15px;
@@ -82,6 +83,25 @@
             .active-star {
                 color: $secondary;
                 opacity: 1;
+            }
+        }
+    }
+}
+
+// Responsive
+@media(max-width : '768px') {
+    .covoiturage-form-validate {
+        gap: 1rem;
+        padding: 1.5rem 1rem;
+
+        .form-div{
+            gap: 0.5rem;
+        }
+
+        .good-travel {
+            .checkbox-group {
+                flex-direction: row;
+                gap: 10px;
             }
         }
     }
