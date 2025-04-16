@@ -187,8 +187,6 @@ class PageController extends Controller
             // On récupere les id passés dans l'url, et on les dechiffre
             $passagerId = CovoiturageController::decryptUrlParameter($_GET['passagerId']);
             $covoiturageId = CovoiturageController::decryptUrlParameter($_GET['covoiturageId']);
-            var_dump($passagerId);
-            var_dump($covoiturageId);
 
             // On appel le repository pour la classe Covoiturage
             $covoiturageRepository = new CovoiturageRepository;
@@ -206,66 +204,68 @@ class PageController extends Controller
             $driverNoteArray = [];
 
 
-            // Si on envoi le formulaire de validation du covoiturage, ....
-            if (isset($_POST["validateCovoiturageForm"])) {
-                // Si le passager indique que le covoiturage s'est bien passé
-                if ($_POST['questionRadio'] == "oui") {
-                    // On récupere les détails du covoiturage
-                    $covoiturageDetails = $covoiturageRepository->searchCovoiturageDetailsById($covoiturageId);
-                    $covoituragePrice = $covoiturageDetails[0]['prix']; // prix du covoiturage
-                    $driverId = $covoiturageDetails[0]['user_id']; // l'id du chauffeur
-                    $questionRadioYes = ($_POST['questionRadio'] == "oui"); // pour savoir si le passager a répondu oui ou non à la question
-                    $questionRadioNo = ($_POST['questionRadio'] == "non"); // pour savoir si le passager a répondu oui ou non à la question
+            // Si on envoi le formulaire de validation du covoiturage, et le passager indique que le covoiturage s'est bien passé
+            if (isset($_POST["validateCovoiturageForm"]) && $_POST['questionRadio'] == "oui") {
+                // On récupere les détails du covoiturage
+                $covoiturageDetails = $covoiturageRepository->searchCovoiturageDetailsById($covoiturageId);
+                $covoituragePrice = $covoiturageDetails[0]['prix']; // prix du covoiturage
+                $driverId = $covoiturageDetails[0]['user_id']; // l'id du chauffeur
+                $questionRadioYes = ($_POST['questionRadio'] == "oui"); // pour savoir si le passager a répondu oui ou non à la question
+                $questionRadioNo = ($_POST['questionRadio'] == "non"); // pour savoir si le passager a répondu oui ou non à la question
 
-                    // Fonction pour mettre à jour les crédits du chauffeur
-                    // $covoiturageRepository->updateDriverCredits($covoituragePrice, $driverId);
+                // Fonction pour mettre à jour les crédits du chauffeur
+                $covoiturageRepository->updateDriverCredits($covoituragePrice, $driverId);
 
-                    // Fonction pour mettre à jour le statut du covoiturage
-                    // 1 = Crée | 2 = Démarré | 3 = Arrivé | 4 = Validé | 5 = Annulé
-                    $covoiturageRepository->updateCovoiturageStatut($covoiturageId, 4);
+                // Fonction pour mettre à jour le statut du covoiturage
+                // 1 = Crée | 2 = Démarré | 3 = Arrivé | 4 = Validé | 5 = Annulé
+                $covoiturageRepository->updateCovoiturageStatut($covoiturageId, 4);
 
-                    // Variables pour enregistrer les détails de l'avis
-                    $avisTitle = $_POST['titre'];
-                    $avisDescription = $_POST['avis'];
-                    $avisNote = $_POST['note'];
-                    // Validation des champs de l'avis et de la note
-                    $errors = $covoiturageValidator->validateCovoiturageFinished($avisTitle, $avisDescription, $avisNote);
+                // Variables pour enregistrer les détails de l'avis
+                $avisTitle = $_POST['titre'];
+                $avisDescription = $_POST['avis'];
+                $avisNote = $_POST['note'];
+                // Validation des champs de l'avis et de la note
+                $errors = $covoiturageValidator->validateCovoiturageFinished($avisTitle, $avisDescription, $avisNote);
 
-                    // La note du chauffeur
-                    $driverNote = $_POST['note'];
-                    // on transforme la note du chauffeur en un tableau d'entier
-                    $driverNoteInt = (int)$driverNote;
-                    for ($i = 1; $i <= $driverNoteInt; $i++) {
-                        $driverNoteArray[] = $i;
-                    }
-
-                    // Si le passager a rempli les champs de l'avis et de la note
-                    if (empty($errors)) {
-                        // Fonction pour ajouter l'avis et la note du passager au chauffeur en bdd
-                        $covoiturageRepository->addAvisAndNote(
-                            $avisTitle,
-                            $avisDescription,
-                            $avisNote,
-                            false, // false pour indiquer que l'avis est en attente de validation par l'employé
-                            $passagerId,
-                            $driverId,
-                            $covoiturageId
-                        );
-                        var_dump('en base de donées');
-                    } // Si le passager n'a pas rempli les champs de l'avis et de la note, on affiche le message de success et on le redirige vers la page d'accueil 
-                    else {
-                        // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
-                        $_SESSION['message_to_User'] = "Merci pour votre retour !</br>Nous sommes ravis que votre trajet se soit bien déroulé.";
-                        $_SESSION['message_code'] = "success";
-                        // On redirige vers la page d'accueil
-                        header('location: ?controller=page&action=accueil');
-                        exit();
-                    }
-                } // Si le passager indique que le covoiturage NE S'EST PAS bien passé
-                elseif ($_POST['questionRadio'] == "non") {
-                    var_dump($_POST);
-                    var_dump('problem');
+                // La note du chauffeur
+                $driverNote = $_POST['note'];
+                // on transforme la note du chauffeur en un tableau d'entier
+                $driverNoteInt = (int)$driverNote;
+                for ($i = 1; $i <= $driverNoteInt; $i++) {
+                    $driverNoteArray[] = $i;
                 }
+
+                // Si le passager a rempli les champs de l'avis et de la note
+                if (empty($errors)) {
+                    // Fonction pour ajouter l'avis et la note du passager au chauffeur en bdd
+                    $covoiturageRepository->addAvisAndNote(
+                        $avisTitle,
+                        $avisDescription,
+                        $avisNote,
+                        false, // false pour indiquer que l'avis est en attente de validation par l'employé
+                        $passagerId,
+                        $driverId,
+                        $covoiturageId
+                    );
+                    // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+                    $_SESSION['message_to_User'] = "Merci pour votre avis !</br>Votre note et commentaire ont bien été enregistrés et seront examinés par notre équipe.";
+                    $_SESSION['message_code'] = "success";
+                    // On redirige vers la page d'accueil
+                    header('location: ?controller=page&action=accueil');
+                    exit();
+                } // Si le passager n'a pas rempli les champs de l'avis et de la note, on affiche le message de success et on le redirige vers la page d'accueil 
+                elseif (count($errors) == 3) {
+                    // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+                    $_SESSION['message_to_User'] = "Merci pour votre retour !</br>Nous sommes ravis que votre trajet se soit bien déroulé.";
+                    $_SESSION['message_code'] = "success";
+                    // // On redirige vers la page d'accueil
+                    header('location: ?controller=page&action=accueil');
+                    exit();
+                }
+            } // Si le passager indique que le covoiturage NE S'EST PAS bien passé
+            elseif (isset($_POST["validateCovoiturageForm"]) && $_POST['questionRadio'] == "non") {
+                var_dump($_POST);
+                var_dump('problem');
             }
         } catch (Exception $e) {
             $this->render("Errors/404", [

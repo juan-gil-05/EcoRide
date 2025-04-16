@@ -52,30 +52,20 @@
             overflow: hidden;
             transition: max-height 0.4s ease, opacity 0.4s ease;
             flex-basis: 100%;
-            position: absolute;
         }
 
         .comment-about-travel.show {
             max-height: 200px;
             opacity: 1;
-            position: relative;
         }
     }
 
     // Pour donner une note au chauffeur
     .driver-note,
     .driver-comment {
-        position: absolute;
-        max-height: 0;
-        opacity: 0;
-        overflow: hidden;
-        transition: max-height 0.4s ease, opacity 0.4s ease;
-        flex-basis: 100%;
-
         label {
             margin-left: 10px;
         }
-
         // Style pour chaque étoile
         .note-stars {
             margin-left: 15px;
@@ -94,11 +84,5 @@
                 opacity: 1;
             }
         }
-    }
-    // Class pour afficher la section de la note et l'avis du chauffeur
-    .show {
-        max-height: 500px;
-        opacity: 1;
-        position: relative;
     }
 }
