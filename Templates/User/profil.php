@@ -1,8 +1,6 @@
 <?php
 // HEADER
-
 use App\Security\Security;
-
 require_once './Templates/header.php';
 ?>
 
@@ -136,6 +134,10 @@ require_once './Templates/header.php';
         </div>
     </section>
 <?php } ?>
+
+<?php if(Security::isEmploye()) {?>
+    <h1>true</h1>
+<?php }?>
 
 <!-- Boutton pour se deconnecter -->
 <div class="d-flex justify-content-center mt-5 mb-5">
