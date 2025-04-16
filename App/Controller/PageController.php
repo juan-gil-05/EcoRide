@@ -224,10 +224,6 @@ class PageController extends Controller
                     // 1 = Crée | 2 = Démarré | 3 = Arrivé | 4 = Validé | 5 = Annulé
                     $covoiturageRepository->updateCovoiturageStatut($covoiturageId, 4);
 
-                    // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
-                    $_SESSION['message_to_User'] = "Merci pour votre retour !</br>Nous sommes ravis que votre trajet se soit bien déroulé.";
-                    $_SESSION['message_code'] = "success";
-                    
                     // Variables pour enregistrer les détails de l'avis
                     $avisTitle = $_POST['titre'];
                     $avisDescription = $_POST['avis'];
@@ -245,7 +241,7 @@ class PageController extends Controller
 
                     // Si le passager a rempli les champs de l'avis et de la note
                     if (empty($errors)) {
-                        // Fonction pour ajouter l'avis et la note du passager au chauffeur
+                        // Fonction pour ajouter l'avis et la note du passager au chauffeur en bdd
                         $covoiturageRepository->addAvisAndNote(
                             $avisTitle,
                             $avisDescription,
@@ -256,9 +252,14 @@ class PageController extends Controller
                             $covoiturageId
                         );
                         var_dump('en base de donées');
-                    } else {
-                        var_dump($_POST);
-                        echo ('sans titre, description ou note');
+                    } // Si le passager n'a pas rempli les champs de l'avis et de la note, on affiche le message de success et on le redirige vers la page d'accueil 
+                    else {
+                        // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+                        $_SESSION['message_to_User'] = "Merci pour votre retour !</br>Nous sommes ravis que votre trajet se soit bien déroulé.";
+                        $_SESSION['message_code'] = "success";
+                        // On redirige vers la page d'accueil
+                        header('location: ?controller=page&action=accueil');
+                        exit();
                     }
                 } // Si le passager indique que le covoiturage NE S'EST PAS bien passé
                 elseif ($_POST['questionRadio'] == "non") {
