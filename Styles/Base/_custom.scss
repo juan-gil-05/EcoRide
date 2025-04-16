@@ -71,6 +71,11 @@ ul{
   list-style: none;
 }
 
+// Pour masquer des éléments
+.hidden {
+  display: none !important;
+}
+
 //-------------------------------------------------------------------------------
 // Import du Bootstrap pour sass
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
