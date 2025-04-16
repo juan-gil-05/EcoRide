@@ -28,7 +28,7 @@ require_once './Templates/header.php';
             </div>
             <!-- Si le covoiturage ne s'est pas bien passé, le passager peut laisser un comentaire -->
             <div class="comment-about-travel" id="commentAboutTravel">
-                <textarea class="form-control" name="commentaire" rows="2" placeholder="Dites-nous ce qui n’a pas fonctionné 😕"></textarea>
+                <textarea class="form-control" name="commentaire" rows="2" placeholder="Dites-nous ce qui n’a pas fonctionné 😕" required></textarea>
             </div>
         </div>
         <!-- Pour donner une note au chauffuer -->

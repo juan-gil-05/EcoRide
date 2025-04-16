@@ -264,8 +264,19 @@ class PageController extends Controller
                 }
             } // Si le passager indique que le covoiturage NE S'EST PAS bien passé
             elseif (isset($_POST["validateCovoiturageForm"]) && $_POST['questionRadio'] == "non") {
-                var_dump($_POST);
-                var_dump('problem');
+                // On récupere le commentaire
+                $commentaire = $_POST['commentaire'];
+                // Pour chercher l'id de la participation d'un passager dans un covoiturage. (Table : User_Covoiturages)
+                $userCovoiturageId = $covoiturageRepository->searchUserCovoiturageId($passagerId, $covoiturageId);
+                $userCovoiturageId = $userCovoiturageId['id'];
+                // Fonction pour enregistrer le commentaire dans la bdd
+                $covoiturageRepository->addCommentaireToCovoiturage($commentaire, $userCovoiturageId);
+                // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+                $_SESSION['message_to_User'] = "Merci pour votre retour !</br>Nous allons examiner votre commentaire et contacter le chauffeur si nécessaire.";
+                $_SESSION['message_code'] = "success";
+                // // On redirige vers la page d'accueil
+                header('location: ?controller=page&action=accueil');
+                exit();
             }
         } catch (Exception $e) {
             $this->render("Errors/404", [

@@ -279,4 +279,28 @@ class CovoiturageRepository extends Repository
         $query->bindValue(":driverId", $driverId, $this->pdo::PARAM_INT);
         return $query->execute();
     }
+
+    // Fonction pour ajouter un commentaire au covoiturage, quand le passager indique qu'il s'est mal passé 
+    public function addCommentaireToCovoiturage(string $commentaire, int $userCovoiturageId): bool
+    {
+        $sql = "INSERT INTO Commentaire (commentaire, user_covoiturage_id)
+                VALUES (:commentaire, :userCovoiturageId);";
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":commentaire", $commentaire, $this->pdo::PARAM_STR);
+        $query->bindValue(":userCovoiturageId", $userCovoiturageId, $this->pdo::PARAM_INT);
+        return $query->execute();
+    }
+
+    // Fonction pour chercher l'id de la participation d'un passager dans un covoiturage. (Table : User_Covoiturages)
+    public function searchUserCovoiturageId(int $userId, int $covoiturageId): array
+    {
+        $sql = "SELECT id FROM User_Covoiturages
+                WHERE user_id = :userId AND covoiturage_id = :covoiturageId";
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":userId", $userId, $this->pdo::PARAM_INT);
+        $query->bindValue(":covoiturageId", $covoiturageId, $this->pdo::PARAM_INT);
+        $query->execute();
+
+        return $query->fetch($this->pdo::FETCH_ASSOC);
+    } 
 }
