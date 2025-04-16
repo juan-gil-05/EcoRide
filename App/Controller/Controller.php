@@ -43,6 +43,11 @@ class Controller
                         $controller = new PreferenceUserController();
                         $controller->route();
                         break;
+                        // Appel du controlleur pour l'espace employé
+                    case 'employe':
+                        $controller = new EmployeController();
+                        $controller->route();
+                        break;
                         // Si le contrôleur passe dans l'url n'existe pas
                     default:
                         throw new Exception("Ce contrôleur n'existe pas: " . $_GET['controller']);

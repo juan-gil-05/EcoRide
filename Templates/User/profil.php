@@ -1,6 +1,7 @@
 <?php
 // HEADER
 use App\Security\Security;
+
 require_once './Templates/header.php';
 ?>
 
@@ -134,10 +135,15 @@ require_once './Templates/header.php';
         </div>
     </section>
 <?php } ?>
-
-<?php if(Security::isEmploye()) {?>
-    <h1>true</h1>
-<?php }?>
+<!-- Section pour acceder à l'espace employé -->
+<?php if (Security::isEmploye()) { ?>
+    <section class="employe-section content-text pt-2">
+        <!-- Bouton pour acceder à l'espace employé -->
+        <a class="btn btn-warning secondary-btn mt-2" href="?controller=employe&action=validateAvisAndNote">
+            Mon espace
+        </a>
+    </section>
+<?php } ?>
 
 <!-- Boutton pour se deconnecter -->
 <div class="d-flex justify-content-center mt-5 mb-5">

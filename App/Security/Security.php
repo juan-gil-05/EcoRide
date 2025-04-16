@@ -36,7 +36,7 @@ class Security
         if ($_SESSION['user']['role'] == "4") {
             return true;
         } else {
-            return true;
+            return false;
         }
     }
 }
