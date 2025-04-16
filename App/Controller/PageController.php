@@ -220,6 +220,14 @@ class PageController extends Controller
                     // Fonction pour mettre à jour les crédits du chauffeur
                     // $covoiturageRepository->updateDriverCredits($covoituragePrice, $driverId);
 
+                    // Fonction pour mettre à jour le statut du covoiturage
+                    // 1 = Crée | 2 = Démarré | 3 = Arrivé | 4 = Validé | 5 = Annulé
+                    $covoiturageRepository->updateCovoiturageStatut($covoiturageId, 4);
+
+                    // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+                    $_SESSION['message_to_User'] = "Merci pour votre retour !</br>Nous sommes ravis que votre trajet se soit bien déroulé.";
+                    $_SESSION['message_code'] = "success";
+                    
                     // Variables pour enregistrer les détails de l'avis
                     $avisTitle = $_POST['titre'];
                     $avisDescription = $_POST['avis'];
@@ -250,7 +258,7 @@ class PageController extends Controller
                         var_dump('en base de donées');
                     } else {
                         var_dump($_POST);
-                        echo('sans titre, description ou note');
+                        echo ('sans titre, description ou note');
                     }
                 } // Si le passager indique que le covoiturage NE S'EST PAS bien passé
                 elseif ($_POST['questionRadio'] == "non") {
