@@ -7,7 +7,7 @@ class AvisRepository extends Repository
     // Fonction pour chercher tous les avis avec les notes des chauffeurs
     public function searchAllAvisAndNotes(): array
     {
-        $sql = ("SELECT * FROM Avis");
+        $sql = ("SELECT * FROM Avis ORDER BY statut ASC;");
         $query = $this->pdo->prepare($sql);
         $query->execute();
         return $query->fetchAll($this->pdo::FETCH_ASSOC);

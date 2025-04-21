@@ -64,8 +64,9 @@ require_once './Templates/header.php';
                         <button class="btn btn-primary secondary-btn text-white small-text"
                             name="avisValidated"
                             value="1"
-                            type="submit">
-                            Valider
+                            type="submit"
+                            <?= ($avisAndNote['statut'] == 1) ? 'disabled' : '' ?>>
+                            <?= ($avisAndNote['statut'] == 1) ? 'Déjà validé' : 'Valider' ?>
                         </button>
                     </form>
                 </div>
