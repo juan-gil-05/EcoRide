@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Covoiturage;
+use App\Repository\AvisRepository;
 use App\Repository\CovoiturageRepository;
 use App\Repository\Repository;
 use App\Security\CovoiturageValidator;
@@ -190,6 +191,8 @@ class PageController extends Controller
 
             // On appel le repository pour la classe Covoiturage
             $covoiturageRepository = new CovoiturageRepository;
+            // On appel le repository pour les avis 
+            $avisRepository = new AvisRepository;
             // Pour valider le fomulaire de l'avis et la note
             $covoiturageValidator = new CovoiturageValidator;
             // Pour enregistrer les erreurs du formulaire
@@ -238,7 +241,7 @@ class PageController extends Controller
                 // Si le passager a rempli les champs de l'avis et de la note
                 if (empty($errors)) {
                     // Fonction pour ajouter l'avis et la note du passager au chauffeur en bdd
-                    $covoiturageRepository->addAvisAndNote(
+                    $avisRepository->addAvisAndNote(
                         $avisTitle,
                         $avisDescription,
                         $avisNote,

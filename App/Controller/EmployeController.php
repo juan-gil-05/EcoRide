@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\AvisRepository;
 use App\Repository\CovoiturageRepository;
 use App\Repository\UserRepository;
 use Exception;
@@ -43,11 +44,11 @@ class EmployeController extends Controller
     public function validateAvisAndNote()
     {
         // Repositories
-        $covoiturageRepository = new CovoiturageRepository;
+        $avisRepository = new AvisRepository;
         $userRepository = new UserRepository;
 
         // Tous les avis et les notes des chauffeurs 
-        $allAvisAndNotes = $covoiturageRepository->searchAllAvisAndNotes();
+        $allAvisAndNotes = $avisRepository->searchAllAvisAndNotes();
         // Pour parcourir le tableau 
         foreach ($allAvisAndNotes as $avisAndNote) {
 
