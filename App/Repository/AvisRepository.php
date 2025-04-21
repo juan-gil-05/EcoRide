@@ -28,5 +28,15 @@ class AvisRepository extends Repository
         $query->bindValue(":covoiturageId", $covoiturageId, $this->pdo::PARAM_INT);
         return $query->execute();
     }
-    
+
+    // Fonction pour mettre à jour le statut de l'avis, après la validation d'un employé
+    public function updateAvisStatut(int $avisStatut, int $avisId) : bool
+    {
+        $sql = "UPDATE Avis SET statut = :avisStatut WHERE avis_id = :avisId";
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":avisStatut", $avisStatut, $this->pdo::PARAM_INT);
+        $query->bindValue(":avisId", $avisId, $this->pdo::PARAM_INT);
+        return $query->execute();
+    }
+
 }

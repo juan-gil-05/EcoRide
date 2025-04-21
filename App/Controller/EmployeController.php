@@ -68,6 +68,29 @@ class EmployeController extends Controller
             // var_dump($driverNoteInt);
             // var_dump($driverNoteArray);
             // echo ("</br>");
+
+
+        }
+        // Si l'employé valide l'avis, alors ....
+        if (isset($_POST['avisValidated'])) {
+            $avisStatut = $_POST['avisValidated']; // On récupere le statut, donc = 1 : True
+            $avisId = $_POST['avis_id']; // On récupere l'id de l'avis
+            $avisRepository->updateAvisStatut($avisStatut, $avisId);
+            // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+            $_SESSION['message_to_User'] = 'L’avis a été validé avec succès.</br> Il est maintenant visible publiquement.';
+            $_SESSION['message_code'] = "success";
+            // On envoie l'user vers la page précédente
+            header('Location : ' . $_SERVER['HTTP_REFERER']);
+        } // Si l'employé refuse l'avis, alors ... 
+        elseif (isset($_POST['avisRefused'])) {
+            $avisStatut = $_POST['avisRefused']; // On récupere le statut, donc = 0 : False
+            $avisId = $_POST['avis_id']; // On récupere l'id de l'avis
+            $avisRepository->updateAvisStatut($avisStatut, $avisId);
+            // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+            $_SESSION['message_to_User'] = 'L’avis a été refusé.</br> Il ne sera pas publié sur la plateforme.';
+            $_SESSION['message_code'] = "info";
+            // On envoie l'user vers la page précédente
+            header('Location : ' . $_SERVER['HTTP_REFERER']);
         }
 
 

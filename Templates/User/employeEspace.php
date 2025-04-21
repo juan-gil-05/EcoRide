@@ -49,13 +49,25 @@ require_once './Templates/header.php';
                     </p>
                 </div>
                 <!-- Les boutons d'action : (Valider ou refuser) -->
-                <div class="avis-btn mt-4">
-                    <button class="btn btn-danger secondary-btn text-white small-text">
-                        Refuser
-                    </button>
-                    <button class="btn btn-primary secondary-btn text-white small-text">
-                        Valider
-                    </button>
+                <div class="mt-4">
+                    <form method="post" class="avis-btn">
+                        <!-- Input chaché pour envoyer l'id de l'avis dans le form -->
+                        <input type="hidden" name="avis_id" value="<?= $avisAndNote['avis_id'] ?>">
+                        <!-- Refuser -->
+                        <button class="btn btn-danger secondary-btn text-white small-text"
+                            name="avisRefused"
+                            value="0"
+                            type="submit">
+                            Refuser
+                        </button>
+                        <!-- Valider -->
+                        <button class="btn btn-primary secondary-btn text-white small-text"
+                            name="avisValidated"
+                            value="1"
+                            type="submit">
+                            Valider
+                        </button>
+                    </form>
                 </div>
             </li>
         <?php } ?>
