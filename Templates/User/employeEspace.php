@@ -4,14 +4,30 @@ use App\Security\Security;
 
 require_once './Templates/header.php';
 ?>
+<!-- Navbar pour afficher les avis ou les covoiturages signalés -->
+<nav class="navbar bg-body-primary employe-navbar content-text fw-bold">
+    <div class="container-fluid">
+        <ul class="navbar-nav">
+            <!-- Avis à valider -->
+            <li class="nav-item" id="showAvis">
+                <a class="nav-link active" href="#" id="showAvisBtn">Avis à valider</a>
+            </li>
+            <!-- Trajets signalés -->
+            <li class="nav-item" id="showComments">
+                <a class="nav-link" href="#" id="showCommentsBtn">Trajets signalés</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
 <!-- Section avec tous les avis -->
-<section class="container mb-5">
+<section class="container mb-5 mt-3" id="avisSection">
     <!-- Titre de la page -->
-    <div class="mt-5">
-        <h2 class="subtitle-text text-center text-white text-capitalize fs-4">Tous les avis</h2>
+    <div class="">
+        <h2 class="subtitle-text text-center text-white text-capitalize-">Tous les avis</h2>
     </div>
     <!-- La list des avis -->
-    <ul class="mt-4 ps-0">
+    <ul class="mt-4 ps-0 avis-list-container">
         <?php foreach ($allAvisAndNotes as $avisAndNote) { ?>
             <li class="avis-list small-text mb-4">
                 <!-- Le pseudo du passager et du chauffeur -->
@@ -73,6 +89,10 @@ require_once './Templates/header.php';
             </li>
         <?php } ?>
     </ul>
+</section>
+
+<!-- Section avec les covoiturages signalés -->
+<section class="container mb-5 mt-3 hidden" id="commentsSection">   
 </section>
 
 <?php
