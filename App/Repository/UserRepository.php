@@ -65,4 +65,14 @@ class UserRepository extends Repository
             return false;
         }
     }
+
+    // Fonction pour trouver un utilisateur par son id
+    public function findUserById(int $userId): array
+    {
+        $sql = ("SELECT pseudo FROM User WHERE id = :userId");
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(':userId', $userId, $this->pdo::PARAM_INT);
+        $query->execute();
+        return $query->fetch($this->pdo::FETCH_ASSOC);
+    }
 }

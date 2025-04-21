@@ -1,0 +1,59 @@
+.avis-list {
+    background-color: $light;
+    padding: 1.5rem 3rem;
+    border-radius: 10px;
+    position: relative;
+    //Le pseudo du passager et du chauffeur
+    .users-name {
+        display: flex;
+        justify-content: space-between;
+        // Pour créer un ligne en dessous
+        &::after {
+            content: "";
+            width: 100%;
+            top: 29%;
+            left: 0;
+            position: absolute;
+            height: 0.3px;
+            background-color: rgba($dark, 0.4);
+        }
+    }
+    // Le titre de l'avis et la note du chauffeur
+    .avis-title-note {
+        display: flex;
+        justify-content: space-between;
+
+        // Style pour chaque étoile
+        .note-stars {
+            gap: 10px;
+
+            i {
+                color: $dark;
+                opacity: 0.3;
+            }
+
+            // Quand on clique sur les étoiles
+            .active-star {
+                color: $secondary;
+                opacity: 1;
+            }
+        }
+    }
+    // La déscription de l'avis
+    .avis-description {
+        border-bottom: 0.1px solid rgba($dark, 0.2);
+    }
+    // Les boutons d'action : (Valider ou refuser)
+    .avis-btn{
+        display: flex;
+        justify-content: space-evenly;
+        
+    }
+}
+
+// Pour le responsive
+@media (max-width : "768px"){
+    .avis-list{
+        padding: 1.2rem;
+    }
+}   

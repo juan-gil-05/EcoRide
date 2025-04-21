@@ -303,4 +303,13 @@ class CovoiturageRepository extends Repository
 
         return $query->fetch($this->pdo::FETCH_ASSOC);
     } 
+
+    // Fonction pour chercher tous les avis avec les notes des chauffeurs
+    public function searchAllAvisAndNotes() : array
+    {
+        $sql = ("SELECT * FROM Avis");
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+        return $query->fetchAll($this->pdo::FETCH_ASSOC);
+    }
 }

@@ -13435,4 +13435,51 @@ html {
     flex-direction: row;
     gap: 10px;
   }
+}
+.avis-list {
+  background-color: #f5f5f5;
+  padding: 1.5rem 3rem;
+  border-radius: 10px;
+  position: relative;
+}
+.avis-list .users-name {
+  display: flex;
+  justify-content: space-between;
+}
+.avis-list .users-name::after {
+  content: "";
+  width: 100%;
+  top: 29%;
+  left: 0;
+  position: absolute;
+  height: 0.3px;
+  background-color: rgba(78, 78, 78, 0.4);
+}
+.avis-list .avis-title-note {
+  display: flex;
+  justify-content: space-between;
+}
+.avis-list .avis-title-note .note-stars {
+  gap: 10px;
+}
+.avis-list .avis-title-note .note-stars i {
+  color: #4e4e4e;
+  opacity: 0.3;
+}
+.avis-list .avis-title-note .note-stars .active-star {
+  color: #0063ac;
+  opacity: 1;
+}
+.avis-list .avis-description {
+  border-bottom: 0.1px solid rgba(78, 78, 78, 0.2);
+}
+.avis-list .avis-btn {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+@media (max-width: 768px) {
+  .avis-list {
+    padding: 1.2rem;
+  }
 }/*# sourceMappingURL=main.css.map */
