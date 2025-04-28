@@ -96,11 +96,6 @@ class CovoiturageController extends Controller
 
                 // Pour récupérer la note du chauffeur 
                 $driverNote[$covoiturageId] = ($userRepository->findDriverNote($covoiturage['driver_id']));
-                // $driverNote[$covoiturageId] = (!is_null($userRepository->findDriverNote($covoiturage['driver_id']))) ? "033" : "1" ;
-
-                // echo "<br>";
-                // var_dump($driverNote);
-                // echo "<br>";
 
                 // Fonction du repository pour récupérer les covoiturages avec ses énergies utilisées, (Électrique, Diesel, .....)
                 $energies = $covoiturageRepository->searchCovoiturageDetailsbyId($covoiturageId);
@@ -184,6 +179,9 @@ class CovoiturageController extends Controller
         $preferenceUserRepository = new PreferenceUserRepository;
         $userRepository = new UserRepository;
 
+        // Initialisation des variables
+        $driverNote = null;
+
         // On récupére l'id du covoiturage passée dans l'url et on le décrypte 
         $covoiturageId = $this->decryptUrlParameter($_GET['id']);
 
@@ -201,6 +199,8 @@ class CovoiturageController extends Controller
 
         // L'id du chauffeur
         $driverId = $covoiturageDetail['user_id'];
+        // Pour récupérer la note du chauffeur 
+        $driverNote = $userRepository->findDriverNote($driverId);
 
         // on appel la fonction qui formate les dates et les heures des covoiturages
         $dateTimeCovoiturage = $this->dateTimeCovoiturage($covoiturageDetail);
@@ -242,6 +242,7 @@ class CovoiturageController extends Controller
                 "doubleConfirmation" => $participateToCovoiturage[5],
                 "isUserParticipant" => $participateToCovoiturage[6],
                 "isDriverInCovoiturage" => $participateToCovoiturage[7],
+                "driverNote" => $driverNote,
             ]
         );
     }

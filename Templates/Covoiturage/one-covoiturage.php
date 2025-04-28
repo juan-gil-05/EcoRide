@@ -176,7 +176,7 @@ require_once './Templates/header.php';
         <!-- Icon -->
         <i class="bi bi-star-fill"></i>
         <!-- La note -->
-        <p>- / 5</p>
+        <p><?= (!is_null($driverNote['note'])) ? $driverNote['note'] : "-" ?> / 5</p>
       </div>
     </div>
     <!-- Section des préférences au chauffeur -->

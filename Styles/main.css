@@ -12847,6 +12847,7 @@ html {
 }
 .covoiturage-info .driver-info .driver-header .driver-note {
   display: flex;
+  align-items: baseline;
   gap: 5px;
   font-weight: 500;
   margin-bottom: 15px;
