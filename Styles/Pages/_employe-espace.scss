@@ -42,7 +42,7 @@
 .avis-list-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 2rem;
 
     .avis-list {
         background-color: $light;
@@ -107,7 +107,7 @@
 .comment-list-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 2rem;
 
     .comment-list {
         background-color: $light;
@@ -135,6 +135,11 @@
         // La déscription du commentaire
         .comment-description {
             border-bottom: 0.1px solid rgba($dark, 0.2);
+        }
+
+        .comments-btn{
+            display: flex;
+            justify-content: center;
         }
 
         // Modal avec le decriptif du covoiturage

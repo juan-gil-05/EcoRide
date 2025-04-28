@@ -124,16 +124,16 @@ require_once './Templates/header.php';
                         <?= $comment['commentaire'] ?>
                     </p>
                 </div>
-                <!-- Les boutons d'action : (Voir le descriptif ou problème r) -->
-                <div class="mt-4">
+                <!-- Le bouton d'action : (Voir le descriptif) -->
+                <div class="mt-4 comments-btn">
                     <!-- Button pour ouvir la modal -->
-                    <button type="button" class="btn btn-warning secondary-btn small-text" data-bs-toggle="modal" data-bs-target="#descriptionModal">
+                    <button class="btn btn-warning secondary-btn small-text" data-bs-toggle="modal" data-bs-target="#descriptionModal<?=$comment['commentaire_id'] ?>">
                         Descriptif du trajet
                     </button>
                 </div>
 
                 <!-- Modal avec le decriptif du covoiturage -->
-                <div class="modal fade covoiturage-description-modal" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionLabel" aria-hidden="true">
+                <div class="modal fade covoiturage-description-modal" id="descriptionModal<?=$comment['commentaire_id'] ?>" tabindex="-1" aria-labelledby="descriptionLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -170,8 +170,8 @@ require_once './Templates/header.php';
                                 <!-- Dscriptif du trajet -->
                                 <ul class="covoiturage-description-list">
                                     <li>Numero du covoiturage : <span> <?= $comment['covoiturage_id'] ?> </span></li>
-                                    <li>Adresse et date de départ : <span> <?= $comment['adresse_depart'] ?></span> - <span><?= $dateDepartFormatted[$comment['commentaire_id']] ?></span></li>
-                                    <li>Adresse et date d'arrivée : <span> <?= $comment['adresse_arrivee'] ?></span> - <span><?= $dateArriveeFormatted[$comment['commentaire_id']] ?></span></li>
+                                    <li>Adresse et date de départ : <span class="text-capitalize"> <?= $comment['adresse_depart'] ?></span> - <span><?= $dateDepartFormatted[$comment['commentaire_id']] ?></span></li>
+                                    <li>Adresse et date d'arrivée : <span class="text-capitalize"> <?= $comment['adresse_arrivee'] ?></span> - <span><?= $dateArriveeFormatted[$comment['commentaire_id']] ?></span></li>
                                 </ul>
                             </div>
                         </div>

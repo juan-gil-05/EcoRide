@@ -13464,7 +13464,7 @@ html {
 .avis-list-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: 2rem;
 }
 .avis-list-container .avis-list {
   background-color: #f5f5f5;
@@ -13512,7 +13512,7 @@ html {
 .comment-list-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: 2rem;
 }
 .comment-list-container .comment-list {
   background-color: #f5f5f5;
@@ -13535,6 +13535,10 @@ html {
 }
 .comment-list-container .comment-list .comment-description {
   border-bottom: 0.1px solid rgba(78, 78, 78, 0.2);
+}
+.comment-list-container .comment-list .comments-btn {
+  display: flex;
+  justify-content: center;
 }
 .comment-list-container .comment-list .covoiturage-description-modal .modal-dialog {
   max-width: 92%;
