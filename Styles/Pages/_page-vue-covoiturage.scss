@@ -229,6 +229,7 @@
         .driver-note {
           color: $dark;
           display: flex;
+          align-items: baseline;
           gap: 5px;
         }
         // Le bouton pour plus de détail sur le covoiturage

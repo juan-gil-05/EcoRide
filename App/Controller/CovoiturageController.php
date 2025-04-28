@@ -66,6 +66,7 @@ class CovoiturageController extends Controller
         // S'il n'y a pas, on laisse un tableau vide
         $covoiturages = $_SESSION['covoiturages'] ?? [];
         $covoiturageRepository = new CovoiturageRepository;
+        $userRepository = new UserRepository;
 
         // Variables que l'on va utiliser dans la vue
         $covoiturage = "";
@@ -78,13 +79,13 @@ class CovoiturageController extends Controller
         $maxDuration = null;
         $dateTimeCovoiturage = [null, null, null, null, null];
         $covoiturageEncryptId = null;
+        $driverNote = null;
 
 
         // Si on a des covoiturages dans la session
         if (!empty($covoiturages)) {
             // On parcourt le tableau pour trouver chaque covoiturage
             foreach ($covoiturages as $covoiturage) {
-
                 // on appel la fonction qui formate les dates des covoiturages
                 $dateTimeCovoiturage = $this->dateTimeCovoiturage($covoiturage);
 
@@ -92,6 +93,14 @@ class CovoiturageController extends Controller
                 $covoiturageId = $covoiturage['id'];
                 // Pour crypter l'id du covoiturage avant de l'envoyer dans l'url, afin d'afficher les détails de chaque covoiturage 
                 $covoiturageEncryptId[$covoiturage['id']] =  $this->encryptUrlParameter($covoiturage['id']);
+
+                // Pour récupérer la note du chauffeur 
+                $driverNote[$covoiturageId] = ($userRepository->findDriverNote($covoiturage['driver_id']));
+                // $driverNote[$covoiturageId] = (!is_null($userRepository->findDriverNote($covoiturage['driver_id']))) ? "033" : "1" ;
+
+                // echo "<br>";
+                // var_dump($driverNote);
+                // echo "<br>";
 
                 // Fonction du repository pour récupérer les covoiturages avec ses énergies utilisées, (Électrique, Diesel, .....)
                 $energies = $covoiturageRepository->searchCovoiturageDetailsbyId($covoiturageId);
@@ -156,7 +165,8 @@ class CovoiturageController extends Controller
                 "energieByCovoiturageId" => $energieByCovoiturageId,
                 "maxPrice" => $maxPrice,
                 "maxDuration" => $maxDuration,
-                "covoiturageEncryptId" => $covoiturageEncryptId
+                "covoiturageEncryptId" => $covoiturageEncryptId,
+                "driverNote" => $driverNote,
             ]
         );
     }

@@ -256,7 +256,7 @@ require_once './Templates/header.php';
               <!-- Icon -->
               <i class="bi bi-star-fill"></i>
               <!-- La note -->
-              <p>- / 5</p>
+              <p><?= (!is_null($driverNote[$covoiturage['id']]['note'])) ? $driverNote[$covoiturage['id']]['note'] : "-" ?> / 5</p>
             </div>
             <!-- Bouton pour voir plus en détail le covoiturage -->
             <div class="content-text">

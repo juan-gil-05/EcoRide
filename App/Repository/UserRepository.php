@@ -75,4 +75,16 @@ class UserRepository extends Repository
         $query->execute();
         return $query->fetch($this->pdo::FETCH_ASSOC);
     }
+
+    // Fonction pour trouver la note d'un chauffeur
+    public function findDriverNote(int $userId): array
+    {
+        $sql = ("SELECT AVG(note) as note FROM Avis WHERE user_id_cible = :userId");
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(':userId', $userId, $this->pdo::PARAM_INT);
+        $query->execute();
+        return $query->fetch($this->pdo::FETCH_ASSOC);
+    }
+
+
 }

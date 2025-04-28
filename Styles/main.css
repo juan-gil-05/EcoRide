@@ -12547,6 +12547,7 @@ html {
 .covoiturages .covoiturage-results .travel-card .driver-profile .driver-note {
   color: #4e4e4e;
   display: flex;
+  align-items: baseline;
   gap: 5px;
 }
 .covoiturages .covoiturage-results .travel-card .driver-profile .btn {

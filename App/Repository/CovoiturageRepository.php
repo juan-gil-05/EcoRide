@@ -28,7 +28,9 @@ class CovoiturageRepository extends Repository
     // Fonction pour checher des covoiturages
     public function searchCovoiturageByDateAndAdresse(string $adresseDepart, string $adresseArrivee, ?string $dateDepart = null): array
     {
-        $sql = ("SELECT * FROM Covoiturage
+        $sql = ("SELECT Covoiturage.*, User.id AS driver_id FROM Covoiturage
+                INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
+                INNER JOIN User ON Voiture.user_id = User.id
                 WHERE adresse_depart LIKE :adresseDepart AND
                 adresse_arrivee LIKE :adresseArrivee
                 ");
