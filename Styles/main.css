@@ -12917,6 +12917,7 @@ html {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  width: 90%;
 }
 .covoiturage-info .driver-info .comments ul li .user-comment .comment-title {
   display: flex;

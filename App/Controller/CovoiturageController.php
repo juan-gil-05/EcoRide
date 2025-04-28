@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Covoiturage;
+use App\Repository\AvisRepository;
 use App\Repository\CovoiturageRepository;
 use App\Repository\PreferenceUserRepository;
 use App\Repository\UserRepository;
@@ -178,9 +179,11 @@ class CovoiturageController extends Controller
         $covoiturageRepository = new CovoiturageRepository;
         $preferenceUserRepository = new PreferenceUserRepository;
         $userRepository = new UserRepository;
+        $avisRepository = new AvisRepository;
 
         // Initialisation des variables
         $driverNote = null;
+        $passagerPseudo = [];
 
         // On récupére l'id du covoiturage passée dans l'url et on le décrypte 
         $covoiturageId = $this->decryptUrlParameter($_GET['id']);
@@ -201,6 +204,16 @@ class CovoiturageController extends Controller
         $driverId = $covoiturageDetail['user_id'];
         // Pour récupérer la note du chauffeur 
         $driverNote = $userRepository->findDriverNote($driverId);
+        // Pour récupérer les avis du chauffeur
+        $allDriverAvis = $avisRepository->searchAllAvisByDriverId($driverId);
+        // Pour chercher les avis validés, afin de vérifier si le chauffeur a des avis validés ou pas
+        $avisValidated = array_filter($allDriverAvis, fn($avis) => $avis['statut'] == 1);
+        // Pour parcourir les avis du chauffeur
+        foreach ($allDriverAvis as $avis) {
+            $avisId = $avis['avis_id']; // id de l'avis
+            // Pour récupérer le pseudo de l'utilisateur qui a écrit l'avis
+            $passagerPseudo[$avisId] = $userRepository->findUserById($avis['user_id_auteur']);
+        }
 
         // on appel la fonction qui formate les dates et les heures des covoiturages
         $dateTimeCovoiturage = $this->dateTimeCovoiturage($covoiturageDetail);
@@ -243,6 +256,9 @@ class CovoiturageController extends Controller
                 "isUserParticipant" => $participateToCovoiturage[6],
                 "isDriverInCovoiturage" => $participateToCovoiturage[7],
                 "driverNote" => $driverNote,
+                "allDriverAvis" => $allDriverAvis,
+                "passagerPseudo" => $passagerPseudo,
+                "avisValidated" => $avisValidated,
             ]
         );
     }

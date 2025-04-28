@@ -90,7 +90,7 @@ require_once './Templates/header.php';
       </div>
     </div>
     <!-- Bouton pour participer au covoiturage, le bouton ouvre la modale -->
-    <div class="participation-btn content-text">
+    <div class="participation-btn content-text mb-5">
       <button class="btn btn-warning shadow-section primary-btn" id="participationBtn" data-bs-toggle="modal" data-bs-target="#participateConfirmation">
         Participer
       </button>
@@ -222,85 +222,44 @@ require_once './Templates/header.php';
       <!-- Titre -->
       <h2 class="subtitle-text">Avis</h2>
       <!-- List des avis -->
-      <ul>
-        <!--Première avis-->
-        <li>
-          <div class="user-comment">
-            <!-- Prenom de la personne qui laisse l'avis -->
-            <p class="small-text">Pierre</p>
-            <!-- Titre et note de l'avis -->
-            <div class="small-text comment-title">
-              <!-- Titre de l'avis -->
-              <p>Super expérience !</p>
-              <!-- La note de l'avis -->
-              <div class="note-stars">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-              </div>
+      <ul class="w-100">
+        <!-- Si le chauffeur a des avis validés -->
+        <?php if (!empty($avisValidated)) { ?>
+          <?php foreach ($allDriverAvis as $avis) { ?>
+            <!-- On affiche uniquement les avis qui ont été déjà validés par l'employé, donc, avec le statut = 1 -->
+            <?php if ($avis['statut'] == 1) { ?>
+              <li>
+                <div class="user-comment">
+                  <!-- Pseudo de la personne qui laisse l'avis -->
+                  <p class="small-text"><?= $passagerPseudo[$avis['avis_id']]['pseudo'] ?></p>
+                  <!-- Titre et note de l'avis -->
+                  <div class="small-text comment-title">
+                    <!-- Titre de l'avis -->
+                    <p><?= $avis['titre'] ?></p>
+                    <!-- La note -->
+                    <div class="note-stars">
+                      <!-- Boucle pour imprimir une étoile selon la note donnée -->
+                      <?php for ($i = 0; $i < $avis['note']; $i++) {
+                        echo '<i class="bi bi-star-fill"></i>';
+                      } ?>
+                    </div>
+                  </div>
+                  <!-- L'avis -->
+                  <p class="small-text">
+                    <?= $avis['avis'] ?>
+                  </p>
+                </div>
+              </li>
+            <?php }  ?>
+          <?php } ?>
+        <?php } else { ?>
+          <li>
+            <!-- Si le chauffeur n'a pas des avis -->
+            <div class="user-comment">
+              <p class="small-text">Aucun avis pour le moment.</p>
             </div>
-            <!-- L'avis -->
-            <p class="small-text">
-              “Très ponctuel et professionnel, le trajet s’est déroulé dans une
-              ambiance agréable et détendue. La voiture était propre et
-              confortable.”
-            </p>
-          </div>
-        </li>
-        <!-- Deuxième avis-->
-        <li>
-          <div class="user-comment">
-            <!-- Prenom de la personne qui laisse l'avis -->
-            <p class="small-text">Yuli</p>
-            <!-- Titre et note de l'avis -->
-            <div class="small-text comment-title">
-              <!-- Titre de l'avis -->
-              <p>Bon trajet dans l’ensemble.</p>
-              <!-- La note de l'avis -->
-              <div class="note-stars">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-              </div>
-            </div>
-            <!-- L'avis -->
-            <p class="small-text">
-              “Chauffeuse sympathique et respectueuse des horaires. La conduite
-              était sécurisante, mais il y avait un peu trop de musique à mon
-              goût, même si cela n’a pas empêché de passer un bon moment.”
-            </p>
-          </div>
-        </li>
-        <!-- Troisième avis-->
-        <li>
-          <div class="user-comment">
-            <!-- Prenom de la personne qui laisse l'avis -->
-            <p class="small-text">Julian</p>
-            <!-- Titre et note de l'avis -->
-            <div class="small-text comment-title">
-              <!-- Titre de l'avis -->
-              <p>Au top !</p>
-              <!-- La note de l'avis -->
-              <div class="note-stars">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-              </div>
-            </div>
-            <!-- L'avis -->
-            <p class="small-text">
-              “Conduite fluide et excellente communication avant le trajet. La
-              chauffeuse est très amical, et sa voiture électrique rend le
-              trajet encore plus agréable en sachant qu’on fait un geste pour la
-              planète. Je suis entièrement satisfait !”
-            </p>
-          </div>
-        </li>
+          </li>
+        <?php } ?>
       </ul>
     </div>
   </div>

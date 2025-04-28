@@ -39,4 +39,15 @@ class AvisRepository extends Repository
         return $query->execute();
     }
 
+    // Fonction pour chercher tous les avis d'un conducteur par son id
+    public function searchAllAvisByDriverId(int $userId): array
+    {
+        $sql = ("SELECT * FROM Avis WHERE user_id_cible = :userId");
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(':userId', $userId, $this->pdo::PARAM_INT);
+        $query->execute();
+        return $query->fetchAll($this->pdo::FETCH_ASSOC);
+    }
+
+
 }
