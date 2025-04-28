@@ -139,7 +139,7 @@ require_once './Templates/header.php';
 <?php if (Security::isEmploye()) { ?>
     <section class="employe-section content-text pt-2">
         <!-- Bouton pour acceder à l'espace employé -->
-        <a class="btn btn-warning secondary-btn mt-2" href="?controller=employe&action=validateAvisAndNote">
+        <a class="btn btn-warning secondary-btn mt-2" href="?controller=employe&action=validateAvisAndComments">
             Mon espace
         </a>
     </section>

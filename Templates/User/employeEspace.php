@@ -92,7 +92,94 @@ require_once './Templates/header.php';
 </section>
 
 <!-- Section avec les covoiturages signalés -->
-<section class="container mb-5 mt-3 hidden" id="commentsSection">   
+<section class="container mb-5 mt-3 hidden" id="commentsSection">
+    <!-- Titre de la page -->
+    <div class="">
+        <h2 class="subtitle-text text-center text-white text-capitalize-">Tous les commentaires</h2>
+    </div>
+    <!-- La list des commentaires -->
+    <ul class="mt-4 ps-0 comment-list-container">
+        <?php foreach ($allComments as $comment) { ?>
+            <li class="comment-list small-text mb-4">
+                <!-- Le pseudo du passager et du chauffeur -->
+                <div class="users-name">
+                    <!-- Pseudo du passager -->
+                    <div class="d-flex gap-2">
+                        <p class="fw-bold">Passager : </p>
+                        <span class="text-capitalize"><?= $passagerNameComments[$comment['commentaire_id']]['pseudo'] ?></span>
+                    </div>
+                    <!-- Pseudo du chauffeur -->
+                    <div class="d-flex gap-2">
+                        <p class="fw-bold">Conducteur : </p>
+                        <span class="text-capitalize"><?= $driverNameComments[$comment['commentaire_id']]['pseudo'] ?></span>
+                    </div>
+                </div>
+                <!-- Le titre du commentaire  -->
+                <div class="comment-title mt-4">
+                    <p class="fw-medium">Commentaire du passager</p>
+                </div>
+                <!-- La déscription du commentaire -->
+                <div class="comment-description">
+                    <p class="ms-2">
+                        <?= $comment['commentaire'] ?>
+                    </p>
+                </div>
+                <!-- Les boutons d'action : (Voir le descriptif ou problème r) -->
+                <div class="mt-4">
+                    <!-- Button pour ouvir la modal -->
+                    <button type="button" class="btn btn-warning secondary-btn small-text" data-bs-toggle="modal" data-bs-target="#descriptionModal">
+                        Descriptif du trajet
+                    </button>
+                </div>
+
+                <!-- Modal avec le decriptif du covoiturage -->
+                <div class="modal fade covoiturage-description-modal" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="subtitle-text mb-0" id="descriptionLabel">Descriptif du covoiturage</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Les pseudos et mails du passager et du chauffeur -->
+                                <div class="d-flex justify-content-around">
+                                    <!-- Pseudo et Mail du passager -->
+                                    <div class="d-flex flex-column gap-2">
+                                        <p class="fw-bold mb-0">Passager :
+                                            <span class="text-capitalize fw-normal"><?= $passagerNameComments[$comment['commentaire_id']]['pseudo'] ?>
+                                            </span>
+                                        </p>
+                                        <p class="fw-bold">Mail :
+                                            <span class="fw-normal"><?= $comment['passager_mail'] ?>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <!-- Pseudo et Mail du chauffeur -->
+                                    <div class="d-flex flex-column gap-2">
+                                        <p class="fw-bold mb-0">Conducteur :
+                                            <span class="text-capitalize fw-normal"><?= $driverNameComments[$comment['commentaire_id']]['pseudo'] ?>
+                                            </span>
+                                        </p>
+                                        <p class="fw-bold">Mail :
+                                            <span class="fw-normal"><?= $comment['driver_mail'] ?>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <!-- Dscriptif du trajet -->
+                                <ul class="covoiturage-description-list">
+                                    <li>Numero du covoiturage : <span> <?= $comment['covoiturage_id'] ?> </span></li>
+                                    <li>Adresse et date de départ : <span> <?= $comment['adresse_depart'] ?></span> - <span><?= $dateDepartFormatted[$comment['commentaire_id']] ?></span></li>
+                                    <li>Adresse et date d'arrivée : <span> <?= $comment['adresse_arrivee'] ?></span> - <span><?= $dateArriveeFormatted[$comment['commentaire_id']] ?></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        <?php } ?>
+    </ul>
 </section>
 
 <?php

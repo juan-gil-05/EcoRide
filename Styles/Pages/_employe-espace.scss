@@ -8,8 +8,10 @@
             display: flex;
             flex-direction: row;
             gap: 2rem;
+
             // Les options dasn le navbar
             .nav-item {
+
                 // Pour chaque lien ou bouton
                 .nav-link {
                     padding: 10px 20px;
@@ -17,11 +19,13 @@
                     cursor: pointer;
                     color: white !important;
                     transition: background-color 0.3s ease;
+
                     // Au survole
                     &:hover {
                         background-color: lighten($light, 10%);
                         color: $dark !important;
                     }
+
                     // Quand est cliqué
                     &.active {
                         background-color: $light;
@@ -33,6 +37,7 @@
 
     }
 }
+
 // Tous les avis
 .avis-list-container {
     display: grid;
@@ -98,6 +103,77 @@
     }
 }
 
+// Tous les commentaires
+.comment-list-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+
+    .comment-list {
+        background-color: $light;
+        padding: 1.5rem 2rem;
+        border-radius: 10px;
+        position: relative;
+
+        //Le pseudo du passager et du chauffeur
+        .users-name {
+            display: flex;
+            justify-content: space-between;
+
+            // Pour créer un ligne en dessous
+            &::after {
+                content: "";
+                width: 100%;
+                top: 28%;
+                left: 0;
+                position: absolute;
+                height: 0.3px;
+                background-color: rgba($dark, 0.4);
+            }
+        }
+
+        // La déscription du commentaire
+        .comment-description {
+            border-bottom: 0.1px solid rgba($dark, 0.2);
+        }
+
+        // Modal avec le decriptif du covoiturage
+        .covoiturage-description-modal {
+            // Le width de la modal
+            .modal-dialog {
+                max-width: 92%;
+                // Le contenu de la modal
+                .modal-content {
+                    background-color: $light;
+                    .modal-header {
+                        padding: 1.5rem 2rem;
+                    }
+                    .modal-body {
+                        padding: 2rem 1rem;
+                        // La list avec les descriptif des covoiturages
+                        .covoiturage-description-list {
+                            padding-left: 0;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+
+                            li {
+                                font-weight: 700;
+
+                                span {
+                                    font-weight: 400;
+                                }
+
+                                ;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 // Pour le responsive
 @media (max-width : "768px") {
     .avis-list-container {
@@ -106,6 +182,48 @@
 
         .avis-list {
             padding: 1.2rem;
+        }
+    }
+    .comment-list-container{
+        grid-template-columns: repeat(1, 1fr);
+        gap: 0;
+
+        .comment-list {
+            padding: 1.2rem;
+
+            // Modal avec le decriptif du covoiturage
+        .covoiturage-description-modal {
+            // Le width de la modal
+            .modal-dialog {
+                max-width: 100%;
+                // Le contenu de la modal
+                .modal-content {
+                    .modal-header {
+                        padding: 1rem;
+                    }
+                    .modal-body {
+                        padding: 1rem 0.2rem;
+                        // La list avec les descriptif des covoiturages
+                        .covoiturage-description-list {
+                            padding-left: 0;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+
+                            li {
+                                font-weight: 700;
+
+                                span {
+                                    font-weight: 400;
+                                }
+
+                                ;
+                            }
+                        }
+                    }
+                }
+            }
+        }
         }
     }
 }
