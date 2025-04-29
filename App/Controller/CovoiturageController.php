@@ -70,17 +70,10 @@ class CovoiturageController extends Controller
         $userRepository = new UserRepository;
 
         // Variables que l'on va utiliser dans la vue
-        $covoiturage = "";
         $adresseDepart = "";
         $adresseArrivee = "";
-        $driversByCovoiturageId = [];
-        $energieByCovoiturageId = [];
         $ecologique = null;
-        $maxPrice = null;
-        $maxDuration = null;
         $dateTimeCovoiturage = [null, null, null, null, null];
-        $covoiturageEncryptId = null;
-        $driverNote = null;
 
 
         // Si on a des covoiturages dans la session
@@ -127,6 +120,13 @@ class CovoiturageController extends Controller
                 $ecologique = (isset($_POST['ecologique'])) ? 1 : null;
                 // Pour la durée maximum du voyage
                 $maxDuration = (!empty($_POST['maxDuration'])) ? $_POST['maxDuration'] : null;
+                // La note du chauffeur appliquée par le passager dans le filtre
+                $driverFilterNote = $_POST['note'] ? $_POST['note'] : null;
+                // on transforme la note du chauffeur en un tableau d'entier
+                $driverFilterNoteInt = (int)$driverFilterNote;
+                for ($i = 1; $i <= $driverFilterNoteInt; $i++) {
+                    $driverFilterNoteArray[] = $i;
+                }
 
                 // On appel la fonction du repository et on le passe les params du filtre
                 $covoituragesMaxPrice = $covoiturageRepository->filterSearchCovoiturage(
@@ -135,10 +135,11 @@ class CovoiturageController extends Controller
                     $adresseArrivee,
                     $ecologique,
                     $maxPrice,
-                    $maxDuration
+                    $maxDuration,
+                    $driverFilterNote
                 );
 
-                // Le nouveaux valeurs de la varible $covoiturage seront les covoiturages trouvés après appliqué les filtres
+                // Les nouveaux valeurs de la variable $covoiturage seront les covoiturages trouvés après appliqué les filtres
                 $covoiturages = $covoituragesMaxPrice;
                 // On parcourt le tableau pour récuperer chaque covoiturage trouvé
                 foreach ($covoituragesMaxPrice as $covoiturageMaxPrice) {
@@ -151,18 +152,19 @@ class CovoiturageController extends Controller
             "Covoiturage/all-covoiturages",
             [
                 "covoiturages" => $covoiturages,
-                "covoiturage" => $covoiturage,
+                "covoiturage" => $covoiturage ?? "",
                 "dayName" => $dateTimeCovoiturage[0],
                 "dayNumber" => $dateTimeCovoiturage[1],
                 "monthName" => $dateTimeCovoiturage[2],
                 "adresseDepart" => $dateTimeCovoiturage[3],
                 "adresseArrivee" => $dateTimeCovoiturage[4],
-                "driversByCovoiturageId" => $driversByCovoiturageId,
-                "energieByCovoiturageId" => $energieByCovoiturageId,
-                "maxPrice" => $maxPrice,
-                "maxDuration" => $maxDuration,
-                "covoiturageEncryptId" => $covoiturageEncryptId,
-                "driverNote" => $driverNote,
+                "driversByCovoiturageId" => $driversByCovoiturageId ?? [],
+                "energieByCovoiturageId" => $energieByCovoiturageId ?? [],
+                "maxPrice" => $maxPrice ?? null,
+                "maxDuration" => $maxDuration ?? null,
+                "covoiturageEncryptId" => $covoiturageEncryptId ?? null,
+                "driverNote" => $driverNote ?? null,
+                "driverFilterNoteArray" => $driverFilterNoteArray ?? [],
             ]
         );
     }

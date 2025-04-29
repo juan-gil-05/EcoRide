@@ -54,11 +54,11 @@ require_once './Templates/header.php';
           <label for="">Note minimale</label>
           <!-- Étoiles pour filtrer la note minimal -->
           <div class="note-stars">
-            <i class="bi bi-star-fill star"></i>
-            <i class="bi bi-star-fill star"></i>
-            <i class="bi bi-star-fill star"></i>
-            <i class="bi bi-star-fill star"></i>
-            <i class="bi bi-star-fill star"></i>
+            <!-- Input caché pour envoyer la valeur de la note du chauffeur, selon la quantité des étoiles séléctionées -->
+            <input type="hidden" name="note" id="inputNote" value=""></input>
+            <?php for($i = 1; $i <= 5; $i++) {?>
+              <i class="bi bi-star-fill star <?= (in_array($i, $driverFilterNoteArray)) ? "active-star" : "" ?>" data-value="<?=$i?>"></i>
+            <?php } ?>
           </div>
         </div>
         <!-- Bouton pour filtrer -->
