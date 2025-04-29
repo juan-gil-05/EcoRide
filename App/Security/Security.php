@@ -39,4 +39,14 @@ class Security
             return false;
         }
     }
+
+    // Fonction pour savoir si l'utilisateur est un admin
+    public static function isAdmin() : bool
+    {
+        if ($_SESSION['user']['role'] == "5") {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -12,6 +12,10 @@ use App\Security\Security;
     <h4>Vous êtes passager<br></h4>
   <?php } elseif (Security::isChauffeur()) { ?>
     <h4>Vous êtes chauffeur<br></h4>
+  <?php } elseif (Security::isEmploye()) { ?>
+    <h4>Vous êtes Employé<br></h4>
+  <?php } elseif (Security::isAdmin()) { ?>
+    <h4>Vous êtes Administrateur<br></h4>
   <?php } ?>
 <?php } ?>
 
