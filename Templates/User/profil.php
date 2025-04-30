@@ -145,6 +145,89 @@ require_once './Templates/header.php';
     </section>
 <?php } ?>
 
+<!-- Section pour l'administrateur -->
+<?php if (Security::isAdmin()) { ?>
+    <section class="admin-section content-text pt-2">
+
+        <!-- Bouton pour concevoir des comptes employés -->
+        <button class="btn btn-warning secondary-btn mt-2 small-text" data-bs-toggle="modal" data-bs-target="#createEmployeAccountModal">
+            Créer un compte employé
+        </button>
+        <!-- Modal pour concevoir un compte employé-->
+        <div class="modal fade create-employe-account-modal" id="createEmployeAccountModal" tabindex="-1" aria-labelledby="createEmployeAccountModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="createEmployeAccountModalLabel">Créer un compte employé</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Formulaire pour créer un compte employé -->
+                        <form method="post" class="d-flex flex-column create-employe-account-form" id="createEmployeAccountForm">
+                            <!-- Tous les champs du formulaire de l'utilisateur -->
+                            <div class="create-employe-account-body">
+                                <!-- Pseudo -->
+                                <div class="form-floating">
+                                    <input type="text" name="pseudo" class="form-control small-text"
+                                        id="floatingInput" placeholder="juanes" value="<?= $employePseudoAccount ?>">
+                                    <label for="floatingPseudo" class="small-text">Pseudo</label>
+                                    <!-- S'il y a des erreurs on affiche le message d'erreur -->
+                                    <!-- Les messages sont chargés dynamiquement depuis le js -->
+                                    <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text hidden" id="pseudoEmpty"></div>
+                                </div>
+                                <!-- E-mail -->
+                                <div class="form-floating">
+                                    <input type="email" class="form-control small-text"
+                                        id="floatingMail" name="mail" placeholder="name@example.com" value="<?= $employeMailAccount ?>">
+                                    <label for="floatingMail" class="small-text">Email address</label>
+                                    <!-- S'il y a des erreurs on affiche le message d'erreur -->
+                                    <!-- Les messages sont chargés dynamiquement depuis le js -->
+                                    <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text hidden" id="mailEmpty"></div>
+                                    <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text hidden" id="mailUsed"></div>
+                                </div>
+                                <!-- Mot de passe -->
+                                <div class="form-floating">
+                                    <input type="password" class="form-control small-text"
+                                        id="floatingPassword" name="password" placeholder="Password" value="<?= $employePasswordAccount ?>">
+                                    <label for="floatingPassword" class="small-text">Mot de passe</label>
+                                    <!-- message et button pour afficher le mot de passe -->
+                                    <div class="show-password">
+                                        <span class="text-dark small-text" id="showPasswordText">Afficher le mot de passe</span>
+                                        <i class="bi bi-square" id="showPasswordIcon"></i>
+                                    </div>
+                                    <!-- S'il y a des erreurs on affiche le message d'erreur -->
+                                    <!-- Les messages sont chargés dynamiquement depuis le js -->
+                                    <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text hidden" id="passwordEmpty"></div>
+                                    <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text hidden" id="passwordLen"></div>
+                                    <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text hidden" id="passwordInfo"></div>
+                                </div>
+                            </div>
+                            <!-- Button pour créer le compte -->
+                            <div class="modal-footer justify-content-center gap-3">
+                                <button type="button" class="btn btn-danger secondary-btn text-white small-text" data-bs-dismiss="modal">Annuler</button>
+                                <button class="btn btn-primary secondary-btn text-white small-text" name="singUp" type="submit">
+                                    Créer
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Bouton pour visualiser les graphiques de : 
+            1. nombre des covoiturages par jour
+            2. combien la plateforme gagne de crédit en fonction des jours -->
+        <a class="btn btn-secondary text-white secondary-btn mt-2 small-text" href="#">
+            Visualiser les graphiques
+        </a>
+        <!-- Bouton pour suspendre un compte aussi bien utilisateur qu’employé -->
+        <a class="btn btn-dark text-white secondary-btn mt-2 small-text" href="#">
+            Suspendre un compte
+        </a>
+    </section>
+<?php } ?>
+
 <!-- Boutton pour se deconnecter -->
 <div class="d-flex justify-content-center mt-5 mb-5">
     <a href="?controller=auth&action=logOut" class="btn btn-danger text-light secondary-btn content-text">Se deconnecter</a>

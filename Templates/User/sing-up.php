@@ -12,7 +12,6 @@ require_once './Templates/header.php';
     <!-- titre -->
     <h1 class="mb-4 text-center text-white headline-text">Créer un compte</h1>
 
-
     <!-- Tous les champs du formulaire de l'utilisateur -->
     <div class="d-flex flex-column align-items-center content-text gap-3">
       <!-- Pseudo -->
@@ -103,7 +102,6 @@ require_once './Templates/header.php';
         </div>
       </div>
     </div>
-
 
     <!-- Button pour créer le compte -->
     <div class="d-flex justify-content-center mt-4">

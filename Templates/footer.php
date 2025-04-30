@@ -31,6 +31,7 @@
 <script src="../Scripts/startCovoiturage.js"></script>
 <script src="../Scripts/validateCovoiturage.js"></script>
 <script src="../Scripts/employeEspace.js"></script>
+<script src="../Scripts/adminEspace.js"></script>
 </body>
 
 </html>

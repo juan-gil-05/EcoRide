@@ -86,5 +86,15 @@ class UserRepository extends Repository
         return $query->fetch($this->pdo::FETCH_ASSOC);
     }
 
+    // Fonction pour créer un nouveau utilisateur
+    public function createEmployeAccount(User $user)
+    {
+        $sql = ("INSERT INTO User (pseudo, mail, password, role_id) VALUES (:pseudo,:mail,:mdp, 4)");
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":pseudo", $user->getPseudo(), $this->pdo::PARAM_STR);
+        $query->bindValue(":mail", $user->getMail(), $this->pdo::PARAM_STR);
+        $query->bindValue(":mdp", $user->getPassword(), $this->pdo::PARAM_STR);
+        return $query->execute();
+    }
 
 }
