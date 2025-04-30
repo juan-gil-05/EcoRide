@@ -48,6 +48,11 @@ class Controller
                         $controller = new EmployeController();
                         $controller->route();
                         break;
+                        // Appel du controlleur pour l'espace admin
+                    case 'admin':
+                        $controller = new AdminController();
+                        $controller->route();
+                        break;
                         // Si le contrôleur passe dans l'url n'existe pas
                     default:
                         throw new Exception("Ce contrôleur n'existe pas: " . $_GET['controller']);

@@ -222,8 +222,8 @@ require_once './Templates/header.php';
             Visualiser les graphiques
         </a>
         <!-- Bouton pour suspendre un compte aussi bien utilisateur qu’employé -->
-        <a class="btn btn-dark text-white secondary-btn mt-2 small-text" href="#">
-            Suspendre un compte
+        <a class="btn btn-dark text-white secondary-btn mt-2 small-text" href="?controller=admin&action=adminEspace">
+            Tous les comptes utilisateur
         </a>
     </section>
 <?php } ?>
