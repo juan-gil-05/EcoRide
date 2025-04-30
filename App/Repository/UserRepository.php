@@ -76,6 +76,17 @@ class UserRepository extends Repository
         return $query->fetch($this->pdo::FETCH_ASSOC);
     }
 
+    // Fonction pour trouver tous les utilisateurs
+    public function findAllUsers(): array
+    {
+        $sql = ("SELECT User.id, pseudo, mail, Role.libelle as user_role, nb_credits
+                FROM User
+                INNER JOIN Role ON User.role_id = Role.id;");
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+        return $query->fetchAll($this->pdo::FETCH_ASSOC);
+    }
+
     // Fonction pour trouver la note d'un chauffeur
     public function findDriverNote(int $userId): array
     {
@@ -96,5 +107,4 @@ class UserRepository extends Repository
         $query->bindValue(":mdp", $user->getPassword(), $this->pdo::PARAM_STR);
         return $query->execute();
     }
-
 }

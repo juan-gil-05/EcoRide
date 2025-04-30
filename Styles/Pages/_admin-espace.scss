@@ -1,0 +1,36 @@
+// style de la table génerée par DataTable (La bibliothèque JS)
+.dt-container {
+
+    // Text qui indique : Afficher [X] entrées. et Recherche
+    .dt-length, .dt-search {
+        label {
+            color: white;
+        }
+    }
+    // Text qui indique : Affichage de 1 à 10 sur 29 entrées ....
+    .dt-info{
+        color: $dark;
+    }
+    // Le contenu de la table
+    .dt-layout-table {
+        .user-table {
+            background-color: $light;
+            // Les entêtes de la table
+            thead {
+                th {
+                    padding: 10px;
+                }
+            }
+            // Le corps de la table
+            tbody {
+                td,
+                th {
+                    padding: 10px;
+                }
+                .id-row { // La colonne ID
+                    text-align: left;
+                }
+            }
+        }
+    }
+}

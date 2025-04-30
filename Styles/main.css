@@ -13648,4 +13648,23 @@ html {
   .comment-list-container .comment-list .covoiturage-description-modal .modal-dialog .modal-content .modal-body .covoiturage-description-list li span {
     font-weight: 400;
   }
+}
+.dt-container .dt-length label, .dt-container .dt-search label {
+  color: white;
+}
+.dt-container .dt-info {
+  color: #4e4e4e;
+}
+.dt-container .dt-layout-table .user-table {
+  background-color: #f5f5f5;
+}
+.dt-container .dt-layout-table .user-table thead th {
+  padding: 10px;
+}
+.dt-container .dt-layout-table .user-table tbody td,
+.dt-container .dt-layout-table .user-table tbody th {
+  padding: 10px;
+}
+.dt-container .dt-layout-table .user-table tbody .id-row {
+  text-align: left;
 }/*# sourceMappingURL=main.css.map */

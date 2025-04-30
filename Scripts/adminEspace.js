@@ -1,5 +1,12 @@
-// Script pour la creation d'un compte employé despuis l'espace admin
+// Script pour initialiser le tableau des utilisateurs avec la librairie JS DataTable
+// new DataTable('#userTable'); // userTable est l'id du tableau des utilisateurs
+$('#userTable').DataTable({ // JQuery pour initialiser le tableau et changer la langue
+    language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json'
+    }
+});
 
+// Script pour la creation d'un compte employé despuis l'espace admin
 // On récupère le formulaire de création de compte employé
 const createEmployeAccountForm = document.getElementById("createEmployeAccountForm");
 
@@ -66,7 +73,6 @@ createEmployeAccountForm.addEventListener("submit", (event) => {
             console.error("Erreur lors de la requête :", error);
         });
 })
-
 
 
 

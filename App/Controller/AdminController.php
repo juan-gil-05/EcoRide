@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\UserRepository;
+
 class AdminController extends Controller
 {
     // Fonction pour gérer le routage
@@ -40,6 +42,18 @@ class AdminController extends Controller
     // Fonction pour afficher l'espace admin
     private function adminEspace()
     {
-        $this->render("User/adminEspace");
+
+        $userRepository = new UserRepository;
+
+        $allUsers = $userRepository->findAllUsers();
+
+        // var_dump($allUsers);
+
+        $this->render(
+            "User/adminEspace",
+            [
+                'allUsers' => $allUsers
+            ]
+        );
     }
 }
