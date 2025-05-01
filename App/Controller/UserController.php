@@ -114,7 +114,7 @@ class UserController extends Controller
     }
 
     // Fonction pour hasher le mot de passe
-    protected function passwordHasher(User $user)
+    public function passwordHasher(User $user)
     {
         if (! empty($_POST['password'])) {
             $passwordHashed = password_hash($user->getPassword(), PASSWORD_DEFAULT);
@@ -159,9 +159,6 @@ class UserController extends Controller
         // Fonction array_map pour récupérer uniquement les values des préférences personnelles dans un nouveau array
         $preferencesPersonnelles = array_map(fn($pref) => $pref['personnelle'], $allPreferences);
 
-        // Fonction pour créer un compte employé
-        $employeAccount = $this->createEmployeAccount();
-
 
         $this->render(
             "User/profil",
@@ -173,64 +170,8 @@ class UserController extends Controller
                 "allCars" => $allCars,
                 "preferences" => $preferences,
                 "preferencesPersonnelles" => $preferencesPersonnelles,
-                "employePseudoAccount" => $employeAccount['pseudo'],
-                "employeMailAccount" => $employeAccount['mail'],
-                "employePasswordAccount" => $employeAccount['password'],
-                "errors" => $employeAccount['errors']
             ]
         );
     }
 
-    // Fonction pour créer un compte employé
-    private function createEmployeAccount()
-    {
-        $errors = [];
-        $pseudo = "";
-        $mail = "";
-        $password = "";
-        try {
-            $user = new User();
-            $UserValidator = new UserValidator();
-            $userRepository = new UserRepository();
-            // Si le formulaire est envoyé, on hydrate l'objet User avec les données passées
-            if (isset($_POST['singUp'])) {
-                $user->hydrate($_POST);
-                $pseudo = $user->getPseudo();
-                $mail = $user->getMail();
-                $password = $user->getPassword();
-                // Pour hasher le mot de passe
-                $this->passwordHasher($user);
-                // Pour valider s'il n'y a pas des erreurs dans le formulaire
-                $errors = $UserValidator->singUpEmployeValidate($user);
-                // S'il n'y a pas des erreurs, on crée l'utilisateur dans la base des données
-                if (empty($errors)) {
-
-                    // on crée l'employé dans la base de données
-                    $userRepository->createEmployeAccount($user);
-
-                    // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
-                    $_SESSION['message_to_User'] = "Le compte employé a été créé avec succès.";
-                    $_SESSION['message_code'] = "success";
-                    // On envoie le json au fetch
-                    echo (json_encode(['success' => true, 'message' => 'Compte créé avec succès']));
-                    exit;
-                } else { // S'il y a des erreurs
-                    // On envoie le json au fetch
-                    echo (json_encode(['success' => false, 'errors' => $errors]));
-                    exit;
-                }
-            }
-
-            return [
-                'pseudo' => $pseudo,
-                'mail' => $mail,
-                'password' => $password,
-                'errors' => $errors
-            ];
-        } catch (Exception $e) {
-            $this->render("Errors/404", [
-                'error' => $e->getMessage()
-            ]);
-        }
-    }
 }

@@ -1,91 +1,157 @@
-// style de la table génerée par DataTable (La bibliothèque JS)
-.dt-container {
+.admin-espace-container {
+    position: relative; // Pour positionner le bouton de création de compte utilisateur
 
-    // Text qui indique : Afficher [X] entrées. et Recherche
-    .dt-length,
-    .dt-search {
-        label {
-            color: white;
-        }
+    // Bouton pour créer un compte utilisateur
+    .create-employe-account {
+        position: absolute;
+        top: 7px;
+        left: 50%;
+        transform: translateX(-50%);
+        cursor: pointer;
+        z-index: 1;
+        font-size: 0.8rem;
     }
 
-    // Text qui indique : Affichage de 1 à 10 sur 29 entrées ....
-    .dt-info {
-        color: $dark;
-    }
+    // La modale pour créer un compte employé
+    .create-employe-account-modal {
 
-    // Le contenu de la table
-    .dt-layout-table {
-        .user-table {
+        // Le fond de la modale
+        .modal-content {
             background-color: $light;
+            border-radius: 0 0 15px 15px;
+            padding: 10px;
 
-            // Les entêtes de la table
-            thead {
-                th {
-                    padding: 10px;
-                }
+            .modal-body {
 
-                // La colonne Actions
-                .actions-row {
-                    text-align: center;
-                }
-            }
+                // Le formulaire pour créer un compte employé
+                .create-employe-account-form {
 
-            // Le corps de la table
-            tbody {
+                    // Le contenu du formulaire
+                    .create-employe-account-body {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 20px;
+                        margin: 0.5rem;
 
-                td,
-                th {
-                    padding: 15px;
-                }
+                        // Pour les inputs et les labels
+                        .form-floating {
+                            width: 100%;
 
-                .id-row {
-                    // La colonne ID
-                    text-align: left;
-                }
+                            label {
+                                color: $dark;
+                            }
 
-                // La colonne Actions
-                .actions-col {
-                    text-align: center;
+                            // section pour afficher le mot de passe
+                            .show-password {
+                                display: flex;
+                                justify-content: end;
+                                align-items: center;
+                                gap: 10px;
 
-                    // L'icon pour supprimer un compte utilisateur
-                    .bi-trash-fill {
-                        color: $danger;
-                        cursor: pointer;
-                        transition: all 0.3s ease-in-out;
-
-                        &:hover {
-                            font-size: 0.95rem;
-                            color: $danger;
-                            // color: rgba($color: $danger, $alpha: 0.9);
-                            filter: brightness(0.9);
+                                // Icon du petit carré
+                                i {
+                                    cursor: pointer;
+                                    color: $dark;
+                                }
+                            }
                         }
                     }
                 }
 
-
             }
         }
     }
-}
 
-// Styles de la modale pour supprimer un compte utilisateur
-.modal-delete-user {
-    .btn-close-div {
-        display: flex;
-        justify-content: flex-end;
-        padding: 10px;
+    // style de la table génerée par DataTable (La bibliothèque JS)
+    .dt-container {
+
+        // Text qui indique : Afficher [X] entrées. et Recherche
+        .dt-length,
+        .dt-search {
+            label {
+                color: white;
+            }
+        }
+
+        // Text qui indique : Affichage de 1 à 10 sur 29 entrées ....
+        .dt-info {
+            color: $dark;
+        }
+
+        // Le contenu de la table
+        .dt-layout-table {
+            .user-table {
+                background-color: $light;
+
+                // Les entêtes de la table
+                thead {
+                    th {
+                        padding: 10px;
+                    }
+
+                    // La colonne Actions
+                    .actions-row {
+                        text-align: center;
+                    }
+                }
+
+                // Le corps de la table
+                tbody {
+
+                    td,
+                    th {
+                        padding: 15px;
+                    }
+
+                    .id-row {
+                        // La colonne ID
+                        text-align: left;
+                    }
+
+                    // La colonne Actions
+                    .actions-col {
+                        text-align: center;
+
+                        // L'icon pour supprimer un compte utilisateur
+                        .bi-trash-fill {
+                            color: $danger;
+                            cursor: pointer;
+                            transition: all 0.3s ease-in-out;
+
+                            &:hover {
+                                font-size: 0.95rem;
+                                color: $danger;
+                                // color: rgba($color: $danger, $alpha: 0.9);
+                                filter: brightness(0.9);
+                            }
+                        }
+                    }
+
+
+                }
+            }
+        }
     }
 
-    // Formulaire de suppression d'un compte utilisateur
-    .delete-user-form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    // Styles de la modale pour supprimer un compte utilisateur
+    .modal-delete-user {
+        .btn-close-div {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px;
+        }
 
-        padding: 2px 15px 20px;
+        // Formulaire de suppression d'un compte utilisateur
+        .delete-user-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            padding: 2px 15px 20px;
+        }
+
     }
-
 }
 
 @media (max-width: 768px) {
@@ -162,10 +228,10 @@
         // Pour afficher la pagination en bas
         .pagination {
             .dt-paging-button {
-                button{
+                button {
                     font-size: 0.5rem;
                 }
-            }   
+            }
         }
     }
 }

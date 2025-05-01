@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Security\UserValidator;
+use Exception;
 
 class AdminController extends Controller
 {
@@ -48,7 +51,7 @@ class AdminController extends Controller
         $allUsers = $userRepository->findAllUsers();
 
         // Si il y a une action de suppression d'un utilisateur
-        if(isset($_POST['deleteUser'])) {    
+        if (isset($_POST['deleteUser'])) {
             $userId = $_POST['id']; // On récupère l'id de l'utilisateur à supprimer
             // On supprime l'utilisateur
             $userRepository->deleteUser($userId);
@@ -57,11 +60,72 @@ class AdminController extends Controller
             $_SESSION['message_code'] = "success";
         }
 
+        // Fonction pour créer un compte employé
+        $employeAccount = $this->createEmployeAccount();
+
         $this->render(
             "User/adminEspace",
             [
-                'allUsers' => $allUsers
+                'allUsers' => $allUsers,
+                "employePseudoAccount" => $employeAccount['pseudo'],
+                "employeMailAccount" => $employeAccount['mail'],
+                "employePasswordAccount" => $employeAccount['password'],
+                "errors" => $employeAccount['errors']
             ]
         );
+    }
+
+    // Fonction pour créer un compte employé
+    private function createEmployeAccount()
+    {
+        $errors = [];
+        $pseudo = "";
+        $mail = "";
+        $password = "";
+        try {
+            $user = new User();
+            $UserValidator = new UserValidator();
+            $userRepository = new UserRepository();
+            $userController = new UserController();
+            // Si le formulaire est envoyé, on hydrate l'objet User avec les données passées
+            if (isset($_POST['singUp'])) {
+                $user->hydrate($_POST);
+                $pseudo = $user->getPseudo();
+                $mail = $user->getMail();
+                $password = $user->getPassword();
+                // Pour hasher le mot de passe
+                $userController->passwordHasher($user);
+                // Pour valider s'il n'y a pas des erreurs dans le formulaire
+                $errors = $UserValidator->singUpEmployeValidate($user);
+                // S'il n'y a pas des erreurs, on crée l'utilisateur dans la base des données
+                if (empty($errors)) {
+
+                    // on crée l'employé dans la base de données
+                    $userRepository->createEmployeAccount($user);
+
+                    // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+                    $_SESSION['message_to_User'] = "Le compte employé a été créé avec succès.";
+                    $_SESSION['message_code'] = "success";
+                    // On envoie le json au fetch
+                    echo (json_encode(['success' => true, 'message' => 'Compte créé avec succès']));
+                    exit;
+                } else { // S'il y a des erreurs
+                    // On envoie le json au fetch
+                    echo (json_encode(['success' => false, 'errors' => $errors]));
+                    exit;
+                }
+            }
+
+            return [
+                'pseudo' => $pseudo,
+                'mail' => $mail,
+                'password' => $password,
+                'errors' => $errors
+            ];
+        } catch (Exception $e) {
+            $this->render("Errors/404", [
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 }
