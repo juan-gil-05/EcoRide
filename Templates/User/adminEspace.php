@@ -25,13 +25,13 @@ require_once './Templates/header.php';
                 // On parcour le tableau des utilisateurs pour remplir la table avec les données de chaque user
                 foreach ($allUsers as $user) { ?>
                     <tr>
-                        <th scope="row" class="id-row"><?= $user['id'] ?></th>
-                        <td><?= $user['pseudo'] ?></td>
-                        <td><?= $user['mail'] ?></td>
-                        <td><?= $user['user_role'] ?></td>
-                        <td><?= $user['nb_credits'] ?></td>
+                        <th scope="row" class="id-row" data-cell="ID"><?= $user['id'] ?></th>
+                        <td data-cell = "Pseudo"><?= $user['pseudo'] ?></td>
+                        <td data-cell = "Mail"><?= $user['mail'] ?></td>
+                        <td data-cell = "Role"><?= $user['user_role'] ?></td>
+                        <td data-cell = "# Crédits"><?= $user['nb_credits'] ?></td>
                         <!-- La collone avec les bouton d'action : Supprimer un utilisateur -->
-                        <td class="actions-col"><i class="bi bi-trash-fill" data-bs-toggle="modal" data-bs-target="#deleteUserConfirm<?= $user['id'] ?>"></i></td>
+                        <td class="actions-col" data-cell="Actions"><i class="bi bi-trash-fill" data-bs-toggle="modal" data-bs-target="#deleteUserConfirm<?= $user['id'] ?>"></i></td>
                     </tr>
                     <!-- On ajout le html de la modale à la vaiable $modals -->
                     <?php $modals .= "

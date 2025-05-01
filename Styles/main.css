@@ -13667,7 +13667,7 @@ html {
 }
 .dt-container .dt-layout-table .user-table tbody td,
 .dt-container .dt-layout-table .user-table tbody th {
-  padding: 10px;
+  padding: 15px;
 }
 .dt-container .dt-layout-table .user-table tbody .id-row {
   text-align: left;
@@ -13681,7 +13681,9 @@ html {
   transition: all 0.3s ease-in-out;
 }
 .dt-container .dt-layout-table .user-table tbody .actions-col .bi-trash-fill:hover {
-  font-size: 1.08rem;
+  font-size: 0.95rem;
+  color: #f44336;
+  filter: brightness(0.9);
 }
 
 .modal-delete-user .btn-close-div {
@@ -13694,4 +13696,48 @@ html {
   flex-direction: column;
   align-items: center;
   padding: 2px 15px 20px;
+}
+
+@media (max-width: 768px) {
+  .dt-container .dt-length label,
+  .dt-container .dt-search label {
+    color: white;
+  }
+  .dt-container .dt-length select,
+  .dt-container .dt-search select {
+    font-size: 0.6rem;
+  }
+  .dt-container .dt-info {
+    color: #4e4e4e;
+  }
+  .dt-container .dt-layout-table .user-table colgroup col {
+    width: 100% !important;
+  }
+  .dt-container .dt-layout-table .user-table thead th {
+    display: none;
+  }
+  .dt-container .dt-layout-table .user-table tbody td,
+  .dt-container .dt-layout-table .user-table tbody th {
+    display: block;
+    width: 100% !important;
+  }
+  .dt-container .dt-layout-table .user-table tbody td::before,
+  .dt-container .dt-layout-table .user-table tbody th::before {
+    content: attr(data-cell) " : ";
+    font-weight: bold;
+  }
+  .dt-container .dt-layout-table .user-table tbody td:first-child,
+  .dt-container .dt-layout-table .user-table tbody th:first-child {
+    padding-top: 1rem;
+  }
+  .dt-container .dt-layout-table .user-table tbody td:last-child,
+  .dt-container .dt-layout-table .user-table tbody th:last-child {
+    padding-bottom: 1rem;
+  }
+  .dt-container .dt-layout-table .user-table tbody .dt-type-numeric {
+    text-align: left;
+  }
+  .dt-container .pagination .dt-paging-button button {
+    font-size: 0.5rem;
+  }
 }/*# sourceMappingURL=main.css.map */

@@ -25,8 +25,8 @@
                     padding: 10px;
                 }
 
+                // La colonne Actions
                 .actions-row {
-                    // La colonne Actions
                     text-align: center;
                 }
             }
@@ -36,7 +36,7 @@
 
                 td,
                 th {
-                    padding: 10px;
+                    padding: 15px;
                 }
 
                 .id-row {
@@ -44,8 +44,8 @@
                     text-align: left;
                 }
 
+                // La colonne Actions
                 .actions-col {
-                    // La colonne Actions
                     text-align: center;
 
                     // L'icon pour supprimer un compte utilisateur
@@ -55,12 +55,15 @@
                         transition: all 0.3s ease-in-out;
 
                         &:hover {
-                            font-size: 1.08rem;
+                            font-size: 0.95rem;
+                            color: $danger;
+                            // color: rgba($color: $danger, $alpha: 0.9);
+                            filter: brightness(0.9);
                         }
                     }
                 }
 
-                
+
             }
         }
     }
@@ -73,6 +76,7 @@
         justify-content: flex-end;
         padding: 10px;
     }
+
     // Formulaire de suppression d'un compte utilisateur
     .delete-user-form {
         display: flex;
@@ -82,4 +86,86 @@
         padding: 2px 15px 20px;
     }
 
+}
+
+@media (max-width: 768px) {
+    .dt-container {
+
+        // Text qui indique : Afficher [X] entrées. et Recherche
+        .dt-length,
+        .dt-search {
+
+            // Pour afficher le texte en blanc
+            label {
+                color: white;
+            }
+
+            // Pour changer la taille de la police du select : Afficher [X] entrées.
+            select {
+                font-size: 0.6rem;
+            }
+        }
+
+        // Text qui indique : Affichage de 1 à 10 sur 29 entrées ....
+        .dt-info {
+            color: $dark;
+        }
+
+        .dt-layout-table {
+            .user-table {
+
+                // Pour afficher la table en mode responsive
+                colgroup {
+                    col {
+                        width: 100% !important;
+                    }
+                }
+
+                thead {
+
+                    // Pour chacher les entêtes de la table
+                    th {
+                        display: none;
+                    }
+                }
+
+                tbody {
+
+                    td,
+                    th {
+                        display: block;
+                        width: 100% !important;
+
+                        // Pour afficher le nom de la colonne
+                        &::before {
+                            content: attr(data-cell) " : ";
+                            font-weight: bold;
+                        }
+
+                        &:first-child {
+                            padding-top: 1rem;
+                        }
+
+                        &:last-child {
+                            padding-bottom: 1rem;
+                        }
+                    }
+
+                    // La colonne nombre de credits
+                    .dt-type-numeric {
+                        text-align: left;
+                    }
+                }
+            }
+        }
+
+        // Pour afficher la pagination en bas
+        .pagination {
+            .dt-paging-button {
+                button{
+                    font-size: 0.5rem;
+                }
+            }   
+        }
+    }
 }
