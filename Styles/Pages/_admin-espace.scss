@@ -20,6 +20,9 @@
                 th {
                     padding: 10px;
                 }
+                .actions-row { // La colonne Actions
+                    text-align: center;
+                }
             }
             // Le corps de la table
             tbody {
@@ -29,6 +32,19 @@
                 }
                 .id-row { // La colonne ID
                     text-align: left;
+                }
+                .actions-col { // La colonne Actions
+                    text-align: center;
+                    // L'icon pour supprimer un compte utilisateur
+                    .bi-trash-fill{
+                        color: $danger;
+                        cursor: pointer;
+                        transition: all 0.3s ease-in-out;
+                        
+                        &:hover {
+                            font-size: 1.08rem;
+                        }
+                    }
                 }
             }
         }

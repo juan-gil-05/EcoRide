@@ -15,6 +15,7 @@ require_once './Templates/header.php';
                     <th scope="col">Mail</th>
                     <th scope="col">Role</th>
                     <th scope="col"># Crédits</th>
+                    <th scope="col" class="actions-row">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +27,7 @@ require_once './Templates/header.php';
                         <td><?= $user['mail'] ?></td>
                         <td><?= $user['user_role'] ?></td>
                         <td><?= $user['nb_credits'] ?></td>
+                        <td class="actions-col"><i class="bi bi-trash-fill"></i></td>
                     </tr>
                 <?php } ?>
             </tbody>

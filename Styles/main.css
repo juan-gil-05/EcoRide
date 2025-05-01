@@ -13661,10 +13661,24 @@ html {
 .dt-container .dt-layout-table .user-table thead th {
   padding: 10px;
 }
+.dt-container .dt-layout-table .user-table thead .actions-row {
+  text-align: center;
+}
 .dt-container .dt-layout-table .user-table tbody td,
 .dt-container .dt-layout-table .user-table tbody th {
   padding: 10px;
 }
 .dt-container .dt-layout-table .user-table tbody .id-row {
   text-align: left;
+}
+.dt-container .dt-layout-table .user-table tbody .actions-col {
+  text-align: center;
+}
+.dt-container .dt-layout-table .user-table tbody .actions-col .bi-trash-fill {
+  color: #f44336;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.dt-container .dt-layout-table .user-table tbody .actions-col .bi-trash-fill:hover {
+  font-size: 1.08rem;
 }/*# sourceMappingURL=main.css.map */
