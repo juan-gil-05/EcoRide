@@ -41,6 +41,12 @@ require_once './Templates/header.php';
                 <div class="alert alert-danger mt-3 content-text text-center"><?= $errors['invalidUser'] ?></div>
             </div>
         <?php } ?>
+        <!-- Erreur si le compte est suspendu -->
+        <?php if (isset($errors['inactiveUser'])) { ?>
+            <div class="if-form-error d-flex justify-content-center content-text">
+                <div class="alert alert-danger mt-3 content-text text-center"><?= $errors['inactiveUser'] ?></div>
+            </div>
+        <?php } ?>
         <!-- Button de connexion -->
         <div class="d-flex justify-content-center">
             <button class="btn btn-warning text-dark w-50 py-3 mt-3 content-text fw-medium" name="logIn" type="submit">Se connecter</button>

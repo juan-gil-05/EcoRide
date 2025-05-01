@@ -7,6 +7,7 @@ class User extends Entity
     protected ?int $id = null;
     // A la création du compte, l’utilisateur bénéficie de 20 crédits.
     protected int $nb_credits;
+    protected int $active; // 0 = inactif, 1 = actif
     protected string $pseudo = "";
     protected string $mail = "";
     protected string $password = "";
@@ -154,6 +155,24 @@ class User extends Entity
     public function setPhotoUniqId(?string $photo_uniqId): self
     {
         $this->photo_uniqId = $photo_uniqId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of active
+     */
+    public function getActive(): int
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set the value of active
+     */
+    public function setActive(int $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }

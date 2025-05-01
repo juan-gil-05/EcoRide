@@ -67,30 +67,36 @@ class AuthController extends Controller
                 if (empty($errors)) {
                     // Et si le mot de passe est correct ...
                     if ($user && $userValidator->passwordVerify($user)) {
-                        // Pour générer l'id de la session
-                        session_regenerate_id(true);
-                        // On crée une nouvelle session avec les données de l'utilisateur connecté
-                        $_SESSION['user'] = [
-                            "id" => $user->getId(),
-                            "pseudo" => $user->getPseudo(),
-                            "mail" => $user->getMail(),
-                            "password" => $user->getPassword(),
-                            "role" => $user->getRoleId(),
-                        ];
-                        // Si l'utilisateur a le role du Chauffeur ou Passager-chaffeur,
-                        // On envoi l'user vers la page pour enregister une voiture
-                        if ($user->getRoleId() == 2 || $user->getRoleId() == 3) {
-                            // Si l'utilisateur a déjà enregistré des voitures, 
-                            // On envoi a la page d'accueil
-                            if ($voitureRepository->findCarByUserId($user->getId())) {
+                        // On vérifie si l'utilisateur est actif
+                        if($user->getActive() == 1){
+                            // Pour générer l'id de la session
+                            session_regenerate_id(true);
+                            // On crée une nouvelle session avec les données de l'utilisateur connecté
+                            $_SESSION['user'] = [
+                                "id" => $user->getId(),
+                                "pseudo" => $user->getPseudo(),
+                                "mail" => $user->getMail(),
+                                "password" => $user->getPassword(),
+                                "role" => $user->getRoleId(),
+                            ];
+                            // Si l'utilisateur a le role du Chauffeur ou Passager-chaffeur,
+                            // On envoi l'user vers la page pour enregister une voiture
+                            if ($user->getRoleId() == 2 || $user->getRoleId() == 3) {
+                                // Si l'utilisateur a déjà enregistré des voitures, 
+                                // On envoi a la page d'accueil
+                                if ($voitureRepository->findCarByUserId($user->getId())) {
+                                    header('location: ?controller=page&action=accueil');
+                                } else {
+                                    // Envois vers la page pour enregistrer une voiture
+                                    header('location: ?controller=voiture&action=carInscription');
+                                }
+                            } else { // Si l'user n'est pas chauffeur mais passager, alors ...
+                                // On envoie l'utilisateur vers la page d'accueil
                                 header('location: ?controller=page&action=accueil');
-                            } else {
-                                // Envois vers la page pour enregistrer une voiture
-                                header('location: ?controller=voiture&action=carInscription');
                             }
-                        } else { // Si l'user n'est pas chauffeur mais passager, alors ...
-                            // On envoie l'utilisateur vers la page d'accueil
-                            header('location: ?controller=page&action=accueil');
+                        }else{
+                            // Si le compte est suspendu, on affiche un message d'erreur
+                            $errors['inactiveUser'] = "Votre compte est suspendu, veuillez nous contacter pour en savoir plus.";
                         }
                     } // Si le mot de passe ou le mail est incorrect
                     else {
