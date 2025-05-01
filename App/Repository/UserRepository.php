@@ -107,4 +107,14 @@ class UserRepository extends Repository
         $query->bindValue(":mdp", $user->getPassword(), $this->pdo::PARAM_STR);
         return $query->execute();
     }
+
+    // Fonction pour supprimer un utilisateur
+    public function deleteUser(int $userId): bool
+    {
+        $sql = ("DELETE FROM User WHERE id = :userId");
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(':userId', $userId, $this->pdo::PARAM_INT);
+        return $query->execute();
+    }
+
 }

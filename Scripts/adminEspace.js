@@ -2,7 +2,7 @@
 // new DataTable('#userTable'); // userTable est l'id du tableau des utilisateurs
 $('#userTable').DataTable({ // JQuery pour initialiser le tableau et changer la langue
     language: {
-        url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json'
+        url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json'
     }
 });
 

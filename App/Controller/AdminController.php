@@ -42,12 +42,20 @@ class AdminController extends Controller
     // Fonction pour afficher l'espace admin
     private function adminEspace()
     {
-
+        // repository pour la table User
         $userRepository = new UserRepository;
-
+        // On récupère tous les utilisateurs
         $allUsers = $userRepository->findAllUsers();
 
-        // var_dump($allUsers);
+        // Si il y a une action de suppression d'un utilisateur
+        if(isset($_POST['deleteUser'])) {    
+            $userId = $_POST['id']; // On récupère l'id de l'utilisateur à supprimer
+            // On supprime l'utilisateur
+            $userRepository->deleteUser($userId);
+            // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+            $_SESSION['message_to_User'] = 'Le compte utilisateur a bien été supprimé.';
+            $_SESSION['message_code'] = "success";
+        }
 
         $this->render(
             "User/adminEspace",
