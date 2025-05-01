@@ -79,7 +79,7 @@ class UserRepository extends Repository
     // Fonction pour trouver tous les utilisateurs
     public function findAllUsers(): array
     {
-        $sql = ("SELECT User.id, pseudo, mail, Role.libelle as user_role, nb_credits
+        $sql = ("SELECT User.id, pseudo, mail, Role.libelle as user_role, nb_credits, active
                 FROM User
                 INNER JOIN Role ON User.role_id = Role.id;");
         $query = $this->pdo->prepare($sql);
@@ -108,10 +108,10 @@ class UserRepository extends Repository
         return $query->execute();
     }
 
-    // Fonction pour supprimer un utilisateur
-    public function deleteUser(int $userId): bool
+    // Fonction pour suspendre un utilisateur
+    public function suspendUser(int $userId): bool
     {
-        $sql = ("DELETE FROM User WHERE id = :userId");
+        $sql = ("UPDATE User SET active = 0 WHERE id = :userId");
         $query = $this->pdo->prepare($sql);
         $query->bindValue(':userId', $userId, $this->pdo::PARAM_INT);
         return $query->execute();

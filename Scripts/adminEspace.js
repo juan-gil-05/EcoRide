@@ -76,7 +76,9 @@ if(createEmployeAccountForm){
     })
 }
 
-
+// Pour les tooltips Bootstrap. les icones pour suspendre un compte 
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggleTooltip="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
 
 

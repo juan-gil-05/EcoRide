@@ -104,8 +104,8 @@
                         padding: 15px;
                     }
 
+                    // La colonne ID
                     .id-row {
-                        // La colonne ID
                         text-align: left;
                     }
 
@@ -113,8 +113,8 @@
                     .actions-col {
                         text-align: center;
 
-                        // L'icon pour supprimer un compte utilisateur
-                        .bi-trash-fill {
+                        // L'icon pour suspendre un compte utilisateur
+                        .bi-person-fill-slash {
                             color: $danger;
                             cursor: pointer;
                             transition: all 0.3s ease-in-out;
@@ -122,114 +122,164 @@
                             &:hover {
                                 font-size: 0.95rem;
                                 color: $danger;
-                                // color: rgba($color: $danger, $alpha: 0.9);
+                                filter: brightness(0.9);
+                            }
+                        }
+
+                        // L'icon quand l'user est déjà suspendu
+                        .inactif-user-delete-btn {
+                            cursor: not-allowed;
+                            color: $dark;
+
+                            &:hover {
+                                font-size: 0.95rem;
+                                color: $dark;
                                 filter: brightness(0.9);
                             }
                         }
                     }
 
+                    // La colonne de l'user actif ou inactif
+                    .active-col {
+                        text-align: center;
+
+                        // Icon pour afficher si l'utilisateur est actif
+                        .bi-check-circle-fill {
+                            color: $primary;
+                        }
+
+                        // Icon pour afficher si l'utilisateur est inactif
+                        .bi-x-circle-fill {
+                            color: $danger;
+                        }
+                    }
 
                 }
             }
         }
     }
 
-    // Styles de la modale pour supprimer un compte utilisateur
-    .modal-delete-user {
-        .btn-close-div {
-            display: flex;
-            justify-content: flex-end;
-            padding: 10px;
-        }
+}
 
-        // Formulaire de suppression d'un compte utilisateur
-        .delete-user-form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            padding: 2px 15px 20px;
-        }
-
+// Styles de la modale pour suspendre un compte utilisateur
+.modal-suspend-user {
+    .btn-close-div {
+        display: flex;
+        justify-content: flex-end;
+        padding: 10px;
     }
+
+    // Formulaire de suppression d'un compte utilisateur
+    .suspend-user-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        padding: 2px 15px 20px;
+    }
+
 }
 
 @media (max-width: 768px) {
-    .dt-container {
+    .admin-espace-container {
 
-        // Text qui indique : Afficher [X] entrées. et Recherche
-        .dt-length,
-        .dt-search {
-
-            // Pour afficher le texte en blanc
-            label {
-                color: white;
-            }
-
-            // Pour changer la taille de la police du select : Afficher [X] entrées.
-            select {
-                font-size: 0.6rem;
-            }
+        // Bouton pour créer un compte utilisateur
+        .create-employe-account {
+            top: 1.4%;
+            left: 88%;
+            font-size: 0.4rem;
+            width: 80px;
         }
 
-        // Text qui indique : Affichage de 1 à 10 sur 29 entrées ....
-        .dt-info {
-            color: $dark;
-        }
+        // Le contenu de la table des utilisateurs
+        .dt-container {
 
-        .dt-layout-table {
-            .user-table {
+            // Pour adjuster la barre de recherche, afin de, pourvoir afficher le bouton de création de compte utilisateur
+            &:first-child {
+                .dt-layout-end {
+                    display: flex;
+                }
+            }
 
-                // Pour afficher la table en mode responsive
-                colgroup {
-                    col {
-                        width: 100% !important;
-                    }
+            // Text qui indique : Afficher [X] entrées. et Recherche
+            .dt-length,
+            .dt-search {
+
+                // Pour afficher le texte en blanc
+                label {
+                    color: white;
                 }
 
-                thead {
-
-                    // Pour chacher les entêtes de la table
-                    th {
-                        display: none;
-                    }
+                // Pour changer la taille de la police du select : Afficher [X] entrées.
+                select {
+                    font-size: 0.6rem;
                 }
+            }
 
-                tbody {
+            // Text qui indique : Affichage de 1 à 10 sur 29 entrées ....
+            .dt-info {
+                color: $dark;
+            }
 
-                    td,
-                    th {
-                        display: block;
-                        width: 100% !important;
+            .dt-layout-table {
+                .user-table {
 
-                        // Pour afficher le nom de la colonne
-                        &::before {
-                            content: attr(data-cell) " : ";
-                            font-weight: bold;
-                        }
-
-                        &:first-child {
-                            padding-top: 1rem;
-                        }
-
-                        &:last-child {
-                            padding-bottom: 1rem;
+                    // Pour afficher la table en mode responsive
+                    colgroup {
+                        col {
+                            width: 100% !important;
                         }
                     }
 
-                    // La colonne nombre de credits
-                    .dt-type-numeric {
-                        text-align: left;
+                    thead {
+
+                        // Pour chacher les entêtes de la table
+                        th {
+                            display: none;
+                        }
+                    }
+
+                    tbody {
+
+                        td,
+                        th {
+                            display: block;
+                            width: 100% !important;
+
+                            // Pour afficher le nom de la colonne
+                            &::before {
+                                content: attr(data-cell) " : ";
+                                font-weight: bold;
+                            }
+
+                            &:first-child {
+                                padding-top: 1rem;
+                            }
+
+                            &:last-child {
+                                padding-bottom: 1rem;
+                            }
+                        }
+
+                        // La colonne nombre de credits
+                        .dt-type-numeric {
+                            text-align: left;
+                        }
+
+                        // La colonne de l'user actif ou inactif
+                        .active-col {
+                            text-align: left !important;
+                        }
                     }
                 }
             }
-        }
 
-        // Pour afficher la pagination en bas
-        .pagination {
-            .dt-paging-button {
-                button {
-                    font-size: 0.5rem;
+            // Pour afficher la pagination en bas
+            .pagination {
+                .dt-paging-button {
+                    button {
+                        font-size: 0.5rem;
+                    }
                 }
             }
         }

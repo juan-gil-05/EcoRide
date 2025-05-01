@@ -51,12 +51,12 @@ class AdminController extends Controller
         $allUsers = $userRepository->findAllUsers();
 
         // Si il y a une action de suppression d'un utilisateur
-        if (isset($_POST['deleteUser'])) {
-            $userId = $_POST['id']; // On récupère l'id de l'utilisateur à supprimer
+        if (isset($_POST['suspendUser'])) {
+            $userId = $_POST['id']; // On récupère l'id de l'utilisateur à suspendre
             // On supprime l'utilisateur
-            $userRepository->deleteUser($userId);
+            $userRepository->suspendUser($userId);
             // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
-            $_SESSION['message_to_User'] = 'Le compte utilisateur a bien été supprimé.';
+            $_SESSION['message_to_User'] = 'Le compte utilisateur a bien été suspendu.';
             $_SESSION['message_code'] = "success";
         }
 

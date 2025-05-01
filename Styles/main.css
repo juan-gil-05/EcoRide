@@ -13715,22 +13715,41 @@ html {
 .admin-espace-container .dt-container .dt-layout-table .user-table tbody .actions-col {
   text-align: center;
 }
-.admin-espace-container .dt-container .dt-layout-table .user-table tbody .actions-col .bi-trash-fill {
+.admin-espace-container .dt-container .dt-layout-table .user-table tbody .actions-col .bi-person-fill-slash {
   color: #f44336;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
-.admin-espace-container .dt-container .dt-layout-table .user-table tbody .actions-col .bi-trash-fill:hover {
+.admin-espace-container .dt-container .dt-layout-table .user-table tbody .actions-col .bi-person-fill-slash:hover {
   font-size: 0.95rem;
   color: #f44336;
   filter: brightness(0.9);
 }
-.admin-espace-container .modal-delete-user .btn-close-div {
+.admin-espace-container .dt-container .dt-layout-table .user-table tbody .actions-col .inactif-user-delete-btn {
+  cursor: not-allowed;
+  color: #4e4e4e;
+}
+.admin-espace-container .dt-container .dt-layout-table .user-table tbody .actions-col .inactif-user-delete-btn:hover {
+  font-size: 0.95rem;
+  color: #4e4e4e;
+  filter: brightness(0.9);
+}
+.admin-espace-container .dt-container .dt-layout-table .user-table tbody .active-col {
+  text-align: center;
+}
+.admin-espace-container .dt-container .dt-layout-table .user-table tbody .active-col .bi-check-circle-fill {
+  color: #4caf50;
+}
+.admin-espace-container .dt-container .dt-layout-table .user-table tbody .active-col .bi-x-circle-fill {
+  color: #f44336;
+}
+
+.modal-suspend-user .btn-close-div {
   display: flex;
   justify-content: flex-end;
   padding: 10px;
 }
-.admin-espace-container .modal-delete-user .delete-user-form {
+.modal-suspend-user .suspend-user-form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13738,45 +13757,57 @@ html {
 }
 
 @media (max-width: 768px) {
-  .dt-container .dt-length label,
-  .dt-container .dt-search label {
+  .admin-espace-container .create-employe-account {
+    top: 1.4%;
+    left: 88%;
+    font-size: 0.4rem;
+    width: 80px;
+  }
+  .admin-espace-container .dt-container:first-child .dt-layout-end {
+    display: flex;
+  }
+  .admin-espace-container .dt-container .dt-length label,
+  .admin-espace-container .dt-container .dt-search label {
     color: white;
   }
-  .dt-container .dt-length select,
-  .dt-container .dt-search select {
+  .admin-espace-container .dt-container .dt-length select,
+  .admin-espace-container .dt-container .dt-search select {
     font-size: 0.6rem;
   }
-  .dt-container .dt-info {
+  .admin-espace-container .dt-container .dt-info {
     color: #4e4e4e;
   }
-  .dt-container .dt-layout-table .user-table colgroup col {
+  .admin-espace-container .dt-container .dt-layout-table .user-table colgroup col {
     width: 100% !important;
   }
-  .dt-container .dt-layout-table .user-table thead th {
+  .admin-espace-container .dt-container .dt-layout-table .user-table thead th {
     display: none;
   }
-  .dt-container .dt-layout-table .user-table tbody td,
-  .dt-container .dt-layout-table .user-table tbody th {
+  .admin-espace-container .dt-container .dt-layout-table .user-table tbody td,
+  .admin-espace-container .dt-container .dt-layout-table .user-table tbody th {
     display: block;
     width: 100% !important;
   }
-  .dt-container .dt-layout-table .user-table tbody td::before,
-  .dt-container .dt-layout-table .user-table tbody th::before {
+  .admin-espace-container .dt-container .dt-layout-table .user-table tbody td::before,
+  .admin-espace-container .dt-container .dt-layout-table .user-table tbody th::before {
     content: attr(data-cell) " : ";
     font-weight: bold;
   }
-  .dt-container .dt-layout-table .user-table tbody td:first-child,
-  .dt-container .dt-layout-table .user-table tbody th:first-child {
+  .admin-espace-container .dt-container .dt-layout-table .user-table tbody td:first-child,
+  .admin-espace-container .dt-container .dt-layout-table .user-table tbody th:first-child {
     padding-top: 1rem;
   }
-  .dt-container .dt-layout-table .user-table tbody td:last-child,
-  .dt-container .dt-layout-table .user-table tbody th:last-child {
+  .admin-espace-container .dt-container .dt-layout-table .user-table tbody td:last-child,
+  .admin-espace-container .dt-container .dt-layout-table .user-table tbody th:last-child {
     padding-bottom: 1rem;
   }
-  .dt-container .dt-layout-table .user-table tbody .dt-type-numeric {
+  .admin-espace-container .dt-container .dt-layout-table .user-table tbody .dt-type-numeric {
     text-align: left;
   }
-  .dt-container .pagination .dt-paging-button button {
+  .admin-espace-container .dt-container .dt-layout-table .user-table tbody .active-col {
+    text-align: left !important;
+  }
+  .admin-espace-container .dt-container .pagination .dt-paging-button button {
     font-size: 0.5rem;
   }
 }/*# sourceMappingURL=main.css.map */
