@@ -297,4 +297,31 @@ class CovoiturageRepository extends Repository
 
         return $query->fetch($this->pdo::FETCH_ASSOC);
     }
+
+    // SECTION MONGODB
+
+    // Fonction pour chercher tous les covoiturages
+    public function getAllCovoiturages(): array
+    {
+        $sql = ("SELECT Covoiturage.*, User.id AS driver_id FROM Covoiturage
+                    INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
+                    INNER JOIN User ON Voiture.user_id = User.id");
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+
+        return $query->fetchAll($this->pdo::FETCH_ASSOC);
+    }
+
+    public function getAll(string $name)
+    {
+        $collection = $this->mongo->test;
+        $data = $collection->findOne(['nombre' => $name]);
+        return $data;
+    }
+    public function insertOne(string $name, int $age)
+    {
+        $collection = $this->mongo->test;
+        $data = $collection->insertOne(['nombre' => $name, 'edad' => $age]);
+        return $data;
+    }
 }

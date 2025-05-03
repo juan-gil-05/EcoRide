@@ -3,3 +3,5 @@
 node_modules
 // vendor pour le comoposer
 vendor 
+// DataBase Config
+db_config.php
