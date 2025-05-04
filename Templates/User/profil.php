@@ -151,7 +151,7 @@ require_once './Templates/header.php';
         <!--Bouton pour visualiser les graphiques de : 
             1. nombre des covoiturages par jour
             2. combien la plateforme gagne de crédit en fonction des jours -->
-        <a class="btn btn-secondary text-white secondary-btn mt-2 small-text" href="#">
+        <a class="btn btn-secondary text-white secondary-btn mt-2 small-text" href="?controller=admin&action=adminGraphs">
             Visualiser les graphiques
         </a>
         <!-- Bouton pour voir la table de tous les utilisateurs -->

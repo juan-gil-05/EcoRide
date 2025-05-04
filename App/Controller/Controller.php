@@ -13,47 +13,51 @@ class Controller
         try {
             if (isset($_GET['controller'])) {
                 switch ($_GET['controller']) {
-                        // Appel du contrôleur page
+                    // Appel du contrôleur page
                     case 'page':
                         $controller = new PageController();
                         $controller->route();
                         break;
-                        // Appel du contrôleur covoiturages
+                    // Appel du contrôleur covoiturages
                     case 'covoiturages':
                         $controller = new CovoiturageController();
                         $controller->route();
                         break;
-                        // Appel du contrôleur user
+                    // Appel du contrôleur user
                     case 'user':
                         $controller = new UserController();
                         $controller->route();
                         break;
-                        // Appel du contrôleur auth
+                    // Appel du contrôleur auth
                     case 'auth':
                         $controller = new AuthController();
                         $controller->route();
                         break;
-                        // Appel du contrôleur voiture
+                    // Appel du contrôleur voiture
                     case 'voiture':
                         $controller = new VoitureController();
                         $controller->route();
                         break;
-                        // Appel du contrôleur preference
+                    // Appel du contrôleur preference
                     case 'preferences':
                         $controller = new PreferenceUserController();
                         $controller->route();
                         break;
-                        // Appel du controlleur pour l'espace employé
+                    // Appel du controlleur pour l'espace employé
                     case 'employe':
                         $controller = new EmployeController();
                         $controller->route();
                         break;
-                        // Appel du controlleur pour l'espace admin
+                    // Appel du controlleur pour l'espace admin
                     case 'admin':
                         $controller = new AdminController();
                         $controller->route();
                         break;
-                        // Si le contrôleur passe dans l'url n'existe pas
+                    // Appel du controlleur pour les API
+                    case 'api':
+                        $this->apiRoute();
+                        break;
+                    // Si le contrôleur passe dans l'url n'existe pas
                     default:
                         throw new Exception("Ce contrôleur n'existe pas: " . $_GET['controller']);
                         break;
@@ -97,6 +101,26 @@ class Controller
                     'error' => $e->getMessage()
                 ]
             );
+        }
+    }
+
+    // Fonction pour gerer le routage de l'API
+    private function apiRoute()
+    {
+        if (isset($_GET['action'])) {
+            switch ($_GET['action']) {
+                // Action pour obtenir les données du graphique
+                case 'getGraphData':
+                    $apiController = new ApiController();
+                    $apiController->getGraphData();
+                    break;
+                // Si l'action passée dans l'url n'existe pas
+                default:
+                    throw new \Exception("Cette action n'existe pas dans l'API");
+            }
+        } else {
+            // Si il n'y a pas une action dans l'url
+            throw new \Exception("Aucune action détectée dans l'API");
         }
     }
 }

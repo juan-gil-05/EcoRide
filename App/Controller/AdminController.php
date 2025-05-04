@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\CovoiturageRepository;
 use App\Repository\UserRepository;
 use App\Security\UserValidator;
+use DateTime;
 use Exception;
 
 class AdminController extends Controller
@@ -18,6 +20,10 @@ class AdminController extends Controller
                     // Action pour afficher l'espace admin
                     case 'adminEspace':
                         $this->adminEspace();
+                        break;
+                    // Action pour afficher les graphiques du site
+                    case 'adminGraphs':
+                        $this->adminGraphs();
                         break;
                     // Si l'action passée dans l'url n'existe pas
                     default:
@@ -127,5 +133,15 @@ class AdminController extends Controller
                 'error' => $e->getMessage()
             ]);
         }
+    }
+
+    /*
+    Exemple d'appel depuis l'url
+        ?controller=admin&action=adminGraphs
+    */
+    // Fonction pour afficher les graphiques du site
+    private function adminGraphs()
+    {
+        $this->render("User/adminGraphs");
     }
 }

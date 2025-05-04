@@ -25,6 +25,19 @@ class CovoiturageRepository extends Repository
         return $query->execute();
     }
 
+    // Fonction pour chercher tous les covoiturages
+    public function getAllCovoiturages(): array
+    {
+        $sql = ("SELECT Covoiturage.*, User.id AS driver_id FROM Covoiturage
+                        INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
+                        INNER JOIN User ON Voiture.user_id = User.id
+                        ORDER BY date_heure_depart ASC");
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+
+        return $query->fetchAll($this->pdo::FETCH_ASSOC);
+    }
+
     // Fonction pour checher des covoiturages
     public function searchCovoiturageByDateAndAdresse(string $adresseDepart, string $adresseArrivee, ?string $dateDepart = null): array
     {
@@ -299,20 +312,7 @@ class CovoiturageRepository extends Repository
     }
 
     // SECTION MONGODB
-
-    // Fonction pour chercher tous les covoiturages
-    public function getAllCovoiturages(): array
-    {
-        $sql = ("SELECT Covoiturage.*, User.id AS driver_id FROM Covoiturage
-                    INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
-                    INNER JOIN User ON Voiture.user_id = User.id");
-        $query = $this->pdo->prepare($sql);
-        $query->execute();
-
-        return $query->fetchAll($this->pdo::FETCH_ASSOC);
-    }
-
-    public function getAll(string $name)
+    public function getOne(string $name)
     {
         $collection = $this->mongo->test;
         $data = $collection->findOne(['nombre' => $name]);
@@ -323,5 +323,12 @@ class CovoiturageRepository extends Repository
         $collection = $this->mongo->test;
         $data = $collection->insertOne(['nombre' => $name, 'edad' => $age]);
         return $data;
+    }
+
+    public function insertDates(string $date, int $quantity)
+    {
+        $collection = $this->mongo->covoiturage_for_day;
+        $insert = $collection->insertOne(['date' => $date, 'quantity' => $quantity]);
+        return $insert;
     }
 }
