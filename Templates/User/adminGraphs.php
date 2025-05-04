@@ -7,7 +7,7 @@ require_once './Templates/header.php';
 
 <!-- Section avec les graphiques de l'app. le canvas est rempli dynamiquement par le fichier JS-->
 <section class="container rounded bg-light p-3 mt-4 mb-5 d-flex justify-content-center">
-    <div class="col-12 col-md-10" style="height: 500px;">
+    <div class="col-12 col-md-10 chart-container">
         <h2 class="text-center subtitle-text">Graphique</h2>
         <!-- Canvas pour le graphique -->
       <canvas id="myChart" class="d-inline"></canvas>

@@ -13810,4 +13810,21 @@ html {
   .admin-espace-container .dt-container .pagination .dt-paging-button button {
     font-size: 0.5rem;
   }
+}
+.chart-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+.chart-container #myChart {
+  width: 100% !important;
+  height: 500px !important;
+}
+
+@media (max-width: 768px) {
+  .chart-container #myChart {
+    height: 400px !important;
+    position: relative;
+  }
 }/*# sourceMappingURL=main.css.map */
