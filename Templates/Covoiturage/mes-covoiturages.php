@@ -210,7 +210,7 @@ require_once './Templates/header.php';
                                                 Arrivée à destination
                                             </button>
                                         <?php } ?>
-                                        <?php if ($covoiturage['statut_id'] == 3) { ?>
+                                        <?php if ($covoiturage['statut_id'] == 3 || $covoiturage['statut_id'] == 4) { ?>
                                             <button id="finishBtn<?= $covoiturage['id'] ?>"
                                                 class="btn btn-dark secondary-btn text-white">
                                                 Clôturé

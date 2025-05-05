@@ -275,6 +275,19 @@ class CovoiturageRepository extends Repository
         return $query->execute();
     }
 
+    // Fonction pour changer le statut de la participation d'un passager dans un covoiturage
+    public function updateUserCovoiturageStatut(int $passgerId, int $covoiturageId, int $statutId): bool
+    {
+        $sql = "UPDATE User_Covoiturages 
+                SET statut_id = :statutId
+                WHERE user_id = :passgerId AND covoiturage_id = :covoiturageId";
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":statutId", $statutId, $this->pdo::PARAM_INT);
+        $query->bindValue(":passgerId", $passgerId, $this->pdo::PARAM_INT);
+        $query->bindValue(":covoiturageId", $covoiturageId, $this->pdo::PARAM_INT);
+        return $query->execute();
+    }
+
     // Fonction pour mettre à jour les crédits du chauffeur après la validation du passager
     public function updateDriverCredits(int $covoituragePrice, int $driverId): bool
     {

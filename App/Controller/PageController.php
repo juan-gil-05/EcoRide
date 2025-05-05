@@ -219,9 +219,9 @@ class PageController extends Controller
                 // Fonction pour mettre à jour les crédits du chauffeur
                 $covoiturageRepository->updateDriverCredits($covoituragePrice, $driverId);
 
-                // Fonction pour mettre à jour le statut du covoiturage
-                // 1 = Crée | 2 = Démarré | 3 = Arrivé | 4 = Validé | 5 = Annulé
-                $covoiturageRepository->updateCovoiturageStatut($covoiturageId, 4);
+                // Fonction pour mettre à jour le statut de la participation du passager au covoiturage
+                // 4 = Validé
+                $covoiturageRepository->updateUserCovoiturageStatut($passagerId, $covoiturageId, 4);
 
                 // Variables pour enregistrer les détails de l'avis
                 $avisTitle = $_POST['titre'];
