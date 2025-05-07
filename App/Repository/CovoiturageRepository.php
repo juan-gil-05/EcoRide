@@ -288,6 +288,24 @@ class CovoiturageRepository extends Repository
         return $query->execute();
     }
 
+    // Fonction pour trouver les dates de tous les covoiturages,
+    // les nombres de covoiturages par jour
+    // et la gain journalier de la plateforme selon la quantité des participations dasn les covoiturages
+    public function getPlatformCovoituragesAndGainPerDate(): array
+    {
+        $sql = "SELECT 
+                DATE_FORMAT(c.date_heure_depart, '%d-%m-%Y') AS jour,
+                COUNT(DISTINCT c.id) AS nb_trajets,
+                COUNT(uc.id) * 2 AS gain
+                FROM covoiturage c
+                LEFT JOIN user_covoiturages uc ON uc.covoiturage_id = c.id
+                GROUP BY jour
+                ORDER BY STR_TO_DATE(jour, '%d-%m-%Y') ASC;";
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+        return $query->fetchAll($this->pdo::FETCH_ASSOC);
+    }
+
     // Fonction pour mettre à jour les crédits du chauffeur après la validation du passager
     public function updateDriverCredits(int $covoituragePrice, int $driverId): bool
     {
