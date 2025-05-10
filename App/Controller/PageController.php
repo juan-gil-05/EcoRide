@@ -240,12 +240,11 @@ class PageController extends Controller
 
                 // Si le passager a rempli les champs de l'avis et de la note
                 if (empty($errors)) {
-                    // Fonction pour ajouter l'avis et la note du passager au chauffeur en bdd
-                    $avisRepository->addAvisAndNote(
+                    // Fonction pour ajouter l'avis et la note du passager au chauffeur en mongoDB
+                    $avisRepository->insertAvisAndNote(
                         $avisTitle,
                         $avisDescription,
                         $avisNote,
-                        false, // false pour indiquer que l'avis est en attente de validation par l'employé
                         $passagerId,
                         $driverId,
                         $covoiturageId

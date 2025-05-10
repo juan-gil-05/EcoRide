@@ -51,7 +51,10 @@ class EmployeController extends Controller
         $commentRepository = new CommentRepository;
 
         // Tous les avis et les notes des chauffeurs 
-        $allAvisAndNotes = $avisRepository->searchAllAvisAndNotes();
+        $allAvisAndNotesObject = $avisRepository->findAllAvisAndNotes();
+
+        // Pour convertir l'objet mongo en array
+        $allAvisAndNotes = iterator_to_array($allAvisAndNotesObject);
 
         // Function pour valider ou refuser les avis et notes
         $avisNotesFunction = $this->validateAvisAndNote($allAvisAndNotes, $avisRepository, $userRepository);
@@ -81,41 +84,34 @@ class EmployeController extends Controller
     // Fonction pour valider ou refuser les avis et notes
     private function validateAvisAndNote(array $allAvisAndNotes, AvisRepository $avisRepository, UserRepository $userRepository): array
     {
-        // Tous les avis et les notes des chauffeurs 
-        $allAvisAndNotes = $avisRepository->searchAllAvisAndNotes(); {
-            // Pour parcourir le tableau des avis et notes
-            foreach ($allAvisAndNotes as $avisAndNote) {
-                // Toute l'info de l'avis
-                $avisId = $avisAndNote['avis_id']; // L'id de l'avis
-                $passagerId = $avisAndNote['user_id_auteur']; // L'id du passager
-                $driverId = $avisAndNote['user_id_cible']; // L'id du chauffeur
-                $passagerName[$avisId] = $userRepository->findUserById($passagerId); // Le pseudo du passager
-                $driverName[$avisId] =  $userRepository->findUserById($driverId); // Le pseudo du chauffeur
-            }
-            // Si l'employé valide l'avis, alors ....
-            if (isset($_POST['avisValidated'])) {
-                $avisStatut = $_POST['avisValidated']; // On récupere le statut, donc = 1 : True
-                $avisId = $_POST['avis_id']; // On récupere l'id de l'avis
-                $avisRepository->updateAvisStatut($avisStatut, $avisId);
-                // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
-                $_SESSION['message_to_User'] = 'L’avis a été validé avec succès.</br> Il est maintenant visible publiquement.';
-                $_SESSION['message_code'] = "success";
-                // On envoie l'user vers la page précédente
-                header('Location : ' . $_SERVER['HTTP_REFERER']);
-            } // Si l'employé refuse l'avis, alors ... 
-            elseif (isset($_POST['avisRefused'])) {
-                $avisStatut = $_POST['avisRefused']; // On récupere le statut, donc = 0 : False
-                $avisId = $_POST['avis_id']; // On récupere l'id de l'avis
-                $avisRepository->updateAvisStatut($avisStatut, $avisId);
-                // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
-                $_SESSION['message_to_User'] = 'L’avis a été refusé.</br> Il ne sera pas publié sur la plateforme.';
-                $_SESSION['message_code'] = "info";
-                // On envoie l'user vers la page précédente
-                header('Location : ' . $_SERVER['HTTP_REFERER']);
-            }
-            // On retourne le tableau avec les pseudos des passagers et des chauffeurs
-            return [$passagerName, $driverName];
+        // Pour parcourir le tableau des avis et notes
+        foreach ($allAvisAndNotes as $avisAndNote) {
+            // Toute l'info de l'avis
+            $avisId = (string) $avisAndNote['_id']; // L'id de l'avis
+            $passagerId = $avisAndNote['user_id_auteur']; // L'id du passager
+            $driverId = $avisAndNote['user_id_cible']; // L'id du chauffeur
+            $passagerName[$avisId] = $userRepository->findUserById($passagerId); // Le pseudo du passager
+            $driverName[$avisId] =  $userRepository->findUserById($driverId); // Le pseudo du chauffeur
         }
+        // Si l'employé valide l'avis, alors ....
+        if (isset($_POST['avisValidated'])) {
+            $avisStatut = $_POST['avisValidated']; // On récupere le statut, donc = 1 : True
+            $avisId = $_POST['avis_id']; // On récupere l'id de l'avis passe dans le formulaire
+            $avisRepository->updateAvisStatut($avisStatut, $avisId);
+            // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+            $_SESSION['message_to_User'] = 'L’avis a été validé avec succès.</br> Il est maintenant visible publiquement.';
+            $_SESSION['message_code'] = "success";
+        } // Si l'employé refuse l'avis, alors ... 
+        elseif (isset($_POST['avisRefused'])) {
+            $avisStatut = $_POST['avisRefused']; // On récupere le statut, donc = 0 : False
+            $avisId = $_POST['avis_id']; // On récupere l'id de l'avis passe dans le formulaire
+            $avisRepository->updateAvisStatut($avisStatut, $avisId);
+            // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+            $_SESSION['message_to_User'] = 'L’avis a été refusé.</br> Il ne sera pas publié sur la plateforme.';
+            $_SESSION['message_code'] = "info";
+        }
+        // On retourne le tableau avec les pseudos des passagers et des chauffeurs
+        return [$passagerName, $driverName];
     }
 
     // Fonction pour visualiser les commentaires de tous les covoiturages signalés

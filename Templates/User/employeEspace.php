@@ -29,18 +29,20 @@ require_once './Templates/header.php';
     <!-- La list des avis -->
     <ul class="mt-4 ps-0 avis-list-container">
         <?php foreach ($allAvisAndNotes as $avisAndNote) { ?>
+            <!-- Pour transforme l'id de l'avis en string -->
+            <?php $avisId = (string)$avisAndNote['_id']; ?> 
             <li class="avis-list small-text mb-4">
                 <!-- Le pseudo du passager et du chauffeur -->
                 <div class="users-name">
                     <!-- Pseudo du passager -->
                     <div class="d-flex gap-2">
                         <p class="fw-bold">Passager: </p>
-                        <span class="text-capitalize"><?= $passagerName[$avisAndNote['avis_id']]['pseudo'] ?></span>
+                        <span class="text-capitalize"><?= $passagerName[$avisId]['pseudo'] ?></span>
                     </div>
                     <!-- Pseudo du chauffeur -->
                     <div class="d-flex gap-2">
                         <p class="fw-bold">Conducteur: </p>
-                        <span class="text-capitalize"><?= $driverName[$avisAndNote['avis_id']]['pseudo'] ?></span>
+                        <span class="text-capitalize"><?= $driverName[$avisId]['pseudo'] ?></span>
                     </div>
                 </div>
                 <!-- Le titre de l'avis et la note du chauffeur -->
@@ -68,7 +70,7 @@ require_once './Templates/header.php';
                 <div class="mt-4">
                     <form method="post" class="avis-btn">
                         <!-- Input chaché pour envoyer l'id de l'avis dans le form -->
-                        <input type="hidden" name="avis_id" value="<?= $avisAndNote['avis_id'] ?>">
+                        <input type="hidden" name="avis_id" value="<?= $avisAndNote['_id'] ?>">
                         <!-- Refuser -->
                         <button class="btn btn-danger secondary-btn text-white small-text"
                             name="avisRefused"
@@ -81,8 +83,8 @@ require_once './Templates/header.php';
                             name="avisValidated"
                             value="1"
                             type="submit"
-                            <?= ($avisAndNote['statut'] == 1) ? 'disabled' : '' ?>>
-                            <?= ($avisAndNote['statut'] == 1) ? 'Déjà validé' : 'Valider' ?>
+                            <?= ($avisAndNote['accepte'] == true) ? 'disabled' : '' ?>>
+                            <?= ($avisAndNote['accepte'] == true) ? 'Déjà validé' : 'Valider' ?>
                         </button>
                     </form>
                 </div>
@@ -127,13 +129,13 @@ require_once './Templates/header.php';
                 <!-- Le bouton d'action : (Voir le descriptif) -->
                 <div class="mt-4 comments-btn">
                     <!-- Button pour ouvir la modal -->
-                    <button class="btn btn-warning secondary-btn small-text" data-bs-toggle="modal" data-bs-target="#descriptionModal<?=$comment['commentaire_id'] ?>">
+                    <button class="btn btn-warning secondary-btn small-text" data-bs-toggle="modal" data-bs-target="#descriptionModal<?= $comment['commentaire_id'] ?>">
                         Descriptif du trajet
                     </button>
                 </div>
 
                 <!-- Modal avec le decriptif du covoiturage -->
-                <div class="modal fade covoiturage-description-modal" id="descriptionModal<?=$comment['commentaire_id'] ?>" tabindex="-1" aria-labelledby="descriptionLabel" aria-hidden="true">
+                <div class="modal fade covoiturage-description-modal" id="descriptionModal<?= $comment['commentaire_id'] ?>" tabindex="-1" aria-labelledby="descriptionLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
