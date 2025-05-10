@@ -207,12 +207,12 @@ class CovoiturageController extends Controller
         // Pour récupérer la note du chauffeur 
         $driverNote = $userRepository->findDriverNote($driverId);
         // Pour récupérer les avis du chauffeur
-        $allDriverAvis = $avisRepository->searchAllAvisByDriverId($driverId);
+        $allDriverAvis = $avisRepository->findAllAvisByDriverId($driverId);
         // Pour chercher les avis validés, afin de vérifier si le chauffeur a des avis validés ou pas
-        $avisValidated = array_filter($allDriverAvis, fn($avis) => $avis['statut'] == 1);
+        $avisValidated = array_filter($allDriverAvis, fn($avis) => $avis['accepte'] == 1);
         // Pour parcourir les avis du chauffeur
         foreach ($allDriverAvis as $avis) {
-            $avisId = $avis['avis_id']; // id de l'avis
+            $avisId = (string) $avis['_id']; // id de l'avis
             // Pour récupérer le pseudo de l'utilisateur qui a écrit l'avis
             $passagerPseudo[$avisId] = $userRepository->findUserById($avis['user_id_auteur']);
         }

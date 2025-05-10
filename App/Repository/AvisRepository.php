@@ -6,17 +6,6 @@ use MongoDB\BSON\ObjectId;
 
 class AvisRepository extends Repository
 {
-
-    // Fonction pour chercher tous les avis d'un conducteur par son id
-    public function searchAllAvisByDriverId(int $userId): array
-    {
-        $sql = ("SELECT * FROM Avis WHERE user_id_cible = :userId");
-        $query = $this->pdo->prepare($sql);
-        $query->bindValue(':userId', $userId, $this->pdo::PARAM_INT);
-        $query->execute();
-        return $query->fetchAll($this->pdo::FETCH_ASSOC);
-    }
-
     // MongoDB SECTION
 
     // Function pour insérer un avis et une note sur un chauffeur 
@@ -52,5 +41,15 @@ class AvisRepository extends Repository
             ['$set' => ['accepte' => $avisStatut]] // la modification
         );
         return $data;
+    }
+
+    // Function pour trouver tous les avis d'un chauffeur selon son id
+    public function findAllAvisByDriverId(int $driverId)
+    {
+        $collection = $this->mongo->Avis; // pour choisir la collection Avis 
+        $data = $collection->find(['user_id_cible' => $driverId]);
+
+        $result = iterator_to_array($data);
+        return $result;
     }
 }

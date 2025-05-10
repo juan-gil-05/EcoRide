@@ -226,12 +226,14 @@ require_once './Templates/header.php';
         <!-- Si le chauffeur a des avis validés -->
         <?php if (!empty($avisValidated)) { ?>
           <?php foreach ($allDriverAvis as $avis) { ?>
+            <!-- Pour récuperer l'id de l'avis et le transformer en string -->
+            <?php $avisId = (string) $avis['_id']; ?> 
             <!-- On affiche uniquement les avis qui ont été déjà validés par l'employé, donc, avec le statut = 1 -->
-            <?php if ($avis['statut'] == 1) { ?>
+            <?php if ($avis['accepte'] == 1) { ?>
               <li>
                 <div class="user-comment">
                   <!-- Pseudo de la personne qui laisse l'avis -->
-                  <p class="small-text"><?= $passagerPseudo[$avis['avis_id']]['pseudo'] ?></p>
+                  <p class="small-text"><?= $passagerPseudo[$avisId]['pseudo'] ?></p>
                   <!-- Titre et note de l'avis -->
                   <div class="small-text comment-title">
                     <!-- Titre de l'avis -->
