@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use MongoDB\Operation\Aggregate;
 
 class UserRepository extends Repository
 {
@@ -87,16 +88,6 @@ class UserRepository extends Repository
         return $query->fetchAll($this->pdo::FETCH_ASSOC);
     }
 
-    // Fonction pour trouver la note d'un chauffeur
-    public function findDriverNote(int $userId): array
-    {
-        $sql = ("SELECT AVG(note) as note FROM Avis WHERE user_id_cible = :userId");
-        $query = $this->pdo->prepare($sql);
-        $query->bindValue(':userId', $userId, $this->pdo::PARAM_INT);
-        $query->execute();
-        return $query->fetch($this->pdo::FETCH_ASSOC);
-    }
-
     // Fonction pour créer un nouveau utilisateur
     public function createEmployeAccount(User $user)
     {
@@ -117,4 +108,36 @@ class UserRepository extends Repository
         return $query->execute();
     }
 
+    // MONGODB SECTION
+
+    // Fonction pour calculer la note d'un conducteur
+    public function findDriverNote(int $driverId)
+    {
+        $collection = $this->mongo->Avis;
+        $data = $collection->aggregate([
+            [
+                '$match' => ['user_id_cible' => $driverId] // Pour associer l'id passé
+            ],
+            [ // Pour aggrouper par id et calculer la note moyenne selon la note donnée par les passagers
+                '$group' =>
+                [
+                    '_id' => '$user_id_cible',
+                    'note' => ['$avg' => '$note']
+                ]
+            ],
+            [ // Avec le project je peux arrondir la note, afin d'avoir q'une seule chiffre après la virgule
+                '$project' => [
+                    '_id' => 1, // on laisse 1 pour afficher l'id
+                    'note' => [
+                        '$round' => ['$note', 1] // Redondear a 1 decimal
+                    ]
+                ]
+            ]
+        ]);
+
+        // Pour convertir l'objet mongo dans un array php
+        $result = iterator_to_array($data);
+        // Si on a des résultats, on les rendre, sinon, on laisse la note à null
+        return $result[0] ?? ['note' => null];
+    }
 }

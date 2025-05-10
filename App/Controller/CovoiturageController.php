@@ -89,7 +89,7 @@ class CovoiturageController extends Controller
                 $covoiturageEncryptId[$covoiturage['id']] =  $this->encryptUrlParameter($covoiturage['id']);
 
                 // Pour récupérer la note du chauffeur 
-                $driverNote[$covoiturageId] = ($userRepository->findDriverNote($covoiturage['driver_id']));
+                $driverNote[$covoiturageId] = $userRepository->findDriverNote($covoiturage['driver_id']);
 
                 // Fonction du repository pour récupérer les covoiturages avec ses énergies utilisées, (Électrique, Diesel, .....)
                 $energies = $covoiturageRepository->searchCovoiturageDetailsbyId($covoiturageId);
