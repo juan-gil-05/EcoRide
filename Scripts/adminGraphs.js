@@ -11,9 +11,11 @@ fetch('index.php?controller=api&action=getGraphData')
 
 // Fonction pour creer le graphique
 function createChart(charData, chartType) {
-    let dates = charData.map(data => data.jour) // Les dates des covoiturages
-    let numberOfCovoiturages = charData.map(data => data.nb_trajets) // Les quantites de covoiturages
-    let gains = charData.map(data => data.gain) // Les gains par jour selon la participation aux covoiturages
+    const dateGainQuantityData = charData[0] // Les datas pour le jour, la quantité et les gains journaliers
+    const totalGains = charData[1] // le nombre total de crédit gagné par la plateforme
+    let dates = dateGainQuantityData.map(data => data.jour) // Les dates des covoiturages
+    let numberOfCovoiturages = dateGainQuantityData.map(data => data.nb_trajets) // Les quantites de covoiturages
+    let gains = dateGainQuantityData.map(data => data.gain) // Les gains par jour selon la participation aux covoiturages
     const isMobile = window.innerWidth <= 768 // Pour savoir si on est sur mobile ou pas
     // On cree le graphique avec Chart.js
     new Chart(graph, {
@@ -63,7 +65,19 @@ function createChart(charData, chartType) {
                             size: isMobile ? 10 : 12
                         }
                     }
-                }
+                },
+                // Pour ajouter un sous-titre avec le nombre des crédits gagnés par la plateforme
+                subtitle: {
+                    display: true,
+                    text: 'Nombre total de crédit gagné = ' + totalGains,
+                    color: 'black',
+                    padding : 8,
+                    font: {
+                      size: isMobile ? 12 : 15,
+                      weight: 'bold',
+                    },
+                  }
+            
             }
         }
     })
