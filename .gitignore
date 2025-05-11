@@ -1,7 +1,5 @@
 // Les dossiers et fichiers à ignorer lors de l'envoi sur le dépôt git
 // node modules pour le bootstrap
 node_modules
-// vendor pour le comoposer
-vendor 
 // DataBase Config
 db_config.php
