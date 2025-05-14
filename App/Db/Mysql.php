@@ -18,7 +18,7 @@ class Mysql
     public function __construct()
     {
         // Appel du fichier avec les paramètres de la BDD
-        $conf = require_once "./db_config.php";
+        $conf = require_once BASE_PATH."/db_config.php";
 
         if (isset($conf['db_name'])) {
             $this->db_name = $conf['db_name'];

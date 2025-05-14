@@ -80,7 +80,7 @@ class Controller
     protected function render(string $path, array $params = []): void
     {
         // Path du fichier avec la vue
-        $filePath = _ROOTPATH_ . "/Templates/" . $path . ".php";
+        $filePath = BASE_PATH . "/Templates/" . $path . ".php";
 
         try {
             // Si le path est introuvable

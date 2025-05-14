@@ -2,7 +2,7 @@
 // Definition de un constante pour le path depuis l'index.php
 define('_ROOTPATH_', __DIR__);
 // Pour charger les namespaces
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 /** Paramètres de la session de l'utilisateur
  *  Sécurise le cookie de session avec httponly
@@ -17,6 +17,8 @@ session_set_cookie_params([
 // Initialisation de la session
 session_start();
 
+// On definit le path pour appeler les fichier depuis l'index, afin d'eviter des erreurs dans le serveur
+define('BASE_PATH', dirname(__DIR__));
 
 // Pour le système du routage
 use App\Controller\Controller;
@@ -25,4 +27,4 @@ $controller = new Controller();
 $controller->route();
 
 // Fichier pour afficher les messages d'information à l'utilisateur
-require_once './App/Tools/SweetAlerts.php';
+require_once BASE_PATH.'/App/Tools/SweetAlerts.php';

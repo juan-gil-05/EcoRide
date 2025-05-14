@@ -1,7 +1,7 @@
 <?php
 namespace App\Db;
 
-require 'vendor/autoload.php'; // Autoload de composer pour charger la class Client de MongoDB
+require BASE_PATH.'/vendor/autoload.php'; // Autoload de composer pour charger la class Client de MongoDB
 
 use MongoDB\Client;
 
@@ -17,7 +17,7 @@ class Mongodb
     public function __construct()
     {
         // Appel du fichier avec les paramètres de la BDD
-        $conf = require "./db_config.php";
+        $conf = require BASE_PATH."/db_config.php";
 
         if (isset($conf['db_name_mongo'])) {
             $this->db_name_mongo = $conf['db_name_mongo'];
@@ -55,8 +55,10 @@ class Mongodb
         $port = $this->db_port_mongo;
         $dbName = $this->db_name_mongo;
 
-        // Connection string
-        $connectionPath = "mongodb://".$user.":".$password."@".$host.":".$port."/".$dbName;
+        // Connection string en LOCAL
+        // $connectionPath = "mongodb://".$user.":".$password."@".$host.":".$port."/".$dbName;
+        // Connection string en mongoDB Atlas
+        $connectionPath = "mongodb+srv://ecorideAtlasUser:EMbrkLd2qKK7a1Lp@ecoridecluster.w66nwkr.mongodb.net/?retryWrites=true&w=majority&appName=EcoRideCluster";
         // Instance de la classe Client
         $mongo = new Client($connectionPath);
         $db = $mongo->selectDatabase($dbName); // Sélection de la base de données
