@@ -1,6 +1,6 @@
 <?php
 //HEADER
-require_once './Templates/header.php';
+require_once  BASE_PATH . '/Templates/header.php';
 ?>
 
 <!-- main -->
@@ -227,7 +227,7 @@ require_once './Templates/header.php';
         <?php if (!empty($avisValidated)) { ?>
           <?php foreach ($allDriverAvis as $avis) { ?>
             <!-- Pour récuperer l'id de l'avis et le transformer en string -->
-            <?php $avisId = (string) $avis['_id']; ?> 
+            <?php $avisId = (string) $avis['_id']; ?>
             <!-- On affiche uniquement les avis qui ont été déjà validés par l'employé, donc, avec le statut = 1 -->
             <?php if ($avis['accepte'] == 1) { ?>
               <li>
@@ -269,5 +269,5 @@ require_once './Templates/header.php';
 
 <?php
 // FOOTER
-require_once './Templates/footer.php';
+require_once  BASE_PATH . '/Templates/footer.php';
 ?>

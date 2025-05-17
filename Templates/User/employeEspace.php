@@ -2,7 +2,7 @@
 // HEADER
 use App\Security\Security;
 
-require_once './Templates/header.php';
+require_once  BASE_PATH . '/Templates/header.php';
 ?>
 <!-- Navbar pour afficher les avis ou les covoiturages signalés -->
 <nav class="navbar bg-body-primary employe-navbar content-text fw-bold">
@@ -30,7 +30,7 @@ require_once './Templates/header.php';
     <ul class="mt-4 ps-0 avis-list-container">
         <?php foreach ($allAvisAndNotes as $avisAndNote) { ?>
             <!-- Pour transforme l'id de l'avis en string -->
-            <?php $avisId = (string)$avisAndNote['_id']; ?> 
+            <?php $avisId = (string)$avisAndNote['_id']; ?>
             <li class="avis-list small-text mb-4">
                 <!-- Le pseudo du passager et du chauffeur -->
                 <div class="users-name">
@@ -186,5 +186,5 @@ require_once './Templates/header.php';
 
 <?php
 // FOOTER
-require_once './Templates/footer.php';
+require_once  BASE_PATH . '/Templates/footer.php';
 ?>

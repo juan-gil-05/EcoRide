@@ -1,6 +1,6 @@
 <?php
 // HEADER
-require_once './Templates/header.php';
+require_once  BASE_PATH . '/Templates/header.php';
 ?>
 
 
@@ -56,8 +56,8 @@ require_once './Templates/header.php';
           <div class="note-stars">
             <!-- Input caché pour envoyer la valeur de la note du chauffeur, selon la quantité des étoiles séléctionées -->
             <input type="hidden" name="note" id="inputNote" value=""></input>
-            <?php for($i = 1; $i <= 5; $i++) {?>
-              <i class="bi bi-star-fill star <?= (in_array($i, $driverFilterNoteArray)) ? "active-star" : "" ?>" data-value="<?=$i?>"></i>
+            <?php for ($i = 1; $i <= 5; $i++) { ?>
+              <i class="bi bi-star-fill star <?= (in_array($i, $driverFilterNoteArray)) ? "active-star" : "" ?>" data-value="<?= $i ?>"></i>
             <?php } ?>
           </div>
         </div>
@@ -279,5 +279,5 @@ require_once './Templates/header.php';
 
 <?php
 // FOOTER
-require_once './Templates/footer.php';
+require_once  BASE_PATH . '/Templates/footer.php';
 ?>

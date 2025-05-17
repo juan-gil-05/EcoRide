@@ -2,7 +2,7 @@
 // HEADER
 use App\Security\Security;
 
-require_once './Templates/header.php';
+require_once  BASE_PATH . '/Templates/header.php';
 ?>
 
 <!-- Section avec l'information de l'utilisateur -->
@@ -168,5 +168,5 @@ require_once './Templates/header.php';
 
 <?php
 // FOOTER
-require_once './Templates/footer.php';
+require_once  BASE_PATH . '/Templates/footer.php';
 ?>

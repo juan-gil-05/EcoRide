@@ -1,6 +1,6 @@
 <?php
 //HEADER
-require_once './Templates/header.php';
+require_once  BASE_PATH . '/Templates/header.php';
 ?>
 
 <section class="container mt-4 connection-form">
@@ -128,5 +128,5 @@ require_once './Templates/header.php';
 
 <?php
 // FOOTER
-require_once './Templates/footer.php';
+require_once  BASE_PATH . '/Templates/footer.php';
 ?>

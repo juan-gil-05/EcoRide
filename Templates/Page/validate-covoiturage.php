@@ -1,6 +1,6 @@
 <?php
 // HEADER
-require_once './Templates/header.php';
+require_once  BASE_PATH . '/Templates/header.php';
 ?>
 
 <!-- Formulaire pour valider que le covoiturage s'est bien passé -->
@@ -92,5 +92,5 @@ require_once './Templates/header.php';
 
 <?php
 // FOOTER
-require_once './Templates/footer.php';
+require_once  BASE_PATH . '/Templates/footer.php';
 ?>

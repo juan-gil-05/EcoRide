@@ -1,6 +1,6 @@
 <?php
 // HEADER
-require_once './Templates/header.php';
+require_once  BASE_PATH . '/Templates/header.php';
 ?>
 <!-- Section avec la table de tous les utilisateurs -->
 <section class="container admin-espace-container mt-3 mb-5">
@@ -149,5 +149,5 @@ require_once './Templates/header.php';
 
 <?php
 // FOOTER
-require_once './Templates/footer.php';
+require_once  BASE_PATH . '/Templates/footer.php';
 ?>
