@@ -50,7 +50,12 @@ class Mysql
     public function getPdo(): PDO
     {
         if (is_null($this->pdo)) {
-            $this->pdo = new PDO('mysql:dbname=' . $this->db_name . ';charset=utf8;host=' . $this->db_host . ':' . $this->db_port, $this->db_user, $this->db_password);
+            $dsn = 'mysql:dbname=' . $this->db_name .
+                   ';charset=utf8' .
+                   ';host=' . $this->db_host .
+                   ';port=' . $this->db_port;
+    
+            $this->pdo = new PDO($dsn, $this->db_user, $this->db_password);
         }
         return $this->pdo;
     }

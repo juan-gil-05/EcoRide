@@ -23,6 +23,8 @@ use App\Security\Security;
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <!-- DataTable JS library CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.bootstrap5.css" />
+    <!-- Import les Bootstrap icons avec CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <!--Import des styles-->
     <link rel="stylesheet" href="/Styles/main.css"/>
     <!-- SweetAlert2 CSS -->

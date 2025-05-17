@@ -1,6 +1,6 @@
 <?php
 // HEADER
-require_once './Templates/header.php';
+require_once BASE_PATH . '/Templates/header.php';
 
 use App\Security\Security;
 ?>
@@ -150,5 +150,5 @@ use App\Security\Security;
 
 <?php
 // FOOTER
-require_once './Templates/footer.php';
+require_once BASE_PATH . '/Templates/footer.php';
 ?>

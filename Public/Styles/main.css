@@ -1,6 +1,4 @@
 @charset "UTF-8";
-@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-@import "../node_modules/bootstrap-icons/font/bootstrap-icons.min.css";
 .headline-text {
   font-family: "Poppins", sans-serif;
   font-size: 1.9rem !important;
@@ -13041,7 +13039,7 @@ html {
   width: 46%;
 }
 .connection-form form .covoiturage-form .covoiturage-form-div div label {
-  color: #fff;
+  color: white;
   font-weight: 500;
 }
 .connection-form form .covoiturage-form .covoiturage-form-div div input {
