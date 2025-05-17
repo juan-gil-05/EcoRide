@@ -148,6 +148,10 @@ use App\Security\Security;
   </div>
 </section>
 
+<!-- On appel le script ici car après faire un récherche s'il y a des erreurs, on n'a plus l'action dans l'url
+    et donc, le footer n'appel pas le script -->
+<script src="../Scripts/searchCovoiturage.js"></script>
+
 <?php
 // FOOTER
 require_once BASE_PATH . '/Templates/footer.php';
