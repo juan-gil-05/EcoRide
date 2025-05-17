@@ -13291,7 +13291,7 @@ html {
   background-color: #f5f5f5;
 }
 .driver-info-profil .accordion .accordion-body ul .hidden {
-  display: none;
+  display: none !important;
 }
 
 .employe-section {

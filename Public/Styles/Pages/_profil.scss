@@ -94,7 +94,7 @@
 
         // Pour cacher le formualire de création d'une nouvelle préférence
         .hidden {
-          display: none;
+          display: none !important;
         }
       }
     }

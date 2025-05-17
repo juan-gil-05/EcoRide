@@ -9,9 +9,11 @@ require_once  BASE_PATH . '/Templates/header.php';
 <section class="profil-section">
     <!-- Photo de l'utilisateur -->
     <div class="">
-        <img src="../../Uploads/User/<?= (!empty($photoUniqueId)) ? $photoUniqueId :
-                                            "../../Assets/Img_page-vue-covoiturages/driver-default.png"
-                                        ?>"
+        <?php
+            $defaultImage = "/Assets/Img_page-vue-covoiturages/driver-default.png";
+            $driverImagePath = (!empty($photoUniqueId)) ? "/Uploads/User/".$photoUniqueId : $defaultImage;
+        ?>
+        <img src="<?= $driverImagePath ?>"
             alt="Photo de l'utilisateur" class="user-image">
     </div>
     <!-- Le pseudo, le mail et le nombre des crédits de l'utilisateur -->
