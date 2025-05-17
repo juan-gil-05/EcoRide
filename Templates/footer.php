@@ -28,17 +28,32 @@
 <script src="https://cdn.datatables.net/2.3.0/js/dataTables.bootstrap5.js"></script>
 <!-- Import du JS pour la librairie Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<!-- Import du JS -->
-<script src="../Scripts/driverNote.js"></script>
-<script src="../Scripts/showPassword.js"></script>
-<script src="../Scripts/driverForm.js"></script>
-<script src="../Scripts/preferencesForm.js"></script>
-<script src="../Scripts/searchCovoiturage.js"></script>
-<script src="../Scripts/startCovoiturage.js"></script>
-<script src="../Scripts/validateCovoiturage.js"></script>
-<script src="../Scripts/employeEspace.js"></script>
-<script src="../Scripts/adminEspace.js"></script>
-<script src="../Scripts/adminGraphs.js"></script>
+<!-- Import du propre JS-->
+<?php
+// Tableau avec les scripts js pour chaque page, dont l'action est la clé et les scripts les valeurs
+$scripts = [
+    'showAll' => ['driverNote.js'],
+    'validateCovoiturage' => ['driverNote.js', 'validateCovoiturage.js'],
+    'logIn' => ['showPassword.js'],
+    'singUp' => ['showPassword.js', 'driverForm.js'],
+    'preferencesInscription' => ['preferencesForm.js'],
+    'profil' => ['preferencesForm.js'],
+    'accueil' => ['searchCovoiturage.js'],
+    'mesCovoiturages' => ['startCovoiturage.js'],
+    'validateAvisAndComments' => ['employeEspace.js'],
+    'adminEspace' => ['showPassword.js', 'adminEspace.js'],
+    'adminGraphs' => ['adminGraphs.js']
+];
+// Pour récupérer l'action dans l'url 
+$currentAction = $_GET['action'] ?? '';
+// Si l'action est dans le tableau, alors, 
+// on parcours le tableau et on crée une balise script pour chaque script de l'action
+if (isset($scripts[$currentAction])) {
+    foreach ($scripts[$currentAction] as $script) {
+        echo "<script src=\"../Scripts/{$script}\"></script>\n";
+    }
+}
+?>
 </body>
 
 </html>
