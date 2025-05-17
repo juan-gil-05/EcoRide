@@ -23,11 +23,15 @@
 <!--Import du JS du Bootstrap-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
 <!-- Import du JS pour la librairie DataTable -->
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
-<script src="https://cdn.datatables.net/2.3.0/js/dataTables.bootstrap5.js"></script>
+<?php if ($_GET['action'] == 'adminEspace') { ?>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.bootstrap5.js"></script>
+<?php } ?>
 <!-- Import du JS pour la librairie Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<?php if ($_GET['action'] == 'adminGraphs') { ?>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<?php } ?>
 <!-- Import du propre JS-->
 <?php
 // Tableau avec les scripts js pour chaque page, dont l'action est la clé et les scripts les valeurs
