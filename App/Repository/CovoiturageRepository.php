@@ -297,8 +297,8 @@ class CovoiturageRepository extends Repository
                 DATE_FORMAT(c.date_heure_depart, '%d-%m-%Y') AS jour,
                 COUNT(DISTINCT c.id) AS nb_trajets,
                 COUNT(uc.id) * 2 AS gain
-                FROM covoiturage c
-                LEFT JOIN user_covoiturages uc ON uc.covoiturage_id = c.id
+                FROM Covoiturage c
+                LEFT JOIN User_Covoiturages uc ON uc.covoiturage_id = c.id
                 GROUP BY jour
                 ORDER BY STR_TO_DATE(jour, '%d-%m-%Y') ASC;";
         $query = $this->pdo->prepare($sql);
