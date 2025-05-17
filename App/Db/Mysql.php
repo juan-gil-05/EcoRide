@@ -3,6 +3,7 @@
 
 namespace App\Db;
 
+use Exception;
 use PDO;
 
 class Mysql
@@ -18,23 +19,13 @@ class Mysql
     public function __construct()
     {
         // Appel du fichier avec les paramètres de la BDD
-        $conf = require_once BASE_PATH."/db_config.php";
+        $config = require BASE_PATH . "/config.php";
 
-        if (isset($conf['db_name'])) {
-            $this->db_name = $conf['db_name'];
-        }
-        if (isset($conf['db_user'])) {
-            $this->db_user = $conf['db_user'];
-        }
-        if (isset($conf['db_password'])) {
-            $this->db_password = $conf['db_password'];
-        }
-        if (isset($conf['db_port'])) {
-            $this->db_port = $conf['db_port'];
-        }
-        if (isset($conf['db_host'])) {
-            $this->db_host = $conf['db_host'];
-        }
+        $this->db_name = $config['DB_NAME'];
+        $this->db_user = $config['DB_USER'];
+        $this->db_password = $config['DB_PASSWORD'];
+        $this->db_port = $config['DB_PORT'];
+        $this->db_host = $config['DB_HOST'];
     }
 
     // SINGLETON pour instancier la class Mysql une seule fois
@@ -47,16 +38,20 @@ class Mysql
     }
 
     // Ajout des params à la propipriété pdo et connexion a la BDD via Objet PDO
-    public function getPdo(): PDO
+    public function getPdo()
     {
-        if (is_null($this->pdo)) {
-            $dsn = 'mysql:dbname=' . $this->db_name .
-                   ';charset=utf8' .
-                   ';host=' . $this->db_host .
-                   ';port=' . $this->db_port;
-    
-            $this->pdo = new PDO($dsn, $this->db_user, $this->db_password);
+        try {
+            if (is_null($this->pdo)) {
+                $dsn = 'mysql:dbname=' . $this->db_name .
+                    ';charset=utf8' .
+                    ';host=' . $this->db_host .
+                    ';port=' . $this->db_port;
+
+                $this->pdo = new PDO($dsn, $this->db_user, $this->db_password);
+            }
+            return $this->pdo;
+        } catch (Exception $e) {
+            echo ('Error : ' . $e);
         }
-        return $this->pdo;
     }
 }

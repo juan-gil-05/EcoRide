@@ -1,4 +1,9 @@
 <?php
-    // Création des constantes pour faciliter l'acces aux PATH
-    define("USER_IMAGES_FOLDER", "/uploads/user");
-    define("ASSETS_IMAGES_FOLDER", "/assets");
+require_once BASE_PATH . '/vendor/autoload.php';
+
+// Dans ce fichier on charge les variables d'environement avec la Bibliotheque vlucas/phpdotenv
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(BASE_PATH);
+$dotenv->load();
+return $_ENV;

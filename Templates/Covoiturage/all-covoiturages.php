@@ -1,5 +1,8 @@
 <?php
 // HEADER
+
+use App\Security\Security;
+
 require_once  BASE_PATH . '/Templates/header.php';
 ?>
 
@@ -68,9 +71,11 @@ require_once  BASE_PATH . '/Templates/header.php';
       </form>
     </div>
     <!-- Bouton pour visualiser les covoiturages de l'utilisateur en mode desktop -->
-    <div class="mt-5 text-center mes-covoiturages-btn content-text">
-      <a href="?controller=covoiturages&action=mesCovoiturages" class="btn btn-warning primary-btn shadow-section">Mes covoiturages</a>
-    </div>
+    <?php if (Security::isLogged()) { ?>
+      <div class="mt-5 text-center mes-covoiturages-btn content-text">
+        <a href="?controller=covoiturages&action=mesCovoiturages" class="btn btn-warning primary-btn shadow-section">Mes covoiturages</a>
+      </div>
+    <?php } ?>
   </div>
 
   <!-- Section de les résultats de la récherche des covoiturages -->

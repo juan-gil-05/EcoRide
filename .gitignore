@@ -3,3 +3,5 @@
 node_modules
 // DataBase Config
 db_config.php
+// Variables d'environement
+.env

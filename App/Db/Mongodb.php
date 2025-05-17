@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Db;
 
-require BASE_PATH.'/vendor/autoload.php'; // Autoload de composer pour charger la class Client de MongoDB
+require BASE_PATH . '/vendor/autoload.php'; // Autoload de composer pour charger la class Client de MongoDB
 
+use Exception;
 use MongoDB\Client;
 
 class Mongodb
@@ -17,30 +19,19 @@ class Mongodb
     public function __construct()
     {
         // Appel du fichier avec les paramètres de la BDD
-        $conf = require BASE_PATH."/db_config.php";
+        $config = require BASE_PATH . "/config.php";
 
-        if (isset($conf['db_name_mongo'])) {
-            $this->db_name_mongo = $conf['db_name_mongo'];
-        }
-        if (isset($conf['db_user_mongo'])) {
-            $this->db_user_mongo = $conf['db_user_mongo'];
-        }
-        if (isset($conf['db_password_mongo'])) {
-            $this->db_password_mongo = $conf['db_password_mongo'];
-        }
-        if (isset($conf['db_port_mongo'])) {
-            $this->db_port_mongo = $conf['db_port_mongo'];
-        }
-        if (isset($conf['db_host_mongo'])) {
-            $this->db_host_mongo = $conf['db_host_mongo'];
-        }
+        $this->db_name_mongo = $config['MONGO_DB_NAME'];
+        $this->db_user_mongo = $config['MONGO_DB_USER'];
+        $this->db_password_mongo = $config['MONGO_DB_PASSWORD'];
+        $this->db_host_mongo = $config['MONGO_DB_HOST'];
     }
 
 
     // SINGLETON pour instancier la class Mongodb une seule fois
     public static function getInstance(): self
     {
-        if(is_null(self::$_instance)){
+        if (is_null(self::$_instance)) {
             self::$_instance = new Mongodb;
         }
         return self::$_instance;
@@ -58,11 +49,16 @@ class Mongodb
         // Connection string en LOCAL
         // $connectionPath = "mongodb://".$user.":".$password."@".$host.":".$port."/".$dbName;
         // Connection string en mongoDB Atlas
-        $connectionPath = "mongodb+srv://ecorideAtlasUser:EMbrkLd2qKK7a1Lp@ecoridecluster.w66nwkr.mongodb.net/?retryWrites=true&w=majority&appName=EcoRideCluster";
-        // Instance de la classe Client
-        $mongo = new Client($connectionPath);
-        $db = $mongo->selectDatabase($dbName); // Sélection de la base de données
-        // On retourne l'instance de la base de données
-        return $db;
+        try {
+            $connectionPath = "mongodb+srv://" . $user . ":" . $password . "@" . $host . "/?retryWrites=true&w=majority&appName=" . $dbName;
+            // Instance de la classe Client
+            $mongo = new Client($connectionPath);
+            $db = $mongo->selectDatabase($dbName); // Sélection de la base de données
+            // On retourne l'instance de la base de données
+            return $db;
+        } catch (Exception $e) {
+            echo ('Error : ' . $e->getMessage());
+            exit;
+        }
     }
 }
