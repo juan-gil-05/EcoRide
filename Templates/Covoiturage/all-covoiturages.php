@@ -2,6 +2,7 @@
 // HEADER
 
 use App\Security\Security;
+use Random\Engine\Secure;
 
 require_once  BASE_PATH . '/Templates/header.php';
 ?>
@@ -81,14 +82,15 @@ require_once  BASE_PATH . '/Templates/header.php';
   <!-- Section de les résultats de la récherche des covoiturages -->
   <div class="covoiturage-results">
     <!-- Barre de recherche des covoiturages -->
-    <div class="search-bar-covoiturage subtitle-text">
-      <!-- Icon de recherche -->
-      <i class="bi bi-search"></i>
-      <!-- Input avec le l'adresse de départ et d'arrivée comme placeholder -->
-      <input
-        type="text"
-        placeholder="<?= $adresseDepart . ' -> ' . $adresseArrivee ?>"
-        class="shadow-section search-input text-capitalize" />
+    <div class="result-bar-covoiturage subtitle-text">
+      <!-- div avec l'adresse de départ et d'arrivée des covoiturages -->
+      <div class="shadow-section result-div text-capitalize">
+        <?php if (!empty($covoiturages)) { ?>
+          <p class="mb-0 subtitle-text"><?= $adresseDepart . ' -> ' . $adresseArrivee ?></p>
+          <?php } else { ?>
+            <p class="mb-0 small-text">Aucun covoiturage pour l'instant</p>
+        <?php } ?>
+      </div>
       <!-- Bouton pour afficher les filtres quand on est en mobile ou tablet -->
       <button
         class="btn btn-secondary filter-btn small-text"
@@ -184,12 +186,16 @@ require_once  BASE_PATH . '/Templates/header.php';
     <!-- Le jour et la date du covoiturage, et le bouton pour visualiser les covoiturages de l'utilisateur -->
     <div class="d-flex align-items-center mt-3 mb-3 justify-content-between">
       <!-- Le jour et la date du covoiturage -->
-      <h2 class="subtitle-text"><?= $dayName . ", " . $dayNumber . " " . $monthName ?></h2>
+      <?php if (!empty($covoiturages)) { ?>
+        <h2 class="subtitle-text"><?= $dayName . ", " . $dayNumber . " " . $monthName ?></h2>
+      <?php } ?>
 
       <!-- Bouton pour visualiser les covoiturages de l'utilisateur en mode mobile -->
-      <div class="text-center mes-covoiturages-btn-mobile content-text">
-        <a href="?controller=covoiturages&action=mesCovoiturages" class="btn btn-warning shadow-section">Mes covoiturages</a>
-      </div>
+      <?php if (Security::isLogged()) { ?>
+        <div class="text-center mes-covoiturages-btn-mobile content-text">
+          <a href="?controller=covoiturages&action=mesCovoiturages" class="btn btn-warning shadow-section">Mes covoiturages</a>
+        </div>
+      <?php } ?>
     </div>
 
     <!-- Les cartes avec les résultats de tous les covoiturages -->
@@ -274,7 +280,7 @@ require_once  BASE_PATH . '/Templates/header.php';
       <?php  }
     } else { ?>
       <h3 class="text-center headline-text">
-        <a class="text-white" href="?controller=page&action=accueil">Pas de covoiturages</a>
+        <a class="text-white" href="?controller=page&action=accueil">Cliquez ici pour faire une recherche</a>
       </h3>
     <?php }
     ?>
