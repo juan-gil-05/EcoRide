@@ -50,7 +50,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                                 <?php if (in_array("Fumeur", $preferences)) {
                                     echo 'J\'accepte les fumeurs';
                                 } elseif (in_array("Non_fumeur", $preferences)) {
-                                    echo 'Je n\'accepte les fumeurs';
+                                    echo 'Je n\'accepte pas les fumeurs';
                                 } ?>
                             </li>
                             <!-- Accepte ou pas les animaux? -->

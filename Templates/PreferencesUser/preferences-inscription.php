@@ -35,7 +35,7 @@ require_once  BASE_PATH . '/Templates/header.php';
     <!-- Si clique sur le bouton de continuer et qu'il n'y a pas des erreurs, 
     alors, on affiche la deuxième partie du formulaire -->
     <?php if ((isset($_POST['prefInscription1']) || isset($_POST['prefInscription2'])) && empty($errors)) {
-        require_once './Templates/PreferencesUser/preferences-inscription2.php';
+        require_once BASE_PATH.'/Templates/PreferencesUser/preferences-inscription2.php';
     }
     ?>
 
