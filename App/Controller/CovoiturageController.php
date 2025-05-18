@@ -271,71 +271,77 @@ class CovoiturageController extends Controller
     */
     protected function mesCovoiturages()
     {
-        // Appel du repository
-        $covoiturageRepository = new CovoiturageRepository;
+        // Si l'utilisateur est connecté
+        if (Security::isLogged()) {
+            // Appel du repository
+            $covoiturageRepository = new CovoiturageRepository;
 
-        // Initialisation des variables
-        $covoiturageEncryptId = null;
-        $dayName = null;
-        $dayNumber = null;
-        $monthName = null;
+            // Initialisation des variables
+            $covoiturageEncryptId = null;
+            $dayName = null;
+            $dayNumber = null;
+            $monthName = null;
 
-        $userId = ($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
-        // Pour chercher les covoiturages du chauffeur
-        $covoituragesAsDriver = $covoiturageRepository->searchCovoiturageDetailsByUserId($userId);
+            $userId = ($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
+            // Pour chercher les covoiturages du chauffeur
+            $covoituragesAsDriver = $covoiturageRepository->searchCovoiturageDetailsByUserId($userId);
 
-        // Pour parcourir les covoiturages du chauffeur
-        foreach ($covoituragesAsDriver as $covoiturage) {
-            // Pour récupérer l'id de chaque covoiturage
-            $covoiturageId = $covoiturage['id'];
-            // Pour crypter l'id du covoiturage avant de l'envoyer dans l'url pour afficher les détails de chaque covoiturage 
-            $covoiturageEncryptId[$covoiturageId] =  $this->encryptUrlParameter($covoiturageId);
-            // on appel la fonction qui formate les dates des covoiturages
-            $dateTimeCovoiturage = $this->dateTimeCovoiturage($covoiturage);
-            $dayName[$covoiturageId] = $dateTimeCovoiturage[0];
-            $dayNumber[$covoiturageId] = $dateTimeCovoiturage[1];
-            $monthName[$covoiturageId] = $dateTimeCovoiturage[2];
+            // Pour parcourir les covoiturages du chauffeur
+            foreach ($covoituragesAsDriver as $covoiturage) {
+                // Pour récupérer l'id de chaque covoiturage
+                $covoiturageId = $covoiturage['id'];
+                // Pour crypter l'id du covoiturage avant de l'envoyer dans l'url pour afficher les détails de chaque covoiturage 
+                $covoiturageEncryptId[$covoiturageId] =  $this->encryptUrlParameter($covoiturageId);
+                // on appel la fonction qui formate les dates des covoiturages
+                $dateTimeCovoiturage = $this->dateTimeCovoiturage($covoiturage);
+                $dayName[$covoiturageId] = $dateTimeCovoiturage[0];
+                $dayNumber[$covoiturageId] = $dateTimeCovoiturage[1];
+                $monthName[$covoiturageId] = $dateTimeCovoiturage[2];
+            }
+
+            // Pour chercher les covoiturages du passager
+            $covoiturageaAsPassager = $covoiturageRepository->searchCovoiturageParticipateByUserId($userId);
+
+            // Pour parcourir les covoiturages du passager
+            foreach ($covoiturageaAsPassager as $covoiturage) {
+                // Pour récupérer l'id de chaque covoiturage
+                $covoiturageId = $covoiturage['id'];
+                // Pour crypter l'id du covoiturage avant de l'envoyer dans l'url pour afficher les détails de chaque covoiturage 
+                $covoiturageEncryptId[$covoiturageId] =  $this->encryptUrlParameter($covoiturageId);
+                // on appel la fonction qui formate les dates des covoiturages
+                $dateTimeCovoiturage = $this->dateTimeCovoiturage($covoiturage);
+                $dayName[$covoiturageId] = $dateTimeCovoiturage[0];
+                $dayNumber[$covoiturageId] = $dateTimeCovoiturage[1];
+                $monthName[$covoiturageId] = $dateTimeCovoiturage[2];
+            }
+
+            // Si l'utilisateur quitte le covoiturage
+            $this->leaveCovoiturage();
+
+            // Si le chauffeur supprime le covoiturage
+            $this->deleteCovoiturage();
+
+            // Si le chauffeur démarre le covoiturage
+            $this->startCovoiturage($covoiturageRepository);
+
+            // Si le chauffeur indique avoir arrivé à la destination
+            $this->arriveCovoiturage($covoiturageRepository);
+
+            $this->render(
+                "Covoiturage/mes-covoiturages",
+                [
+                    "covoituragesAsDriver" => $covoituragesAsDriver,
+                    "covoiturageaAsPassager" => $covoiturageaAsPassager,
+                    "covoiturageEncryptId" => $covoiturageEncryptId,
+                    "dayName" => $dayName,
+                    "dayNumber" => $dayNumber,
+                    "monthName" => $monthName,
+                ]
+            );
+        } // Sinon on envoie à la page de connexion
+        else {
+            header('Location: ?controller=auth&action=logIn');
         }
-
-        // Pour chercher les covoiturages du passager
-        $covoiturageaAsPassager = $covoiturageRepository->searchCovoiturageParticipateByUserId($userId);
-
-        // Pour parcourir les covoiturages du passager
-        foreach ($covoiturageaAsPassager as $covoiturage) {
-            // Pour récupérer l'id de chaque covoiturage
-            $covoiturageId = $covoiturage['id'];
-            // Pour crypter l'id du covoiturage avant de l'envoyer dans l'url pour afficher les détails de chaque covoiturage 
-            $covoiturageEncryptId[$covoiturageId] =  $this->encryptUrlParameter($covoiturageId);
-            // on appel la fonction qui formate les dates des covoiturages
-            $dateTimeCovoiturage = $this->dateTimeCovoiturage($covoiturage);
-            $dayName[$covoiturageId] = $dateTimeCovoiturage[0];
-            $dayNumber[$covoiturageId] = $dateTimeCovoiturage[1];
-            $monthName[$covoiturageId] = $dateTimeCovoiturage[2];
-        }
-
-        // Si l'utilisateur quitte le covoiturage
-        $this->leaveCovoiturage();
-
-        // Si le chauffeur supprime le covoiturage
-        $this->deleteCovoiturage();
-
-        // Si le chauffeur démarre le covoiturage
-        $this->startCovoiturage($covoiturageRepository);
-
-        // Si le chauffeur indique avoir arrivé à la destination
-        $this->arriveCovoiturage($covoiturageRepository);
-
-        $this->render(
-            "Covoiturage/mes-covoiturages",
-            [
-                "covoituragesAsDriver" => $covoituragesAsDriver,
-                "covoiturageaAsPassager" => $covoiturageaAsPassager,
-                "covoiturageEncryptId" => $covoiturageEncryptId,
-                "dayName" => $dayName,
-                "dayNumber" => $dayNumber,
-                "monthName" => $monthName,
-            ]
-        );
     }
 
     /*
@@ -345,61 +351,67 @@ class CovoiturageController extends Controller
     // Function pour créer un nouveau covoiturage
     protected function createCovoiturage()
     {
-        // Tableau des erreurs
-        $errors = [];
-        $covoiturage = new Covoiturage;
-        $covoiturageRepository = new CovoiturageRepository;
-        $covoiturageValidator = new CovoiturageValidator;
-        $voitureRepository = new VoitureRepository;
+        // Si l'utilisateur est connecté
+        if (Security::isLogged()) {
+            // Tableau des erreurs
+            $errors = [];
+            $covoiturage = new Covoiturage;
+            $covoiturageRepository = new CovoiturageRepository;
+            $covoiturageValidator = new CovoiturageValidator;
+            $voitureRepository = new VoitureRepository;
 
-        // L'id de l'utilsateur
-        $user_id = $_SESSION['user']['id'];
-        // Variable qui contient toutes les voitures de l'utilisateur connecté
-        $cars = $voitureRepository->findAllCarsByUserId($user_id);
-        // Variables de chaque champ du formulaire
-        $dateTimeDepart = "";
-        $dateTimeArrivee = "";
-        $adresseDepart = "";
-        $adresseArrivee = "";
-        $nbPlaceDisponibles = "";
-        $prix = "";
+            // L'id de l'utilsateur
+            $user_id = $_SESSION['user']['id'];
+            // Variable qui contient toutes les voitures de l'utilisateur connecté
+            $cars = $voitureRepository->findAllCarsByUserId($user_id);
+            // Variables de chaque champ du formulaire
+            $dateTimeDepart = "";
+            $dateTimeArrivee = "";
+            $adresseDepart = "";
+            $adresseArrivee = "";
+            $nbPlaceDisponibles = "";
+            $prix = "";
 
-        try {
-            // Si on evoi le formulaire, alors, on hydrate l'objet Covoiturage avec les données passées 
-            if (isset($_POST['createCovoiturage'])) {
-                $covoiturage->hydrate($_POST);
-                // On récupere les données passées dans le formulaire
-                $dateTimeDepart = $covoiturage->getDateHeureDepart();
-                $dateTimeArrivee = $covoiturage->getDateHeureArrivee();
-                $adresseDepart = $covoiturage->getAdresseDepart();
-                $adresseArrivee = $covoiturage->getAdresseArrivee();
-                $nbPlaceDisponibles = $covoiturage->getNbPlaceDisponible();
-                $prix = $covoiturage->getPrix();
-                // Pour valider les erreurs du formulaire
-                $errors = $covoiturageValidator->createCovoiturageValidate($covoiturage);
-                // S'il n'y a pas des erreurs, on crée le covoiturage dans la base des données
-                if (empty($errors)) {
-                    $covoiturageRepository->createCovoiturage($covoiturage);
-                    // On envoi vers la page de mes covoiturages 
-                    header('Location: ?controller=covoiturages&action=mesCovoiturages');
+            try {
+                // Si on evoi le formulaire, alors, on hydrate l'objet Covoiturage avec les données passées 
+                if (isset($_POST['createCovoiturage'])) {
+                    $covoiturage->hydrate($_POST);
+                    // On récupere les données passées dans le formulaire
+                    $dateTimeDepart = $covoiturage->getDateHeureDepart();
+                    $dateTimeArrivee = $covoiturage->getDateHeureArrivee();
+                    $adresseDepart = $covoiturage->getAdresseDepart();
+                    $adresseArrivee = $covoiturage->getAdresseArrivee();
+                    $nbPlaceDisponibles = $covoiturage->getNbPlaceDisponible();
+                    $prix = $covoiturage->getPrix();
+                    // Pour valider les erreurs du formulaire
+                    $errors = $covoiturageValidator->createCovoiturageValidate($covoiturage);
+                    // S'il n'y a pas des erreurs, on crée le covoiturage dans la base des données
+                    if (empty($errors)) {
+                        $covoiturageRepository->createCovoiturage($covoiturage);
+                        // On envoi vers la page de mes covoiturages 
+                        header('Location: ?controller=covoiturages&action=mesCovoiturages');
+                    }
                 }
-            }
 
-            $this->render(
-                "Covoiturage/create-covoiturages",
-                [
-                    "errors" => $errors,
-                    "cars" => $cars,
-                    "dateTimeDepart" => $dateTimeDepart,
-                    "dateTimeArrivee" => $dateTimeArrivee,
-                    "adresseDepart" => $adresseDepart,
-                    "adresseArrivee" => $adresseArrivee,
-                    "nbPlaceDisponibles" => $nbPlaceDisponibles,
-                    "prix" => $prix
-                ]
-            );
-        } catch (Exception $e) {
-            $this->render("Errors/404", ["error" => $e->getMessage()]);
+                $this->render(
+                    "Covoiturage/create-covoiturages",
+                    [
+                        "errors" => $errors,
+                        "cars" => $cars,
+                        "dateTimeDepart" => $dateTimeDepart,
+                        "dateTimeArrivee" => $dateTimeArrivee,
+                        "adresseDepart" => $adresseDepart,
+                        "adresseArrivee" => $adresseArrivee,
+                        "nbPlaceDisponibles" => $nbPlaceDisponibles,
+                        "prix" => $prix
+                    ]
+                );
+            } catch (Exception $e) {
+                $this->render("Errors/404", ["error" => $e->getMessage()]);
+            }
+        } // Sinon on envoie à la page de connexion
+        else {
+            header('Location: ?controller=auth&action=logIn');
         }
     }
 

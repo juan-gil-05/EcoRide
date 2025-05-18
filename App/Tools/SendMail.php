@@ -23,19 +23,19 @@ class SendMail
             //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
             $mail->isSMTP();                                            // Envoyer le mail via SMTP
             $mail->SMTPAuth   = true;                                   // Activer l'authentification SMTP
-            $mail->Host       = 'smtp.gmail.com';                       // Spécifier le host SMTP
-            $mail->Username   = 'testecoride8@gmail.com';               //SMTP username
-            $mail->Password   = 'xnmrbjihoerwprhl';                     //SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Activer le cryptage TLS;
-            $mail->Port       = 587;                                    // Port TCP à utiliser pour la connexion
+            $mail->Host       = $_ENV['SMTP_HOST'];                       // Spécifier le host SMTP
+            $mail->Username   = $_ENV['SMTP_USER'];                     //SMTP username
+            $mail->Password   = $_ENV['SMTP_PASSWORD'];                     //SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            // Activer le cryptage SSL;
+            $mail->Port       = $_ENV['SMTP_PORT'];                     // Port à utiliser pour la connexion
 
 
             // Expediteur et Destinataire
-            $mail->setFrom('testecoride8@gmail.com', 'EcoRide');       // Qui ENVOIE le mail
+            $mail->setFrom($_ENV['SMTP_FROM_EMAIL'], $_ENV['SMTP_FROM_NAME']);       // Qui ENVOIE le mail
             $mail->addAddress($to, 'Passager');                          // Qui REÇOIT le mail
 
             // Encodage
-            $mail->CharSet = 'UTF-8'; 
+            $mail->CharSet = 'UTF-8';
             $mail->Encoding = 'base64';
 
             //Content
@@ -43,7 +43,7 @@ class SendMail
             $mail->Subject = $subject;                             // Sujet du mail
 
             // Chemin du modèle du mail
-            $templatePath = _ROOTPATH_ . "/Templates/Mails/" . $templateMail;
+            $templatePath = BASE_PATH . "/Templates/Mails/" . $templateMail;
 
             // Exécution de PHP dans le fichier template
             ob_start();

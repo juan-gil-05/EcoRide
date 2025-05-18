@@ -6,6 +6,7 @@ use App\Repository\AvisRepository;
 use App\Repository\CommentRepository;
 use App\Repository\CovoiturageRepository;
 use App\Repository\UserRepository;
+use App\Security\Security;
 use DateTime;
 use Exception;
 
@@ -45,40 +46,45 @@ class EmployeController extends Controller
     // Fonction pour valider ou refuser les avis des chauffeurs
     private function validateAvisAndComments()
     {
-        // Repositories
-        $avisRepository = new AvisRepository;
-        $userRepository = new UserRepository;
-        $commentRepository = new CommentRepository;
+        // Si l'utilisateur est connecté en tant qu'employée
+        if (Security::isEmploye()) {
+            // Repositories
+            $avisRepository = new AvisRepository;
+            $userRepository = new UserRepository;
+            $commentRepository = new CommentRepository;
 
-        // Tous les avis et les notes des chauffeurs 
-        $allAvisAndNotesObject = $avisRepository->findAllAvisAndNotes();
+            // Tous les avis et les notes des chauffeurs 
+            $allAvisAndNotesObject = $avisRepository->findAllAvisAndNotes();
 
-        // Pour convertir l'objet mongo en array
-        $allAvisAndNotes = iterator_to_array($allAvisAndNotesObject);
+            // Pour convertir l'objet mongo en array
+            $allAvisAndNotes = iterator_to_array($allAvisAndNotesObject);
 
-        // Function pour valider ou refuser les avis et notes
-        $avisNotesFunction = $this->validateAvisAndNote($allAvisAndNotes, $avisRepository, $userRepository);
+            // Function pour valider ou refuser les avis et notes
+            $avisNotesFunction = $this->validateAvisAndNote($allAvisAndNotes, $avisRepository, $userRepository);
 
-        // Tous les commentaires des covoiturages signalés
-        $allComments = $commentRepository->searchAllComments();
+            // Tous les commentaires des covoiturages signalés
+            $allComments = $commentRepository->searchAllComments();
 
-        // Function pour visualiser les commentaires de tous les covoiturages signalés
-        $commentsFunction = $this->ValidateComments($allComments, $commentRepository, $userRepository);
+            // Function pour visualiser les commentaires de tous les covoiturages signalés
+            $commentsFunction = $this->ValidateComments($allComments, $commentRepository, $userRepository);
 
-
-        $this->render(
-            'User/employeEspace',
-            [
-                "allAvisAndNotes" => $allAvisAndNotes,
-                "passagerName" => $avisNotesFunction[0],
-                "driverName" => $avisNotesFunction[1],
-                "allComments" => $allComments,
-                "passagerNameComments" => $commentsFunction[0],
-                "driverNameComments" => $commentsFunction[1],
-                "dateDepartFormatted" => $commentsFunction[2],
-                "dateArriveeFormatted" => $commentsFunction[3],
-            ]
-        );
+            $this->render(
+                'User/employeEspace',
+                [
+                    "allAvisAndNotes" => $allAvisAndNotes,
+                    "passagerName" => $avisNotesFunction[0],
+                    "driverName" => $avisNotesFunction[1],
+                    "allComments" => $allComments,
+                    "passagerNameComments" => $commentsFunction[0],
+                    "driverNameComments" => $commentsFunction[1],
+                    "dateDepartFormatted" => $commentsFunction[2],
+                    "dateArriveeFormatted" => $commentsFunction[3],
+                ]
+            );
+        } // Sinon on envoie à la page de connexion
+        else {
+            header('Location: ?controller=auth&action=logIn');
+        }
     }
 
     // Fonction pour valider ou refuser les avis et notes

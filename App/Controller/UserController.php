@@ -7,6 +7,7 @@ use App\Repository\CovoiturageRepository;
 use App\Repository\PreferenceUserRepository;
 use App\Repository\UserRepository;
 use App\Repository\VoitureRepository;
+use App\Security\Security;
 use App\Security\UserValidator;
 use App\Security\VoitureValidator;
 use Exception;
@@ -131,47 +132,53 @@ class UserController extends Controller
     // Fonction pour afficher le profil de l'utilisateur
     protected function profil()
     {
-        // Repositories
-        $userRepository = new UserRepository;
-        $carRepository = new VoitureRepository;
-        $preferenceRepository = new PreferenceUserRepository;
+        // Si l'utilisateur est connecté 
+        if (Security::isLogged()) {
+            // Repositories
+            $userRepository = new UserRepository;
+            $carRepository = new VoitureRepository;
+            $preferenceRepository = new PreferenceUserRepository;
 
-        $userId = $_SESSION['user']['id'];
-        // Pour récuperer le mail de l'utilisateur qui est connecté
-        $userMail = $_SESSION['user']['mail'];
-        // Fonction pour trouver l'information de l'utilisateur par son mail
-        $user =  $userRepository->findOneByMail($userMail);
+            $userId = $_SESSION['user']['id'];
+            // Pour récuperer le mail de l'utilisateur qui est connecté
+            $userMail = $_SESSION['user']['mail'];
+            // Fonction pour trouver l'information de l'utilisateur par son mail
+            $user =  $userRepository->findOneByMail($userMail);
 
-        // Variables de l'user
-        $userPseudo = $user->getPseudo();
-        $userMail = $user->getMail();
-        $userCredits = $user->getNbCredits();
-        $photoUniqueId = $user->getPhotoUniqId();
+            // Variables de l'user
+            $userPseudo = $user->getPseudo();
+            $userMail = $user->getMail();
+            $userCredits = $user->getNbCredits();
+            $photoUniqueId = $user->getPhotoUniqId();
 
-        // Fonction pour chercher toutes les voitures par l'id de l'utilisateur
-        $allCars = $carRepository->findAllCarsByUserId($userId);
+            // Fonction pour chercher toutes les voitures par l'id de l'utilisateur
+            $allCars = $carRepository->findAllCarsByUserId($userId);
 
-        // Fonction pour chercher touts les préférences par l'id de l'utilisateur
-        $allPreferences = $preferenceRepository->searchPreferencesByDriverId($userId);
+            // Fonction pour chercher touts les préférences par l'id de l'utilisateur
+            $allPreferences = $preferenceRepository->searchPreferencesByDriverId($userId);
 
-        // Fonction array_map pour récupérer uniquement les values des libelles dans un nouveau array
-        $preferences = array_map(fn($pref) => $pref['libelle'], $allPreferences);
-        // Fonction array_map pour récupérer uniquement les values des préférences personnelles dans un nouveau array
-        $preferencesPersonnelles = array_map(fn($pref) => $pref['personnelle'], $allPreferences);
+            // Fonction array_map pour récupérer uniquement les values des libelles dans un nouveau array
+            $preferences = array_map(fn($pref) => $pref['libelle'], $allPreferences);
+            // Fonction array_map pour récupérer uniquement les values des préférences personnelles dans un nouveau array
+            $preferencesPersonnelles = array_map(fn($pref) => $pref['personnelle'], $allPreferences);
 
 
-        $this->render(
-            "User/profil",
-            [
-                "pseudo" => $userPseudo,
-                "mail" => $userMail,
-                "credits" => $userCredits,
-                "photoUniqueId" => $photoUniqueId,
-                "allCars" => $allCars,
-                "preferences" => $preferences,
-                "preferencesPersonnelles" => $preferencesPersonnelles,
-            ]
-        );
+            $this->render(
+                "User/profil",
+                [
+                    "pseudo" => $userPseudo,
+                    "mail" => $userMail,
+                    "credits" => $userCredits,
+                    "photoUniqueId" => $photoUniqueId,
+                    "allCars" => $allCars,
+                    "preferences" => $preferences,
+                    "preferencesPersonnelles" => $preferencesPersonnelles,
+                ]
+            );
+        }
+        // Sinon on envoie à la page de connexion
+        else {
+            header('Location: ?controller=auth&action=logIn');
+        }
     }
-
 }

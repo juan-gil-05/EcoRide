@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\CovoiturageRepository;
 use App\Repository\UserRepository;
+use App\Security\Security;
 use App\Security\UserValidator;
 use DateTime;
 use Exception;
@@ -51,34 +52,40 @@ class AdminController extends Controller
     // Fonction pour afficher l'espace admin
     private function adminEspace()
     {
-        // repository pour la table User
-        $userRepository = new UserRepository;
-        // On récupère tous les utilisateurs
-        $allUsers = $userRepository->findAllUsers();
+        // Si l'utilisateur est connecté en tant qu'administrateur
+        if (Security::isAdmin()) {
+            // repository pour la table User
+            $userRepository = new UserRepository;
+            // On récupère tous les utilisateurs
+            $allUsers = $userRepository->findAllUsers();
 
-        // Si il y a une action de suppression d'un utilisateur
-        if (isset($_POST['suspendUser'])) {
-            $userId = $_POST['id']; // On récupère l'id de l'utilisateur à suspendre
-            // On supprime l'utilisateur
-            $userRepository->suspendUser($userId);
-            // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
-            $_SESSION['message_to_User'] = 'Le compte utilisateur a bien été suspendu.';
-            $_SESSION['message_code'] = "success";
+            // Si il y a une action de suppression d'un utilisateur
+            if (isset($_POST['suspendUser'])) {
+                $userId = $_POST['id']; // On récupère l'id de l'utilisateur à suspendre
+                // On supprime l'utilisateur
+                $userRepository->suspendUser($userId);
+                // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+                $_SESSION['message_to_User'] = 'Le compte utilisateur a bien été suspendu.';
+                $_SESSION['message_code'] = "success";
+            }
+
+            // Fonction pour créer un compte employé
+            $employeAccount = $this->createEmployeAccount();
+
+            $this->render(
+                "User/adminEspace",
+                [
+                    'allUsers' => $allUsers,
+                    "employePseudoAccount" => $employeAccount['pseudo'],
+                    "employeMailAccount" => $employeAccount['mail'],
+                    "employePasswordAccount" => $employeAccount['password'],
+                    "errors" => $employeAccount['errors']
+                ]
+            );
+        } // Sinon on envoie à la page de connexion
+        else {
+            header('Location: ?controller=auth&action=logIn');
         }
-
-        // Fonction pour créer un compte employé
-        $employeAccount = $this->createEmployeAccount();
-
-        $this->render(
-            "User/adminEspace",
-            [
-                'allUsers' => $allUsers,
-                "employePseudoAccount" => $employeAccount['pseudo'],
-                "employeMailAccount" => $employeAccount['mail'],
-                "employePasswordAccount" => $employeAccount['password'],
-                "errors" => $employeAccount['errors']
-            ]
-        );
     }
 
     // Fonction pour créer un compte employé
@@ -142,6 +149,12 @@ class AdminController extends Controller
     // Fonction pour afficher les graphiques du site
     private function adminGraphs()
     {
-        $this->render("User/adminGraphs");
+        // Si l'utilisateur est connecté en tant qu'administrateur
+        if (Security::isAdmin()) {
+            $this->render("User/adminGraphs");
+        } // Sinon on envoie à la page de connexion
+        else {
+            header('Location: ?controller=auth&action=logIn');
+        }
     }
 }
