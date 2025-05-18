@@ -11,7 +11,7 @@
             <p class="principal content-text">EcoRide</p>
             <div class="separator"></div>
             <!--Mentions légales-->
-            <p>Mentions légales</p>
+            <a href="?controller=page&action=legalMentions" class="text-white">Mentions légales</a>
         </div>
         <!--Petit text du footer-->
         <p class="text">Réduisez votre empreinte écologique en covoiturant.</p>

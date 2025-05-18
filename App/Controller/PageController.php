@@ -30,7 +30,10 @@ class PageController extends Controller
                     case 'validateCovoiturage':
                         $this->validateCovoiturage();
                         break;
-                    // Si l'action passee dans l'url n'existe pas
+                    // Action pour afficher la page avec les mentions legales
+                    case 'legalMentions':
+                        $this->legalMentions();
+                        break;                    // Si l'action passee dans l'url n'existe pas
                     default:
                         throw new Exception("Cette action n'existe pas: " . $_GET['action']);
                         break;
@@ -298,5 +301,15 @@ class PageController extends Controller
                 "driverNoteArray" => $driverNoteArray,
             ]
         );
+    }
+
+    /*
+    Exemple d'appel depuis l'url
+        ?controller=page&action=legalMentions
+    */
+    // Fonction pour afficher les mentions légales
+    protected function legalMentions()
+    {
+        $this->render("Page/mentions-legales");
     }
 }
