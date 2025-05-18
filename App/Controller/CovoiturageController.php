@@ -321,12 +321,6 @@ class CovoiturageController extends Controller
             // Si le chauffeur supprime le covoiturage
             $this->deleteCovoiturage();
 
-            // Si le chauffeur démarre le covoiturage
-            $this->startCovoiturage($covoiturageRepository);
-
-            // Si le chauffeur indique avoir arrivé à la destination
-            $this->arriveCovoiturage($covoiturageRepository);
-
             $this->render(
                 "Covoiturage/mes-covoiturages",
                 [
@@ -710,45 +704,6 @@ class CovoiturageController extends Controller
         }
     }
 
-    // Fonction pour démarrer le covoiturage
-    public function startCovoiturage(CovoiturageRepository $covoiturageRepository)
-    {
-        // Si le boutton "Démarrer" est cliqué
-        if (isset($_POST['startCovoiturage'])) {
-            // On récupere l'id du covoiturage envoié dans le fetch
-            $covoiturageId = $_POST['covoiturage_id'];
-
-            // On appel la fonction pour mettre à jour le statut du covoiturage
-            // 1 = Crée | 2 = Démarré | 3 = Arrivé | 4 = Validé | 5 = Annulé
-            $covoiturageRepository->updateCovoiturageStatut($covoiturageId, 2);
-
-            // Envoi de la réponse JSON pour la requête AJAX
-            echo (json_encode(['success' => true, 'id' => $covoiturageId]));
-            exit;
-        }
-    }
-
-    // Fonction pour indiquer l'arrivée du covoiturage
-    public function arriveCovoiturage(CovoiturageRepository $covoiturageRepository)
-    {
-        // Si le boutton "Démarrer" est cliqué
-        if (isset($_POST['arriveCovoiturage'])) {
-            // On récupere l'id du covoiturage envoié dans le fetch
-            $covoiturageId = $_POST['covoiturage_id'];
-
-            // On appel la fonction pour mettre à jour le statut du covoiturage
-            // 1 = Crée | 2 = Démarré | 3 = Arrivé | 4 = Validé | 5 = Annulé
-            $covoiturageRepository->updateCovoiturageStatut($covoiturageId, 3);
-
-            // On appel la fonction pour envoyer un mail aux participants du covoiturage, afin de confirmer que le trajet s'est bien déroulé
-            $this->sendMailToValidateCovoiturage($covoiturageRepository, $covoiturageId);
-
-            // Envoi de la réponse JSON pour la requête AJAX
-            echo (json_encode(['success' => true, 'id' => $covoiturageId]));
-            exit;
-        }
-    }
-
     // Fonction pour envoyer un mail aux participants du covoiturage quand le chauffeur indique que le covoiturage est terminé
     public function sendMailToValidateCovoiturage(CovoiturageRepository $covoiturageRepository, int $covoiturageId)
     {
@@ -774,7 +729,7 @@ class CovoiturageController extends Controller
             $passagerMail = $passager['passager_mail'];
             $driverPseudo = ucfirst($passager['driver_pseudo']); // Pseudo du chauffeur
             // On crée le lien vers le site pour valider le covoiturage, avec les id chiffrés
-            $linkToSite = "http://localhost:8888/index.php?controller=page&action=validateCovoiturage&passagerId=" .
+            $linkToSite = "https://ecoride.juangil.fr/index.php?controller=page&action=validateCovoiturage&passagerId=" .
                 $passagerEncryptId[$passager['passager_id']] .
                 "&covoiturageId=" . $covoiturageEncryptId[$covoiturage['covoiturage_id']];
 

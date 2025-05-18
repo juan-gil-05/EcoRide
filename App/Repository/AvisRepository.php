@@ -16,7 +16,7 @@ class AvisRepository extends Repository
             'titre' => $titre,
             'avis' => $avis,
             'note' => $note,
-            'accepte' => false,
+            'accepte' => 0,
             'user_id_auteur' => $userIdAuteur,
             'user_id_cible' => $userIdCible,
             'covoiturage_id' => $covoiturageId

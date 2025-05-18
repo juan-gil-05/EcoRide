@@ -8,7 +8,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 // Importation l'autoload de composer
-require 'vendor/autoload.php';
+require BASE_PATH.'/vendor/autoload.php';
 
 
 class SendMail

@@ -114,6 +114,16 @@ class Controller
                     $apiController = new ApiController();
                     $apiController->getGraphData();
                     break;
+                // Action pour démarrer un covoiturage
+                case 'startCovoiturage':
+                    $apiController = new ApiController();
+                    $apiController->startCovoiturage();
+                    break;
+                // Action pour indiquer l'arrivée du covoiturage  
+                case 'stopCovoiturage':
+                    $apiController = new ApiController();
+                    $apiController->stopCovoiturage();
+                    break;
                 // Si l'action passée dans l'url n'existe pas
                 default:
                     throw new \Exception("Cette action n'existe pas dans l'API");

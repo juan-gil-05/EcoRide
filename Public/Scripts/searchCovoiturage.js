@@ -2,7 +2,7 @@
 // s'il y a d'erreurs dans le formulaire 
 
 // Les messages d'erreurs
-let errors = document.querySelectorAll('.invalid-tooltip');
+let errors = document.querySelectorAll('.invalid-tooltip') ?? 0;
 // La section avec le slogan et la barre de recherche
 let slogan = document.getElementById('slogan');
 let searchBar = document.getElementById('searchBar');

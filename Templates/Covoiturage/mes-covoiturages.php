@@ -180,10 +180,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                                             class="btn btn-warning secondary-btn text-dark">Détail</a>
                                         <!-- Boutons pour démarrer, arrivé à destination et clôturé le covoiturage -->
                                         <!-- Les statuts d'un covoiturage : 
-                                         - 1 : Crée
-                                         - 2 : Démarré
-                                         - 3 : Arrivé
-                                         - 4 : Validé 
+                                         - 1 : Crée - 2 : Démarré - 3 : Arrivé - 4 : Validé 
                                         -->
                                         <?php if ($covoiturage['statut_id'] == 1) { ?>
                                             <button id="startBtn<?= $covoiturage['id'] ?>"

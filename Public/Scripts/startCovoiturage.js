@@ -1,7 +1,7 @@
 // script pour masquer le bouton "Démarrer" et afficher le bouton "Arrivée à destination" lors du clic sur le bouton "Démarrer"
 // tout en utilisant une requête fetch pour mettre à jour l'état du covoiturage dans la base de données
 function startCovoiturage(id) {
-    fetch("", {
+    fetch("index.php?controller=api&action=startCovoiturage", {
         method: "POST",
         headers: {
             "content-type": "application/x-www-form-urlencoded",
@@ -30,7 +30,7 @@ function startCovoiturage(id) {
 // script pour masquer le bouton "Arrivée à destination" et afficher le bouton "Clôturé" lors du clic sur le bouton "Arrivée à destination"
 // tout en utilisant une requête fetch pour mettre à jour l'état du covoiturage dans la base de données
 function arriveCovoiturage(id) {
-    fetch("", {
+    fetch("index.php?controller=api&action=stopCovoiturage", {
         method: "POST",
         headers: {
             "content-type": "application/x-www-form-urlencoded",
