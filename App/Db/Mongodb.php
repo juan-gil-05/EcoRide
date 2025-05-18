@@ -25,6 +25,7 @@ class Mongodb
         $this->db_user_mongo = $config['MONGO_DB_USER'];
         $this->db_password_mongo = $config['MONGO_DB_PASSWORD'];
         $this->db_host_mongo = $config['MONGO_DB_HOST'];
+        $this->db_port_mongo = $config['MONGO_DB_PORT'];
     }
 
 
@@ -46,10 +47,10 @@ class Mongodb
         $port = $this->db_port_mongo;
         $dbName = $this->db_name_mongo;
 
-        // Connection string en LOCAL
-        // $connectionPath = "mongodb://".$user.":".$password."@".$host.":".$port."/".$dbName;
-        // Connection string en mongoDB Atlas
         try {
+            // Connection string en LOCAL
+            // $connectionPath = "mongodb://".$user.":".$password."@".$host.":".$port."/".$dbName;
+            // Connection string en mongoDB Atlas
             $connectionPath = "mongodb+srv://" . $user . ":" . $password . "@" . $host . "/?retryWrites=true&w=majority&appName=" . $dbName;
             // Instance de la classe Client
             $mongo = new Client($connectionPath);

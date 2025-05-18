@@ -16,7 +16,7 @@
         <!--Petit text du footer-->
         <p class="text">Réduisez votre empreinte écologique en covoiturant.</p>
         <!--Le copyright-->
-        <p class="copyright ligne">© 2024 EcoRide. Tous droits réservés.</p>
+        <p class="copyright ligne">© 2025 EcoRide. Tous droits réservés.</p>
     </div>
 </footer>
 

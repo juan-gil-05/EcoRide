@@ -1,24 +1,9 @@
 <?php
 // HEADER
 require_once BASE_PATH . '/Templates/header.php';
-
-use App\Security\Security;
 ?>
 
 <!-- main -->
-<?php if (Security::isLogged()) { ?>
-  <h4>bienvenue <?= $_SESSION['user']['pseudo'] ?></h4>
-  <?php if (Security::isPassager()) { ?>
-    <h4>Vous êtes passager<br></h4>
-  <?php } elseif (Security::isChauffeur()) { ?>
-    <h4>Vous êtes chauffeur<br></h4>
-  <?php } elseif (Security::isEmploye()) { ?>
-    <h4>Vous êtes Employé<br></h4>
-  <?php } elseif (Security::isAdmin()) { ?>
-    <h4>Vous êtes Administrateur<br></h4>
-  <?php } ?>
-<?php } ?>
-
 <!-- Section qui contient le slogan et la barre de recherche des covoiturages -->
 <section>
   <div class="slogan" id="slogan">
