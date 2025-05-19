@@ -109,11 +109,12 @@ class CovoiturageRepository extends Repository
         ?int $energiId = null,
         ?int $maxPrice = null,
         ?int $maxDuration = null,
-        ?int $minimalNote = null,
     ): array {
-        $sql = ("SELECT Covoiturage.* FROM Covoiturage
+        $sql = ("SELECT Covoiturage.*, User.id as driver_id
+                FROM Covoiturage
                 INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
                 INNER JOIN Energie ON Voiture.energie_id = Energie.id
+                INNER JOIN User ON Voiture.user_id = User.id
                 WHERE date_heure_depart LIKE :dateDepart AND 
                 adresse_depart LIKE :adresseDepart AND
                 adresse_arrivee LIKE :adresseArrivee
@@ -123,12 +124,6 @@ class CovoiturageRepository extends Repository
         (!empty($energiId)) ? $sql .= " AND  Energie.id = :energiId" : null;
         (!empty($maxPrice)) ? $sql .= " AND  prix <= :price" : null;
         (!empty($maxDuration)) ? $sql .= " AND  TIMESTAMPDIFF(HOUR, date_heure_depart, date_heure_arrivee) <= :maxDuration" : null;
-        (!empty($minimalNote)) ? $sql .= " AND Voiture.user_id IN (
-                                                                    SELECT user_id_cible
-                                                                    FROM Avis
-                                                                    GROUP BY user_id_cible
-                                                                    HAVING AVG(note) >= :minimalNote
-                                                                    )" : null;
 
         $query = $this->pdo->prepare($sql);
         $query->bindValue(":dateDepart", "%$dateDepart%", $this->pdo::PARAM_STR);
@@ -138,7 +133,6 @@ class CovoiturageRepository extends Repository
         (!empty($energiId)) ? $query->bindValue(":energiId", $energiId, $this->pdo::PARAM_INT) : null;
         (!empty($maxPrice)) ? $query->bindValue(":price", $maxPrice, $this->pdo::PARAM_INT) : null;
         (!empty($maxDuration)) ? $query->bindValue(":maxDuration", $maxDuration, $this->pdo::PARAM_INT) : null;
-        (!empty($minimalNote)) ? $query->bindValue(":minimalNote", $minimalNote, $this->pdo::PARAM_INT) : null;
         $query->execute();
 
         return $query->fetchAll($this->pdo::FETCH_ASSOC);

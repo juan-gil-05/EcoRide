@@ -52,4 +52,27 @@ class AvisRepository extends Repository
         $result = iterator_to_array($data);
         return $result;
     }
+
+    // Function pour filtrer la recherche des covoiturages par note minimal des chauffeurs
+    public function filterByNoteMinimal(?int $noteMinimal)
+    {
+        $collection = $this->mongo->Avis; // pour choisir la collection Avis 
+        $data = $collection->aggregate([
+            [ // On regroupe les id des chauffeurs et on calcule la note moyenne selon la note donnée dans chaque avis
+                '$group' =>
+                [
+                    '_id' => '$user_id_cible',
+                    'note' => ['$avg' => '$note'],
+                ]
+            ],
+            [ // Pour filtrer avec la note minimale donnée comme parametre
+                '$match' => [
+                    'note' => ['$gte' => $noteMinimal]
+                ]
+            ]
+        ]);
+        // On retourne uniquement les id des chauffeurs
+        $result = iterator_to_array($data);
+        return array_column($result, '_id');
+    }
 }

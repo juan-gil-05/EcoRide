@@ -68,6 +68,7 @@ class CovoiturageController extends Controller
         $covoiturages = $_SESSION['covoiturages'] ?? [];
         $covoiturageRepository = new CovoiturageRepository;
         $userRepository = new UserRepository;
+        $avisRepository = new AvisRepository;
 
         // Variables que l'on va utiliser dans la vue
         $adresseDepart = "";
@@ -127,23 +128,30 @@ class CovoiturageController extends Controller
                 for ($i = 1; $i <= $driverFilterNoteInt; $i++) {
                     $driverFilterNoteArray[] = $i;
                 }
+                // Pour trouver les id des chauffeurs avec la note minimal donnée dans le filtre
+                $driverMinimalNote = $avisRepository->filterByNoteMinimal($driverFilterNote);
 
                 // On appel la fonction du repository et on le passe les params du filtre
-                $covoituragesMaxPrice = $covoiturageRepository->filterSearchCovoiturage(
+                $covoituragesAfterFilter = $covoiturageRepository->filterSearchCovoiturage(
                     $dateDepartFormated,
                     $adresseDepart,
                     $adresseArrivee,
                     $ecologique,
                     $maxPrice,
                     $maxDuration,
-                    $driverFilterNote
                 );
 
-                // Les nouveaux valeurs de la variable $covoiturage seront les covoiturages trouvés après appliqué les filtres
-                $covoiturages = $covoituragesMaxPrice;
+
+                // Les nouveaux valeurs de la variable $covoiturages seront les covoiturages trouvés après appliqué les filtres
+                // Si on applique le filtre de la note minimal, alors -> on filtre les tableau pour avoir uniquement les covoiturages
+                //  dont la note de chauffeur est majeur ou égale a celle donée 
+                // Sinon, on envoie le resultat des covoiturages après le filtre
+                $covoiturages = ($_POST['note']) ? array_filter($covoituragesAfterFilter, function ($covoit) use ($driverMinimalNote) {
+                    return in_array($covoit['driver_id'], $driverMinimalNote);
+                }) : $covoituragesAfterFilter;
                 // On parcourt le tableau pour récuperer chaque covoiturage trouvé
-                foreach ($covoituragesMaxPrice as $covoiturageMaxPrice) {
-                    $covoiturage = $covoiturageMaxPrice;
+                foreach ($covoituragesAfterFilter as $covoiturageAfterFilter) {
+                    $covoiturage = $covoiturageAfterFilter;
                 }
             }
         }
