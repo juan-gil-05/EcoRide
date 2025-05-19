@@ -68,7 +68,7 @@ class AuthController extends Controller
                     // Et si le mot de passe est correct ...
                     if ($user && $userValidator->passwordVerify($user)) {
                         // On vérifie si l'utilisateur est actif
-                        if($user->getActive() == 1){
+                        if ($user->getActive() == 1) {
                             // Pour générer l'id de la session
                             session_regenerate_id(true);
                             // On crée une nouvelle session avec les données de l'utilisateur connecté
@@ -85,16 +85,25 @@ class AuthController extends Controller
                                 // Si l'utilisateur a déjà enregistré des voitures, 
                                 // On envoi a la page d'accueil
                                 if ($voitureRepository->findCarByUserId($user->getId())) {
+                                    // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+                                    $_SESSION['message_to_User'] = "Vous êtes connectez";
+                                    $_SESSION['message_code'] = "success";
+                                    // On redirige vers la page d'accueil
                                     header('location: ?controller=page&action=accueil');
+                                    exit();
                                 } else {
                                     // Envois vers la page pour enregistrer une voiture
                                     header('location: ?controller=voiture&action=carInscription');
                                 }
                             } else { // Si l'user n'est pas chauffeur mais passager, alors ...
-                                // On envoie l'utilisateur vers la page d'accueil
+                                // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+                                $_SESSION['message_to_User'] = "Vous êtes connectez";
+                                $_SESSION['message_code'] = "success";
+                                // On redirige vers la page d'accueil
                                 header('location: ?controller=page&action=accueil');
+                                exit();
                             }
-                        }else{
+                        } else {
                             // Si le compte est suspendu, on affiche un message d'erreur
                             $errors['inactiveUser'] = "Votre compte est suspendu, veuillez nous contacter pour en savoir plus.";
                         }
@@ -102,7 +111,7 @@ class AuthController extends Controller
                     else {
                         $errors['invalidUser'] = "Email ou mot de passe invalide";
                     }
-                } 
+                }
             }
         } catch (Exception $e) {
             $this->render("Errors/404", [

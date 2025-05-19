@@ -390,8 +390,12 @@ class CovoiturageController extends Controller
                     // S'il n'y a pas des erreurs, on crée le covoiturage dans la base des données
                     if (empty($errors)) {
                         $covoiturageRepository->createCovoiturage($covoiturage);
+                        // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+                        $_SESSION['message_to_User'] = "Covoiturage ajouté avec succès";
+                        $_SESSION['message_code'] = "success";
                         // On envoi vers la page de mes covoiturages 
                         header('Location: ?controller=covoiturages&action=mesCovoiturages');
+                        exit();
                     }
                 }
 

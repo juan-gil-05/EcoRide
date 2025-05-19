@@ -85,8 +85,12 @@ class PreferenceUserController extends Controller
                 $personalPreference->hydrate($_POST);
                 // Pour la créer dans la base de données 
                 $preferenceRepository->createPreference($personalPreference, $user_id);
+                // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+                $_SESSION['message_to_User'] = "Nouvelle préférence sauvegardée";
+                $_SESSION['message_code'] = "success";
                 // On envoi vers la page d'accueil
-                header('Location: ?controller=page&action=accueil');
+                header('Location: ?controller=user&action=profil');
+                exit();
             }
             
         } catch (Exception $e) {

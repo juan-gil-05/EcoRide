@@ -79,8 +79,12 @@ class UserController extends Controller
                     // Si l'utilisateur est passager 
                     if ($user->getRoleId() == "1") {
                         $userRepository->createUser($user);
+                        // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+                        $_SESSION['message_to_User'] = "Compte crée avec succès";
+                        $_SESSION['message_code'] = "success";
                         // On envoie l'utilisateur vers la page de connexion
                         header('Location: ?controller=auth&action=logIn');
+                        exit();
                     } elseif ($user->getRoleId() == "2" || $user->getRoleId() == "3") { // Si l'utilisateur est chauffeur
                         // Pour enregistrer la photo dans l'attribut photo de l'objet User
                         $user->setPhoto($_FILES['photo']['name']);
@@ -89,8 +93,12 @@ class UserController extends Controller
                         // S'il n'y aps des erreur, on crée l'utilisateur avec la photo de profile
                         if (empty($errors)) {
                             $userRepository->createDriverUser($user);
+                            // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+                            $_SESSION['message_to_User'] = "Compte crée avec succès";
+                            $_SESSION['message_code'] = "success";
                             // On envoie l'utilisateur vers la page de connexion
                             header('Location: ?controller=auth&action=logIn');
+                            exit();
                         }
                     }
                 }

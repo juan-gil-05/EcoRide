@@ -8,7 +8,7 @@
             <p>contact@ecoride.fr</p>
             <div class="separator"></div>
             <!--Nom-->
-            <p class="principal content-text">EcoRide</p>
+            <a class="principal content-text text-white" href="?controller=page&action=accueil">EcoRide</a>
             <div class="separator"></div>
             <!--Mentions légales-->
             <a href="?controller=page&action=legalMentions" class="text-white">Mentions légales</a>
