@@ -32,9 +32,15 @@ EcoRide est une startup française dont l'objectif est de réduire l'impact envi
 
 - PHP >= 8.1
 - Serveur web local (ex. : [XAMPP](https://www.apachefriends.org/), [MAMP](https://www.mamp.info/))
-- MySQL & MongoDB installés localement
+- MySQL 
+    - ([Doc pour l'installation en Windows](https://dev.mysql.com/downloads/installer/))
+    - ([Doc pour l'installation en macOS avec Homebrew](https://formulae.brew.sh/formula/mysql))
+- MongoDB 
+    - ([Doc pour l'installation en Windows](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/))
+    - ([Doc pour l'installation en macOS](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/))
 - Composer ([Doc pour l'installation](https://getcomposer.org/download/))
 - NPM ([Doc pour l'installation](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm))
+- Driver PHP MongoDB (voir ci-dessous)
 
 ## 💻 Étapes pour déployer le projet en local
 
@@ -112,6 +118,28 @@ EcoRide est une startup française dont l'objectif est de réduire l'impact envi
             exit;
         }
         ```
+    4. Installation du driver PHP pour MongoDB (si non déjà installée)
+    
+        > L'application utilise MongoDB via la librairie `mongodb/mongodb`, qui nécessite l'extension PHP native `mongodb`.
+
+        - Installer via [PECL](https://pecl.php.net), depuis la terminal:
+            ```bash
+            pecl install mongodb
+            ```
+
+        - Activer l'extension dans le fichier `php.ini` :
+            Ouvrez le fichier `php.ini` et ajoutez cette ligne :
+            ```ini
+            extension=mongodb.so
+            ```
+
+        - Vérifier que l'extension est active :
+            ```bash
+            php -m | grep mongodb
+            ```
+             ➜ Si la ligne `mongodb` s’affiche, tout est bon ✅
+
+   
 
 7. **Configuration SMTP pour l'envoi d'emails (en local)**
 
@@ -130,12 +158,20 @@ EcoRide est une startup française dont l'objectif est de réduire l'impact envi
     SMTP_PASSWORD=your_mailtrap_password
     SMTP_FROM_NAME=EcoRide (DEV)
     SMTP_FROM_EMAIL=no-reply@ecoride.dev
+    ````
+    > 💡 Dans le fichier App/Tools/SendMail.php, assurez-vous d’utiliser le bon port et le bon protocole :
+    - Par exemple:
+        ```php
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Utilise TLS
+        $mail->Port       = 2525;                           // Port utilisé par Mailtrap avec TLS
+        ```
 
 8. **Lancer l'application**
 
     1. Démarrer votre serveur Apache/Nginx et MySQL.
-    2. Accéder à l'application via :  
-    [http://localhost:8888/EcoRide/public/](http://localhost:8888/EcoRide/public/)
+    2. Accéder à l'application
+        - Par exepmle via :  
+            [http://localhost:8888/EcoRide/Public/](http://localhost:8888/EcoRide/public/)
     3. Vous pouvez maintenant utiliser EcoRide en local !
 
 
