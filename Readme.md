@@ -57,17 +57,7 @@ EcoRide est une startup française dont l'objectif est de réduire l'impact envi
     mv EcoRide /Applications/MAMP/htdocs/
     ```
 
-3. **Installer les dépendances**
 
-    Depuis la racine de votre projet faites :
-
-    ```bash
-    composer install
-    ````
-
-    ```bash
-    npm install
-    ```
 
 4. **Créer la base de données MySQL :**
 
