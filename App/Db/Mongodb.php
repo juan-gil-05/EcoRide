@@ -21,11 +21,11 @@ class Mongodb
         // Appel du fichier avec les paramètres de la BDD
         $config = require BASE_PATH . "/config.php";
 
+        $this->db_user_mongo = $config['MONGO_INITDB_ROOT_USERNAME'];
+        $this->db_password_mongo = $config['MONGO_INITDB_ROOT_PASSWORD'];
+        $this->db_host_mongo = $config['MONGO_HOST'];
+        $this->db_port_mongo = $config['MONGO_PORT'];
         $this->db_name_mongo = $config['MONGO_DB_NAME'];
-        $this->db_user_mongo = $config['MONGO_DB_USER'];
-        $this->db_password_mongo = $config['MONGO_DB_PASSWORD'];
-        $this->db_host_mongo = $config['MONGO_DB_HOST'];
-        $this->db_port_mongo = $config['MONGO_DB_PORT'];
     }
 
 
@@ -49,9 +49,9 @@ class Mongodb
 
         try {
             // Connection string en LOCAL
-            // $connectionPath = "mongodb://".$user.":".$password."@".$host.":".$port."/".$dbName;
+            $connectionPath = "mongodb://" . $user . ":" . $password . "@" . $host . ":" . $port . "/" . $dbName;
             // Connection string en mongoDB Atlas
-            $connectionPath = "mongodb+srv://" . $user . ":" . $password . "@" . $host . "/?retryWrites=true&w=majority&appName=" . $dbName;
+            // $connectionPath = "mongodb+srv://" . $user . ":" . $password . "@" . $host . "/?retryWrites=true&w=majority&appName=" . $dbName;
             // Instance de la classe Client
             $mongo = new Client($connectionPath);
             $db = $mongo->selectDatabase($dbName); // Sélection de la base de données

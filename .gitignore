@@ -4,3 +4,4 @@ node_modules
 // Variables d'environement
 .env
 vendor
+.DS_Store
