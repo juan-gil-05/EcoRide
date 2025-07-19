@@ -11,13 +11,13 @@ Cette plateforme web, pensée pour les voyageurs soucieux de l’écologie et de
 ---
 
 ## 📚 Table des matières
-1. [Fonctionnalités](#-fonctionnalités)
-2. [Technologies](#️-technologies-utilisées)
-3. [Prérequis](#-prérequis)
-4. [Installation](#-installation)
-5. [Configuration SMTP](#-configuration-smtp)
-6. [Déploiement Docker](#-déploiement-docker)
-7. [Auteur](#-auteur)
+1. [Fonctionnalités](#fonctionnalités)
+2. [Technologies](#technologies-utilisées)
+3. [Prérequis](#prérequis)
+4. [Installation](#étapes-pour-déployer-le-projet-en-local)
+5. [Configuration SMTP](#configuration-smtp)
+6. [Déploiement Docker](#deploiment-docker)
+7. [Auteur](#auteur)
 
 ---
 
