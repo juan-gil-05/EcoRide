@@ -17,6 +17,25 @@ jobs:
           server: ${{secrets.FTP_SERVER}}
           username: ${{secrets.FTP_USERNAME}}
           password: ${{secrets.FTP_PASSWORD}}
+          exclude: |
+              **/.git*
+              **/.github*
+              **/.gitignore
+              **/node_modules/**
+              **/vendor/**
+              **/documentation/**
+              **/Dockerfile
+              **/docker-compose.yaml*
+              **/.dockerignore
+              **/Readme.md
+              **/package.json
+              **/package-lock.json
+              **/composer.json
+              **/composer.lock
+              **/.env
+              **/.env.example
+              **/mongo-seed/**
+
           
       
 
