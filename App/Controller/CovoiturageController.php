@@ -87,7 +87,7 @@ class CovoiturageController extends Controller
                 // Pour récupérer l'id de chaque covoiturage
                 $covoiturageId = $covoiturage['id'];
                 // Pour crypter l'id du covoiturage avant de l'envoyer dans l'url, afin d'afficher les détails de chaque covoiturage 
-                $covoiturageEncryptId[$covoiturage['id']] =  $this->encryptUrlParameter($covoiturage['id']);
+                $covoiturageEncryptId[$covoiturage['id']] =  Security::encryptUrlParameter($covoiturage['id']);
 
                 // Pour récupérer la note du chauffeur 
                 $driverNote[$covoiturageId] = $userRepository->findDriverNote($covoiturage['driver_id']);
@@ -196,7 +196,7 @@ class CovoiturageController extends Controller
         $passagerPseudo = [];
 
         // On récupére l'id du covoiturage passée dans l'url et on le décrypte 
-        $covoiturageId = $this->decryptUrlParameter($_GET['id']);
+        $covoiturageId = Security::decryptUrlParameter($_GET['id']);
 
         // Pour récupérer les détailles du covoiturage
         $covoiturageDetail = $covoiturageRepository->searchCovoiturageDetailsById($covoiturageId);
@@ -299,7 +299,7 @@ class CovoiturageController extends Controller
                 // Pour récupérer l'id de chaque covoiturage
                 $covoiturageId = $covoiturage['id'];
                 // Pour crypter l'id du covoiturage avant de l'envoyer dans l'url pour afficher les détails de chaque covoiturage 
-                $covoiturageEncryptId[$covoiturageId] =  $this->encryptUrlParameter($covoiturageId);
+                $covoiturageEncryptId[$covoiturageId] =  Security::encryptUrlParameter($covoiturageId);
                 // on appel la fonction qui formate les dates des covoiturages
                 $dateTimeCovoiturage = $this->dateTimeCovoiturage($covoiturage);
                 $dayName[$covoiturageId] = $dateTimeCovoiturage[0];
@@ -315,7 +315,7 @@ class CovoiturageController extends Controller
                 // Pour récupérer l'id de chaque covoiturage
                 $covoiturageId = $covoiturage['id'];
                 // Pour crypter l'id du covoiturage avant de l'envoyer dans l'url pour afficher les détails de chaque covoiturage 
-                $covoiturageEncryptId[$covoiturageId] =  $this->encryptUrlParameter($covoiturageId);
+                $covoiturageEncryptId[$covoiturageId] =  Security::encryptUrlParameter($covoiturageId);
                 // on appel la fonction qui formate les dates des covoiturages
                 $dateTimeCovoiturage = $this->dateTimeCovoiturage($covoiturage);
                 $dayName[$covoiturageId] = $dateTimeCovoiturage[0];
@@ -499,39 +499,6 @@ class CovoiturageController extends Controller
             $dureeCovoiturage,
             $jours
         ];
-    }
-
-    // Fonction pour crypter un paramètre passé dans l'url avec l'algorithme ASE (Advanced Encryption Standard)
-    protected function encryptUrlParameter($id)
-    {
-        // Clé pour crypter et décrypter 
-        $key = "JkgDDiB3KTxGiDBPBYGObdzFPzyiVJ8g";
-        // Parce qu'on utilise le CBC (Cipher Block Chaining) qui a besoin d'un 'Initialization Vector'
-        $IV = random_bytes(16); // 16 bytes car on utilise 128 bites
-        // On crypte avec la fonction openssl
-        $encrypted = openssl_encrypt($id, "AES-128-CBC", $key, 0, $IV);
-        // Variable qui joint le 'Initialization Vector' avec le paramètre crypté et fait un encode 
-        $base64Encoded = base64_encode($IV . $encrypted);
-        // finallement, on change les symbole '+' et '/' pour éviter des erreurs au moment de décripter le IV
-        return strtr($base64Encoded, '+/', '-_');
-    }
-
-    // Fonction pour décryper un paramètre passé dans l'url avec l'algorithme ASE (Advanced Encryption Standard)
-    public static function decryptUrlParameter($encryptedParam)
-    {
-        // Clé pour crypter et décrypter 
-        $key = "JkgDDiB3KTxGiDBPBYGObdzFPzyiVJ8g";
-        // on change les symbole '-' et '_' pour éviter les erreurs
-        $base64Decoded = strtr($encryptedParam, '-_', '+/');
-        // fonction pour decoder le param
-        $decodedParam = base64_decode($base64Decoded);
-        // Pour séparer le IV du param, (les 16 premières chiffres)
-        $IV = substr($decodedParam, 0, 16);
-        // Pour récuperer le param, (les chiffres après la 16ème chiffre)
-        $encrypted = substr($decodedParam, 16);
-        // On décripte avec la fonction openssl
-        $decrypted = openssl_decrypt($encrypted, "AES-128-CBC", $key, 0, $IV);
-        return $decrypted;
     }
 
     // Fonction pour participer au covoiturage
@@ -729,7 +696,7 @@ class CovoiturageController extends Controller
             // Les date du covoiturage
             $covoiturageDateDepart = new DateTime($covoiturage['date_heure_depart']);
             // l'id du covoiturage chiffré
-            $covoiturageEncryptId[$covoiturage['covoiturage_id']] = $this->encryptUrlParameter($covoiturage['covoiturage_id']);
+            $covoiturageEncryptId[$covoiturage['covoiturage_id']] = Security::encryptUrlParameter($covoiturage['covoiturage_id']);
         }
 
         // Pour récupérer les participants du covoiturage
@@ -737,7 +704,7 @@ class CovoiturageController extends Controller
         foreach ($participants as $passager) {
             // Mail, pseudo des passagers et du chauffeur
             $passagerPseudo = ucfirst($passager['passager_pseudo']);
-            $passagerEncryptId[$passager['passager_id']] =  $this->encryptUrlParameter($passager['passager_id']); // Id chiffré du passager
+            $passagerEncryptId[$passager['passager_id']] =  Security::encryptUrlParameter($passager['passager_id']); // Id chiffré du passager
             $passagerMail = $passager['passager_mail'];
             $driverPseudo = ucfirst($passager['driver_pseudo']); // Pseudo du chauffeur
             // On crée le lien vers le site pour valider le covoiturage, avec les id chiffrés
