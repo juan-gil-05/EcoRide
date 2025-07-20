@@ -111,7 +111,7 @@ require_once  BASE_PATH . '/Templates/header.php';
               <div class="d-flex gap-3 justify-content-center align-items-center text-white">
                 <a href="?controller=auth&action=logIn" class="btn btn-light content-text ">Se connecter</a>
                 <p class="mb-0"> | </p>
-                <a href="?controller=user&action=singUp" class="btn btn-light content-text ">S'inscrire</a>
+                <a href="?controller=user&action=signUp" class="btn btn-light content-text ">S'inscrire</a>
               </div>
             </div>
             <!-- Si l'utilisateur participe déjà au covoiturage -->
@@ -159,7 +159,7 @@ require_once  BASE_PATH . '/Templates/header.php';
   </div>
   <!-- Information du chauffeur -->
   <div class="driver-info shadow-section">
-    <!-- La photo, le prenom/nom et la note du chauffuer -->
+    <!-- La photo, le prenom/nom et la note du chauffeur -->
     <div class="driver-header">
       <!-- Photo, s'il n'y a pas, on affiche l'image par defaut-->
       <img

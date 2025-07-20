@@ -32,7 +32,7 @@
       }
     }
 
-    // Si l'utilisateur est un chauffuer, alors on affiche le fomulaire pour les chauffeur
+    // Si l'utilisateur est un chauffeur, alors on affiche le fomulaire pour les chauffeur
     .if-chauffeur {
       label {
         color: white;
@@ -41,7 +41,7 @@
         background-color: $light;
       }
     }
-    // Si l'utilisateur n'est pas un chauffuer, alors on n'affiche pas le fomulaire pour les chauffeur
+    // Si l'utilisateur n'est pas un chauffeur, alors on n'affiche pas le fomulaire pour les chauffeur
     .non-chauffeur {
       display: none !important;
     }

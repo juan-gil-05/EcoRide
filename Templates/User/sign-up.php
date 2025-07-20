@@ -105,7 +105,7 @@ require_once  BASE_PATH . '/Templates/header.php';
 
     <!-- Button pour créer le compte -->
     <div class="d-flex justify-content-center mt-4">
-      <button class="btn btn-warning text-dark w-50 py-3 mt-3 content-text fw-medium" name="singUp" type="submit">Se registrer</button>
+      <button class="btn btn-warning text-dark w-50 py-3 mt-3 content-text fw-medium" name="signUp" type="submit">Se registrer</button>
     </div>
     <!-- Lien si l'utilisateru a déjà un compte -->
     <div class="d-flex justify-content-center mt-5 lien content-text mb-5">

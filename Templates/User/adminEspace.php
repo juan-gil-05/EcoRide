@@ -58,7 +58,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                         <!-- Button pour créer le compte -->
                         <div class="modal-footer justify-content-center gap-3">
                             <button type="button" class="btn btn-danger secondary-btn text-white small-text" data-bs-dismiss="modal">Annuler</button>
-                            <button class="btn btn-primary secondary-btn text-white small-text" name="singUp" type="submit">
+                            <button class="btn btn-primary secondary-btn text-white small-text" name="signUp" type="submit">
                                 Créer
                             </button>
                         </div>

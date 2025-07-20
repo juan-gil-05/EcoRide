@@ -23,7 +23,7 @@ if(createEmployeAccountForm){
             headers: { // On définit le type de contenu de la requête
                 "content-type": "application/x-www-form-urlencoded",
             },
-            body: data + '&singUp=1', // On ajoute le paramètre singUp=1 pour récupérer la requête dans le controller
+            body: data + '&signUp=1', // On ajoute le paramètre signUp=1 pour récupérer la requête dans le controller
         }).then(response => response.json())
             .then(data => {
                 // Si il n'y a pas des erreurs dans le formulaire 

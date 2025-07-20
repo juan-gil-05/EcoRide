@@ -101,7 +101,7 @@ class AdminController extends Controller
             $userRepository = new UserRepository();
             $userController = new UserController();
             // Si le formulaire est envoyé, on hydrate l'objet User avec les données passées
-            if (isset($_POST['singUp'])) {
+            if (isset($_POST['signUp'])) {
                 $user->hydrate($_POST);
                 $pseudo = $user->getPseudo();
                 $mail = $user->getMail();
@@ -109,7 +109,7 @@ class AdminController extends Controller
                 // Pour hasher le mot de passe
                 $userController->passwordHasher($user);
                 // Pour valider s'il n'y a pas des erreurs dans le formulaire
-                $errors = $UserValidator->singUpEmployeValidate($user);
+                $errors = $UserValidator->signUpEmployeValidate($user);
                 // S'il n'y a pas des erreurs, on crée l'utilisateur dans la base des données
                 if (empty($errors)) {
 

@@ -31,7 +31,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                 <textarea class="form-control small-text" id="commentTextArea" name="commentaire" rows="2" placeholder="Dites-nous ce qui n’a pas fonctionné 😕"></textarea>
             </div>
         </div>
-        <!-- Pour donner une note au chauffuer -->
+        <!-- Pour donner une note au chauffeur -->
         <div class="driver-note form-div" id="driverNote">
             <!-- Le label et le text de '(facultatif)' -->
             <div>

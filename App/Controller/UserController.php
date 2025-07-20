@@ -21,8 +21,8 @@ class UserController extends Controller
             if (isset($_GET['action'])) {
                 switch ($_GET['action']) {
                     // Action pour créer un compte utilisateur
-                    case 'singUp':
-                        $this->singUp();
+                    case 'signUp':
+                        $this->signUp();
                         break;
                     // Si l'action passée dans l'url n'existe pas
                     case 'profil':
@@ -47,10 +47,10 @@ class UserController extends Controller
 
     /*
     Exemple d'appel depuis l'url
-        ?controller=user&action=singUp
+        ?controller=user&action=signUp
     */
     // Fonction pour créer un compte utilisateur 
-    protected function singUp()
+    protected function signUp()
     {
         $errors = [];
         $pseudo = "";
@@ -59,77 +59,82 @@ class UserController extends Controller
         $roleName = "";
         $roleId = "";
         try {
-            $user = new User();
-            $UserValidator = new UserValidator();
-            $userRepository = new UserRepository();
-            // Si le formulaire est envoyé, on hydrate l'objet User avec les données passées
-            if (isset($_POST['singUp'])) {
-                $user->hydrate($_POST);
-                $pseudo = $user->getPseudo();
-                $mail = $user->getMail();
-                $password = $user->getPassword();
-                $roleId = $user->getRoleId();
-                $roleName = $userRepository->findRoleName($user->getRoleId());
-                // Pour hasher le mot de passe
-                $this->passwordHasher($user);
-                // Pour valider s'il n'y a pas des erreurs dans le formulaire
-                $errors = $UserValidator->singUpValidate($user);
-                // S'il n'y a pas des erreurs, on crée l'utilisateur dans la basse des données
-                if (empty($errors)) {
-                    // Si l'utilisateur est passager 
-                    if ($user->getRoleId() == "1") {
-                        $userRepository->createUser($user);
-                        // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
-                        $_SESSION['message_to_User'] = "Compte crée avec succès";
-                        $_SESSION['message_code'] = "success";
-                        // On envoie l'utilisateur vers la page de connexion
-                        header('Location: ?controller=auth&action=logIn');
-                        exit();
-                    } elseif ($user->getRoleId() == "2" || $user->getRoleId() == "3") { // Si l'utilisateur est chauffeur
-                        // Pour enregistrer la photo dans l'attribut photo de l'objet User
-                        $user->setPhoto($_FILES['photo']['name']);
-                        // Pour valider s'il n'y a pas des erreurs dans le formulaire
-                        $errors = $UserValidator->UserPhotoValidate($user);
-                        // S'il n'y aps des erreur, on crée l'utilisateur avec la photo de profile
-                        if (empty($errors)) {
-                            $userRepository->createDriverUser($user);
-                            // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
-                            $_SESSION['message_to_User'] = "Compte crée avec succès";
-                            $_SESSION['message_code'] = "success";
-                            // On envoie l'utilisateur vers la page de connexion
-                            header('Location: ?controller=auth&action=logIn');
-                            exit();
-                        }
-                    }
-                }
+
+            if (!isset($_POST['signUp'])) {
+                $this->render(
+                    "User/sign-up",
+                    [
+                        'errors' => $errors,
+                        'pseudo' => $pseudo,
+                        'password' => $password,
+                        'mail' => $mail,
+                        'roleName' => $roleName,
+                        'roleId' => $roleId
+                    ]
+                );
+                exit;
             }
-            // On affiche la page de création du compte, et on passe des params
-            $this->render(
-                "User/sing-up",
-                [
-                    'errors' => $errors,
-                    'pseudo' => $pseudo,
-                    'password' => $password,
-                    'mail' => $mail,
-                    'roleName' => $roleName,
-                    'roleId' => $roleId
-                ]
-            );
+
+            $user = new User();
+            $userValidator = new UserValidator();
+            $userRepository = new UserRepository();
+
+            $user->hydrate($_POST);
+            $pseudo = $user->getPseudo();
+            $mail = $user->getMail();
+            $password = $user->getPassword();
+            $roleId = $user->getRoleId();
+            $roleName = $userRepository->findRoleName($user->getRoleId());
+
+            // Pour hasher le mot de passe
+            Security::passwordHasher($user);
+
+            // Pour valider s'il n'y a pas des erreurs dans le formulaire
+            $errors = $userValidator->signUpValidate($user);
+
+            if (!empty($errors)) {
+                $this->render(
+                    "User/sign-up",
+                    [
+                        'errors' => $errors,
+                        'pseudo' => $pseudo,
+                        'password' => $password,
+                        'mail' => $mail,
+                        'roleName' => $roleName,
+                        'roleId' => $roleId
+                    ]
+                );
+                exit;
+            }
+
+            $userCreated = $this->createUserDependingOnRole($user, $userRepository, $userValidator, $errors);
+
+            // Si userCreated n'est pas vide, c'est parce qu'il contient les erreurs retournées para la fonction
+            if (!empty($userCreated)) {
+                $this->render(
+                    "User/sign-up",
+                    [
+                        'errors' => $userCreated,
+                        'pseudo' => $pseudo,
+                        'password' => $password,
+                        'mail' => $mail,
+                        'roleName' => $roleName,
+                        'roleId' => $roleId
+                    ]
+                );
+                exit;
+            }
+
+            // Pour connecter l'utilisateur
+            AuthController::connectUser($user, $userRepository);
+
+            // Pour rediriger l'user selon certaines conditions
+            $this->redirectAfterLogin($user, $userRepository);
+            exit();
         } catch (Exception $e) {
             $this->render("Errors/404", [
                 'error' => $e->getMessage()
             ]);
-        }
-    }
-
-    // Fonction pour hasher le mot de passe
-    public function passwordHasher(User $user)
-    {
-        if (! empty($_POST['password'])) {
-            $passwordHashed = password_hash($user->getPassword(), PASSWORD_DEFAULT);
-            return $user->setPassword($passwordHashed);
-        } else {
-            return false;
         }
     }
 
@@ -160,7 +165,7 @@ class UserController extends Controller
             $photoUniqueId = $user->getPhotoUniqId();
 
             // Fonction pour chercher toutes les voitures par l'id de l'utilisateur
-            $allCars = $carRepository->findAllCarsByUserId($userId);
+            $allCars = ($carRepository->findAllCarsByUserId($userId)) ? $carRepository->findAllCarsByUserId($userId) : [];
 
             // Fonction pour chercher touts les préférences par l'id de l'utilisateur
             $allPreferences = $preferenceRepository->searchPreferencesByDriverId($userId);
@@ -188,5 +193,46 @@ class UserController extends Controller
         else {
             header('Location: ?controller=auth&action=logIn');
         }
+    }
+
+    private function createUserDependingOnRole(User $user, UserRepository $userRepository, UserValidator $userValidator, array $errors)
+    {
+        // Si l'utilisateur est passager 
+        if ($user->getRoleId() == "1") {
+            $userRepository->createUser($user);
+        } else { // Si l'utilisateur est chauffeur
+            // Pour enregistrer la photo dans l'attribut photo de l'objet User
+            $user->setPhoto($_FILES['photo']['name']);
+            // Pour valider s'il n'y a pas des erreurs dans le formulaire
+            $errors = $userValidator->UserPhotoValidate($user);
+            // S'il n'y pas des erreur, on crée l'utilisateur avec la photo de profile
+            if (!empty($errors)) {
+                // $errors = array_push($errors, $errors);
+                return $errors;
+            }
+            $userRepository->createDriverUser($user);
+        }
+        // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+        $_SESSION['message_to_User'] = "Compte crée avec succès";
+        $_SESSION['message_code'] = "success";
+    }
+
+    public static function redirectAfterLogin(User $user, UserRepository $userRepository): void
+    {
+        $voitureRepository = new VoitureRepository;
+        $user = $userRepository->findOneByMail($user->getMail());
+
+        if ($user->getRoleId() == "2" || $user->getRoleId() == "3") {
+            // Chauffeur
+            if ($voitureRepository->findCarByUserId($user->getId())) { // s'il a déjà des voitures
+                header('Location: ?controller=page&action=accueil');
+            } else { // sinon, on envoie vers la page d'inscription d'une voiture
+                header('Location: ?controller=voiture&action=carInscription');
+            }
+        } else {
+            // Passager
+            header('Location: ?controller=page&action=accueil');
+        }
+        exit;
     }
 }

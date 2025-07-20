@@ -8,7 +8,7 @@ use App\Repository\UserRepository;
 class UserValidator
 {
     // Fonction de validation du formulaire pour la création d'un compte utilisateur
-    public function singUpValidate(User $userHydrate): array
+    public function signUpValidate(User $userHydrate): array
     {
         // Tableau d'erreurs
         $errors = [];
@@ -54,7 +54,7 @@ class UserValidator
     }
 
     // Fonction de validation du formulaire pour la création d'un compte employé
-    public function singUpEmployeValidate(User $userHydrate): array
+    public function signUpEmployeValidate(User $userHydrate): array
     {
         // Tableau d'erreurs
         $errors = [];

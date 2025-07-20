@@ -49,9 +49,9 @@ class Mongodb
 
         try {
             // Connection string en LOCAL
-            // $connectionPath = "mongodb://" . $user . ":" . $password . "@" . $host . ":" . $port . "/" . $dbName;
+            $connectionPath = "mongodb://" . $user . ":" . $password . "@" . $host . ":" . $port . "/" . $dbName;
             // Connection string en mongoDB Atlas
-            $connectionPath = "mongodb+srv://" . $user . ":" . $password . "@" . $host . "/?retryWrites=true&w=majority&appName=" . $dbName;
+            // $connectionPath = "mongodb+srv://" . $user . ":" . $password . "@" . $host . "/?retryWrites=true&w=majority&appName=" . $dbName;
             // Instance de la classe Client
             $mongo = new Client($connectionPath);
             $db = $mongo->selectDatabase($dbName); // Sélection de la base de données
