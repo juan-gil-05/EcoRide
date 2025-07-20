@@ -9,7 +9,7 @@ require_once BASE_PATH . '/Templates/header.php';
   <div class="slogan" id="slogan">
     <!-- Slogan du site -->
     <h2 class="subtitle-text text-white">
-      Voyagez avec EcoRide TEST<br />
+      Voyagez avec EcoRide TEST CD<br />
       le covoiturage écologique à votre portée.
     </h2>
     <!-- Bar de recherche des covoiturages -->
