@@ -119,8 +119,8 @@ CREATE TABLE `Role` (
 
 INSERT INTO `Role` (`id`, `libelle`) VALUES
 (1, 'Passager'),
-(2, 'Chauffuer'),
-(3, 'Chauffuer - Passager'),
+(2, 'chauffeur'),
+(3, 'chauffeur - Passager'),
 (4, 'Employé'),
 (5, 'Administrateur');
 

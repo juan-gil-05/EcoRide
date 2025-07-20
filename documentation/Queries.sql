@@ -22,12 +22,12 @@ SELECT * FROM User;
 
 INSERT INTO Role (libelle) VALUES ('passager');
 INSERT INTO Role (libelle) VALUES ('chauffeur');
-INSERT INTO Role (libelle) VALUES ('passager_chauffuer');
+INSERT INTO Role (libelle) VALUES ('passager_chauffeur');
 
 
 
 UPDATE Role  
-SET libelle = "Chauffuer - Passager"
+SET libelle = "chauffeur - Passager"
 WHERE id = 3;
 
 SELECT * FROM Role;
