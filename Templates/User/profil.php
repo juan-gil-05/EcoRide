@@ -10,8 +10,8 @@ require_once  BASE_PATH . '/Templates/header.php';
     <!-- Photo de l'utilisateur -->
     <div class="">
         <?php
-            $defaultImage = "/Assets/Img_page-vue-covoiturages/driver-default.png";
-            $driverImagePath = (!empty($photoUniqueId)) ? "/Uploads/User/".$photoUniqueId : $defaultImage;
+        $defaultImage = "/Assets/Img_page-vue-covoiturages/driver-default.png";
+        $driverImagePath = (!empty($photoUniqueId)) ? "/Uploads/User/" . $photoUniqueId : $defaultImage;
         ?>
         <img src="<?= $driverImagePath ?>"
             alt="Photo de l'utilisateur" class="user-image">
@@ -86,7 +86,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                             <!-- à la base il est caché -->
                             <li id="personalPreference" class="hidden d-flex justify-content-center">
                                 <!-- L'action c'est le controller PreferenceUser -->
-                                <form action="?controller=preferences&action=preferencesInscription" method="post" class="d-flex flex-column gap-2">
+                                <form action="?controller=preferences&action=preferencesInscriptionPersonal" method="post" class="d-flex flex-column gap-2">
                                     <!-- L'input text -->
                                     <textarea name="preference_personnelle" class="form-control" required></textarea>
                                     <!-- Input invisible pour envoyer un param fictif à la base de données

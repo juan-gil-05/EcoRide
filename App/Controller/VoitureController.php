@@ -89,11 +89,11 @@ class VoitureController extends Controller
                             $_SESSION['message_to_User'] = "Voiture crée avec succès";
                             $_SESSION['message_code'] = "success";
                             // On redirige vers la page d'accueil
-                            header('location: ?controller=page&action=accueil');
-                            exit();
+                            header('location: ?controller=user&action=profil');
+                            exit;
                         } else {
                             // On evoi vers la page pour enregistrer les préférences
-                            header('Location: ?controller=preferences&action=preferencesInscription');
+                            header('Location: ?controller=preferences&action=preferencesInscriptionSmoker');
                         }
                     }
                 }
