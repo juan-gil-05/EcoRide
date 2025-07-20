@@ -70,7 +70,7 @@ require_once  BASE_PATH . '/Templates/header.php';
           <option value="<?= ($roleId) ? $roleId : "" ?>"><?= $roleName ?></option>
           <option value="1">Passager</option>
           <option value="2" class="driverRole">Chauffeur</option>
-          <option value="3" class="driverRole">Chauffeur et passageur</option>
+          <option value="3" class="driverRole">Chauffeur et passager</option>
         </select>
         <!-- Si il y a des erreurs on affiche le message d'erreur -->
         <?php if (isset($errors['roleEmpty'])) { ?>
