@@ -1,0 +1,24 @@
+name: Déploiment automatique via FTP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  FTP-deploy-action:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Github checkout
+        uses: actions/checkout@v4.2.2
+      - name: FTP-Deploy-Action
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          ftp-server: ${{secrets.FTP_SERVER}}
+          ftp-username: ${{secrets.FTP_USERNAME}}
+          ftp-password: ${{secrets.FTP_PASSWORD}}
+          
+      
+
+
+      
