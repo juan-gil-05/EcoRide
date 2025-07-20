@@ -19,8 +19,7 @@ jobs:
           password: ${{secrets.FTP_PASSWORD}}
           exclude: |
               **/.git*
-              **/.github*
-              **/.gitignore
+              **/.git*/**
               **/node_modules/**
               **/vendor/**
               **/documentation/**
