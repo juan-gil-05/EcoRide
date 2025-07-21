@@ -4,7 +4,7 @@ function startCovoiturage(id) {
     fetch("index.php?controller=api&action=startCovoiturage", {
         method: "POST",
         headers: {
-            "content-type": "application/x-www-form-urlencoded",
+            "content-type": "application/x-www-form-urlencoded"
         },
         // Envoi de l'id du covoiturage et l'action startCovoiturage
         body: `covoiturage_id=${id}&startCovoiturage=1`
@@ -13,18 +13,22 @@ function startCovoiturage(id) {
         .then(data => {
             if (data.success) {
                 // Cacher le bouton "Démarrer"
-                const startBtn = document.getElementById("startBtn" + id);
-                if (startBtn) startBtn.classList.add("hidden");
+                const startBtn = document.getElementById("startBtn" + id)
+                if (startBtn) {
+                    startBtn.classList.add("hidden")
+                }
 
                 // Afficher le bouton "Arrivée à destination"
-                const arriveBtn = document.getElementById("arriveBtn" + id);
-                if (arriveBtn) arriveBtn.classList.remove("hidden");
+                const arriveBtn = document.getElementById("arriveBtn" + id)
+                if (arriveBtn) {
+                    arriveBtn.classList.remove("hidden")
+                }
 
             }
         })
         .catch(error => {
-            console.error("Erreur lors de la requête :", error);
-        });
+            console.error("Erreur lors de la requête :", error)
+        })
 }
 
 // script pour masquer le bouton "Arrivée à destination" et afficher le bouton "Clôturé" lors du clic sur le bouton "Arrivée à destination"
@@ -33,7 +37,7 @@ function arriveCovoiturage(id) {
     fetch("index.php?controller=api&action=stopCovoiturage", {
         method: "POST",
         headers: {
-            "content-type": "application/x-www-form-urlencoded",
+            "content-type": "application/x-www-form-urlencoded"
         },
         // Envoi de l'id du covoiturage et l'action arriveCovoiturage
         body: `covoiturage_id=${id}&arriveCovoiturage=1`
@@ -42,18 +46,22 @@ function arriveCovoiturage(id) {
         .then(data => {
             if (data.success) {
                 // Cacher le bouton "Arrivée à destination"
-                const arriveBtn = document.getElementById("arriveBtn" + id);
-                if (arriveBtn) arriveBtn.classList.add("hidden");
+                const arriveBtn = document.getElementById("arriveBtn" + id)
+                if (arriveBtn) {
+                    arriveBtn.classList.add("hidden")
+                }
 
                 // Afficher le bouton "Clôturé"
-                const finishBtn = document.getElementById("finishBtn" + id);
-                if (finishBtn) finishBtn.classList.remove("hidden");
+                const finishBtn = document.getElementById("finishBtn" + id)
+                if (finishBtn) {
+                    finishBtn.classList.remove("hidden")
+                }
                 // Recharger la page pour afficher le message au chauffeur comme quoi le covoiturage un mail a été envoyé
                 // à tous les passagers pour les informer que le covoiturage est terminé               
-                location.reload();
+                location.reload()
             }
         })
         .catch(error => {
-            console.error("Erreur lors de la requête :", error);
-        });
+            console.error("Erreur lors de la requête :", error)
+        })
 }
