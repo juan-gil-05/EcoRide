@@ -181,7 +181,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                                         </div>
                                     </div>
                                     <!-- Tous les boutons d'action du covoiturage -->
-                                    <div class="covoiturage-btn-div d-flex justify-content-evenly">
+                                    <div class="covoiturage-btn-div d-flex justify-content-evenly align-items-center">
                                         <!-- Bouton pour pour ouvrir la modal de confirmation -->
                                         <button class="btn btn-danger secondary-btn text-light"
                                             data-bs-toggle="modal"
@@ -248,13 +248,13 @@ require_once  BASE_PATH . '/Templates/header.php';
                                             <button id="arriveBtn<?= $covoiturage['id'] ?>"
                                                 class="btn btn-primary secondary-btn text-white"
                                                 onclick="arriveCovoiturage(<?= $covoiturage['id'] ?>)">
-                                                Arrivée à destination
+                                                Arrivée
                                             </button>
                                         <?php } else { ?>
                                             <button id="arriveBtn<?= $covoiturage['id'] ?>"
                                                 class="btn btn-primary secondary-btn text-white hidden"
                                                 onclick="arriveCovoiturage(<?= $covoiturage['id'] ?>)">
-                                                Arrivée à destination
+                                                Arrivée
                                             </button>
                                         <?php } ?>
                                         <?php if ($covoiturage['statut_id'] == 3 || $covoiturage['statut_id'] == 4) { ?>
