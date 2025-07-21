@@ -7,6 +7,7 @@ use App\Repository\AvisRepository;
 use App\Repository\CovoiturageRepository;
 use App\Repository\Repository;
 use App\Security\CovoiturageValidator;
+use App\Security\Security;
 use DateTime;
 use Exception;
 
@@ -189,8 +190,8 @@ class PageController extends Controller
     {
         try {
             // On récupere les id passés dans l'url, et on les dechiffre
-            $passagerId = CovoiturageController::decryptUrlParameter($_GET['passagerId']);
-            $covoiturageId = CovoiturageController::decryptUrlParameter($_GET['covoiturageId']);
+            $passagerId = Security::decryptUrlParameter($_GET['passagerId']);
+            $covoiturageId = Security::decryptUrlParameter($_GET['covoiturageId']);
 
             // On appel le repository pour la classe Covoiturage
             $covoiturageRepository = new CovoiturageRepository;

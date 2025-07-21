@@ -107,7 +107,7 @@ class AdminController extends Controller
                 $mail = $user->getMail();
                 $password = $user->getPassword();
                 // Pour hasher le mot de passe
-                $userController->passwordHasher($user);
+                Security::passwordHasher($user);
                 // Pour valider s'il n'y a pas des erreurs dans le formulaire
                 $errors = $UserValidator->signUpEmployeValidate($user);
                 // S'il n'y a pas des erreurs, on crée l'utilisateur dans la base des données
