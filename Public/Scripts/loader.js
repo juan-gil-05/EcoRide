@@ -1,15 +1,26 @@
-const loader = document.getElementById("loader")
+// Quand le DOM est chargé
+document.addEventListener("DOMContentLoaded", () => {
+    // Pour récuperer le loader
+    const loader = document.getElementById("loader");
 
-function loaderPage() {
-    window.addEventListener("load", () => {
-        loader.classList.add("loader--hidden")
+    // Cacher le loader quand la page a chargée
+    loader.classList.add("loader--hidden");
 
-        loader.addEventListener("transitionend", () => {
-            if (loader && loader.parentNode === document.body) {
-                document.body.removeChild(loader)
+    // Pour afficher le loader quand on clique sur un lien
+    document.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", (e) => {
+            // Si le lien a l'attribut href, alors, on affiche le loader
+            const href = link.getAttribute("href");
+            if (href) {
+                loader.classList.remove("loader--hidden");
             }
-        })
-    })
-}
+        });
+    });
 
-loaderPage()
+    // Pour afficher le loader quand on envoie un formulaire
+    document.querySelectorAll("form").forEach(form => {
+        form.addEventListener("submit", () => {
+            loader.classList.remove("loader--hidden");
+        });
+    });
+});
