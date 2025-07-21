@@ -10,14 +10,6 @@ export default defineConfig([
     languageOptions: {
       globals: {
         ...globals.browser,
-        isConnected: "writable",
-        getRole: "writable",
-        showAndHideElementsForRoles: "writable",
-        apiUrl: "writable",
-        sanitizeHtml: "writable",
-        getInfosUser: "writable",
-        loaderPage: "writable",
-        getToken: "writable"
       }
     },
     rules: {
