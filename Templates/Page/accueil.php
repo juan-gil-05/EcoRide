@@ -23,7 +23,7 @@ require_once BASE_PATH . '/Templates/header.php';
             <!-- Icon -->
             <i class="bi bi-record-circle"></i>
             <input type="text" name="adresse_depart" id="" placeholder="Adresse de départ"
-              value="<?= $adresseDepart ?>"
+              value="<?= htmlspecialchars($adresseDepart) ?>"
               class="form-control content-text <?= (isset($errors['adresseDepartEmpty'])) ? "is-invalid" : "" ?>" />
             <!-- Si il y a des erreurs on affiche le message d'erreur -->
             <?php if (isset($errors['adresseDepartEmpty'])) { ?>
@@ -35,7 +35,7 @@ require_once BASE_PATH . '/Templates/header.php';
             <!-- Icon -->
             <i class="bi bi-geo-alt-fill"></i>
             <input type="text" name="adresse_arrivee" id="" placeholder="Adresse d’arrivée"
-              value="<?= $adresseArrivee ?>"
+              value="<?= htmlspecialchars($adresseArrivee) ?>"
               class="form-control content-text <?= (isset($errors['adresseArriveeEmpty'])) ? "is-invalid" : "" ?>" />
             <?php if (isset($errors['adresseArriveeEmpty'])) { ?>
               <div class="invalid-tooltip position-static small-text"><?= $errors['adresseArriveeEmpty'] ?></div>

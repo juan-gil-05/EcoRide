@@ -42,7 +42,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                 <div>
                     <label for="adresseDepart" class="form-label content-text">Adresse de départ:</label>
                     <input type="text" name="adresse_depart" id="adresseDepart"
-                        value="<?= $adresseDepart ?>"
+                        value="<?= htmlspecialchars($adresseDepart) ?>"
                         class="form-control content-text <?= (isset($errors['adresseDepartEmpty'])) ? "is-invalid" : "" ?>">
                     <!-- Si il y a des erreurs on affiche le message d'erreur -->
                     <?php if (isset($errors['adresseDepartEmpty'])) { ?>
@@ -53,7 +53,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                 <div>
                     <label for="adresseArrivee" class="form-label content-text">Adresse d'arrivée:</label>
                     <input type="text" name="adresse_arrivee" id="adresseArrivee"
-                        value="<?= $adresseArrivee ?>"
+                        value="<?= htmlspecialchars($adresseArrivee) ?>"
                         class="form-control content-text <?= (isset($errors['adresseArriveeEmpty'])) ? "is-invalid" : "" ?>">
                     <!-- Si il y a des erreurs on affiche le message d'erreur -->
                     <?php if (isset($errors['adresseArriveeEmpty'])) { ?>

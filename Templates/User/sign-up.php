@@ -18,7 +18,7 @@ require_once  BASE_PATH . '/Templates/header.php';
       <div class="form-floating">
         <input type="text" name="pseudo" class="form-control content-text
                 <?= (isset($errors['pseudoEmpty'])) ? "is-invalid" : "" ?>"
-          id="floatingInput" placeholder="juanes" value="<?= $pseudo ?>">
+          id="floatingInput" placeholder="juanes" value="<?= htmlspecialchars($pseudo) ?>">
         <label for="floatingPseudo" class="content-text">Pseudo</label>
         <!-- Si il y a des erreurs on affiche le message d'erreur -->
         <?php if (isset($errors['pseudoEmpty'])) { ?>
@@ -29,7 +29,7 @@ require_once  BASE_PATH . '/Templates/header.php';
       <div class="form-floating">
         <input type="email" class="form-control content-text
         <?= (isset($errors['mailEmpty'])) || (isset($errors['mailUsed'])) ? "is-invalid" : "" ?>"
-          id="floatingMail" name="mail" placeholder="name@example.com" value="<?= $mail ?>">
+          id="floatingMail" name="mail" placeholder="name@example.com" value="<?= htmlspecialchars($mail) ?>">
         <label for="floatingMail" class="content-text">Email address</label>
         <!-- Si il y a des erreurs on affiche le message d'erreur -->
         <?php if (isset($errors['mailEmpty'])) { ?>
@@ -43,7 +43,7 @@ require_once  BASE_PATH . '/Templates/header.php';
       <div class="form-floating">
         <input type="password" class="form-control content-text
         <?= (isset($errors['passwordEmpty'])) || (isset($errors['passwordLen'])) || (isset($errors['passwordInfo'])) ? "is-invalid" : "" ?>"
-          id="floatingPassword" name="password" placeholder="Password" value="<?= $password ?>">
+          id="floatingPassword" name="password" placeholder="Password" value="<?= htmlspecialchars($password) ?>">
         <label for="floatingPassword" class="content-text">Mot de passe</label>
         <!-- message et button pour afficher le mot de passe -->
         <div class="show-password">

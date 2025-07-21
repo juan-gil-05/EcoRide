@@ -62,7 +62,7 @@ class AuthController extends Controller
             $userValidator = new UserValidator;
             $voitureRepository = new VoitureRepository;
 
-            $mail = $_POST['mail'] ?? "";
+            $mail = htmlspecialchars($_POST['mail']) ?? "";
             $user = $userRepository->findOneByMail($mail);
             $userMail = $user ? $user->getMail() : $mail;
 

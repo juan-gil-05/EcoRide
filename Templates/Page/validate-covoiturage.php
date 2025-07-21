@@ -64,7 +64,7 @@ require_once  BASE_PATH . '/Templates/header.php';
             </div>
             <!-- Le titre de l'avis -->
             <div class="w-100 d-flex flex-column align-items-center">
-                <input type="text" name="titre" id="" class="form-control small-text" placeholder="Titre" value="<?= $avisTitle ?>">
+                <input type="text" name="titre" id="" class="form-control small-text" placeholder="Titre" value="<?= htmlspecialchars($avisTitle) ?>">
                 <!-- Erreur : si le passager veut laisser un avis, il doit mettre un titre -->
                 <?php if (isset($errors['avisTitleEmpty'])) { ?>
                     <div class="small-text mt-2">

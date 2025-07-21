@@ -18,7 +18,7 @@ require_once  BASE_PATH . '/Templates/header.php';
             <div>
                 <div class="car-form-div">
                     <label for="immatriculation" class="form-label content-text">Plaque d’immatriculation:</label>
-                    <input type="text" name="immatriculation" value="<?= $immatriculation ?>"
+                    <input type="text" name="immatriculation" value="<?= htmlspecialchars($immatriculation) ?>"
                         class="form-control content-text
                         <?= (isset($errors['immatriculationEmpty'])) || (isset($errors['immatriculationExists']))
                             || (isset($errors['immatriculationIncorrect'])) ? "is-invalid" : "" ?>" id="immatriculation">
@@ -52,7 +52,7 @@ require_once  BASE_PATH . '/Templates/header.php';
             <div>
                 <div class="car-form-div">
                     <label for="marque" class="form-label content-text">Marque:</label>
-                    <input type="text" name="marque" value="<?= $marque ?>"
+                    <input type="text" name="marque" value="<?= htmlspecialchars($marque) ?>"
                         class="form-control content-text<?= (isset($errors['marqueEmpty'])) ? "is-invalid" : "" ?>" id="marque">
                 </div>
                 <!-- Si il y a des erreurs on affiche le message d'erreur -->
@@ -64,7 +64,7 @@ require_once  BASE_PATH . '/Templates/header.php';
             <div>
                 <div class="car-form-div">
                     <label for="modele" class="form-label content-text">Modèle:</label>
-                    <input type="text" name="modele" value="<?= $modele ?>"
+                    <input type="text" name="modele" value="<?= htmlspecialchars($modele) ?>"
                         class="form-control content-text <?= (isset($errors['modeleEmpty'])) ? "is-invalid" : "" ?>" id="modele">
                 </div>
                 <!-- Si il y a des erreurs on affiche le message d'erreur -->
@@ -76,7 +76,7 @@ require_once  BASE_PATH . '/Templates/header.php';
             <div>
                 <div class="car-form-div">
                     <label for="couleur" class="form-label content-text">Couleur:</label>
-                    <input type="text" name="couleur" value="<?= $couleur ?>"
+                    <input type="text" name="couleur" value="<?= htmlspecialchars($couleur) ?>"
                         class="form-control content-text <?= (isset($errors['couleurEmpty'])) ? "is-invalid" : "" ?>" id="couleur">
                 </div>
                 <!-- Si il y a des erreurs on affiche le message d'erreur -->

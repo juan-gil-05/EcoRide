@@ -22,7 +22,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                             <!-- Pseudo -->
                             <div class="form-floating">
                                 <input type="text" name="pseudo" class="form-control small-text"
-                                    id="floatingInput" placeholder="juanes" value="<?= $employePseudoAccount ?>">
+                                    id="floatingInput" placeholder="juanes" value="<?= htmlspecialchars($employePseudoAccount) ?>">
                                 <label for="floatingPseudo" class="small-text">Pseudo</label>
                                 <!-- S'il y a des erreurs on affiche le message d'erreur -->
                                 <!-- Les messages sont chargés dynamiquement depuis le js -->
