@@ -36,6 +36,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <?php } ?>
 <!-- Import du propre JS-->
+<script src="../Scripts/loader.js"></script>
 <?php
 // Tableau avec les scripts js pour chaque page, dont l'action est la clé et les scripts les valeurs
 $scripts = [

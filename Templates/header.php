@@ -37,7 +37,9 @@ use App\Security\Security;
 <body>
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.min.js"></script>
-
+    <!-- Pour afficher le loader -->
+    <div class="loader" id="loader"></div>
+    
     <header>
         <!--Navbar du site-->
         <nav class="navbar navbar-expand-lg bg-light header">
