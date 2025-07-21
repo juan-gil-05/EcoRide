@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repository;
 
 use App\Entity\Energie;
@@ -15,7 +16,7 @@ class EnergieRepository extends Repository
         $energie = $query->fetch($this->pdo::FETCH_ASSOC);
 
         // Si on trouve une energie, alors, on hydrate la classe de l'energie avec celui trouvé
-        if($energie){
+        if ($energie) {
             return Energie::createAndHydrate($energie);
         } else {
             return false;

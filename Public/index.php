@@ -1,4 +1,5 @@
 <?php
+
 // Definition de un constante pour le path depuis l'index.php
 define('_ROOTPATH_', __DIR__);
 // Pour charger les namespaces
@@ -27,4 +28,4 @@ $controller = new Controller();
 $controller->route();
 
 // Fichier pour afficher les messages d'information à l'utilisateur
-require_once BASE_PATH.'/App/Tools/SweetAlerts.php';
+require_once BASE_PATH . '/App/Tools/SweetAlerts.php';

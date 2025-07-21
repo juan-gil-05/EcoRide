@@ -30,13 +30,12 @@ class PreferenceUserController extends Controller
                         throw new Exception("Cette action n'existe pas: " . $_GET['action']);
                         break;
                 }
-            }
-            // Si il n'y a pas une action dans l'url 
-            else {
+            } else {
+                // Si il n'y a pas une action dans l'url
                 throw new \Exception("Aucune action détectée");
             }
-        } // On return la page d'erreur s'il en existe un
-        catch (Exception $e) {
+        } catch (Exception $e) {
+            // On return la page d'erreur s'il en existe un
             $this->render("Errors/404", [
                 'error' => $e->getMessage()
             ]);
@@ -56,9 +55,9 @@ class PreferenceUserController extends Controller
         $user_id = $_SESSION['user']['id'];
 
         try {
-            $preference = new PreferenceUser;
-            $preferenceRepository = new PreferenceUserRepository;
-            $preferenceValidator = new PreferenceUserValidator;
+            $preference = new PreferenceUser();
+            $preferenceRepository = new PreferenceUserRepository();
+            $preferenceValidator = new PreferenceUserValidator();
             if (isset($_POST['prefInscriptionSmoker'])) {
                 $preference->hydrate($_POST);
                 // Pour la validation des erreurs
@@ -96,9 +95,9 @@ class PreferenceUserController extends Controller
         $user_id = $_SESSION['user']['id'];
 
         try {
-            $preference = new PreferenceUser;
-            $preferenceRepository = new PreferenceUserRepository;
-            $preferenceValidator = new PreferenceUserValidator;
+            $preference = new PreferenceUser();
+            $preferenceRepository = new PreferenceUserRepository();
+            $preferenceValidator = new PreferenceUserValidator();
 
             if (isset($_POST['prefInscriptionAnimal'])) {
                 $preference->hydrate($_POST);
@@ -135,16 +134,17 @@ class PreferenceUserController extends Controller
         $errors = [];
         // L'id de l'utilisateur
         $user_id = $_SESSION['user']['id'];
-        $preferenceRepository = new PreferenceUserRepository;
+        $preferenceRepository = new PreferenceUserRepository();
 
         // Pour enregistrer une nouvelle préférence personnelle
-        $personalPreference = new PreferenceUser;
+        $personalPreference = new PreferenceUser();
         if (isset($_POST['newPersonalPreference'])) {
             // On hydrate l'objet avec les données passées
             $personalPreference->hydrate($_POST);
-            // Pour la créer dans la base de données 
+            // Pour la créer dans la base de données
             $preferenceRepository->createPreference($personalPreference, $user_id);
-            // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+            // On crée cette session pour pouvoir afficher le message de succès,
+            // le message_code c'est pour l'icon de SweetAlert
             $_SESSION['message_to_User'] = "Préférence sauvegardée";
             $_SESSION['message_code'] = "success";
             // On envoi vers la page d'accueil

@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Repository\CovoiturageRepository;
-use DateTime;
 
 class ApiController extends Controller
 {
@@ -46,7 +45,7 @@ class ApiController extends Controller
     {
         // Si le boutton "Démarrer" est cliqué
         if (isset($_POST['startCovoiturage'])) {
-            $covoiturageRepository = new CovoiturageRepository;
+            $covoiturageRepository = new CovoiturageRepository();
             // On récupere l'id du covoiturage envoié dans le fetch
             $covoiturageId = (int) $_POST['covoiturage_id'];
 
@@ -62,12 +61,12 @@ class ApiController extends Controller
 
     // URL pour l'appeler : index.php?controller=api&action=stopCovoiturage
     // Fonction pour indiquer l'arrivée du covoiturage
-    public function stopCovoiturage() 
+    public function stopCovoiturage()
     {
         // Si le boutton "Démarrer" est cliqué
         if (isset($_POST['arriveCovoiturage'])) {
-            $covoiturageRepository = new CovoiturageRepository;
-            $covoiturageController = new CovoiturageController;
+            $covoiturageRepository = new CovoiturageRepository();
+            $covoiturageController = new CovoiturageController();
 
             // On récupere l'id du covoiturage envoié dans le fetch
             $covoiturageId = (int) $_POST['covoiturage_id'];
@@ -76,7 +75,8 @@ class ApiController extends Controller
             // 1 = Crée | 2 = Démarré | 3 = Arrivé | 4 = Validé | 5 = Annulé
             $covoiturageRepository->updateCovoiturageStatut($covoiturageId, 3);
 
-            // On appel la fonction pour envoyer un mail aux participants du covoiturage, afin de confirmer que le trajet s'est bien déroulé
+            // On appel la fonction pour envoyer un mail aux participants du covoiturage,
+            // afin de confirmer que le trajet s'est bien déroulé
             $covoiturageController->sendMailToValidateCovoiturage($covoiturageRepository, $covoiturageId);
 
             // Envoi de la réponse JSON pour la requête AJAX
@@ -84,7 +84,4 @@ class ApiController extends Controller
             exit;
         }
     }
-
-
-
 }

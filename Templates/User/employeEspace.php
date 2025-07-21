@@ -1,4 +1,5 @@
 <?php
+
 // HEADER
 use App\Security\Security;
 
@@ -108,12 +109,16 @@ require_once  BASE_PATH . '/Templates/header.php';
                     <!-- Pseudo du passager -->
                     <div class="d-flex gap-2">
                         <p class="fw-bold">Passager : </p>
-                        <span class="text-capitalize"><?= $passagerNameComments[$comment['commentaire_id']]['pseudo'] ?></span>
+                        <span class="text-capitalize">
+                            <?= $passagerNameComments[$comment['commentaire_id']]['pseudo'] ?>
+                        </span>
                     </div>
                     <!-- Pseudo du chauffeur -->
                     <div class="d-flex gap-2">
                         <p class="fw-bold">Conducteur : </p>
-                        <span class="text-capitalize"><?= $driverNameComments[$comment['commentaire_id']]['pseudo'] ?></span>
+                        <span class="text-capitalize">
+                            <?= $driverNameComments[$comment['commentaire_id']]['pseudo'] ?>
+                        </span>
                     </div>
                 </div>
                 <!-- Le titre du commentaire  -->
@@ -129,18 +134,23 @@ require_once  BASE_PATH . '/Templates/header.php';
                 <!-- Le bouton d'action : (Voir le descriptif) -->
                 <div class="mt-4 comments-btn">
                     <!-- Button pour ouvir la modal -->
-                    <button class="btn btn-warning secondary-btn small-text" data-bs-toggle="modal" data-bs-target="#descriptionModal<?= $comment['commentaire_id'] ?>">
+                    <button class="btn btn-warning secondary-btn small-text"
+                        data-bs-toggle="modal" data-bs-target="#descriptionModal<?= $comment['commentaire_id'] ?>">
                         Descriptif du trajet
                     </button>
                 </div>
 
                 <!-- Modal avec le decriptif du covoiturage -->
-                <div class="modal fade covoiturage-description-modal" id="descriptionModal<?= $comment['commentaire_id'] ?>" tabindex="-1" aria-labelledby="descriptionLabel" aria-hidden="true">
+                <div class="modal fade covoiturage-description-modal"
+                    id="descriptionModal<?= $comment['commentaire_id'] ?>"
+                    tabindex="-1" aria-labelledby="descriptionLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h2 class="subtitle-text mb-0" id="descriptionLabel">Descriptif du covoiturage</h2>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close"
+                                    data-bs-dismiss="modal" aria-label="Close">
+                                </button>
                             </div>
                             <div class="modal-body">
                                 <!-- Les pseudos et mails du passager et du chauffeur -->
@@ -148,7 +158,8 @@ require_once  BASE_PATH . '/Templates/header.php';
                                     <!-- Pseudo et Mail du passager -->
                                     <div class="d-flex flex-column gap-2">
                                         <p class="fw-bold mb-0">Passager :
-                                            <span class="text-capitalize fw-normal"><?= $passagerNameComments[$comment['commentaire_id']]['pseudo'] ?>
+                                            <span class="text-capitalize fw-normal">
+                                                <?= $passagerNameComments[$comment['commentaire_id']]['pseudo'] ?>
                                             </span>
                                         </p>
                                         <p class="fw-bold">Mail :
@@ -159,7 +170,8 @@ require_once  BASE_PATH . '/Templates/header.php';
                                     <!-- Pseudo et Mail du chauffeur -->
                                     <div class="d-flex flex-column gap-2">
                                         <p class="fw-bold mb-0">Conducteur :
-                                            <span class="text-capitalize fw-normal"><?= $driverNameComments[$comment['commentaire_id']]['pseudo'] ?>
+                                            <span class="text-capitalize fw-normal">
+                                                <?= $driverNameComments[$comment['commentaire_id']]['pseudo'] ?>
                                             </span>
                                         </p>
                                         <p class="fw-bold">Mail :
@@ -172,8 +184,18 @@ require_once  BASE_PATH . '/Templates/header.php';
                                 <!-- Dscriptif du trajet -->
                                 <ul class="covoiturage-description-list">
                                     <li>Numero du covoiturage : <span> <?= $comment['covoiturage_id'] ?> </span></li>
-                                    <li>Adresse et date de départ : <span class="text-capitalize"> <?= $comment['adresse_depart'] ?></span> - <span><?= $dateDepartFormatted[$comment['commentaire_id']] ?></span></li>
-                                    <li>Adresse et date d'arrivée : <span class="text-capitalize"> <?= $comment['adresse_arrivee'] ?></span> - <span><?= $dateArriveeFormatted[$comment['commentaire_id']] ?></span></li>
+                                    <li>Adresse et date de départ :
+                                        <span class="text-capitalize"> <?= $comment['adresse_depart'] ?>
+                                        </span> -
+                                        <span><?= $dateDepartFormatted[$comment['commentaire_id']] ?>
+                                        </span>
+                                    </li>
+                                    <li>Adresse et date d'arrivée :
+                                        <span class="text-capitalize"> <?= $comment['adresse_arrivee'] ?>
+                                        </span> -
+                                        <span><?= $dateArriveeFormatted[$comment['commentaire_id']] ?>
+                                        </span>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

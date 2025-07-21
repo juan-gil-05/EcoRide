@@ -18,7 +18,8 @@
              window.location.href = window.location.pathname + window.location.search;
          })
      </script>
- <?php
+     <?php
         // Après d'avoir afficher le message, on supprime la session
         unset($_SESSION['message_to_User']);
-    } ?>
+ }
+    ?>

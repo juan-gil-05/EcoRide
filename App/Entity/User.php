@@ -14,7 +14,6 @@ class User extends Entity
     protected ?string $photo = "";
     protected ?string $photo_uniqId = "";
     protected ?string $role_id = "";
-    
     /**
      * Get the value of id
      */

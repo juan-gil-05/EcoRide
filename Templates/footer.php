@@ -21,7 +21,10 @@
 </footer>
 
 <!--Import du JS du Bootstrap-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+    crossorigin="anonymous">
+</script>
 <!-- Import du JS pour la librairie DataTable -->
 <?php if (isset($_GET['action']) && $_GET['action'] == 'adminEspace') { ?>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -48,9 +51,9 @@ $scripts = [
     'adminEspace' => ['showPassword.js', 'adminEspace.js'],
     'adminGraphs' => ['adminGraphs.js']
 ];
-// Pour récupérer l'action dans l'url 
+// Pour récupérer l'action dans l'url
 $currentAction = $_GET['action'] ?? '';
-// Si l'action est dans le tableau, alors, 
+// Si l'action est dans le tableau, alors,
 // on parcours le tableau et on crée une balise script pour chaque script de l'action
 if (isset($scripts[$currentAction])) {
     foreach ($scripts[$currentAction] as $script) {

@@ -1,4 +1,5 @@
 <?php
+
 // Class pour faire la connexion avec la BDD
 
 namespace App\Db;
@@ -14,7 +15,7 @@ class Mysql
     private $db_port;
     private $db_host;
     private $pdo = null;
-    private static $_instance = null;
+    private static $instance = null;
 
     public function __construct()
     {
@@ -31,17 +32,16 @@ class Mysql
     // SINGLETON pour instancier la class Mysql une seule fois
     public static function getInstance(): self
     {
-        if (is_null(self::$_instance)) {
-            self::$_instance = new Mysql();
+        if (is_null(self::$instance)) {
+            self::$instance = new Mysql();
         }
-        return self::$_instance;
+        return self::$instance;
     }
 
     // Ajout des params à la propipriété pdo et connexion a la BDD via Objet PDO
     public function getPdo(): PDO
     {
         try {
-
             $host = $this->db_host;
             $db_name = $this->db_name;
             $db_port = $this->db_port;

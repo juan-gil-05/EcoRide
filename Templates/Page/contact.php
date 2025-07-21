@@ -20,13 +20,15 @@ require_once  BASE_PATH . '/Templates/header.php';
                 <!-- Email -->
                 <div class="content-text">
                     <label for="email" class="form-labe">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" placeholder="juanito@gmail.com" required>
+                    <input type="email" name="email" id="email" class="form-control"
+                        placeholder="juanito@gmail.com" required>
                 </div>
             </div>
             <!-- Message -->
             <div class="content-text">
                 <label for="message" class="form-labe">Message</label>
-                <textarea name="message" id="message" class="form-control" placeholder="Votre message" required></textarea>
+                <textarea name="message" id="message" class="form-control"
+                    placeholder="Votre message" required></textarea>
             </div>
             <!-- Bouton pour envoyer le formulaire -->
             <button type="submit" class="btn btn-warning secondary-btn">Envoyer</button>

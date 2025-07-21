@@ -42,7 +42,11 @@ require_once  BASE_PATH . '/Templates/header.php';
       <!-- Mot de passe -->
       <div class="form-floating">
         <input type="password" class="form-control content-text
-        <?= (isset($errors['passwordEmpty'])) || (isset($errors['passwordLen'])) || (isset($errors['passwordInfo'])) ? "is-invalid" : "" ?>"
+        <?=
+        (isset($errors['passwordEmpty'])) || (isset($errors['passwordLen'])) || (isset($errors['passwordInfo']))
+          ? "is-invalid"
+          : ""
+        ?>"
           id="floatingPassword" name="password" placeholder="Password" value="<?= htmlspecialchars($password) ?>">
         <label for="floatingPassword" class="content-text">Mot de passe</label>
         <!-- message et button pour afficher le mot de passe -->
@@ -52,13 +56,19 @@ require_once  BASE_PATH . '/Templates/header.php';
         </div>
         <!-- Si il y a des erreurs on affiche le message d'erreur -->
         <?php if (isset($errors['passwordEmpty'])) { ?>
-          <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text"><?= $errors['passwordEmpty'] ?></div>
+          <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text">
+            <?= $errors['passwordEmpty'] ?>
+          </div>
           <!-- Si le mot de passe a moins de 12 caractères   -->
         <?php } elseif (isset($errors['passwordLen'])) { ?>
-          <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text"><?= $errors['passwordLen'] ?></div>
+          <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text">
+            <?= $errors['passwordLen'] ?>
+          </div>
           <!-- si le mot de passe ne respecte pas les requis d'une mot de passe secure -->
         <?php } elseif (isset($errors['passwordInfo'])) { ?>
-          <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text"><?= $errors['passwordInfo'] ?></div>
+          <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text">
+            <?= $errors['passwordInfo'] ?>
+          </div>
         <?php } ?>
 
       </div>
@@ -105,7 +115,9 @@ require_once  BASE_PATH . '/Templates/header.php';
 
     <!-- Button pour créer le compte -->
     <div class="d-flex justify-content-center mt-4">
-      <button class="btn btn-warning text-dark w-50 py-3 mt-3 content-text fw-medium" name="signUp" type="submit">Se registrer</button>
+      <button class="btn btn-warning text-dark w-50 py-3 mt-3 content-text fw-medium"
+        name="signUp" type="submit">Se registrer
+      </button>
     </div>
     <!-- Lien si l'utilisateru a déjà un compte -->
     <div class="d-flex justify-content-center mt-5 lien content-text mb-5">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Security\Security;
+
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +27,7 @@ use App\Security\Security;
     <!-- Import les Bootstrap icons avec CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <!--Import des styles-->
-    <link rel="stylesheet" href="/Styles/main.css"/>
+    <link rel="stylesheet" href="/Styles/main.css" />
     <!-- SweetAlert2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.min.css" rel="stylesheet">
 
@@ -71,7 +72,10 @@ use App\Security\Security;
                         <!-- On verifie si l'utilisateur est connecté ou pas pour afficher le message indicat -->
                         <li class="nav-item">
                             <?php if (Security::islogged()) { ?>
-                                <a class="nav-link" href="?controller=user&action=profil">Mon profil<i class="ms-2 bi bi-person-circle"></i></a>
+                                <a class="nav-link" href="?controller=user&action=profil">
+                                    Mon profil
+                                    <i class="ms-2 bi bi-person-circle"></i>
+                                </a>
                             <?php } else { ?>
                                 <a class="nav-link" href="?controller=auth&action=logIn">Se connecter</a>
                             <?php } ?>

@@ -43,13 +43,12 @@ class CovoiturageController extends Controller
                         throw new Exception("Cette action n'existe pas: " . $_GET['action']);
                         break;
                 }
-            }
-            // Si il n'y a pas des action dans l'url 
-            else {
+            } else {
+                // Si il n'y a pas des action dans l'url
                 throw new \Exception("Aucune action détectée");
             }
-        } // On return la page d'erreur s'il en existe un
-        catch (Exception $e) {
+        } catch (Exception $e) {
+            // On return la page d'erreur s'il en existe un
             $this->render("Errors/404", [
                 'error' => $e->getMessage()
             ]);
@@ -63,12 +62,12 @@ class CovoiturageController extends Controller
     // Fonction pour afficher tous les covoiturages
     protected function allCovoiturages()
     {
-        // On récupére les données envoyées dans la session depuis la page d'accueil 
+        // On récupére les données envoyées dans la session depuis la page d'accueil
         // S'il n'y a pas, on laisse un tableau vide
         $covoiturages = $_SESSION['covoiturages'] ?? [];
-        $covoiturageRepository = new CovoiturageRepository;
-        $userRepository = new UserRepository;
-        $avisRepository = new AvisRepository;
+        $covoiturageRepository = new CovoiturageRepository();
+        $userRepository = new UserRepository();
+        $avisRepository = new AvisRepository();
 
         // Variables que l'on va utiliser dans la vue
         $adresseDepart = "";
@@ -86,30 +85,32 @@ class CovoiturageController extends Controller
 
                 // Pour récupérer l'id de chaque covoiturage
                 $covoiturageId = $covoiturage['id'];
-                // Pour crypter l'id du covoiturage avant de l'envoyer dans l'url, afin d'afficher les détails de chaque covoiturage 
+                // Pour crypter l'id du covoiturage avant de l'envoyer dans l'url,
+                // afin d'afficher les détails de chaque covoiturage
                 $covoiturageEncryptId[$covoiturage['id']] =  Security::encryptUrlParameter($covoiturage['id']);
 
-                // Pour récupérer la note du chauffeur 
+                // Pour récupérer la note du chauffeur
                 $driverNote[$covoiturageId] = $userRepository->findDriverNote($covoiturage['driver_id']);
 
-                // Fonction du repository pour récupérer les covoiturages avec ses énergies utilisées, (Électrique, Diesel, .....)
+                // Fonction du repository pour récupérer les covoiturages avec ses énergies utilisées,
+                // (Électrique, Diesel, .....)
                 $energies = $covoiturageRepository->searchCovoiturageDetailsbyId($covoiturageId);
-                // foreach pour parcourir les résultats 
+                // foreach pour parcourir les résultats
                 foreach ($energies as $energie) {
-                    // Array qui contient pour l'id de chaque covoiturage les données trouvées 
+                    // Array qui contient pour l'id de chaque covoiturage les données trouvées
                     $energieByCovoiturageId[$covoiturage['id']] = $energie;
                 }
 
                 // Fonction du repository pour récupérer les covoiturages avec ses chauffeurs
                 $driversInfo = $covoiturageRepository->searchCovoiturageDetailsbyId($covoiturageId);
-                // foreach pour parcourir les résultats 
+                // foreach pour parcourir les résultats
                 foreach ($driversInfo as $driverInfo) {
-                    // Array qui contient pour l'id de chaque covoiturage les données trouvées 
+                    // Array qui contient pour l'id de chaque covoiturage les données trouvées
                     $driversByCovoiturageId[$covoiturage['id']] = $driverInfo;
                 }
             }
 
-            // Si l'utilisateur applique des filtres à la recherche 
+            // Si l'utilisateur applique des filtres à la recherche
             if (isset($_POST['filter'])) {
                 // Pour convertir la date en objet DateTime
                 $dateDepart = new DateTime($covoiturage['date_heure_depart']);
@@ -117,7 +118,8 @@ class CovoiturageController extends Controller
                 $dateDepartFormated = $dateDepart->format("Y-m-d");
                 // Le prix maximal donné
                 $maxPrice = ($_POST['maxPrice']) ? $_POST['maxPrice'] : null;
-                // Si c'est écologique ou pas. 1 puisque les covoiturages écologiques utilisent des voitures avec l'énergie id 1 = éléctrique
+                // Si c'est écologique ou pas.
+                // 1 puisque les covoiturages écologiques utilisent des voitures avec l'énergie id 1 = éléctrique
                 $ecologique = (isset($_POST['ecologique'])) ? 1 : null;
                 // Pour la durée maximum du voyage
                 $maxDuration = (!empty($_POST['maxDuration'])) ? $_POST['maxDuration'] : null;
@@ -142,13 +144,16 @@ class CovoiturageController extends Controller
                 );
 
 
-                // Les nouveaux valeurs de la variable $covoiturages seront les covoiturages trouvés après appliqué les filtres
-                // Si on applique le filtre de la note minimal, alors -> on filtre les tableau pour avoir uniquement les covoiturages
-                //  dont la note de chauffeur est majeur ou égale a celle donée 
-                // Sinon, on envoie le resultat des covoiturages après le filtre
-                $covoiturages = ($_POST['note']) ? array_filter($covoituragesAfterFilter, function ($covoit) use ($driverMinimalNote) {
-                    return in_array($covoit['driver_id'], $driverMinimalNote);
-                }) : $covoituragesAfterFilter;
+                /* Les nouveaux valeurs de la variable $covoiturages seront les covoiturages
+                   trouvés après appliqué les filtres
+                   Si on applique le filtre de la note minimal,
+                   alors -> on filtre les tableau pour avoir uniquement les covoiturages
+                   dont la note de chauffeur est majeur ou égale a celle donée
+                   Sinon, on envoie le resultat des covoiturages après le filtre */
+                $covoiturages = ($_POST['note']) ?
+                    array_filter($covoituragesAfterFilter, function ($covoit) use ($driverMinimalNote) {
+                        return in_array($covoit['driver_id'], $driverMinimalNote);
+                    }) : $covoituragesAfterFilter;
                 // On parcourt le tableau pour récuperer chaque covoiturage trouvé
                 foreach ($covoituragesAfterFilter as $covoiturageAfterFilter) {
                     $covoiturage = $covoiturageAfterFilter;
@@ -186,16 +191,16 @@ class CovoiturageController extends Controller
     protected function oneCovoiturage()
     {
         // Appel des repositories
-        $covoiturageRepository = new CovoiturageRepository;
-        $preferenceUserRepository = new PreferenceUserRepository;
-        $userRepository = new UserRepository;
-        $avisRepository = new AvisRepository;
+        $covoiturageRepository = new CovoiturageRepository();
+        $preferenceUserRepository = new PreferenceUserRepository();
+        $userRepository = new UserRepository();
+        $avisRepository = new AvisRepository();
 
         // Initialisation des variables
         $driverNote = null;
         $passagerPseudo = [];
 
-        // On récupére l'id du covoiturage passée dans l'url et on le décrypte 
+        // On récupére l'id du covoiturage passée dans l'url et on le décrypte
         $covoiturageId = Security::decryptUrlParameter($_GET['id']);
 
         // Pour récupérer les détailles du covoiturage
@@ -212,7 +217,7 @@ class CovoiturageController extends Controller
 
         // L'id du chauffeur
         $driverId = $covoiturageDetail['user_id'];
-        // Pour récupérer la note du chauffeur 
+        // Pour récupérer la note du chauffeur
         $driverNote = $userRepository->findDriverNote($driverId);
         // Pour récupérer les avis du chauffeur
         $allDriverAvis = $avisRepository->findAllAvisByDriverId($driverId);
@@ -237,7 +242,11 @@ class CovoiturageController extends Controller
         $preferencesPersonnelles = array_map(fn($pref) => $pref['personnelle'], $driverPreferences);
 
         // Fonction pour participer au covoiturage
-        $participateToCovoiturage = $this->participateToCovoiturage($covoiturageDetail, $covoiturageRepository, $userRepository);
+        $participateToCovoiturage = $this->participateToCovoiturage(
+            $covoiturageDetail,
+            $covoiturageRepository,
+            $userRepository
+        );
 
 
         $this->render(
@@ -282,7 +291,7 @@ class CovoiturageController extends Controller
         // Si l'utilisateur est connecté
         if (Security::isLogged()) {
             // Appel du repository
-            $covoiturageRepository = new CovoiturageRepository;
+            $covoiturageRepository = new CovoiturageRepository();
 
             // Initialisation des variables
             $covoiturageEncryptId = null;
@@ -298,7 +307,8 @@ class CovoiturageController extends Controller
             foreach ($covoituragesAsDriver as $covoiturage) {
                 // Pour récupérer l'id de chaque covoiturage
                 $covoiturageId = $covoiturage['id'];
-                // Pour crypter l'id du covoiturage avant de l'envoyer dans l'url pour afficher les détails de chaque covoiturage 
+                // Pour crypter l'id du covoiturage avant de l'envoyer
+                // dans l'url pour afficher les détails de chaque covoiturage
                 $covoiturageEncryptId[$covoiturageId] =  Security::encryptUrlParameter($covoiturageId);
                 // on appel la fonction qui formate les dates des covoiturages
                 $dateTimeCovoiturage = $this->dateTimeCovoiturage($covoiturage);
@@ -314,7 +324,8 @@ class CovoiturageController extends Controller
             foreach ($covoiturageaAsPassager as $covoiturage) {
                 // Pour récupérer l'id de chaque covoiturage
                 $covoiturageId = $covoiturage['id'];
-                // Pour crypter l'id du covoiturage avant de l'envoyer dans l'url pour afficher les détails de chaque covoiturage 
+                // Pour crypter l'id du covoiturage avant de l'envoyer
+                // dans l'url pour afficher les détails de chaque covoiturage
                 $covoiturageEncryptId[$covoiturageId] =  Security::encryptUrlParameter($covoiturageId);
                 // on appel la fonction qui formate les dates des covoiturages
                 $dateTimeCovoiturage = $this->dateTimeCovoiturage($covoiturage);
@@ -340,8 +351,8 @@ class CovoiturageController extends Controller
                     "monthName" => $monthName,
                 ]
             );
-        } // Sinon on envoie à la page de connexion
-        else {
+        } else {
+            // Sinon on envoie à la page de connexion
             header('Location: ?controller=auth&action=logIn');
         }
     }
@@ -357,10 +368,10 @@ class CovoiturageController extends Controller
         if (Security::isLogged()) {
             // Tableau des erreurs
             $errors = [];
-            $covoiturage = new Covoiturage;
-            $covoiturageRepository = new CovoiturageRepository;
-            $covoiturageValidator = new CovoiturageValidator;
-            $voitureRepository = new VoitureRepository;
+            $covoiturage = new Covoiturage();
+            $covoiturageRepository = new CovoiturageRepository();
+            $covoiturageValidator = new CovoiturageValidator();
+            $voitureRepository = new VoitureRepository();
 
             // L'id de l'utilsateur
             $user_id = $_SESSION['user']['id'];
@@ -375,7 +386,8 @@ class CovoiturageController extends Controller
             $prix = "";
 
             try {
-                // Si on evoi le formulaire, alors, on hydrate l'objet Covoiturage avec les données passées 
+                // Si on evoi le formulaire, alors,
+                // on hydrate l'objet Covoiturage avec les données passées
                 if (isset($_POST['createCovoiturage'])) {
                     $covoiturage->hydrate($_POST);
                     // On récupere les données passées dans le formulaire
@@ -390,10 +402,11 @@ class CovoiturageController extends Controller
                     // S'il n'y a pas des erreurs, on crée le covoiturage dans la base des données
                     if (empty($errors)) {
                         $covoiturageRepository->createCovoiturage($covoiturage);
-                        // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+                        // On crée cette session pour pouvoir afficher le message de succès,
+                        // le message_code c'est pour l'icon de SweetAlert
                         $_SESSION['message_to_User'] = "Covoiturage ajouté avec succès";
                         $_SESSION['message_code'] = "success";
-                        // On envoi vers la page de mes covoiturages 
+                        // On envoi vers la page de mes covoiturages
                         header('Location: ?controller=covoiturages&action=mesCovoiturages');
                         exit();
                     }
@@ -415,8 +428,8 @@ class CovoiturageController extends Controller
             } catch (Exception $e) {
                 $this->render("Errors/404", ["error" => $e->getMessage()]);
             }
-        } // Sinon on envoie à la page de connexion
-        else {
+        } else {
+            // Sinon on envoie à la page de connexion
             header('Location: ?controller=auth&action=logIn');
         }
     }
@@ -458,7 +471,7 @@ class CovoiturageController extends Controller
             ];
         // Pour récupérer le nom du jour en francais
         $dayName = $weekDayFrench[$dateTimeDepart->format('l')];
-        // Pour récupérer le nombre du jour 
+        // Pour récupérer le nombre du jour
         $dayNumber = $dateTimeDepart->format('d');
         // Pour récupérer le nom du mois en francais
         $monthName = $monthNameFrench[$dateTimeDepart->format('F')];
@@ -502,8 +515,11 @@ class CovoiturageController extends Controller
     }
 
     // Fonction pour participer au covoiturage
-    protected function participateToCovoiturage(array $covoiturageDetail, CovoiturageRepository $covoiturageRepository, UserRepository $userRepository): array
-    {
+    protected function participateToCovoiturage(
+        array $covoiturageDetail,
+        CovoiturageRepository $covoiturageRepository,
+        UserRepository $userRepository
+    ): array {
         // Si l'utilisateur est connecté, on peut participer au covoiturage
         if (Security::isLogged()) {
             // Variable pour savoir si l'utilisateur est connecté ou pas
@@ -514,7 +530,7 @@ class CovoiturageController extends Controller
             $noEnoughCredits = false;
             // Variable pour afficher le modal avec la confirmation de participation au covoiturage
             $doubleConfirmation = false;
-            // Variable pour savoir si l'utilisateur est le chauffeur du covoiturage  
+            // Variable pour savoir si l'utilisateur est le chauffeur du covoiturage
             $isDriverInCovoiturage = false;
 
             // Les places disponibles dans le covoiturage
@@ -537,14 +553,14 @@ class CovoiturageController extends Controller
             // Si l'user n'est pas connecté, on change la variable pour passer l'info à la vue
             if (!Security::isLogged()) {
                 $isNotLogged = true;
-            } // Si l'utilisateur est le chauffeur du covoiturage
-            elseif (in_array($userId, $covoiturageDetail)) {
+            } elseif (in_array($userId, $covoiturageDetail)) {
+                // Si l'utilisateur est le chauffeur du covoiturage
                 $isDriverInCovoiturage = true;
-            } // S'il n'y a pas des places disponibles, on change la variable pour passer l'info à la vue
-            elseif ($disponiblePlaces == 0) {
+            } elseif ($disponiblePlaces == 0) {
+                // S'il n'y a pas des places disponibles, on change la variable pour passer l'info à la vue
                 $noDisponiblePlaces = true;
-            } // Si l'utilisateur ne possède pas assez des crédits pour participer au covoiturage  
-            elseif ($userCredits < $covoituragePrice) {
+            } elseif ($userCredits < $covoituragePrice) {
+                // Si l'utilisateur ne possède pas assez des crédits pour participer au covoiturage
                 $noEnoughCredits = true;
             }
 
@@ -559,8 +575,9 @@ class CovoiturageController extends Controller
                 $doubleConfirmation = true;
                 // Si l'utilisateur confirme sa participation au covoiturage
                 if (isset($_POST['participate'])) {
-                    // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
-                    $_SESSION['message_to_User'] = ' Votre participation au covoiturage a été enregistrée avec succès !';
+                    // On crée cette session pour pouvoir afficher le message de succès,
+                    // le message_code c'est pour l'icon de SweetAlert
+                    $_SESSION['message_to_User'] = 'Votre participation au covoiturage a été enregistrée avec succès !';
                     $_SESSION['message_code'] = "success";
 
                     // On appele la fonction du repository pour enregistrer les données dans la BDD
@@ -602,7 +619,7 @@ class CovoiturageController extends Controller
     public function leaveCovoiturage()
     {
         // Appel du repository
-        $covoiturageRepository = new CovoiturageRepository;
+        $covoiturageRepository = new CovoiturageRepository();
 
         if (isset($_POST['quitCovoiturageAsPassager'])) {
             // L'id du covoiturage et de l'utilisateur
@@ -619,7 +636,8 @@ class CovoiturageController extends Controller
             // Pour mettre à jour les crédits de l'utilisateur
             $covoiturageRepository->updateUserCredits($covoituragePrice, $userId, true);
 
-            // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+            // On crée cette session pour pouvoir afficher le message de succès,
+            // le message_code c'est pour l'icon de SweetAlert
             $_SESSION['message_to_User'] = "Votre participation à ce covoiturage a été annulée.";
             $_SESSION['message_code'] = "success";
         }
@@ -629,7 +647,7 @@ class CovoiturageController extends Controller
     public function deleteCovoiturage()
     {
         // Appel du repository
-        $covoiturageRepository = new CovoiturageRepository;
+        $covoiturageRepository = new CovoiturageRepository();
 
         // Le sujet et le modèle du mail
         $mailSubject = 'Annulation de votre covoiturage';
@@ -677,13 +695,15 @@ class CovoiturageController extends Controller
             // Fonction pour supprimer le covoiturage dans la base des données
             $covoiturageRepository->deleteCovoiturageAsDriver($covoiturageId);
 
-            // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+            // On crée cette session pour pouvoir afficher le message de succès,
+            // le message_code c'est pour l'icon de SweetAlert
             $_SESSION['message_to_User'] = "Covoiturage annulé. Les participants ont été informés par e-mail.";
             $_SESSION['message_code'] = "info";
         }
     }
 
-    // Fonction pour envoyer un mail aux participants du covoiturage quand le chauffeur indique que le covoiturage est terminé
+    // Fonction pour envoyer un mail aux participants du covoiturage quand
+    // le chauffeur indique que le covoiturage est terminé
     public function sendMailToValidateCovoiturage(CovoiturageRepository $covoiturageRepository, int $covoiturageId)
     {
         // Le sujet et le modèle du mail
@@ -696,7 +716,8 @@ class CovoiturageController extends Controller
             // Les date du covoiturage
             $covoiturageDateDepart = new DateTime($covoiturage['date_heure_depart']);
             // l'id du covoiturage chiffré
-            $covoiturageEncryptId[$covoiturage['covoiturage_id']] = Security::encryptUrlParameter($covoiturage['covoiturage_id']);
+            $covoiturageEncryptId[$covoiturage['covoiturage_id']] =
+                Security::encryptUrlParameter($covoiturage['covoiturage_id']);
         }
 
         // Pour récupérer les participants du covoiturage
@@ -704,11 +725,13 @@ class CovoiturageController extends Controller
         foreach ($participants as $passager) {
             // Mail, pseudo des passagers et du chauffeur
             $passagerPseudo = ucfirst($passager['passager_pseudo']);
-            $passagerEncryptId[$passager['passager_id']] =  Security::encryptUrlParameter($passager['passager_id']); // Id chiffré du passager
+            $passagerEncryptId[$passager['passager_id']] =
+                Security::encryptUrlParameter($passager['passager_id']); // Id chiffré du passager
             $passagerMail = $passager['passager_mail'];
             $driverPseudo = ucfirst($passager['driver_pseudo']); // Pseudo du chauffeur
             // On crée le lien vers le site pour valider le covoiturage, avec les id chiffrés
-            $linkToSite = "https://ecoride.juangil.fr/index.php?controller=page&action=validateCovoiturage&passagerId=" .
+            $linkToSite =
+                "https://ecoride.juangil.fr/index.php?controller=page&action=validateCovoiturage&passagerId=" .
                 $passagerEncryptId[$passager['passager_id']] .
                 "&covoiturageId=" . $covoiturageEncryptId[$covoiturage['covoiturage_id']];
 
@@ -724,8 +747,10 @@ class CovoiturageController extends Controller
             SendMail::sendMailToPassagers($passagerMail, $mailSubject, $mailBody, $mailParams);
         }
 
-        // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
-        $_SESSION['message_to_User'] = "Un email a été envoyé à tous les participants pour confirmer que le trajet s’est bien déroulé.<br>Leur retour permettra de valider définitivement votre covoiturage.";
+        // On crée cette session pour pouvoir afficher le message de succès,
+        // le message_code c'est pour l'icon de SweetAlert
+        $_SESSION['message_to_User'] = "Un email a été envoyé à tous les participants pour confirmer " .
+            "que le trajet s’est bien déroulé.<br>Leur retour permettra de valider définitivement votre covoiturage.";
         $_SESSION['message_code'] = "success";
     }
 }

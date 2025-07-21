@@ -6,7 +6,6 @@ use App\Entity\Covoiturage;
 
 class CovoiturageValidator
 {
-
     public function createCovoiturageValidate(Covoiturage $covoiturage): array
     {
         // Tableau d'erreurs
@@ -50,21 +49,21 @@ class CovoiturageValidator
         return $errors;
     }
 
-    public function searchCovoiturageValidate(string $dateDepart, string $adresseDepart, string $adresseArrivee) : array 
+    public function searchCovoiturageValidate(string $dateDepart, string $adresseDepart, string $adresseArrivee): array
     {
         // Tableau d'erreurs
         $errors = [];
 
         // Si le champ est vide
-        if(empty($dateDepart)){
+        if (empty($dateDepart)) {
             $errors['dateDepartEmpty'] = "Vous debez choisir une date de départ";
         }
         // Si le champ est vide
-        if(empty($adresseDepart)){
+        if (empty($adresseDepart)) {
             $errors['adresseDepartEmpty'] = "Vous debez choisir une adresse de départ";
         }
         // Si le champ est vide
-        if(empty($adresseArrivee)){
+        if (empty($adresseArrivee)) {
             $errors['adresseArriveeEmpty'] = "Vous debez choisir une adresse d'arrivée";
         }
 
@@ -76,18 +75,16 @@ class CovoiturageValidator
         // Tableau d'erreurs
         $errors = [];
 
-        if(empty($avisTitle)){
+        if (empty($avisTitle)) {
             $errors['avisTitleEmpty'] = "Vous devez choisir un titre";
         }
-        if(empty($avisDescription)){
+        if (empty($avisDescription)) {
             $errors['avisDescriptionEmpty'] = "Vous devez choisir une description";
         }
-        if(empty($avisNote)){
+        if (empty($avisNote)) {
             $errors['avisNoteEmpty'] = "Pour laisser un avis, vous devez choisir une note";
         }
 
         return $errors;
     }
-
-
 }

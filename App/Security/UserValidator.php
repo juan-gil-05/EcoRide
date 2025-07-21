@@ -12,10 +12,10 @@ class UserValidator
     {
         // Tableau d'erreurs
         $errors = [];
-        // Variable de l'utilisateur passé dans le formulaire 
+        // Variable de l'utilisateur passé dans le formulaire
         $user = $userHydrate;
         // Appel de la classe avec les requêtes SQL
-        $userRepository = new UserRepository;
+        $userRepository = new UserRepository();
         // Expresión regular pour la verification du mot de passe sécurisé
         $regex = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{12,}$/';
 
@@ -29,7 +29,8 @@ class UserValidator
             $errors['mailEmpty'] = "Le champ mail ne doit pas être vide";
         } elseif (!filter_var($user->getMail(), FILTER_VALIDATE_EMAIL)) { // Si le mail n'est pas un mail valide
             $errors['mail'] = "Le mail n\'est pas valide";
-        } elseif ($userRepository->findOneByMail($user->getMail())) { // Si le mail est déjà enregistrer dans la base de données
+        } elseif ($userRepository->findOneByMail($user->getMail())) {
+            // Si le mail est déjà enregistrer dans la base de données
             $errors['mailUsed'] = "Le e-mail est déjà utilisé";
         }
 
@@ -58,10 +59,10 @@ class UserValidator
     {
         // Tableau d'erreurs
         $errors = [];
-        // Variable de l'utilisateur passé dans le formulaire 
+        // Variable de l'utilisateur passé dans le formulaire
         $user = $userHydrate;
         // Appel de la classe avec les requêtes SQL
-        $userRepository = new UserRepository;
+        $userRepository = new UserRepository();
         // Expresión regular pour la verification du mot de passe sécurisé
         $regex = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{12,}$/';
 
@@ -75,7 +76,8 @@ class UserValidator
             $errors['mailEmpty'] = "Le champ mail ne doit pas être vide";
         } elseif (!filter_var($user->getMail(), FILTER_VALIDATE_EMAIL)) { // Si le mail n'est pas un mail valide
             $errors['mail'] = "Le mail n\'est pas valide";
-        } elseif ($userRepository->findOneByMail($user->getMail())) { // Si le mail est déjà enregistrer dans la base de données
+        } elseif ($userRepository->findOneByMail($user->getMail())) {
+            // Si le mail est déjà enregistrer dans la base de données
             $errors['mailUsed'] = "Le e-mail est déjà utilisé";
         }
 
@@ -97,7 +99,7 @@ class UserValidator
     // Fonction pour valider le formulaire de connexion
     public function logInValidate(string $userMail): array
     {
-        // Tableau d'erreurs 
+        // Tableau d'erreurs
         $errors = [];
 
         // Si le champ du mail est vide
@@ -119,7 +121,7 @@ class UserValidator
     }
 
     // Fonction pour récuperer et valider la photo de l'utilsateur
-    public function UserPhotoValidate(User $user)
+    public function userPhotoValidate(User $user)
     {
         $errors = [];
 
@@ -157,7 +159,8 @@ class UserValidator
                         $errors['fileSizeError'] = "L'image est trop grande. Taille maximale autorisée : 2 Mo";
                     }
                 } else {
-                    $errors['fileExtError'] = "Format d'image non autorisé. Seuls les fichiers JPG, PNG ou WEBP sont acceptés";
+                    $errors['fileExtError'] = "Format d'image non autorisé. " .
+                        "Seuls les fichiers JPG, PNG ou WEBP sont acceptés";
                 }
             } else {
                 $errors['fileError'] = "Erreur lors du téléchargement de l'image";

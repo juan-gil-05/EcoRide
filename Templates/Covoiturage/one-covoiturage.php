@@ -91,12 +91,15 @@ require_once  BASE_PATH . '/Templates/header.php';
     </div>
     <!-- Bouton pour participer au covoiturage, le bouton ouvre la modale -->
     <div class="participation-btn content-text mb-5">
-      <button class="btn btn-warning shadow-section primary-btn" id="participationBtn" data-bs-toggle="modal" data-bs-target="#participateConfirmation">
+      <button class="btn btn-warning shadow-section primary-btn"
+        id="participationBtn" data-bs-toggle="modal" data-bs-target="#participateConfirmation">
         Participer
       </button>
     </div>
     <!-- Modal avec les messages d'erreur ou la confirmation pour participer au covoiturage -->
-    <div class="modal fade" id="participateConfirmation" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="participateConfirmationLabel" aria-hidden="true">
+    <div class="modal fade" id="participateConfirmation"
+      data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="participateConfirmationLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <!-- Le contenu de la modal -->
         <div class="modal-content">
@@ -135,21 +138,32 @@ require_once  BASE_PATH . '/Templates/header.php';
           <?php } elseif ($noEnoughCredits) { ?>
             <div class="alert alert-danger mb-0 p-5 text-center content-text" role="alert">
               <strong>💰 Crédits insuffisants !</strong>
-              Vous avez besoin de <?= $covoituragePrice ?> crédits pour participer, mais vous n'avez que <?= $userCredits ?> crédits.
+              Vous avez besoin de <?= $covoituragePrice ?> crédits pour participer,
+              mais vous n'avez que <?= $userCredits ?> crédits.
             </div>
             <!-- Pour afficher la modale de double confimation -->
           <?php } elseif ($doubleConfirmation) { ?>
             <!-- Formulaire pour participer au covoiturage  -->
-            <form method="post" class="w-100 d-flex align-items-center flex-column gap-4 p-5 text-center mb-0 bg-light form" id="participateForm">
+            <form method="post" class="w-100 d-flex align-items-center 
+                                flex-column gap-4 p-5 text-center mb-0 bg-light form"
+              id="participateForm">
               <!-- Input cache pour passer les donnes dans la requête sql -->
-              <input type="text" name="user_id" hidden value="<?= (isset($_SESSION['user']['id'])) ? $_SESSION['user']['id'] : "" ?>">
+              <input type="text" name="user_id" hidden
+                value="<?= (isset($_SESSION['user']['id'])) ? $_SESSION['user']['id'] : "" ?>">
               <!-- Input cache pour passer les donnes dans la requête sql -->
-              <input type="text" name="covoiturage_id" hidden value="<?= $covoiturageDetail['id'] ?>">
-              <label class="content-text text-center fw-medium">Voulez-vous confirmer votre participation et l’utilisation de <?= $covoituragePrice ?> crédits ?</label>
+              <input type="text" name="covoiturage_id" hidden
+                value="<?= $covoiturageDetail['id'] ?>">
+              <label class="content-text text-center fw-medium">
+                Voulez-vous confirmer votre participation et l’utilisation de <?= $covoituragePrice ?> crédits ?
+              </label>
               <!-- Boutons pour confirmer ou annuler -->
               <div class="d-flex gap-3 justify-content-center">
-                <button type="button" value="" class="btn btn-danger shadow-section text-light content-text secondary-btn" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
-                <input type="submit" class="btn btn-primary shadow-section text-white content-text secondary-btn" value="Confirmer" name="participate">
+                <button type="button"
+                  class="btn btn-danger shadow-section text-light content-text secondary-btn"
+                  data-bs-dismiss="modal" aria-label="Close">Annuler
+                </button>
+                <input type="submit" value="Confirmer" name="participate"
+                  class="btn btn-primary shadow-section text-white content-text secondary-btn">
               </div>
             </form>
           <?php } ?>
@@ -166,8 +180,7 @@ require_once  BASE_PATH . '/Templates/header.php';
         src="../../Uploads/User/<?=
                                 (!empty($driver['photo_uniqId']))
                                   ? $driver['photo_uniqId']
-                                  : "../../Assets/Img_page-vue-covoiturages/driver-default.png"
-                                ?>"
+                                  : "../../Assets/Img_page-vue-covoiturages/driver-default.png" ?>"
         alt="Image du chauffeur" />
       <!-- Nom, prenom -->
       <p class="subtitle-text text-capitalize"><?= $driver['pseudo'] ?></p>
@@ -189,11 +202,13 @@ require_once  BASE_PATH . '/Templates/header.php';
         <li><span>Fumeur / non-fumeur :</span>
           <!-- Si dans l'array existe la préférence fumeur, alors le chauffeur accepte les fumeurs -->
           <!-- Si dans l'array existe la préférence non_fumeur, alors le chauffeur n'accepte pas les fumeurs  -->
-          <?php if (in_array("Fumeur", $preferences)) {
+          <?php
+          if (in_array("Fumeur", $preferences)) {
             echo 'J\'accepte les fumeurs';
           } elseif (in_array("Non_fumeur", $preferences)) {
             echo 'Je n\'accepte les fumeurs';
-          } ?>
+          }
+          ?>
         </li>
         <!-- Accepte ou pas les animaux? -->
         <li><span>Animal / pas d’animal :</span>

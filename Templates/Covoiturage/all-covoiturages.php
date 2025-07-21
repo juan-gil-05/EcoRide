@@ -1,4 +1,5 @@
 <?php
+
 // HEADER
 
 use App\Security\Security;
@@ -30,7 +31,8 @@ require_once  BASE_PATH . '/Templates/header.php';
           <!-- Nom du filtre -->
           <label for="">Voyage Écologique</label>
           <!-- Le filtre -->
-          <input class="form-check-input" type="checkbox" name="ecologique" <?= (!empty($_POST['ecologique'])) ? "checked" : "" ?> />
+          <input class="form-check-input" type="checkbox" name="ecologique"
+            <?= (!empty($_POST['ecologique'])) ? "checked" : "" ?> />
         </div>
         <!-- Filtre du Prix maximum -->
         <div>
@@ -39,7 +41,8 @@ require_once  BASE_PATH . '/Templates/header.php';
           <!-- Nom du filtre -->
           <label for="price">Prix maximum</label>
           <!-- Filtre -->
-          <input type="number" class="small-text form-control d-inline" name="maxPrice" id="price" value="<?= $maxPrice ?>" />
+          <input type="number" class="small-text form-control d-inline" name="maxPrice" id="price"
+            value="<?= $maxPrice ?>" />
         </div>
         <!-- Filtre de la Durée maximum -->
         <div>
@@ -48,7 +51,8 @@ require_once  BASE_PATH . '/Templates/header.php';
           <!-- Nom du filtre -->
           <label for="Duration">Durée maximale</label>
           <!-- Filtre -->
-          <input type="number" class="small-text form-control d-inline" name="maxDuration" id="Duration" value="<?= $maxDuration ?>" />
+          <input type="number" class="small-text form-control d-inline" name="maxDuration" id="Duration"
+            value="<?= $maxDuration ?>" />
         </div>
         <!-- Filtre de la Note minimal -->
         <div class="note-filter mb-1">
@@ -58,10 +62,15 @@ require_once  BASE_PATH . '/Templates/header.php';
           <label for="">Note minimale</label>
           <!-- Étoiles pour filtrer la note minimal -->
           <div class="note-stars">
-            <!-- Input caché pour envoyer la valeur de la note du chauffeur, selon la quantité des étoiles séléctionées -->
+            <!-- Input caché pour envoyer la valeur de la note du chauffeur, 
+             selon la quantité des étoiles séléctionées -->
             <input type="hidden" name="note" id="inputNote" value=""></input>
             <?php for ($i = 1; $i <= 5; $i++) { ?>
-              <i class="bi bi-star-fill star <?= (in_array($i, $driverFilterNoteArray)) ? "active-star" : "" ?>" data-value="<?= $i ?>"></i>
+              <i class="bi bi-star-fill star 
+                <?= (in_array($i, $driverFilterNoteArray))
+                  ? "active-star"
+                  : ""
+                ?>" data-value="<?= $i ?>"></i>
             <?php } ?>
           </div>
         </div>
@@ -74,7 +83,9 @@ require_once  BASE_PATH . '/Templates/header.php';
     <!-- Bouton pour visualiser les covoiturages de l'utilisateur en mode desktop -->
     <?php if (Security::isLogged()) { ?>
       <div class="mt-5 text-center mes-covoiturages-btn content-text">
-        <a href="?controller=covoiturages&action=mesCovoiturages" class="btn btn-warning primary-btn shadow-section">Mes covoiturages</a>
+        <a href="?controller=covoiturages&action=mesCovoiturages"
+          class="btn btn-warning primary-btn shadow-section">Mes covoiturages
+        </a>
       </div>
     <?php } ?>
   </div>
@@ -87,8 +98,8 @@ require_once  BASE_PATH . '/Templates/header.php';
       <div class="shadow-section result-div text-capitalize">
         <?php if (!empty($covoiturages)) { ?>
           <p class="mb-0 subtitle-text"><?= $adresseDepart . ' -> ' . $adresseArrivee ?></p>
-          <?php } else { ?>
-            <p class="mb-0 small-text">Aucun covoiturage pour l'instant</p>
+        <?php } else { ?>
+          <p class="mb-0 small-text">Aucun covoiturage pour l'instant</p>
         <?php } ?>
       </div>
       <!-- Bouton pour afficher les filtres quand on est en mobile ou tablet -->
@@ -126,7 +137,8 @@ require_once  BASE_PATH . '/Templates/header.php';
                 <!-- Nom du filtre -->
                 <label for="">Voyage Écologique</label>
                 <!-- Filtre -->
-                <input class="form-check-input" type="checkbox" <?= (!empty($_POST['ecologique'])) ? "checked" : "" ?> name="ecologique" />
+                <input class="form-check-input" type="checkbox"
+                  <?= (!empty($_POST['ecologique'])) ? "checked" : "" ?> name="ecologique" />
               </div>
               <!-- Filtre du Prix maximum -->
               <div>
@@ -193,7 +205,9 @@ require_once  BASE_PATH . '/Templates/header.php';
       <!-- Bouton pour visualiser les covoiturages de l'utilisateur en mode mobile -->
       <?php if (Security::isLogged()) { ?>
         <div class="text-center mes-covoiturages-btn-mobile content-text">
-          <a href="?controller=covoiturages&action=mesCovoiturages" class="btn btn-warning shadow-section">Mes covoiturages</a>
+          <a href="?controller=covoiturages&action=mesCovoiturages"
+            class="btn btn-warning shadow-section">Mes covoiturages
+          </a>
         </div>
       <?php } ?>
     </div>
@@ -267,11 +281,14 @@ require_once  BASE_PATH . '/Templates/header.php';
               <!-- Icon -->
               <i class="bi bi-star-fill"></i>
               <!-- La note -->
-              <p><?= (!is_null($driverNote[$covoiturage['id']]['note'])) ? $driverNote[$covoiturage['id']]['note'] : "-" ?> / 5</p>
+              <p><?= (!is_null($driverNote[$covoiturage['id']]['note']))
+                    ? $driverNote[$covoiturage['id']]['note']
+                    : "-" ?> / 5</p>
             </div>
             <!-- Bouton pour voir plus en détail le covoiturage -->
             <div class="content-text">
-              <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>" class="btn btn-warning secondary-btn">
+              <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>"
+                class="btn btn-warning secondary-btn">
                 Détail
               </a>
             </div>

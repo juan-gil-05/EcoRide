@@ -26,7 +26,9 @@ require_once  BASE_PATH . '/Templates/header.php';
             <!-- Mot de passe -->
             <div class="form-floating mb-5">
                 <input type="password" name="password" class="form-control content-text
-                <?= (isset($errors['invalidUser'])) ? "is-invalid" : "" ?>" id="floatingPassword" placeholder="Password">
+                <?= (isset($errors['invalidUser']))
+                    ? "is-invalid"
+                    : "" ?>" id="floatingPassword" placeholder="Password">
                 <label for="floatingPassword" class="content-text">Mot de passe</label>
                 <!-- message et button pour afficher le mot de passe -->
                 <div class="show-password">
@@ -49,7 +51,8 @@ require_once  BASE_PATH . '/Templates/header.php';
         <?php } ?>
         <!-- Button de connexion -->
         <div class="d-flex justify-content-center">
-            <button class="btn btn-warning text-dark w-50 py-3 mt-3 content-text fw-medium" name="logIn" type="submit">Se connecter</button>
+            <button class="btn btn-warning text-dark w-50 py-3 mt-3 content-text fw-medium"
+                name="logIn" type="submit">Se connecter</button>
         </div>
         <!-- Lien si l'utilisateru n'a pas un compte, pour s'en créer un -->
         <div class="d-flex justify-content-center mt-5 content-text lien">

@@ -32,13 +32,12 @@ class UserController extends Controller
                         throw new Exception("Cette action n'existe pas: " . $_GET['action']);
                         break;
                 }
-            }
-            // Si il n'y a pas une action dans l'url 
-            else {
+            } else {
+                // Si il n'y a pas une action dans l'url
                 throw new \Exception("Aucune action détectée");
             }
-        } // On return la page d'erreur s'il en existe un
-        catch (Exception $e) {
+        } catch (Exception $e) {
+            // On return la page d'erreur s'il en existe un
             $this->render("Errors/404", [
                 'error' => $e->getMessage()
             ]);
@@ -49,7 +48,7 @@ class UserController extends Controller
     Exemple d'appel depuis l'url
         ?controller=user&action=signUp
     */
-    // Fonction pour créer un compte utilisateur 
+    // Fonction pour créer un compte utilisateur
     protected function signUp()
     {
         $errors = [];
@@ -59,7 +58,6 @@ class UserController extends Controller
         $roleName = "";
         $roleId = "";
         try {
-
             if (!isset($_POST['signUp'])) {
                 $this->render(
                     "User/sign-up",
@@ -145,12 +143,12 @@ class UserController extends Controller
     // Fonction pour afficher le profil de l'utilisateur
     protected function profil()
     {
-        // Si l'utilisateur est connecté 
+        // Si l'utilisateur est connecté
         if (Security::isLogged()) {
             // Repositories
-            $userRepository = new UserRepository;
-            $carRepository = new VoitureRepository;
-            $preferenceRepository = new PreferenceUserRepository;
+            $userRepository = new UserRepository();
+            $carRepository = new VoitureRepository();
+            $preferenceRepository = new PreferenceUserRepository();
 
             $userId = $_SESSION['user']['id'];
             // Pour récuperer le mail de l'utilisateur qui est connecté
@@ -165,14 +163,17 @@ class UserController extends Controller
             $photoUniqueId = $user->getPhotoUniqId();
 
             // Fonction pour chercher toutes les voitures par l'id de l'utilisateur
-            $allCars = ($carRepository->findAllCarsByUserId($userId)) ? $carRepository->findAllCarsByUserId($userId) : [];
+            $allCars = ($carRepository->findAllCarsByUserId($userId))
+                ? $carRepository->findAllCarsByUserId($userId)
+                : [];
 
             // Fonction pour chercher touts les préférences par l'id de l'utilisateur
             $allPreferences = $preferenceRepository->searchPreferencesByDriverId($userId);
 
             // Fonction array_map pour récupérer uniquement les values des libelles dans un nouveau array
             $preferences = array_map(fn($pref) => $pref['libelle'], $allPreferences);
-            // Fonction array_map pour récupérer uniquement les values des préférences personnelles dans un nouveau array
+            // Fonction array_map pour récupérer uniquement
+            //les values des préférences personnelles dans un nouveau array
             $preferencesPersonnelles = array_map(fn($pref) => $pref['personnelle'], $allPreferences);
 
 
@@ -188,23 +189,26 @@ class UserController extends Controller
                     "preferencesPersonnelles" => $preferencesPersonnelles,
                 ]
             );
-        }
-        // Sinon on envoie à la page de connexion
-        else {
+        } else {
+            // Sinon on envoie à la page de connexion
             header('Location: ?controller=auth&action=logIn');
         }
     }
 
-    private function createUserDependingOnRole(User $user, UserRepository $userRepository, UserValidator $userValidator, array $errors)
-    {
-        // Si l'utilisateur est passager 
+    private function createUserDependingOnRole(
+        User $user,
+        UserRepository $userRepository,
+        UserValidator $userValidator,
+        array $errors
+    ) {
+        // Si l'utilisateur est passager
         if ($user->getRoleId() == "1") {
             $userRepository->createUser($user);
         } else { // Si l'utilisateur est chauffeur
             // Pour enregistrer la photo dans l'attribut photo de l'objet User
             $user->setPhoto($_FILES['photo']['name']);
             // Pour valider s'il n'y a pas des erreurs dans le formulaire
-            $errors = $userValidator->UserPhotoValidate($user);
+            $errors = $userValidator->userPhotoValidate($user);
             // S'il n'y pas des erreur, on crée l'utilisateur avec la photo de profile
             if (!empty($errors)) {
                 // $errors = array_push($errors, $errors);
@@ -212,14 +216,15 @@ class UserController extends Controller
             }
             $userRepository->createDriverUser($user);
         }
-        // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+        // On crée cette session pour pouvoir afficher le message de succès,
+        // le message_code c'est pour l'icon de SweetAlert
         $_SESSION['message_to_User'] = "Compte crée avec succès";
         $_SESSION['message_code'] = "success";
     }
 
     public static function redirectAfterLogin(User $user, UserRepository $userRepository): void
     {
-        $voitureRepository = new VoitureRepository;
+        $voitureRepository = new VoitureRepository();
         $user = $userRepository->findOneByMail($user->getMail());
 
         if ($user->getRoleId() == "2" || $user->getRoleId() == "3") {

@@ -58,13 +58,13 @@ class Security
         // Pour appeler les variables d'environement
         $config = require BASE_PATH . "/config.php";
 
-        // Clé pour crypter et décrypter 
+        // Clé pour crypter et décrypter
         $key = $config["ENCRYPTER_KEY"];
         // Parce qu'on utilise le CBC (Cipher Block Chaining) qui a besoin d'un 'Initialization Vector'
         $IV = random_bytes(16); // 16 bytes car on utilise 128 bites
         // On crypte avec la fonction openssl
         $encrypted = openssl_encrypt($id, "AES-128-CBC", $key, 0, $IV);
-        // Variable qui joint le 'Initialization Vector' avec le paramètre crypté et fait un encode 
+        // Variable qui joint le 'Initialization Vector' avec le paramètre crypté et fait un encode
         $base64Encoded = base64_encode($IV . $encrypted);
         // finallement, on change les symbole '+' et '/' pour éviter des erreurs au moment de décripter le IV
         return strtr($base64Encoded, '+/', '-_');
@@ -76,7 +76,7 @@ class Security
         // Pour appeler les variables d'environement
         $config = require BASE_PATH . "/config.php";
 
-        // Clé pour crypter et décrypter 
+        // Clé pour crypter et décrypter
         $key = $config["ENCRYPTER_KEY"];
         // on change les symbole '-' et '_' pour éviter les erreurs
         $base64Decoded = strtr($encryptedParam, '-_', '+/');

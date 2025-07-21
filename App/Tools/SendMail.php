@@ -4,11 +4,10 @@ namespace App\Tools;
 
 // Importation de la classe PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 // Importation l'autoload de composer
-require BASE_PATH.'/vendor/autoload.php';
+require BASE_PATH . '/vendor/autoload.php';
 
 
 class SendMail

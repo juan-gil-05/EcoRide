@@ -6,16 +6,25 @@ use App\Entity\Covoiturage;
 
 class CovoiturageRepository extends Repository
 {
-
     // Fonction pour créer un nouveau covoiturage
     public function createCovoiturage(Covoiturage $covoiturage)
     {
         $sql = ("INSERT INTO Covoiturage 
-                       (date_heure_depart, date_heure_arrivee, adresse_depart, adresse_arrivee, nb_place_disponible, prix, voiture_id, statut_id) 
-                VALUES (:date_heure_depart,:date_heure_arrivee, :adresse_depart, :adresse_arrivee, :nb_place_disponible, :prix, :voiture_id, :statut_id)");
+                       (date_heure_depart, date_heure_arrivee, adresse_depart, 
+                        adresse_arrivee, nb_place_disponible, prix, voiture_id, statut_id) 
+                VALUES (:date_heure_depart,:date_heure_arrivee, :adresse_depart, 
+                        :adresse_arrivee, :nb_place_disponible, :prix, :voiture_id, :statut_id)");
         $query = $this->pdo->prepare($sql);
-        $query->bindValue(":date_heure_depart", $covoiturage->getDateHeureDepart()->format("Y-m-d H:i"), $this->pdo::PARAM_STR);
-        $query->bindValue(":date_heure_arrivee", $covoiturage->getDateHeureArrivee()->format("Y-m-d H:i"), $this->pdo::PARAM_STR);
+        $query->bindValue(
+            ":date_heure_depart",
+            $covoiturage->getDateHeureDepart()->format("Y-m-d H:i"),
+            $this->pdo::PARAM_STR
+        );
+        $query->bindValue(
+            ":date_heure_arrivee",
+            $covoiturage->getDateHeureArrivee()->format("Y-m-d H:i"),
+            $this->pdo::PARAM_STR
+        );
         $query->bindValue(":adresse_depart", $covoiturage->getAdresseDepart(), $this->pdo::PARAM_STR);
         $query->bindValue(":adresse_arrivee", $covoiturage->getAdresseArrivee(), $this->pdo::PARAM_STR);
         $query->bindValue(":nb_place_disponible", $covoiturage->getNbPlaceDisponible(), $this->pdo::PARAM_INT);
@@ -39,8 +48,11 @@ class CovoiturageRepository extends Repository
     }
 
     // Fonction pour checher des covoiturages
-    public function searchCovoiturageByDateAndAdresse(string $adresseDepart, string $adresseArrivee, ?string $dateDepart = null): array
-    {
+    public function searchCovoiturageByDateAndAdresse(
+        string $adresseDepart,
+        string $adresseArrivee,
+        ?string $dateDepart = null
+    ): array {
         $sql = ("SELECT Covoiturage.*, User.id AS driver_id FROM Covoiturage
                 INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
                 INNER JOIN User ON Voiture.user_id = User.id
@@ -55,7 +67,7 @@ class CovoiturageRepository extends Repository
 
         $query->bindValue(":adresseDepart", "%$adresseDepart%", $this->pdo::PARAM_STR);
         $query->bindValue(":adresseArrivee", "%$adresseArrivee%", $this->pdo::PARAM_STR);
-        // Si on passe la date de départ, alors on fait le bindValue avec la donée passée 
+        // Si on passe la date de départ, alors on fait le bindValue avec la donée passée
         (!empty($dateDepart)) ? $query->bindValue(":dateDepart", "%$dateDepart%", $this->pdo::PARAM_STR) : null;
 
         $query->execute();
@@ -123,7 +135,9 @@ class CovoiturageRepository extends Repository
         // Si on passe des paramètres des filtres, on les ajout au query sql
         (!empty($energiId)) ? $sql .= " AND  Energie.id = :energiId" : null;
         (!empty($maxPrice)) ? $sql .= " AND  prix <= :price" : null;
-        (!empty($maxDuration)) ? $sql .= " AND  TIMESTAMPDIFF(HOUR, date_heure_depart, date_heure_arrivee) <= :maxDuration" : null;
+        (!empty($maxDuration))
+            ? $sql .= " AND  TIMESTAMPDIFF(HOUR, date_heure_depart, date_heure_arrivee) <= :maxDuration"
+            : null;
 
         $query = $this->pdo->prepare($sql);
         $query->bindValue(":dateDepart", "%$dateDepart%", $this->pdo::PARAM_STR);
@@ -164,7 +178,7 @@ class CovoiturageRepository extends Repository
         return $query->fetchAll($this->pdo::FETCH_ASSOC);
     }
 
-    /* Fonction pour enlever les credits du covoiturage, 
+    /* Fonction pour enlever les credits du covoiturage,
     quand l'user participe à un covoiturage, ou quand l'user quitte le covoiturage
     */
     public function updateUserCredits(int $covoituragePrice, int $userId, bool $addition): bool
@@ -185,7 +199,7 @@ class CovoiturageRepository extends Repository
         return $query->execute();
     }
 
-    /* Fonction pour mettre à jour les nombres de places disponible du covoiturage 
+    /* Fonction pour mettre à jour les nombres de places disponible du covoiturage
     quand l'user participe à un covoiturage, ou quand l'user quitte le covoiturage
     */
     public function updatePlacesDisponibles(int $covoiturageId, bool $addition)
@@ -229,8 +243,9 @@ class CovoiturageRepository extends Repository
     // Fonction pour chercher les participants d'un covoiturage par le covoiturage ID, et le pseudo du chauffeur
     public function searchCovoiturageParticipantsByCovoiturageId(int $covoiturageId): array
     {
-        $sql = "SELECT User_Covoiturages.user_id, passager.mail as passager_mail, passager.pseudo as passager_pseudo, passager.id as passager_id,
-                       driver.pseudo as driver_pseudo, driver.id as driver_id
+        $sql = "SELECT User_Covoiturages.user_id, passager.mail as passager_mail, 
+                passager.pseudo as passager_pseudo, passager.id as passager_id,
+                driver.pseudo as driver_pseudo, driver.id as driver_id
                 FROM User_Covoiturages
                 INNER JOIN User as passager ON User_Covoiturages.user_id = passager.id
                 INNER JOIN Covoiturage ON User_Covoiturages.covoiturage_id = Covoiturage.id
@@ -254,7 +269,8 @@ class CovoiturageRepository extends Repository
         $query->bindValue(":covoiturageId", $covoiturageId, $this->pdo::PARAM_INT);
         $query->execute();
 
-        return $query->fetch() ? true : false; // Si le fetch renvoie une ligne, alors l'utilisateur participe déjà au covoiturage
+        // Si le fetch renvoie une ligne, alors l'utilisateur participe déjà au covoiturage
+        return $query->fetch() ? true : false;
     }
 
     // Fonction pour changer le statut d'un covoiturage
@@ -312,7 +328,7 @@ class CovoiturageRepository extends Repository
         return $query->execute();
     }
 
-    // Fonction pour ajouter un commentaire au covoiturage, quand le passager indique qu'il s'est mal passé 
+    // Fonction pour ajouter un commentaire au covoiturage, quand le passager indique qu'il s'est mal passé
     public function addCommentaireToCovoiturage(string $commentaire, int $userCovoiturageId): bool
     {
         $sql = "INSERT INTO Commentaire (commentaire, user_covoiturage_id)

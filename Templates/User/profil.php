@@ -1,4 +1,5 @@
 <?php
+
 // HEADER
 use App\Security\Security;
 
@@ -34,7 +35,9 @@ require_once  BASE_PATH . '/Templates/header.php';
             <div class="accordion-item">
                 <!-- Header -->
                 <h2 class="accordion-header">
-                    <button class="accordion-button collapsed content-text fw-semibold text-capitalize" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePreferences" aria-expanded="false" aria-controls="collapsePreferences">
+                    <button class="accordion-button collapsed content-text fw-semibold text-capitalize"
+                        type="button" data-bs-toggle="collapse" data-bs-target="#collapsePreferences"
+                        aria-expanded="false" aria-controls="collapsePreferences">
                         Mes préférences
                     </button>
                 </h2>
@@ -45,8 +48,10 @@ require_once  BASE_PATH . '/Templates/header.php';
                         <ul>
                             <!-- Accepte ou pas les fumeurs? -->
                             <li>
-                                <!-- Si dans l'array existe la préférence fumeur, alors le chauffeur accepte les fumeurs -->
-                                <!-- Si dans l'array existe la préférence non_fumeur, alors le chauffeur n'accepte pas les fumeurs  -->
+                                <!-- Si dans l'array existe la préférence fumeur, 
+                                 alors le chauffeur accepte les fumeurs -->
+                                <!-- Si dans l'array existe la préférence non_fumeur, 
+                                 alors le chauffeur n'accepte pas les fumeurs  -->
                                 <?php if (in_array("Fumeur", $preferences)) {
                                     echo 'J\'accepte les fumeurs';
                                 } elseif (in_array("Non_fumeur", $preferences)) {
@@ -55,8 +60,10 @@ require_once  BASE_PATH . '/Templates/header.php';
                             </li>
                             <!-- Accepte ou pas les animaux? -->
                             <li>
-                                <!-- Si dans l'array existe la préférence animal, alors le chauffeur accepte les animaux -->
-                                <!-- Si dans l'array existe la préférence non_animal, alors le chauffeur n'accepte pas les animaux -->
+                                <!-- Si dans l'array existe la préférence animal, 
+                                 alors le chauffeur accepte les animaux -->
+                                <!-- Si dans l'array existe la préférence non_animal, 
+                                 alors le chauffeur n'accepte pas les animaux -->
                                 <?php if (in_array("Animal", $preferences)) {
                                     echo 'J\'accepte les animaux';
                                 } elseif (in_array("Non_animal", $preferences)) {
@@ -86,14 +93,17 @@ require_once  BASE_PATH . '/Templates/header.php';
                             <!-- à la base il est caché -->
                             <li id="personalPreference" class="hidden d-flex justify-content-center">
                                 <!-- L'action c'est le controller PreferenceUser -->
-                                <form action="?controller=preferences&action=preferencesInscriptionPersonal" method="post" class="d-flex flex-column gap-2">
+                                <form action="?controller=preferences&action=preferencesInscriptionPersonal"
+                                    method="post" class="d-flex flex-column gap-2">
                                     <!-- L'input text -->
                                     <textarea name="preference_personnelle" class="form-control" required></textarea>
                                     <!-- Input invisible pour envoyer un param fictif à la base de données
                                      à fin de pouvoir réaliser la requête sql -->
                                     <input type="text" name="preference_id" value="1" hidden>
                                     <!-- bouton pour envoyer le fomulaire -->
-                                    <button type="submit" class="btn btn-secondary" name="newPersonalPreference">Ajouter</button>
+                                    <button type="submit" class="btn btn-secondary"
+                                        name="newPersonalPreference">Ajouter
+                                    </button>
                                 </form>
                             </li>
                         </ul>
@@ -106,7 +116,9 @@ require_once  BASE_PATH . '/Templates/header.php';
             <div class="accordion-item">
                 <!-- Header -->
                 <h2 class="accordion-header">
-                    <button class="accordion-button collapsed content-text fw-semibold text-capitalize" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCars" aria-expanded="false" aria-controls="collapseCars">
+                    <button class="accordion-button collapsed content-text fw-semibold text-capitalize"
+                        type="button" data-bs-toggle="collapse" data-bs-target="#collapseCars"
+                        aria-expanded="false" aria-controls="collapseCars">
                         Mes voitures
                     </button>
                 </h2>
@@ -153,7 +165,8 @@ require_once  BASE_PATH . '/Templates/header.php';
         <!--Bouton pour visualiser les graphiques de : 
             1. nombre des covoiturages par jour
             2. combien la plateforme gagne de crédit en fonction des jours -->
-        <a class="btn btn-secondary text-white secondary-btn mt-2 small-text" href="?controller=admin&action=adminGraphs">
+        <a class="btn btn-secondary text-white secondary-btn mt-2 small-text"
+            href="?controller=admin&action=adminGraphs">
             Visualiser les graphiques
         </a>
         <!-- Bouton pour voir la table de tous les utilisateurs -->
@@ -165,7 +178,10 @@ require_once  BASE_PATH . '/Templates/header.php';
 
 <!-- Boutton pour se deconnecter -->
 <div class="d-flex justify-content-center mt-5 mb-5">
-    <a href="?controller=auth&action=logOut" class="btn btn-danger text-light secondary-btn content-text">Se deconnecter</a>
+    <a href="?controller=auth&action=logOut"
+        class="btn btn-danger text-light secondary-btn content-text">
+        Se deconnecter
+    </a>
 </div>
 
 <?php

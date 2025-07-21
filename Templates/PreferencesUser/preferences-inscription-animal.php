@@ -14,8 +14,12 @@ require_once  BASE_PATH . '/Templates/header.php';
             <!-- Accepte des animaux ? -->
             <div class="d-flex gap-2 align-items-center">
                 <label for="animalCheck" class="form-check-label content-text">J'accepte les animaux: </label>
-                <input type="radio" class="form-check-input" name="preference_id" id="animalCheck" value="2" role="button"> <span class="text-white small-text">Oui</span>
-                <input type="radio" class="form-check-input" name="preference_id" id="animalCheck" value="4" role="button"> <span class="text-white small-text">Non</span>
+                <input type="radio" class="form-check-input" name="preference_id"
+                    id="animalCheck" value="2" role="button">
+                <span class="text-white small-text">Oui</span>
+                <input type="radio" class="form-check-input" name="preference_id"
+                    id="animalCheck" value="4" role="button">
+                <span class="text-white small-text">Non</span>
             </div>
             <!-- S'il y a une erreur, on l'affiche à l'utilisateur -->
             <?php if (isset($errors2['preferenceIdEmpty'])) { ?>

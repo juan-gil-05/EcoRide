@@ -7,17 +7,23 @@ use DateTime;
 
 class VoitureRepository extends Repository
 {
-    // Fonction pour créer une nouvelle voiture 
+    // Fonction pour créer une nouvelle voiture
     public function createCar(Voiture $voiture, int $user_id)
     {
-        $sql = ('INSERT INTO Voiture (modele, couleur, marque, immatriculation, date_premiere_immatriculation, user_id, energie_id)
-                        VALUES (:modele, :couleur, :marque, :immatriculation, :date_premiere_immatriculation, :user_id, :energie_id)');
+        $sql = ('INSERT INTO Voiture (modele, couleur, marque, immatriculation, 
+                                      date_premiere_immatriculation, user_id, energie_id)
+                        VALUES (:modele, :couleur, :marque, 
+                                :immatriculation, :date_premiere_immatriculation, :user_id, :energie_id)');
         $query = $this->pdo->prepare($sql);
         $query->bindValue(':modele', $voiture->getModele(), $this->pdo::PARAM_STR);
         $query->bindValue(':couleur', $voiture->getCouleur(), $this->pdo::PARAM_STR);
         $query->bindValue(':marque', $voiture->getMarque(), $this->pdo::PARAM_STR);
         $query->bindValue(':immatriculation', $voiture->getImmatriculation(), $this->pdo::PARAM_STR);
-        $query->bindValue(':date_premiere_immatriculation', $voiture->getDatePremiereImmatriculation()->format("Y-m-d"), $this->pdo::PARAM_STR);
+        $query->bindValue(
+            ':date_premiere_immatriculation',
+            $voiture->getDatePremiereImmatriculation()->format("Y-m-d"),
+            $this->pdo::PARAM_STR
+        );
         $query->bindValue(':user_id', $user_id, $this->pdo::PARAM_INT);
         $query->bindValue(':energie_id', $voiture->getEnergieId(), $this->pdo::PARAM_INT);
         return $query->execute();
@@ -59,7 +65,9 @@ class VoitureRepository extends Repository
     // Fonction pour récupérer tous les voitures d'un utilisateur
     public function findAllCarsByUserId(int $userId)
     {
-        $sql = ("SELECT Voiture.id, Voiture.marque, Voiture.modele, Voiture.immatriculation FROM Voiture WHERE user_id = :user_id");
+        $sql = ("SELECT Voiture.id, Voiture.marque, Voiture.modele, Voiture.immatriculation 
+                FROM Voiture 
+                WHERE user_id = :user_id");
         $query = $this->pdo->prepare($sql);
         $query->bindValue(':user_id', $userId, $this->pdo::PARAM_INT);
         $query->execute();
@@ -71,5 +79,4 @@ class VoitureRepository extends Repository
             return false;
         }
     }
-
 }

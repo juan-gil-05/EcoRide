@@ -26,13 +26,12 @@ class EmployeController extends Controller
                         throw new Exception("Cette action n'existe pas: " . $_GET['action']);
                         break;
                 }
-            }
-            // Si il n'y a pas une action dans l'url 
-            else {
+            } else {
+                // Si il n'y a pas une action dans l'url
                 throw new \Exception("Aucune action détectée");
             }
-        } // On return la page d'erreur s'il en existe un
-        catch (Exception $e) {
+        } catch (Exception $e) {
+            // On return la page d'erreur s'il en existe un
             $this->render("Errors/404", [
                 'error' => $e->getMessage()
             ]);
@@ -49,11 +48,11 @@ class EmployeController extends Controller
         // Si l'utilisateur est connecté en tant qu'employée
         if (Security::isEmploye()) {
             // Repositories
-            $avisRepository = new AvisRepository;
-            $userRepository = new UserRepository;
-            $commentRepository = new CommentRepository;
+            $avisRepository = new AvisRepository();
+            $userRepository = new UserRepository();
+            $commentRepository = new CommentRepository();
 
-            // Tous les avis et les notes des chauffeurs 
+            // Tous les avis et les notes des chauffeurs
             $allAvisAndNotesObject = $avisRepository->findAllAvisAndNotes();
 
             // Pour convertir l'objet mongo en array
@@ -66,7 +65,7 @@ class EmployeController extends Controller
             $allComments = $commentRepository->searchAllComments();
 
             // Function pour visualiser les commentaires de tous les covoiturages signalés
-            $commentsFunction = $this->ValidateComments($allComments, $commentRepository, $userRepository);
+            $commentsFunction = $this->validateComments($allComments, $commentRepository, $userRepository);
 
             $this->render(
                 'User/employeEspace',
@@ -81,15 +80,18 @@ class EmployeController extends Controller
                     "dateArriveeFormatted" => $commentsFunction[3],
                 ]
             );
-        } // Sinon on envoie à la page de connexion
-        else {
+        } else {
+            // Sinon on envoie à la page de connexion
             header('Location: ?controller=auth&action=logIn');
         }
     }
 
     // Fonction pour valider ou refuser les avis et notes
-    private function validateAvisAndNote(array $allAvisAndNotes, AvisRepository $avisRepository, UserRepository $userRepository): array
-    {
+    private function validateAvisAndNote(
+        array $allAvisAndNotes,
+        AvisRepository $avisRepository,
+        UserRepository $userRepository
+    ): array {
         // Pour parcourir le tableau des avis et notes
         foreach ($allAvisAndNotes as $avisAndNote) {
             // Toute l'info de l'avis
@@ -104,15 +106,18 @@ class EmployeController extends Controller
             $avisStatut = $_POST['avisValidated']; // On récupere le statut, donc = 1 : True
             $avisId = $_POST['avis_id']; // On récupere l'id de l'avis passe dans le formulaire
             $avisRepository->updateAvisStatut($avisStatut, $avisId);
-            // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
-            $_SESSION['message_to_User'] = 'L’avis a été validé avec succès.</br> Il est maintenant visible publiquement.';
+            // On crée cette session pour pouvoir afficher le message de succès,
+            // le message_code c'est pour l'icon de SweetAlert
+            $_SESSION['message_to_User'] = 'L’avis a été validé avec succès.</br>" . 
+                "Il est maintenant visible publiquement.';
             $_SESSION['message_code'] = "success";
-        } // Si l'employé refuse l'avis, alors ... 
-        elseif (isset($_POST['avisRefused'])) {
+        } elseif (isset($_POST['avisRefused'])) {
+            // Si l'employé refuse l'avis, alors ...
             $avisStatut = $_POST['avisRefused']; // On récupere le statut, donc = 0 : False
             $avisId = $_POST['avis_id']; // On récupere l'id de l'avis passe dans le formulaire
             $avisRepository->updateAvisStatut($avisStatut, $avisId);
-            // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+            // On crée cette session pour pouvoir afficher le message de succès,
+            // le message_code c'est pour l'icon de SweetAlert
             $_SESSION['message_to_User'] = 'L’avis a été refusé.</br> Il ne sera pas publié sur la plateforme.';
             $_SESSION['message_code'] = "info";
         }
@@ -121,8 +126,11 @@ class EmployeController extends Controller
     }
 
     // Fonction pour visualiser les commentaires de tous les covoiturages signalés
-    private function ValidateComments(array $allComments, CommentRepository $commentRepository, UserRepository $userRepository)
-    {
+    private function validateComments(
+        array $allComments,
+        CommentRepository $commentRepository,
+        UserRepository $userRepository
+    ) {
         // Pour parcourir le tableau des commentaires
         foreach ($allComments as $comment) {
             // Toute l'info de l'avis

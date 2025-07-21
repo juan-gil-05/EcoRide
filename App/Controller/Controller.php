@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Controller;
-// require_once './App/Controller/PageController.php';
-use Exception;
 
+use Exception;
 
 class Controller
 {
@@ -62,9 +61,8 @@ class Controller
                         throw new Exception("Ce contrôleur n'existe pas: " . $_GET['controller']);
                         break;
                 }
-            }
-            // Si il n'y a pas des contôleur dans l'url 
-            else {
+            } else {
+                // Si il n'y a pas des contôleur dans l'url
                 // On charge la page d'accueil
                 $controller = new PageController();
                 $controller->accueil();
@@ -86,11 +84,10 @@ class Controller
             // Si le path est introuvable
             if (!file_exists($filePath)) {
                 throw new Exception("Le fichier n'existe pas" . $filePath);
-            }
-            /**
-             *  Si le path est trouvé, nous créons des variables à partir du tableau $params 
-             *  et on appel la vue*/
-            else {
+            } else {
+                /**
+                 *  Si le path est trouvé, nous créons des variables à partir du tableau $params
+                 *  et on appel la vue*/
                 extract($params);
                 require_once $filePath;
             }
@@ -119,7 +116,7 @@ class Controller
                     $apiController = new ApiController();
                     $apiController->startCovoiturage();
                     break;
-                // Action pour indiquer l'arrivée du covoiturage  
+                // Action pour indiquer l'arrivée du covoiturage
                 case 'stopCovoiturage':
                     $apiController = new ApiController();
                     $apiController->stopCovoiturage();

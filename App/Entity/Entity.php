@@ -27,9 +27,13 @@ class Entity
                 // Si le method set existe, alors on passe le set avec le value correspondant
                 if (method_exists($this, $methodName)) {
                     // Pour les données de types Datetime
-                    if ($key == 'date_premiere_immatriculation' || $key == 'date_heure_depart' || $key == 'date_heure_arrivee') {
-                        // Si l'utlisateur ne sélectionne pas une date, 
-                        // alors, la date est null, 
+                    if (
+                        $key == 'date_premiere_immatriculation' ||
+                        $key == 'date_heure_depart' ||
+                        $key == 'date_heure_arrivee'
+                    ) {
+                        // Si l'utlisateur ne sélectionne pas une date,
+                        // alors, la date est null,
                         // sinon, on crée un objet DateTime avec la value passée
                         if (empty($value)) {
                             $value = null;

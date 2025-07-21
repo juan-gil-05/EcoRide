@@ -9,8 +9,7 @@ class StringTools
     */
     public static function toCamelCase(string $value, $pascalCase = false): string
     {
-        /*  
-            On remplace les tiret et underscore par des espaces, 
+        /*  On remplace les tiret et underscore par des espaces,
             puis en met les premières lettres de chaque mot en majuscule avec ucword
         */
         $value = ucwords(str_replace(array('-', '_'), ' ', $value));

@@ -12,7 +12,6 @@ use Exception;
 
 class VoitureController extends Controller
 {
-
     // Fonction pour gérer le routage
     public function route(): void
     {
@@ -28,13 +27,12 @@ class VoitureController extends Controller
                         throw new Exception("Cette action n'existe pas: " . $_GET['action']);
                         break;
                 }
-            }
-            // Si il n'y a pas une action dans l'url 
-            else {
+            } else {
+                // Si il n'y a pas une action dans l'url
                 throw new \Exception("Aucune action détectée");
             }
-        } // On return la page d'erreur s'il en existe un
-        catch (Exception $e) {
+        } catch (Exception $e) {
+            // On return la page d'erreur s'il en existe un
             $this->render("Errors/404", [
                 'error' => $e->getMessage()
             ]);
@@ -50,7 +48,7 @@ class VoitureController extends Controller
     // Fonction pour enregistrer une voiture
     protected function carInscription()
     {
-        // Si l'utilisateur est connecté 
+        // Si l'utilisateur est connecté
         if (Security::isLogged()) {
             // Tableau d'erreurs
             $errors = [];
@@ -64,9 +62,9 @@ class VoitureController extends Controller
             $couleur = "";
 
             try {
-                $voiture = new Voiture;
-                $voitureRepository = new VoitureRepository;
-                $voitureValidator = new VoitureValidator;
+                $voiture = new Voiture();
+                $voitureRepository = new VoitureRepository();
+                $voitureValidator = new VoitureValidator();
 
                 // Si le formulaire est envoyé, on hydrate l'objet Voiture avec les données passées
                 if (isset($_POST['carInscription'])) {
@@ -85,7 +83,8 @@ class VoitureController extends Controller
                         $cars = $voitureRepository->findAllCarsByUserId($user_id);
                         // Si l'utilisateur a 2 ou plus de 2 voitures, alors on envoi vers la page d'accueil
                         if (count($cars) >= 2) {
-                            // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+                            // On crée cette session pour pouvoir afficher le message de succès,
+                            // le message_code c'est pour l'icon de SweetAlert
                             $_SESSION['message_to_User'] = "Voiture crée avec succès";
                             $_SESSION['message_code'] = "success";
                             // On redirige vers la page d'accueil
@@ -113,8 +112,8 @@ class VoitureController extends Controller
                     "couleur" => $couleur
                 ]
             );
-        } // Sinon on envoie à la page de connexion
-        else {
+        } else {
+            // Sinon on envoie à la page de connexion
             header('Location: ?controller=auth&action=logIn');
         }
     }

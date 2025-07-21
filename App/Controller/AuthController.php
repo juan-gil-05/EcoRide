@@ -29,9 +29,8 @@ class AuthController extends Controller
                         throw new Exception("Cette action n'existe pas: " . $_GET['action']);
                         break;
                 }
-            }
-            // Si il n'y a pas des action dans l'url 
-            else {
+            } else {
+                // Si il n'y a pas des action dans l'url
                 throw new \Exception("Aucune action détectée");
             }
         } catch (Exception $e) {
@@ -52,15 +51,14 @@ class AuthController extends Controller
         $userMail = "";
 
         try {
-
             if (!isset($_POST['logIn'])) {
                 $this->render("Auth/log-in", ['errors' => $errors, 'mail' => $userMail]);
                 exit;
             }
 
-            $userRepository = new UserRepository;
-            $userValidator = new UserValidator;
-            $voitureRepository = new VoitureRepository;
+            $userRepository = new UserRepository();
+            $userValidator = new UserValidator();
+            $voitureRepository = new VoitureRepository();
 
             $mail = htmlspecialchars($_POST['mail']) ?? "";
             $user = $userRepository->findOneByMail($mail);
@@ -90,7 +88,6 @@ class AuthController extends Controller
             $this->connectUser($user, $userRepository);
             UserController::redirectAfterLogin($user, $userRepository);
             exit;
-            
         } catch (Exception $e) {
             $this->render("Errors/404", [
                 'error' => $e->getMessage()
@@ -128,7 +125,8 @@ class AuthController extends Controller
             "password" => $user->getPassword(),
             "role" => $user->getRoleId(),
         ];
-        // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+        // On crée cette session pour pouvoir afficher le message de succès,
+        // le message_code c'est pour l'icon de SweetAlert
         $_SESSION['message_to_User'] = "Vous êtes connectez";
         $_SESSION['message_code'] = "success";
     }

@@ -63,7 +63,8 @@ require_once BASE_PATH . '/Templates/header.php';
           <div class="alert alert-warning p-2 m-0 border border-dark" id="covoiturageNotFound">
             <!-- Affichage du message avec la date du covoiturage plus proche -->
             <p class="small-text mb-0">Désolé, aucun covoiturage n'est disponible à cette date.
-              <br> Cependant, nous avons trouvé une alternative proche : <?= $newDateDepart->format("d-m-Y") ?>. Souhaitez-vous la consulter ?
+              <br> Cependant, nous avons trouvé une alternative proche : <?= $newDateDepart->format("d-m-Y") ?>.
+              Souhaitez-vous la consulter ?
             </p>
           </div>
           <!-- Si la variable noCovoiturageFoundMsg n'est pas vide, c'est à dire qu'on n'a pas trouvé un covoiturage 

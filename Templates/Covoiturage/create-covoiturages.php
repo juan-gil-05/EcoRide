@@ -18,10 +18,15 @@ require_once  BASE_PATH . '/Templates/header.php';
                     <label for="dateTimeDepart" class="form-label content-text">Date et heure de départ:</label>
                     <input type="datetime-local" name="date_heure_depart" id="dateTimeDepart"
                         value="<?= (!empty($dateTimeDepart)) ? $dateTimeDepart->format("Y-m-d H:i") : ''; ?>"
-                        class="form-control content-text <?= (isset($errors['dateTimeDepartEmpty'])) ? "is-invalid" : "" ?>">
+                        class="form-control content-text 
+                        <?= (isset($errors['dateTimeDepartEmpty']))
+                            ? "is-invalid"
+                            : "" ?>">
                     <!-- Si il y a des erreurs on affiche le message d'erreur -->
                     <?php if (isset($errors['dateTimeDepartEmpty'])) { ?>
-                        <div class="invalid-tooltip position-static small-text"><?= $errors['dateTimeDepartEmpty'] ?></div>
+                        <div class="invalid-tooltip position-static small-text">
+                            <?= $errors['dateTimeDepartEmpty'] ?>
+                        </div>
                     <?php } ?>
                 </div>
                 <!-- Date et heure d'arrivée -->
@@ -29,10 +34,15 @@ require_once  BASE_PATH . '/Templates/header.php';
                     <label for="dateTimeArrivee" class="form-label content-text">Date et heure d'arrivée:</label>
                     <input type="datetime-local" name="date_heure_arrivee" id="dateTimeArrivee"
                         value="<?= (!empty($dateTimeArrivee)) ? $dateTimeArrivee->format("Y-m-d H:i") : ''; ?>"
-                        class="form-control content-text <?= (isset($errors['dateTimeArriveeEmpty'])) ? "is-invalid" : "" ?>">
+                        class="form-control content-text 
+                            <?= (isset($errors['dateTimeArriveeEmpty']))
+                                ? "is-invalid"
+                                : "" ?>">
                     <!-- Si il y a des erreurs on affiche le message d'erreur -->
                     <?php if (isset($errors['dateTimeArriveeEmpty'])) { ?>
-                        <div class="invalid-tooltip position-static small-text"><?= $errors['dateTimeArriveeEmpty'] ?></div>
+                        <div class="invalid-tooltip position-static small-text">
+                            <?= $errors['dateTimeArriveeEmpty'] ?>
+                        </div>
                     <?php } ?>
                 </div>
             </div>
@@ -43,10 +53,15 @@ require_once  BASE_PATH . '/Templates/header.php';
                     <label for="adresseDepart" class="form-label content-text">Adresse de départ:</label>
                     <input type="text" name="adresse_depart" id="adresseDepart"
                         value="<?= htmlspecialchars($adresseDepart) ?>"
-                        class="form-control content-text <?= (isset($errors['adresseDepartEmpty'])) ? "is-invalid" : "" ?>">
+                        class="form-control content-text 
+                            <?= (isset($errors['adresseDepartEmpty']))
+                                ? "is-invalid"
+                                : "" ?>">
                     <!-- Si il y a des erreurs on affiche le message d'erreur -->
                     <?php if (isset($errors['adresseDepartEmpty'])) { ?>
-                        <div class="invalid-tooltip position-static small-text"><?= $errors['adresseDepartEmpty'] ?></div>
+                        <div class="invalid-tooltip position-static small-text">
+                            <?= $errors['adresseDepartEmpty'] ?>
+                        </div>
                     <?php } ?>
                 </div>
                 <!-- Adresse d'arrivée -->
@@ -54,10 +69,15 @@ require_once  BASE_PATH . '/Templates/header.php';
                     <label for="adresseArrivee" class="form-label content-text">Adresse d'arrivée:</label>
                     <input type="text" name="adresse_arrivee" id="adresseArrivee"
                         value="<?= htmlspecialchars($adresseArrivee) ?>"
-                        class="form-control content-text <?= (isset($errors['adresseArriveeEmpty'])) ? "is-invalid" : "" ?>">
+                        class="form-control content-text 
+                            <?= (isset($errors['adresseArriveeEmpty']))
+                                ? "is-invalid"
+                                : "" ?>">
                     <!-- Si il y a des erreurs on affiche le message d'erreur -->
                     <?php if (isset($errors['adresseArriveeEmpty'])) { ?>
-                        <div class="invalid-tooltip position-static small-text"><?= $errors['adresseArriveeEmpty'] ?></div>
+                        <div class="invalid-tooltip position-static small-text">
+                            <?= $errors['adresseArriveeEmpty'] ?>
+                        </div>
                     <?php } ?>
                 </div>
             </div>
@@ -65,7 +85,9 @@ require_once  BASE_PATH . '/Templates/header.php';
             <div class="d-flex covoiturage-form-div">
                 <!-- Nombre des places disponibles -->
                 <div>
-                    <label for="nbPlaceDisponible" class="form-label content-text">Nombre des places disponibles:</label>
+                    <label for="nbPlaceDisponible" class="form-label content-text">
+                        Nombre des places disponibles:
+                    </label>
                     <input type="number" name="nb_place_disponible" id="nbPlaceDisponible"
                         value="<?= (!empty($nbPlaceDisponibles)) ? $nbPlaceDisponibles : '0'; ?>"
                         class="form-control content-text <?= (isset($errors['nbPlaceEmpty'])) ? "is-invalid" : "" ?>">
@@ -85,7 +107,9 @@ require_once  BASE_PATH . '/Templates/header.php';
                         <div class="invalid-tooltip position-static small-text"><?= $errors['prixEmpty'] ?></div>
                     <?php } ?>
                     <!-- Text pour donner info à l'utilisateur -->
-                    <span class="form-text small-text text-dark">2 crédits sont déduits pour le bon fonctionnement de la plateforme</span>
+                    <span class="form-text small-text text-dark">
+                        2 crédits sont déduits pour le bon fonctionnement de la plateforme
+                    </span>
                 </div>
             </div>
             <!-- Sélecctioner la voiture du covoiturage ou bouton pour créer en enregistrer une nouvelle -->
@@ -112,14 +136,19 @@ require_once  BASE_PATH . '/Templates/header.php';
                         <div class="invalid-tooltip position-static small-text"><?= $errors['voitureEmpty'] ?></div>
                     <?php } ?>
                     <!-- Lien pour enregistrer une nouvelle voiture -->
-                    <a class="mt-2 small-text text-light" href="?controller=voiture&action=carInscription">Cliquez ici pour enregistrer une nouvelle voiture</a>
+                    <a class="mt-2 small-text text-light" href="?controller=voiture&action=carInscription">
+                        Cliquez ici pour enregistrer une nouvelle voiture
+                    </a>
                 </div>
             </div>
         </div>
 
         <!-- Button pour créer le covoiturage -->
         <div class="d-flex justify-content-center mt-4 mb-5">
-            <button class="btn btn-warning text-dark w-50 py-3 mt-5 content-text fw-medium" name="createCovoiturage" type="submit">Créer</button>
+            <button class="btn btn-warning text-dark w-50 py-3 mt-5 content-text fw-medium"
+                name="createCovoiturage" type="submit">
+                Créer
+            </button>
         </div>
 
     </form>

@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Repository\CovoiturageRepository;
 use App\Repository\UserRepository;
 use App\Security\Security;
 use App\Security\UserValidator;
@@ -31,13 +30,12 @@ class AdminController extends Controller
                         throw new \Exception("Cette action n'existe pas: " . $_GET['action']);
                         break;
                 }
-            }
-            // Si il n'y a pas une action dans l'url 
-            else {
+            } else {
+                // Si il n'y a pas une action dans l'url
                 throw new \Exception("Aucune action détectée");
             }
-        } // On return la page d'erreur s'il en existe un
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
+            // On return la page d'erreur s'il en existe un
             $this->render("Errors/404", [
                 'error' => $e->getMessage()
             ]);
@@ -55,7 +53,7 @@ class AdminController extends Controller
         // Si l'utilisateur est connecté en tant qu'administrateur
         if (Security::isAdmin()) {
             // repository pour la table User
-            $userRepository = new UserRepository;
+            $userRepository = new UserRepository();
             // On récupère tous les utilisateurs
             $allUsers = $userRepository->findAllUsers();
 
@@ -64,7 +62,8 @@ class AdminController extends Controller
                 $userId = $_POST['id']; // On récupère l'id de l'utilisateur à suspendre
                 // On supprime l'utilisateur
                 $userRepository->suspendUser($userId);
-                // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+                // On crée cette session pour pouvoir afficher le message de succès,
+                // le message_code c'est pour l'icon de SweetAlert
                 $_SESSION['message_to_User'] = 'Le compte utilisateur a bien été suspendu.';
                 $_SESSION['message_code'] = "success";
             }
@@ -82,8 +81,8 @@ class AdminController extends Controller
                     "errors" => $employeAccount['errors']
                 ]
             );
-        } // Sinon on envoie à la page de connexion
-        else {
+        } else {
+            // Sinon on envoie à la page de connexion
             header('Location: ?controller=auth&action=logIn');
         }
     }
@@ -112,11 +111,11 @@ class AdminController extends Controller
                 $errors = $UserValidator->signUpEmployeValidate($user);
                 // S'il n'y a pas des erreurs, on crée l'utilisateur dans la base des données
                 if (empty($errors)) {
-
                     // on crée l'employé dans la base de données
                     $userRepository->createEmployeAccount($user);
 
-                    // On crée cette session pour pouvoir afficher le message de succès, le message_code c'est pour l'icon de SweetAlert
+                    // On crée cette session pour pouvoir afficher le message de succès,
+                    // le message_code c'est pour l'icon de SweetAlert
                     $_SESSION['message_to_User'] = "Le compte employé a été créé avec succès.";
                     $_SESSION['message_code'] = "success";
                     // On envoie le json au fetch
@@ -152,8 +151,8 @@ class AdminController extends Controller
         // Si l'utilisateur est connecté en tant qu'administrateur
         if (Security::isAdmin()) {
             $this->render("User/adminGraphs");
-        } // Sinon on envoie à la page de connexion
-        else {
+        } else {
+            // Sinon on envoie à la page de connexion
             header('Location: ?controller=auth&action=logIn');
         }
     }

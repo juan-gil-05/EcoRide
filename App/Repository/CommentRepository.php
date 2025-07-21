@@ -7,7 +7,8 @@ class CommentRepository extends Repository
     // Fonction pour chercher tous les commentaires signalés
     public function searchAllComments(): array
     {
-        $sql = ("SELECT C.id AS covoiturage_id, C.date_heure_depart, C.date_heure_arrivee, C.adresse_depart, C.adresse_arrivee,
+        $sql = ("SELECT C.id AS covoiturage_id, C.date_heure_depart, 
+                C.date_heure_arrivee, C.adresse_depart, C.adresse_arrivee,
                 Passager.id AS passager_id, Passager.pseudo AS passager_pseudo, Passager.mail AS passager_mail, 
                 Driver.id AS driver_id, Driver.pseudo AS driver_pseudo, Driver.mail AS driver_mail,
                 Comment.commentaire, Comment.id as commentaire_id

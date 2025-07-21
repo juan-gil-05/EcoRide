@@ -12,7 +12,8 @@ require_once  BASE_PATH . '/Templates/header.php';
             <div class="checkbox-group">
                 <!-- OUI -->
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" value="oui" name="questionRadio" id="yesCheckedRadio" required
+                    <input class="form-check-input" type="radio" value="oui"
+                        name="questionRadio" id="yesCheckedRadio" required
                         <?= ($questionRadioYes) ? "checked" : "" ?>>
                     <label class="form-check-label" for="yesCheckedRadio">
                         Oui
@@ -20,7 +21,8 @@ require_once  BASE_PATH . '/Templates/header.php';
                 </div>
                 <!-- NON -->
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" value="non" name="questionRadio" id="noCheckedRadio" required>
+                    <input class="form-check-input" type="radio" value="non"
+                        name="questionRadio" id="noCheckedRadio" required>
                     <label class="form-check-label" for="noCheckedRadio">
                         Non
                     </label>
@@ -28,7 +30,9 @@ require_once  BASE_PATH . '/Templates/header.php';
             </div>
             <!-- Si le covoiturage ne s'est pas bien passé, le passager peut laisser un comentaire -->
             <div class="comment-about-travel" id="commentAboutTravel">
-                <textarea class="form-control small-text" id="commentTextArea" name="commentaire" rows="2" placeholder="Dites-nous ce qui n’a pas fonctionné 😕"></textarea>
+                <textarea class="form-control small-text" id="commentTextArea"
+                    name="commentaire" rows="2" placeholder="Dites-nous ce qui n’a pas fonctionné 😕">
+                </textarea>
             </div>
         </div>
         <!-- Pour donner une note au chauffeur -->
@@ -40,13 +44,19 @@ require_once  BASE_PATH . '/Templates/header.php';
             </div>
             <!-- Étoiles pour noter le chauffeur -->
             <div class="note-stars">
-                <!-- Input caché pour envoyer la valeur de la note du chauffeur, selon la quantité des étoiles séléctionées -->
+                <!-- Input caché pour envoyer la valeur de la note du chauffeur, 
+                 selon la quantité des étoiles séléctionées -->
                 <input type="hidden" name="note" id="inputNote" value=""></input>
-                <i class="bi bi-star-fill star <?= (in_array(1, $driverNoteArray)) ? 'active-star' : '' ?>" data-value="1"></i>
-                <i class="bi bi-star-fill star <?= (in_array(2, $driverNoteArray)) ? 'active-star' : '' ?>" data-value="2"></i>
-                <i class="bi bi-star-fill star <?= (in_array(3, $driverNoteArray)) ? 'active-star' : '' ?>" data-value="3"></i>
-                <i class="bi bi-star-fill star <?= (in_array(4, $driverNoteArray)) ? 'active-star' : '' ?>" data-value="4"></i>
-                <i class="bi bi-star-fill star <?= (in_array(5, $driverNoteArray)) ? 'active-star' : '' ?>" data-value="5"></i>
+                <i class="bi bi-star-fill star <?= (in_array(1, $driverNoteArray)) ? 'active-star' : '' ?>"
+                    data-value="1"></i>
+                <i class="bi bi-star-fill star <?= (in_array(2, $driverNoteArray)) ? 'active-star' : '' ?>"
+                    data-value="2"></i>
+                <i class="bi bi-star-fill star <?= (in_array(3, $driverNoteArray)) ? 'active-star' : '' ?>"
+                    data-value="3"></i>
+                <i class="bi bi-star-fill star <?= (in_array(4, $driverNoteArray)) ? 'active-star' : '' ?>"
+                    data-value="4"></i>
+                <i class="bi bi-star-fill star <?= (in_array(5, $driverNoteArray)) ? 'active-star' : '' ?>"
+                    data-value="5"></i>
             </div>
             <!-- Erreur si le passager veut laisser un avis, il doit mettre une note également -->
             <?php if (isset($errors['avisNoteEmpty'])) { ?>
@@ -64,7 +74,8 @@ require_once  BASE_PATH . '/Templates/header.php';
             </div>
             <!-- Le titre de l'avis -->
             <div class="w-100 d-flex flex-column align-items-center">
-                <input type="text" name="titre" id="" class="form-control small-text" placeholder="Titre" value="<?= htmlspecialchars($avisTitle) ?>">
+                <input type="text" name="titre" class="form-control small-text"
+                    placeholder="Titre" value="<?= htmlspecialchars($avisTitle) ?>">
                 <!-- Erreur : si le passager veut laisser un avis, il doit mettre un titre -->
                 <?php if (isset($errors['avisTitleEmpty'])) { ?>
                     <div class="small-text mt-2">
@@ -74,18 +85,24 @@ require_once  BASE_PATH . '/Templates/header.php';
             </div>
             <!-- La déscription de l'avis -->
             <div class="w-100 d-flex flex-column align-items-center">
-                <textarea class="form-control small-text" name="avis" rows="3" placeholder="Avis"><?= $avisDescription ?></textarea>
+                <textarea class="form-control small-text" name="avis" rows="3"
+                    placeholder="Avis"><?= $avisDescription ?>
+                </textarea>
                 <!-- Erreur : si le passager veut laisser un avis, il doit mettre une déscription (l'avis) -->
                 <?php if (isset($errors['avisDescriptionEmpty'])) { ?>
                     <div class="small-text mt-2">
-                        <div class="alert alert-danger m-0 py-1 text-center"><?= $errors['avisDescriptionEmpty'] ?></div>
+                        <div class="alert alert-danger m-0 py-1 text-center">
+                            <?= $errors['avisDescriptionEmpty'] ?>
+                        </div>
                     </div>
                 <?php } ?>
             </div>
         </div>
         <!-- Bouton pour envoyer le formulaire -->
         <div class="form-div">
-            <button type="submit" class="btn btn-primary secondary-btn text-light content-text" name="validateCovoiturageForm">Envoyer</button>
+            <button type="submit" class="btn btn-primary secondary-btn text-light content-text"
+                name="validateCovoiturageForm">Envoyer
+            </button>
         </div>
     </form>
 </section>

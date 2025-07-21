@@ -14,7 +14,7 @@ class Mongodb
     private $db_password_mongo;
     private $db_port_mongo;
     private $db_host_mongo;
-    private static $_instance = null;
+    private static $instance = null;
 
     public function __construct()
     {
@@ -32,13 +32,13 @@ class Mongodb
     // SINGLETON pour instancier la class Mongodb une seule fois
     public static function getInstance(): self
     {
-        if (is_null(self::$_instance)) {
-            self::$_instance = new Mongodb;
+        if (is_null(self::$instance)) {
+            self::$instance = new Mongodb();
         }
-        return self::$_instance;
+        return self::$instance;
     }
 
-    // Fonction pour se connecter à mongodb 
+    // Fonction pour se connecter à mongodb
     public function mongoConnect()
     {
         $user = $this->db_user_mongo;
@@ -51,7 +51,9 @@ class Mongodb
             // Connection string en LOCAL
             $connectionPath = "mongodb://" . $user . ":" . $password . "@" . $host . ":" . $port . "/" . $dbName;
             // Connection string en mongoDB Atlas
-            // $connectionPath = "mongodb+srv://" . $user . ":" . $password . "@" . $host . "/?retryWrites=true&w=majority&appName=" . $dbName;
+            // $connectionPath =
+            // "mongodb+srv://" . $user . ":" . $password . "@" .
+            // $host . "/?retryWrites=true&w=majority&appName=" . $dbName;
             // Instance de la classe Client
             $mongo = new Client($connectionPath);
             $db = $mongo->selectDatabase($dbName); // Sélection de la base de données
