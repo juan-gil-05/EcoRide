@@ -1,0 +1,5 @@
+# Fichier pour permettre a tous les (search engine boots) 
+# de 'verifier' tous les routes de mon code, afin d'améliorer le SEO
+
+User-agent: *
+Disallow:

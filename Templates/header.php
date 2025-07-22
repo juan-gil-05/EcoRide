@@ -31,7 +31,10 @@ use App\Security\Security;
     <!-- SweetAlert2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.min.css" rel="stylesheet">
 
-    <title>EcoRide</title>
+    <title>EcoRide – Covoiturage écologique et économique en France</title>
+    <!-- Pour améliorer le SEO -->
+    <meta name="description" content="EcoRide, la plateforme de covoiturage écologique et économique. Trouvez un trajet, partagez votre voyage et réduisez votre empreinte carbone.">
+
 </head>
 
 <body>
@@ -39,7 +42,7 @@ use App\Security\Security;
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.min.js"></script>
     <!-- Pour afficher le loader -->
     <div class="loader" id="loader"></div>
-    
+
     <header>
         <!--Navbar du site-->
         <nav class="navbar navbar-expand-lg bg-light header">
