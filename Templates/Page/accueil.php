@@ -22,7 +22,8 @@ require_once BASE_PATH . '/Templates/header.php';
           <div>
             <!-- Icon -->
             <i class="bi bi-record-circle"></i>
-            <input type="text" name="adresse_depart" id="" placeholder="Adresse de départ"
+            <label for="adresse_depart" class="visually-hidden">Adresse de départ</label>
+            <input type="text" name="adresse_depart" id="adresse_depart" placeholder="Adresse de départ"
               value="<?= htmlspecialchars($adresseDepart) ?>"
               class="form-control content-text <?= (isset($errors['adresseDepartEmpty'])) ? "is-invalid" : "" ?>" />
             <!-- Si il y a des erreurs on affiche le message d'erreur -->
@@ -34,7 +35,8 @@ require_once BASE_PATH . '/Templates/header.php';
           <div>
             <!-- Icon -->
             <i class="bi bi-geo-alt-fill"></i>
-            <input type="text" name="adresse_arrivee" id="" placeholder="Adresse d’arrivée"
+            <label for="adresse_arrivee" class="visually-hidden">Adresse d’arrivée</label>
+            <input type="text" name="adresse_arrivee" id="adresse_arrivee" placeholder="Adresse d’arrivée"
               value="<?= htmlspecialchars($adresseArrivee) ?>"
               class="form-control content-text <?= (isset($errors['adresseArriveeEmpty'])) ? "is-invalid" : "" ?>" />
             <?php if (isset($errors['adresseArriveeEmpty'])) { ?>
@@ -48,7 +50,8 @@ require_once BASE_PATH . '/Templates/header.php';
           <div class="date">
             <!-- Icon -->
             <i class="bi bi-calendar2-week-fill"></i>
-            <input type="date" name="date_heure_depart" id="" value="<?= $dateDepart ?>"
+            <label for="dateTimeInput" class="visually-hidden">Date de départ</label>
+            <input type="date" name="date_heure_depart" id="dateTimeInput" value="<?= $dateDepart ?>"
               class="form-control content-text <?= (isset($errors['dateDepartEmpty'])) ? "is-invalid" : "" ?>" />
             <!-- Si il y a des erreurs on affiche le message d'erreur -->
             <?php if (isset($errors['dateDepartEmpty'])) { ?>

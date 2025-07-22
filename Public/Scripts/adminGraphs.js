@@ -26,12 +26,12 @@ function createChart(charData, chartType) {
             datasets: [{
                 label: "Nombre de covoiturages par jour",
                 data: numberOfCovoiturages,
-                backgroundColor: "#0163AC",
+                backgroundColor: "#006ebc",
                 borderWidth: 1
             }, {
                 label: "Nombre de credits gagnes par jour",
                 data: gains, // Pour calculer les credits gagnes par jour
-                backgroundColor: "#EDE42C"
+                backgroundColor: "#f1ea49"
             }]
         },
         options: {

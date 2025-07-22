@@ -1,11 +1,11 @@
 // customisation des couleurs et les fonts
-$primary: #4caf50;
-$secondary: #0063ac;
-$tertiary: #ede42b;
-$warning: #ede42b; // Pour les couleurs des bouttons 'btn-warning'
-$light: #f5f5f5;
-$danger: #f44336;
-$dark: #4e4e4e;
+$primary: #2c772f;
+$secondary: #006ebc;
+$tertiary: #f1ea49;
+$warning: #f1ea49; // Pour les couleurs des bouttons 'btn-warning'
+$light: #FDFDFD;
+$danger: #E53935;
+$dark: #333333;
 
 $font-family-sans-serif: "Poppins", sans-serif !default; // headline et subtitle text
 $font-family-serif: "Montserrat", serif; // content Text
@@ -75,4 +75,3 @@ ul{
 .hidden {
   display: none !important;
 }
-

@@ -46,7 +46,6 @@ $scripts = [
     'signUp' => ['showPassword.js', 'driverForm.js'],
     'preferencesInscription' => ['preferencesForm.js'],
     'profil' => ['preferencesForm.js'],
-    'accueil' => ['searchCovoiturage.js'],
     'mesCovoiturages' => ['startCovoiturage.js'],
     'validateAvisAndComments' => ['employeEspace.js'],
     'adminEspace' => ['showPassword.js', 'adminEspace.js'],

@@ -29,9 +29,9 @@ require_once  BASE_PATH . '/Templates/header.php';
           <!-- Icon du filtre -->
           <i class="bi bi-tree"></i>
           <!-- Nom du filtre -->
-          <label for="">Voyage Écologique</label>
+          <label for="ecoTrip">Voyage Écologique</label>
           <!-- Le filtre -->
-          <input class="form-check-input" type="checkbox" name="ecologique"
+          <input class="form-check-input" type="checkbox" name="ecologique" id="ecoTrip"
             <?= (!empty($_POST['ecologique'])) ? "checked" : "" ?> />
         </div>
         <!-- Filtre du Prix maximum -->
