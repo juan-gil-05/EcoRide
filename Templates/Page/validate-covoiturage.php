@@ -31,8 +31,8 @@ require_once  BASE_PATH . '/Templates/header.php';
             <!-- Si le covoiturage ne s'est pas bien passé, le passager peut laisser un comentaire -->
             <div class="comment-about-travel" id="commentAboutTravel">
                 <textarea class="form-control small-text" id="commentTextArea"
-                    name="commentaire" rows="2" placeholder="Dites-nous ce qui n’a pas fonctionné 😕">
-                </textarea>
+                    name="commentaire" rows="2"
+                    placeholder="Dites-nous ce qui n’a pas fonctionné 😕"></textarea>
             </div>
         </div>
         <!-- Pour donner une note au chauffeur -->
@@ -86,8 +86,7 @@ require_once  BASE_PATH . '/Templates/header.php';
             <!-- La déscription de l'avis -->
             <div class="w-100 d-flex flex-column align-items-center">
                 <textarea class="form-control small-text" name="avis" rows="3"
-                    placeholder="Avis"><?= $avisDescription ?>
-                </textarea>
+                    placeholder="Avis"><?= htmlspecialchars($avisDescription) ?></textarea>
                 <!-- Erreur : si le passager veut laisser un avis, il doit mettre une déscription (l'avis) -->
                 <?php if (isset($errors['avisDescriptionEmpty'])) { ?>
                     <div class="small-text mt-2">

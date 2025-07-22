@@ -145,11 +145,6 @@ class EmployeController extends Controller
             $dateArrivee = new DateTime($comment['date_heure_arrivee']);
             $dateDepartFormatted[$commentId] = $dateDepart->format('d/m/Y à H\h:i');
             $dateArriveeFormatted[$commentId] = $dateArrivee->format('d/m/Y à H\h:i');
-
-            // echo ('<br>');
-            // // var_dump($comment['passager_pseudo']);
-            // var_dump($dateDepartFormatted[1]);
-            // echo ('<br>');
         }
 
 

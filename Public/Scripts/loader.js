@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
         link.addEventListener("click", (e) => {
             // Si le lien a l'attribut href, alors, on affiche le loader
             const href = link.getAttribute("href");
-            if (href) {
+            if (href && href != "#") {
                 loader.classList.remove("loader--hidden");
             }
         });
