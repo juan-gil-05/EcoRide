@@ -13042,9 +13042,8 @@ html {
   background-color: #FDFDFD;
 }
 .connection-form form .form-floating .show-password {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
+  position: absolute;
+  right: 0;
   margin-top: 7px;
 }
 .connection-form form .form-floating .show-password i {

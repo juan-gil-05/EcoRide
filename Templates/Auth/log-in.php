@@ -16,7 +16,7 @@ require_once  BASE_PATH . '/Templates/header.php';
             <div class="form-floating mb-3 ">
                 <input type="email" name="mail" class="form-control form-control-lg shadow-sm content-text
                 <?= (isset($errors['mail'])) || (isset($errors['invalidUser'])) ? "is-invalid" : "" ?>"
-                    id="floatingInput" placeholder="name@example.com" value="<?= $mail ?>">
+                    id="floatingInput" placeholder="name@example.com" value="<?= htmlspecialchars($mail) ?>">
                 <label for="floatingInput" class="content-text">Adresse e-mail</label>
                 <!-- Si il y a des erreurs on affiche le message d'erreur -->
                 <?php if (isset($errors['mail'])) { ?>
@@ -50,7 +50,7 @@ require_once  BASE_PATH . '/Templates/header.php';
             </div>
         <?php } ?>
         <!-- Button de connexion -->
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center mt-5">
             <button class="btn btn-warning btn-lg fw-semibold w-50 content-text"
                 name="logIn" type="submit">Se connecter</button>
         </div>
