@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Covoiturage;
 use App\Repository\AvisRepository;
 use App\Repository\CovoiturageRepository;
-use App\Repository\Repository;
 use App\Security\CovoiturageValidator;
 use App\Security\Security;
 use DateTime;
@@ -13,47 +12,9 @@ use Exception;
 
 class PageController extends Controller
 {
-    // Fonction pour gérer le routage
-    public function route(): void
-    {
-        try {
-            if (isset($_GET['action'])) {
-                switch ($_GET['action']) {
-                    // Action pour afficher la page d'accueil
-                    case 'accueil':
-                        $this->accueil();
-                        break;
-                    // Action pour afficher la page de contact
-                    case 'contact':
-                        $this->contact();
-                        break;
-                    // Action pour afficher la page dans laquelle le passager indique si le covoiturage s'est bien passé
-                    case 'validateCovoiturage':
-                        $this->validateCovoiturage();
-                        break;
-                    // Action pour afficher la page avec les mentions legales
-                    case 'legalMentions':
-                        $this->legalMentions();
-                        break;                    // Si l'action passee dans l'url n'existe pas
-                    default:
-                        throw new Exception("Cette action n'existe pas: " . $_GET['action']);
-                        break;
-                }
-            } else {
-                // Si il n'y a pas des action dans l'url
-                throw new \Exception("Aucune action détectée");
-            }
-        } catch (Exception $e) {
-            // On return la page d'erreur s'il en existe un
-            $this->render("Errors/404", [
-                'error' => $e->getMessage()
-            ]);
-        }
-    }
-
     /*
     Exemple d'appel depuis l'url
-        ?controller=page&action=accueil
+        /page/accueil
     */
     // Fonction pour afficher la page d'accueil
     protected function accueil()
@@ -115,7 +76,7 @@ class PageController extends Controller
                     // pour enregistrer les covoiturages trouvés dans une session,
                     // afin de pouvoir passer les donées ver une nouvelle page
                     $_SESSION['covoiturages'] = $covoiturages;
-                    header('location: ?controller=covoiturages&action=showAll');
+                    header('Location: /covoiturage/tous');
                 } else {
                     // Si on ne trouve pas des covoiturages dans la date passée, alors
                     // On appel la fonction pour chercher le covoiturage le plus proche à la date donnée par l'user
@@ -195,7 +156,7 @@ class PageController extends Controller
 
     /*
     Exemple d'appel depuis l'url
-        ?controller=page&action=contact
+        /page/contact
     */
     // Fonction pour afficher la page de contact
     protected function contact()
@@ -205,15 +166,15 @@ class PageController extends Controller
 
     /*
     Exemple d'appel depuis l'url
-        ?controller=page&action=validateCovoiturage
+        /page/validate-covoiturage
     */
     // Fonction pour afficher la page dans laquelle le passager indique si le covoiturage s'est bien passé
-    protected function validateCovoiturage()
+    protected function validerCovoiturage(string $encryptedPassagerId, string $encryptedCovoiturageId)
     {
         try {
             // On récupere les id passés dans l'url, et on les dechiffre
-            $passagerId = Security::decryptUrlParameter($_GET['passagerId']);
-            $covoiturageId = Security::decryptUrlParameter($_GET['covoiturageId']);
+            $passagerId = Security::decryptUrlParameter($encryptedPassagerId);
+            $covoiturageId = Security::decryptUrlParameter($encryptedCovoiturageId);
 
             // On appel le repository pour la classe Covoiturage
             $covoiturageRepository = new CovoiturageRepository();
@@ -284,7 +245,7 @@ class PageController extends Controller
                         "Votre note et commentaire ont bien été enregistrés et seront examinés par notre équipe.";
                     $_SESSION['message_code'] = "success";
                     // On redirige vers la page d'accueil
-                    header('location: ?controller=page&action=accueil');
+                    header('location: /page/accueil');
                     exit();
                 } elseif (count($errors) == 3) {
                     /* Si le passager n'a pas rempli les champs de l'avis et de la note,
@@ -295,7 +256,7 @@ class PageController extends Controller
                         "Nous sommes ravis que votre trajet se soit bien déroulé.";
                     $_SESSION['message_code'] = "success";
                     // // On redirige vers la page d'accueil
-                    header('location: ?controller=page&action=accueil');
+                    header('location: /page/accueil');
                     exit();
                 }
             } elseif (isset($_POST["validateCovoiturageForm"]) && $_POST['questionRadio'] == "non") {
@@ -313,7 +274,7 @@ class PageController extends Controller
                     "Nous allons examiner votre commentaire et contacter le chauffeur si nécessaire.";
                 $_SESSION['message_code'] = "success";
                 // // On redirige vers la page d'accueil
-                header('location: ?controller=page&action=accueil');
+                header('location: /page/accueil');
                 exit();
             }
         } catch (Exception $e) {
@@ -338,10 +299,10 @@ class PageController extends Controller
 
     /*
     Exemple d'appel depuis l'url
-        ?controller=page&action=legalMentions
+        /page/mentions-legales
     */
     // Fonction pour afficher les mentions légales
-    protected function legalMentions()
+    protected function mentionsLegales()
     {
         $this->render("Page/mentions-legales");
     }

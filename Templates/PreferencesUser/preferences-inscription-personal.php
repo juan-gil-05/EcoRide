@@ -35,7 +35,7 @@ require_once  BASE_PATH . '/Templates/header.php';
         </div>
         <!-- Lien si l'utilisateur veut passer cette étape -->
         <div class="d-flex justify-content-center content-text lien mt-3">
-            <a href="?controller=user&action=profil" class="text-dark">Passer cette étape</a>
+            <a href="/user/profil" class="text-dark">Passer cette étape</a>
         </div>
     </form>
 

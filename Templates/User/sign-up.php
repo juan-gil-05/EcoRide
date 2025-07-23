@@ -141,7 +141,7 @@ require_once  BASE_PATH . '/Templates/header.php';
     </div>
     <!-- Lien si l'utilisateur a déjà un compte -->
     <div class="d-flex justify-content-center mt-5 small-text lien">
-      <a href="?controller=auth&action=logIn" class="text-dark fw-semibold">J'ai dèjà un compte</a>
+      <a href="/auth/connexion" class="text-dark fw-semibold">J'ai dèjà un compte</a>
     </div>
 
   </form>

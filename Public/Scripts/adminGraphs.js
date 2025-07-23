@@ -2,7 +2,7 @@
 // On recupere l'element canvas
 const graph = document.getElementById("myChart")
 // On recupere les donnees de l'API
-fetch("index.php?controller=api&action=getGraphData")
+fetch("/api/getGraphData")
     .then(response => response.json())
     .then(data => {
         // On appelle la fonction createChart avec les donnees recuperees

@@ -47,7 +47,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                         <!-- Liste des préférences -->
                         <ul>
                             <!-- Bouton pour ajouter une nouvelle préférence -->
-                            <li class="add-icon" id="newPrefIcon" >
+                            <li class="add-icon" id="newPrefIcon">
                                 <!-- Icon avec le lien vers la page pour ajouter une préférence -->
                                 <div class="d-flex align-items-center gap-2">
                                     <i class="bi bi-plus-circle-fill"></i>
@@ -130,7 +130,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                             <!-- Bouton pour ajouter une nouvelle voiture -->
                             <li class="add-icon">
                                 <!-- Icon avec le lien vers la page pour ajouter une voiture -->
-                                <a href="?controller=voiture&action=carInscription"
+                                <a href="/voiture/inscription"
                                     class="d-flex align-items-center gap-2">
                                     <i class="bi bi-plus-circle-fill"></i>
                                     <!-- Placeholder -->
@@ -154,7 +154,7 @@ require_once  BASE_PATH . '/Templates/header.php';
 <?php if (Security::isEmploye()) { ?>
     <section class="employe-section content-text pt-2">
         <!-- Bouton pour acceder à l'espace employé -->
-        <a class="btn btn-warning secondary-btn mt-2" href="?controller=employe&action=validateAvisAndComments">
+        <a class="btn btn-warning secondary-btn mt-2" href="/employe/avisCommentaires">
             Mon espace
         </a>
     </section>
@@ -167,11 +167,11 @@ require_once  BASE_PATH . '/Templates/header.php';
             1. nombre des covoiturages par jour
             2. combien la plateforme gagne de crédit en fonction des jours -->
         <a class="btn btn-secondary text-white secondary-btn mt-2 small-text"
-            href="?controller=admin&action=adminGraphs">
+            href="/admin/graphique">
             Visualiser les graphiques
         </a>
         <!-- Bouton pour voir la table de tous les utilisateurs -->
-        <a class="btn btn-warning text-dark secondary-btn mt-2 small-text" href="?controller=admin&action=adminEspace">
+        <a class="btn btn-warning text-dark secondary-btn mt-2 small-text" href="/admin/espace">
             Tous les comptes utilisateur
         </a>
     </section>
@@ -179,7 +179,7 @@ require_once  BASE_PATH . '/Templates/header.php';
 
 <!-- Boutton pour se deconnecter -->
 <div class="d-flex justify-content-center mt-5 mb-5">
-    <a href="?controller=auth&action=logOut"
+    <a href="/auth/deconnexion"
         class="btn btn-danger text-light secondary-btn content-text">
         Se deconnecter
     </a>

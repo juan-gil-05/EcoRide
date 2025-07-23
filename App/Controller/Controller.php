@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Tools\StringTools;
 use Exception;
 
 class Controller
@@ -10,62 +11,51 @@ class Controller
     public function route(): void
     {
         try {
-            if (isset($_GET['controller'])) {
-                switch ($_GET['controller']) {
-                    // Appel du contrôleur page
-                    case 'page':
-                        $controller = new PageController();
-                        $controller->route();
-                        break;
-                    // Appel du contrôleur covoiturages
-                    case 'covoiturages':
-                        $controller = new CovoiturageController();
-                        $controller->route();
-                        break;
-                    // Appel du contrôleur user
-                    case 'user':
-                        $controller = new UserController();
-                        $controller->route();
-                        break;
-                    // Appel du contrôleur auth
-                    case 'auth':
-                        $controller = new AuthController();
-                        $controller->route();
-                        break;
-                    // Appel du contrôleur voiture
-                    case 'voiture':
-                        $controller = new VoitureController();
-                        $controller->route();
-                        break;
-                    // Appel du contrôleur preference
-                    case 'preferences':
-                        $controller = new PreferenceUserController();
-                        $controller->route();
-                        break;
-                    // Appel du controlleur pour l'espace employé
-                    case 'employe':
-                        $controller = new EmployeController();
-                        $controller->route();
-                        break;
-                    // Appel du controlleur pour l'espace admin
-                    case 'admin':
-                        $controller = new AdminController();
-                        $controller->route();
-                        break;
-                    // Appel du controlleur pour les API
-                    case 'api':
-                        $this->apiRoute();
-                        break;
-                    // Si le contrôleur passe dans l'url n'existe pas
-                    default:
-                        throw new Exception("Ce contrôleur n'existe pas: " . $_GET['controller']);
-                        break;
-                }
+            $url = $_GET['url'] ?? "";
+            $url = trim($url, '/');
+            $segments = explode('/', $url);
+
+            $controllerName = $segments[0] ?? "page";
+            $action = StringTools::toCamelCase($segments[1]) ?? "accueil";
+
+            switch ($controllerName) {
+                case 'page':
+                    $controller = new PageController();
+                    break;
+                case 'covoiturage':
+                    $controller = new CovoiturageController();
+                    break;
+                case 'user':
+                    $controller = new UserController();
+                    break;
+                case 'auth':
+                    $controller = new AuthController();
+                    break;
+                case 'voiture':
+                    $controller = new VoitureController();
+                    break;
+                case 'preference':
+                    $controller = new PreferenceUserController();
+                    break;
+                case 'employe':
+                    $controller = new EmployeController();
+                    break;
+                case 'admin':
+                    $controller = new AdminController();
+                    break;
+                // pour gerer le routage de l'API
+                case 'api':
+                    $controller = new ApiController();
+                    break;
+                default:
+                    throw new Exception("Ce contrôleur n'existe pas: " . $controllerName);
+            };
+
+            if (method_exists($controller, $action)) {
+                $params = array_slice($segments, 2);
+                $controller->$action(...$params);
             } else {
-                // Si il n'y a pas des contôleur dans l'url
-                // On charge la page d'accueil
-                $controller = new PageController();
-                $controller->accueil();
+                throw new Exception("Cette action n'existe pas: " . $action);
             }
         } catch (Exception $e) {
             $this->render("Errors/404", [
@@ -98,36 +88,6 @@ class Controller
                     'error' => $e->getMessage()
                 ]
             );
-        }
-    }
-
-    // Fonction pour gerer le routage de l'API
-    private function apiRoute()
-    {
-        if (isset($_GET['action'])) {
-            switch ($_GET['action']) {
-                // Action pour obtenir les données du graphique
-                case 'getGraphData':
-                    $apiController = new ApiController();
-                    $apiController->getGraphData();
-                    break;
-                // Action pour démarrer un covoiturage
-                case 'startCovoiturage':
-                    $apiController = new ApiController();
-                    $apiController->startCovoiturage();
-                    break;
-                // Action pour indiquer l'arrivée du covoiturage
-                case 'stopCovoiturage':
-                    $apiController = new ApiController();
-                    $apiController->stopCovoiturage();
-                    break;
-                // Si l'action passée dans l'url n'existe pas
-                default:
-                    throw new \Exception("Cette action n'existe pas dans l'API");
-            }
-        } else {
-            // Si il n'y a pas une action dans l'url
-            throw new \Exception("Aucune action détectée dans l'API");
         }
     }
 }

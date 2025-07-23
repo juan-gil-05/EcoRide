@@ -10,42 +10,12 @@ use Exception;
 
 class AuthController extends Controller
 {
-    // Fonction pour gérer le routage
-    public function route(): void
-    {
-        try {
-            if (isset($_GET['action'])) {
-                switch ($_GET['action']) {
-                    // Action pour se connecter
-                    case 'logIn':
-                        $this->logIn();
-                        break;
-                    // Action pour se deconnecter
-                    case 'logOut':
-                        $this->logOut();
-                        break;
-                    // Si l'action passée dans l'url n'existe pas
-                    default:
-                        throw new Exception("Cette action n'existe pas: " . $_GET['action']);
-                        break;
-                }
-            } else {
-                // Si il n'y a pas des action dans l'url
-                throw new \Exception("Aucune action détectée");
-            }
-        } catch (Exception $e) {
-            $this->render("Errors/404", [
-                'error' => $e->getMessage()
-            ]);
-        }
-    }
-
     /*
     Exemple d'appel depuis l'url
-        ?controller=auth&action=logIn
+        /auth/connexion
     */
     // Fonction pour se connecter
-    protected function logIn()
+    protected function connexion()
     {
         $errors = [];
         $userMail = "";
@@ -58,7 +28,6 @@ class AuthController extends Controller
 
             $userRepository = new UserRepository();
             $userValidator = new UserValidator();
-            $voitureRepository = new VoitureRepository();
 
             $mail = htmlspecialchars($_POST['mail']) ?? "";
             $user = $userRepository->findOneByMail($mail);
@@ -97,10 +66,10 @@ class AuthController extends Controller
 
     /*
     Exemple d'appel depuis l'url
-        ?controller=auth&action=logOut
+        /auth/deconnexion
     */
     // Fonction pour se deconnecter
-    protected function logOut()
+    protected function deconnexion()
     {
         //Prévient les attaques de fixation de session
         session_regenerate_id(true);
@@ -109,7 +78,7 @@ class AuthController extends Controller
         //Supprime les données du tableau $_SESSION
         unset($_SESSION);
         // On envoie l'utilisateur vers la page de connexion
-        header('location: index.php?controller=auth&action=logIn');
+        header('location: /auth/connexion');
     }
 
     public static function connectUser(User $user, UserRepository $userRepository)

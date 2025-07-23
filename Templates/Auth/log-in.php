@@ -56,7 +56,7 @@ require_once  BASE_PATH . '/Templates/header.php';
         </div>
         <!-- Lien si l'utilisateru n'a pas un compte, pour s'en créer un -->
         <div class="d-flex justify-content-center mt-5 content-text lien">
-            <a href="?controller=user&action=signUp" class="text-dark fw-semibold">Créer un compte</a>
+            <a href="/user/inscription" class="text-dark fw-semibold">Créer un compte</a>
         </div>
     </form>
 </section>

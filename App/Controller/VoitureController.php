@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\PreferenceUser;
 use App\Entity\Voiture;
-use App\Repository\PreferenceUserRepository;
 use App\Repository\VoitureRepository;
 use App\Security\Security;
 use App\Security\VoitureValidator;
@@ -12,41 +10,13 @@ use Exception;
 
 class VoitureController extends Controller
 {
-    // Fonction pour gérer le routage
-    public function route(): void
-    {
-        try {
-            if (isset($_GET['action'])) {
-                switch ($_GET['action']) {
-                    // Action pour créer une nouvelle voiture
-                    case 'carInscription':
-                        $this->carInscription();
-                        break;
-                    // Si l'action passée dans l'url n'existe pas
-                    default:
-                        throw new Exception("Cette action n'existe pas: " . $_GET['action']);
-                        break;
-                }
-            } else {
-                // Si il n'y a pas une action dans l'url
-                throw new \Exception("Aucune action détectée");
-            }
-        } catch (Exception $e) {
-            // On return la page d'erreur s'il en existe un
-            $this->render("Errors/404", [
-                'error' => $e->getMessage()
-            ]);
-        }
-    }
-
-
     /*
     Exemple d'appel depuis l'url
-        ?controller=voiture&action=carInscription
+        /voiture/inscription
     */
 
     // Fonction pour enregistrer une voiture
-    protected function carInscription()
+    protected function inscription()
     {
         // Si l'utilisateur est connecté
         if (Security::isLogged()) {
@@ -88,11 +58,11 @@ class VoitureController extends Controller
                             $_SESSION['message_to_User'] = "Voiture crée avec succès";
                             $_SESSION['message_code'] = "success";
                             // On redirige vers la page d'accueil
-                            header('location: ?controller=user&action=profil');
+                            header('location: /user/profil');
                             exit;
                         } else {
                             // On evoi vers la page pour enregistrer les préférences
-                            header('Location: ?controller=preferences&action=preferencesInscriptionSmoker');
+                            header('Location: /preference/choix-fumeur');
                         }
                     }
                 }
@@ -114,7 +84,7 @@ class VoitureController extends Controller
             );
         } else {
             // Sinon on envoie à la page de connexion
-            header('Location: ?controller=auth&action=logIn');
+            header('Location: /auth/connexion');
         }
     }
 }

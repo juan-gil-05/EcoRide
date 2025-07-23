@@ -3,53 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Repository\CovoiturageRepository;
 use App\Repository\PreferenceUserRepository;
 use App\Repository\UserRepository;
 use App\Repository\VoitureRepository;
 use App\Security\Security;
 use App\Security\UserValidator;
-use App\Security\VoitureValidator;
 use Exception;
 
 class UserController extends Controller
 {
-    // Fonction pour gérer le routage
-    public function route(): void
-    {
-        try {
-            if (isset($_GET['action'])) {
-                switch ($_GET['action']) {
-                    // Action pour créer un compte utilisateur
-                    case 'signUp':
-                        $this->signUp();
-                        break;
-                    // Si l'action passée dans l'url n'existe pas
-                    case 'profil':
-                        $this->profil();
-                        break;
-                    default:
-                        throw new Exception("Cette action n'existe pas: " . $_GET['action']);
-                        break;
-                }
-            } else {
-                // Si il n'y a pas une action dans l'url
-                throw new \Exception("Aucune action détectée");
-            }
-        } catch (Exception $e) {
-            // On return la page d'erreur s'il en existe un
-            $this->render("Errors/404", [
-                'error' => $e->getMessage()
-            ]);
-        }
-    }
-
     /*
     Exemple d'appel depuis l'url
-        ?controller=user&action=signUp
+        /user/inscription
     */
     // Fonction pour créer un compte utilisateur
-    protected function signUp()
+    protected function inscription()
     {
         $errors = [];
         $pseudo = "";
@@ -143,7 +111,7 @@ class UserController extends Controller
 
     /*
     Exemple d'appel depuis l'url
-        ?controller=user&action=profil
+        /user/profil
     */
     // Fonction pour afficher le profil de l'utilisateur
     protected function profil()
@@ -196,7 +164,7 @@ class UserController extends Controller
             );
         } else {
             // Sinon on envoie à la page de connexion
-            header('Location: ?controller=auth&action=logIn');
+            header('Location: /auth/connexion');
         }
     }
 
@@ -235,13 +203,13 @@ class UserController extends Controller
         if ($user->getRoleId() == "2" || $user->getRoleId() == "3") {
             // Chauffeur
             if ($voitureRepository->findCarByUserId($user->getId())) { // s'il a déjà des voitures
-                header('Location: ?controller=page&action=accueil');
+                header('Location: /page/accueil');
             } else { // sinon, on envoie vers la page d'inscription d'une voiture
-                header('Location: ?controller=voiture&action=carInscription');
+                header('Location: /voiture/inscription');
             }
         } else {
             // Passager
-            header('Location: ?controller=page&action=accueil');
+            header('Location: /page/accueil');
         }
         exit;
     }

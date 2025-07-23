@@ -83,7 +83,7 @@ require_once  BASE_PATH . '/Templates/header.php';
     <!-- Bouton pour visualiser les covoiturages de l'utilisateur en mode desktop -->
     <?php if (Security::isLogged()) { ?>
       <div class="mt-5 text-center mes-covoiturages-btn content-text">
-        <a href="?controller=covoiturages&action=mesCovoiturages"
+        <a href="/covoiturage/mes-covoiturages"
           class="btn btn-warning primary-btn shadow-section">Mes covoiturages
         </a>
       </div>
@@ -205,7 +205,7 @@ require_once  BASE_PATH . '/Templates/header.php';
       <!-- Bouton pour visualiser les covoiturages de l'utilisateur en mode mobile -->
       <?php if (Security::isLogged()) { ?>
         <div class="text-center mes-covoiturages-btn-mobile content-text">
-          <a href="?controller=covoiturages&action=mesCovoiturages"
+          <a href="/covoiturage/mes-covoiturages"
             class="btn btn-warning shadow-section">Mes covoiturages
           </a>
         </div>
@@ -287,7 +287,7 @@ require_once  BASE_PATH . '/Templates/header.php';
             </div>
             <!-- Bouton pour voir plus en détail le covoiturage -->
             <div class="content-text">
-              <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>"
+              <a href="/covoiturage/detail/<?= $covoiturageEncryptId[$covoiturage['id']] ?>"
                 class="btn btn-warning secondary-btn">
                 Détail
               </a>
@@ -297,7 +297,7 @@ require_once  BASE_PATH . '/Templates/header.php';
       <?php  }
     } else { ?>
       <h3 class="text-center headline-text">
-        <a class="text-white" href="?controller=page&action=accueil">Cliquez ici pour faire une recherche</a>
+        <a class="text-white" href="/page/accueil">Cliquez ici pour faire une recherche</a>
       </h3>
     <?php }
     ?>

@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Repository\AvisRepository;
 use App\Repository\CommentRepository;
-use App\Repository\CovoiturageRepository;
 use App\Repository\UserRepository;
 use App\Security\Security;
 use DateTime;
@@ -12,38 +11,12 @@ use Exception;
 
 class EmployeController extends Controller
 {
-    // Fonction pour gérer le routage
-    public function route(): void
-    {
-        try {
-            if (isset($_GET['action'])) {
-                switch ($_GET['action']) {
-                    // Action pour valider ou refuser les avis des chauffeurs
-                    case 'validateAvisAndComments':
-                        $this->validateAvisAndComments();
-                        break;
-                    default:
-                        throw new Exception("Cette action n'existe pas: " . $_GET['action']);
-                        break;
-                }
-            } else {
-                // Si il n'y a pas une action dans l'url
-                throw new \Exception("Aucune action détectée");
-            }
-        } catch (Exception $e) {
-            // On return la page d'erreur s'il en existe un
-            $this->render("Errors/404", [
-                'error' => $e->getMessage()
-            ]);
-        }
-    }
-
     /*
     Exemple d'appel depuis l'url
-        ?controller=employe&action=validateAvisAndComments
+        /employe/avis-commentaires
     */
     // Fonction pour valider ou refuser les avis des chauffeurs
-    private function validateAvisAndComments()
+    public function avisCommentaires()
     {
         // Si l'utilisateur est connecté en tant qu'employée
         if (Security::isEmploye()) {
@@ -82,7 +55,7 @@ class EmployeController extends Controller
             );
         } else {
             // Sinon on envoie à la page de connexion
-            header('Location: ?controller=auth&action=logIn');
+            header('Location: /auth/connexion');
         }
     }
 

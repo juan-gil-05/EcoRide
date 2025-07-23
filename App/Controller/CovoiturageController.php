@@ -16,51 +16,12 @@ use Exception;
 
 class CovoiturageController extends Controller
 {
-    // Fonction pour gérer le routage
-    public function route(): void
-    {
-        try {
-            if (isset($_GET['action'])) {
-                switch ($_GET['action']) {
-                    // Action pour afficher tous les covoiturages
-                    case 'showAll':
-                        $this->allCovoiturages();
-                        break;
-                    // Action pour afficher un covoiturage spécifique
-                    case 'showOne':
-                        $this->oneCovoiturage();
-                        break;
-                    // Action pour afficher tous les covoiturage de l'utilisateur
-                    case 'mesCovoiturages':
-                        $this->mesCovoiturages();
-                        break;
-                    // Action pour afficher le formulaire de création d'un covoiturage
-                    case 'createCovoiturage':
-                        $this->createCovoiturage();
-                        break;
-                    // Si l'action passee dans l'url n'existe pas
-                    default:
-                        throw new Exception("Cette action n'existe pas: " . $_GET['action']);
-                        break;
-                }
-            } else {
-                // Si il n'y a pas des action dans l'url
-                throw new \Exception("Aucune action détectée");
-            }
-        } catch (Exception $e) {
-            // On return la page d'erreur s'il en existe un
-            $this->render("Errors/404", [
-                'error' => $e->getMessage()
-            ]);
-        }
-    }
-
     /*
     Exemple d'appel depuis l'url
-        ?controller=covoiturages&action=showAll
+        /covoiturage/tous
     */
     // Fonction pour afficher tous les covoiturages
-    protected function allCovoiturages()
+    protected function tous()
     {
         // On récupére les données envoyées dans la session depuis la page d'accueil
         // S'il n'y a pas, on laisse un tableau vide
@@ -185,10 +146,10 @@ class CovoiturageController extends Controller
 
     /*
     Exemple d'appel depuis l'url
-        ?controller=covoiturages&action=showOne
+        /covoiturage/detail/encryptedId
     */
     // Fonction pour afficher les détails du covoiturage
-    protected function oneCovoiturage()
+    protected function detail(string $encryptedId)
     {
         // Appel des repositories
         $covoiturageRepository = new CovoiturageRepository();
@@ -201,7 +162,7 @@ class CovoiturageController extends Controller
         $passagerPseudo = [];
 
         // On récupére l'id du covoiturage passée dans l'url et on le décrypte
-        $covoiturageId = Security::decryptUrlParameter($_GET['id']);
+        $covoiturageId = Security::decryptUrlParameter($encryptedId);
 
         // Pour récupérer les détailles du covoiturage
         $covoiturageDetail = $covoiturageRepository->searchCovoiturageDetailsById($covoiturageId);
@@ -284,7 +245,7 @@ class CovoiturageController extends Controller
 
     /*
     Exemple d'appel depuis l'url
-        ?controller=covoiturages&action=mesCovoiturages
+        /covoiturage/mes-covoiturages
     */
     protected function mesCovoiturages()
     {
@@ -353,16 +314,16 @@ class CovoiturageController extends Controller
             );
         } else {
             // Sinon on envoie à la page de connexion
-            header('Location: ?controller=auth&action=logIn');
+            header('Location: /auth/connexion');
         }
     }
 
     /*
     Exemple d'appel depuis l'url
-        ?controller=covoiturages&action=createCovoiturage
+        /covoiturage/creer
     */
     // Function pour créer un nouveau covoiturage
-    protected function createCovoiturage()
+    protected function creer()
     {
         // Si l'utilisateur est connecté
         if (Security::isLogged()) {
@@ -407,7 +368,7 @@ class CovoiturageController extends Controller
                         $_SESSION['message_to_User'] = "Covoiturage ajouté avec succès";
                         $_SESSION['message_code'] = "success";
                         // On envoi vers la page de mes covoiturages
-                        header('Location: ?controller=covoiturages&action=mesCovoiturages');
+                        header('Location: /covoiturage/mes-covoiturages');
                         exit();
                     }
                 }
@@ -430,7 +391,7 @@ class CovoiturageController extends Controller
             }
         } else {
             // Sinon on envoie à la page de connexion
-            header('Location: ?controller=auth&action=logIn');
+            header('Location: /auth/connexion');
         }
     }
 
@@ -731,9 +692,9 @@ class CovoiturageController extends Controller
             $driverPseudo = ucfirst($passager['driver_pseudo']); // Pseudo du chauffeur
             // On crée le lien vers le site pour valider le covoiturage, avec les id chiffrés
             $linkToSite =
-                "https://ecoride.juangil.fr/index.php?controller=page&action=validateCovoiturage&passagerId=" .
+                "https://ecoride.juangil.fr/index.php/page/validate-covoiturage/" .
                 $passagerEncryptId[$passager['passager_id']] .
-                "&covoiturageId=" . $covoiturageEncryptId[$covoiturage['covoiturage_id']];
+                "/" . $covoiturageEncryptId[$covoiturage['covoiturage_id']];
 
             // Les paramètres pour envoyer le mail
             $mailParams = [

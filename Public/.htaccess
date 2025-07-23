@@ -1,10 +1,11 @@
 RewriteEngine On
 
-# To get direct acces to all the files and folders
+# Conditions pour dire que, si le fichier ou le directoire n'existent pas, alors 
+# on utilise la règle de réecriture d'url
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-# Redirect everything to index.php
-# QSA = to keep the url params
-# L = To say that it's the last rule
-RewriteRule ^ index.php [QSA,L]
+# Règle qui renvoi vers index.php?url=(le controller et l'action avec ses paramètres)
+# QSA(Query String Append) = Pour garder les paramètres d'url
+# L = Pour dire que c'est la dernière règle
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]

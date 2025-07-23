@@ -18,7 +18,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                 <!-- Si l'utilsateur est connecté et a le rôle du chauffeur, alors, 
                 on affiche le bouton vers la page pour saisir un nouveau covoiturage -->
                 <?php if (Security::isLogged() && Security::isChauffeur()) { ?>
-                    <a href="?controller=covoiturages&action=createCovoiturage"
+                    <a href="/covoiturage/creer"
                         class="btn btn-light mt-3 text-black content-text fw-medium">Créer un nouveau covoiturage</a>
                 <?php } ?>
             </div>
@@ -121,7 +121,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                                             </div>
                                         </div>
                                         <!-- Bouton pour voir les détails du covoiturage -->
-                                        <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>"
+                                        <a href="/covoiturage/detail/<?= $covoiturageEncryptId[$covoiturage['id']] ?>"
                                             class="btn btn-warning secondary-btn">Détail
                                         </a>
                                     </div>
@@ -225,7 +225,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                                             </div>
                                         </div>
                                         <!-- Bouton pour voir les détails du covoiturage -->
-                                        <a href="?controller=covoiturages&action=showOne&id=<?= $covoiturageEncryptId[$covoiturage['id']] ?>"
+                                        <a href="/covoiturage/detail/<?= $covoiturageEncryptId[$covoiturage['id']] ?>"
                                             class="btn btn-warning secondary-btn text-dark">Détail
                                         </a>
                                         <!-- Boutons pour démarrer, arrivé à destination et clôturé le covoiturage -->

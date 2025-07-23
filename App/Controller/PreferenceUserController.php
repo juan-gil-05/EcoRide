@@ -9,45 +9,12 @@ use Exception;
 
 class PreferenceUserController extends Controller
 {
-    // Fonction pour gérer le routage
-    public function route(): void
-    {
-        try {
-            if (isset($_GET['action'])) {
-                switch ($_GET['action']) {
-                    // Actions pour créer les préférences du chauffeur
-                    case 'preferencesInscriptionSmoker':
-                        $this->preferencesInscriptionSmoker();
-                        break;
-                    case 'preferencesInscriptionAnimal':
-                        $this->preferencesInscriptionAnimal();
-                        break;
-                    case 'preferencesInscriptionPersonal':
-                        $this->preferencesInscriptionPersonal();
-                        break;
-                    // Si l'action passée dans l'url n'existe pas
-                    default:
-                        throw new Exception("Cette action n'existe pas: " . $_GET['action']);
-                        break;
-                }
-            } else {
-                // Si il n'y a pas une action dans l'url
-                throw new \Exception("Aucune action détectée");
-            }
-        } catch (Exception $e) {
-            // On return la page d'erreur s'il en existe un
-            $this->render("Errors/404", [
-                'error' => $e->getMessage()
-            ]);
-        }
-    }
-
     /*
     Exemple d'appel depuis l'url
-        ?controller=preferences&action=preferencesInscriptionSmoker
+        /preference/choix-fumeur
     */
     // Fonction pour enregistrer une nouvelle préférence
-    public function preferencesInscriptionSmoker()
+    public function choixFumeur()
     {
         // Tableau d'erreurs
         $errors = [];
@@ -66,7 +33,7 @@ class PreferenceUserController extends Controller
                 if (empty($errors)) {
                     $preferenceRepository->createPreference($preference, $user_id);
                     // On envoi vers la page suivante pour continuer l'insciption
-                    header('Location: ?controller=preferences&action=preferencesInscriptionAnimal');
+                    header('Location: /preference/choix-animal');
                     exit;
                 }
             }
@@ -84,10 +51,10 @@ class PreferenceUserController extends Controller
 
     /*
     Exemple d'appel depuis l'url
-        ?controller=preferences&action=preferencesInscriptionAnimal
+        /preference/choix-animal
     */
     // Fonction pour enregistrer une nouvelle préférence
-    public function preferencesInscriptionAnimal()
+    public function choixAnimal()
     {
         // Tableau d'erreurs
         $errors = [];
@@ -107,7 +74,7 @@ class PreferenceUserController extends Controller
                 if (empty($errors)) {
                     $preferenceRepository->createPreference($preference, $user_id);
                     // On envoi vers la page suivante pour continuer l'insciption
-                    header('Location: ?controller=preferences&action=preferencesInscriptionPersonal');
+                    header('Location: /preference/choix-personnelle');
                     exit;
                 }
             }
@@ -125,10 +92,10 @@ class PreferenceUserController extends Controller
 
     /*
     Exemple d'appel depuis l'url
-        ?controller=preferences&action=preferencesInscriptionPersonal
+        /preference/choix-personnelle
     */
     // Fonction pour enregistrer une nouvelle préférence personnelle
-    public function preferencesInscriptionPersonal()
+    public function choixPersonnelle()
     {
         // L'id de l'utilisateur
         $user_id = $_SESSION['user']['id'];
@@ -146,7 +113,7 @@ class PreferenceUserController extends Controller
             $_SESSION['message_to_User'] = "Préférence sauvegardée";
             $_SESSION['message_code'] = "success";
             // On envoi vers la page d'accueil
-            header('Location: ?controller=user&action=profil');
+            header('Location: /user/profil');
             exit();
         }
 

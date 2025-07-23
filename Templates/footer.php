@@ -1,3 +1,8 @@
+<?php
+
+use App\Tools\StringTools;
+
+?>
 </main>
 
 <footer>
@@ -8,10 +13,10 @@
             <p>contact@ecoride.fr</p>
             <div class="separator"></div>
             <!--Nom-->
-            <a class="principal content-text text-white" href="?controller=page&action=accueil">EcoRide</a>
+            <a class="principal content-text text-white" href="/page/accueil">EcoRide</a>
             <div class="separator"></div>
             <!--Mentions légales-->
-            <a href="?controller=page&action=legalMentions" class="text-white">Mentions légales</a>
+            <a href="/page/mentions-legales" class="text-white">Mentions légales</a>
         </div>
         <!--Petit text du footer-->
         <p class="text">Réduisez votre empreinte écologique en covoiturant.</p>
@@ -26,33 +31,39 @@
     crossorigin="anonymous">
 </script>
 <!-- Import du JS pour la librairie DataTable -->
-<?php if (isset($_GET['action']) && $_GET['action'] == 'adminEspace') { ?>
+<?php
+// Pour récupérer l'action dans l'url
+$url = $_GET['url'] ?? "";
+$url = trim($url, '/');
+$segments = explode('/', $url);
+
+$currentAction = StringTools::toCamelCase($segments[1]) ?? "accueil";
+
+if (isset($currentAction) && $currentAction == 'espace') { ?>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.3.0/js/dataTables.bootstrap5.js"></script>
 <?php } ?>
 <!-- Import du JS pour la librairie Chart.js -->
-<?php if (isset($_GET['action']) && $_GET['action'] == 'adminGraphs') { ?>
+<?php if (isset($currentAction) && $currentAction == 'graphique') { ?>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <?php } ?>
 <!-- Import du propre JS-->
-<script src="../Scripts/loader.js"></script>
+<script src="/Scripts/loader.js"></script>
 <?php
 // Tableau avec les scripts js pour chaque page, dont l'action est la clé et les scripts les valeurs
 $scripts = [
-    'showAll' => ['driverNote.js'],
-    'validateCovoiturage' => ['driverNote.js', 'validateCovoiturage.js'],
-    'logIn' => ['showPassword.js'],
-    'signUp' => ['showPassword.js', 'driverForm.js'],
-    'preferencesInscription' => ['preferencesForm.js'],
+    'tous' => ['driverNote.js'],
+    'validerCovoiturage' => ['driverNote.js', 'validateCovoiturage.js'],
+    'connexion' => ['showPassword.js'],
+    'inscription' => ['showPassword.js', 'driverForm.js'],
     'profil' => ['preferencesForm.js'],
     'mesCovoiturages' => ['startCovoiturage.js'],
-    'validateAvisAndComments' => ['employeEspace.js'],
-    'adminEspace' => ['showPassword.js', 'adminEspace.js'],
-    'adminGraphs' => ['adminGraphs.js']
+    'avisCommentaires' => ['employeEspace.js'],
+    'espace' => ['showPassword.js', 'adminEspace.js'],
+    'graphique' => ['adminGraphs.js']
 ];
-// Pour récupérer l'action dans l'url
-$currentAction = $_GET['action'] ?? '';
+
 // Si l'action est dans le tableau, alors,
 // on parcours le tableau et on crée une balise script pour chaque script de l'action
 if (isset($scripts[$currentAction])) {

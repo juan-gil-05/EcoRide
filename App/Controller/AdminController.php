@@ -6,49 +6,16 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Security\Security;
 use App\Security\UserValidator;
-use DateTime;
 use Exception;
 
 class AdminController extends Controller
 {
-    // Fonction pour gérer le routage
-    public function route(): void
-    {
-        try {
-            if (isset($_GET['action'])) {
-                switch ($_GET['action']) {
-                    // Action pour afficher l'espace admin
-                    case 'adminEspace':
-                        $this->adminEspace();
-                        break;
-                    // Action pour afficher les graphiques du site
-                    case 'adminGraphs':
-                        $this->adminGraphs();
-                        break;
-                    // Si l'action passée dans l'url n'existe pas
-                    default:
-                        throw new \Exception("Cette action n'existe pas: " . $_GET['action']);
-                        break;
-                }
-            } else {
-                // Si il n'y a pas une action dans l'url
-                throw new \Exception("Aucune action détectée");
-            }
-        } catch (\Exception $e) {
-            // On return la page d'erreur s'il en existe un
-            $this->render("Errors/404", [
-                'error' => $e->getMessage()
-            ]);
-        }
-    }
-
-
     /*
     Exemple d'appel depuis l'url
-        ?controller=admin&action=adminEspace
+        /admin/espace
     */
     // Fonction pour afficher l'espace admin
-    private function adminEspace()
+    public function espace()
     {
         // Si l'utilisateur est connecté en tant qu'administrateur
         if (Security::isAdmin()) {
@@ -83,7 +50,7 @@ class AdminController extends Controller
             );
         } else {
             // Sinon on envoie à la page de connexion
-            header('Location: ?controller=auth&action=logIn');
+            header('Location: /auth/connexion');
         }
     }
 
@@ -143,17 +110,17 @@ class AdminController extends Controller
 
     /*
     Exemple d'appel depuis l'url
-        ?controller=admin&action=adminGraphs
+        /admin/graphique
     */
     // Fonction pour afficher les graphiques du site
-    private function adminGraphs()
+    public function graphique()
     {
         // Si l'utilisateur est connecté en tant qu'administrateur
         if (Security::isAdmin()) {
             $this->render("User/adminGraphs");
         } else {
             // Sinon on envoie à la page de connexion
-            header('Location: ?controller=auth&action=logIn');
+            header('Location: /auth/connexion');
         }
     }
 }

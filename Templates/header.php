@@ -48,7 +48,7 @@ use App\Security\Security;
         <nav class="navbar navbar-expand-lg bg-light header">
             <div class="container-fluid">
                 <!--Logo du site-->
-                <a class="navbar-brand headline-text" href="?controller=page&action=accueil">EcoRide</a>
+                <a class="navbar-brand headline-text" href="/page/accueil">EcoRide</a>
                 <!--Bouton du site en mode responsive-->
                 <button
                     class="navbar-toggler"
@@ -66,23 +66,23 @@ use App\Security\Security;
                     id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="?controller=page&action=accueil">Accueil</a>
+                            <a class="nav-link" href="/page/accueil">Accueil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="?controller=covoiturages&action=showAll">Covoiturage</a>
+                            <a class="nav-link" href="/covoiturage/tous">Covoiturage</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="?controller=page&action=contact">Contact</a>
+                            <a class="nav-link" href="/page/contact">Contact</a>
                         </li>
                         <!-- On verifie si l'utilisateur est connecté ou pas pour afficher le message indicat -->
                         <li class="nav-item">
                             <?php if (Security::islogged()) { ?>
-                                <a class="nav-link" href="?controller=user&action=profil">
+                                <a class="nav-link" href="/user/profil">
                                     Mon profil
                                     <i class="ms-2 bi bi-person-circle"></i>
                                 </a>
                             <?php } else { ?>
-                                <a class="nav-link" href="?controller=auth&action=logIn">Se connecter</a>
+                                <a class="nav-link" href="/auth/connexion">Se connecter</a>
                             <?php } ?>
                         </li>
                     </ul>

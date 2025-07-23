@@ -193,7 +193,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                         <?php } ?>
                     </div>
                     <p class="text-center">
-                        <a class="small-text " href="?controller=voiture&action=carInscription">
+                        <a class="small-text " href="/voiture/inscription">
                             Cliquez ici pour enregistrer une nouvelle voiture
                         </a>
                     </p>

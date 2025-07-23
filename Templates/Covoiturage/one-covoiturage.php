@@ -112,9 +112,9 @@ require_once  BASE_PATH . '/Templates/header.php';
               <p class="mb-4"><strong>Attention :</strong> Vous devez être connecté pour participer à ce trajet.</p>
               <!-- Liens pour se connecter ou créer un compte  -->
               <div class="d-flex gap-3 justify-content-center align-items-center text-white">
-                <a href="?controller=auth&action=logIn" class="btn btn-light content-text ">Se connecter</a>
+                <a href="/auth/connexion" class="btn btn-light content-text ">Se connecter</a>
                 <p class="mb-0"> | </p>
-                <a href="?controller=user&action=signUp" class="btn btn-light content-text ">S'inscrire</a>
+                <a href="/user/inscription" class="btn btn-light content-text ">S'inscrire</a>
               </div>
             </div>
             <!-- Si l'utilisateur participe déjà au covoiturage -->
