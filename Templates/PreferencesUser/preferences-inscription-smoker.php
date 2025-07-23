@@ -5,34 +5,43 @@ require_once  BASE_PATH . '/Templates/header.php';
 
 <!-- main -->
 
-<section class="container mt-5 connection-form d-flex flex-column align-items-center">
+<section class="container my-5 bg-light shadow-lg rounded-4 p-4 p-md-5 d-flex flex-column 
+        align-items-center connection-form">
     <!-- titre -->
-    <h1 class="mb-5 text-center text-white headline-text">Enregistrez vos préférences</h1>
+    <h1 class="text-primary fw-bold mb-5 headline-text text-center">Enregistrez vos préférences</h1>
     <!-- Première partie du formulaire pour enregistrer les préférences utilisateur -->
-    <form method="post" class="d-flex flex-column chauffeur">
-        <div class="mt-1 d-flex gap-2 preferences-form content-text">
-            <!-- Accepte les fumeurs ? -->
-            <div class="d-flex gap-2 align-items-center">
-                <label for="smokerCheck" class="form-check-label content-text">J'accepte les fumeurs: </label>
-                <input class="form-check-input"
-                    type="radio" name="preference_id" id="smokerCheck"
-                    value="1" role="button">
-                <span class="text-white small-text">Oui</span>
-                <input class="form-check-input"
-                    type="radio" name="preference_id" id="smokerCheck"
-                    value="3" role="button">
-                <span class="text-white small-text">Non</span>
+    <form method="post" class="chauffeur w-100">
+        <div class="row justify-content-center">
+            <div class="card shadow-sm rounded-3 p-4 mb-4 col-12 col-md-6 text-center">
+                <!-- Accepte les fumeurs ? -->
+                <div class="d-flex justify-content-center gap-3 align-items-center">
+                    <label for="smokerCheck" class="form-check-label content-text">J'accepte les fumeurs: </label>
+                    <div class="d-flex align-items-center gap-1">
+                        <input class="form-check-input mt-0 shadow-sm"
+                            type="radio" name="preference_id" id="smokerCheck"
+                            value="1" role="button">
+                        <span class="text-dark small-text">Oui</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-1">
+                        <input class="form-check-input mt-0 shadow-sm"
+                            type="radio" name="preference_id" id="smokerCheck"
+                            value="3" role="button">
+                        <span class="text-dark small-text">Non</span>
+                    </div>
+                </div>
+                <!-- S'il y a une erreur, on l'affiche à l'utilisateur -->
+                <?php if (isset($errors['preferenceIdEmpty'])) { ?>
+                    <div class="invalid-feedback d-block mt-2 small-text "><?= $errors['preferenceIdEmpty'] ?></div>
+                <?php } ?>
             </div>
-            <!-- S'il y a une erreur, on l'affiche à l'utilisateur -->
-            <?php if (isset($errors['preferenceIdEmpty'])) { ?>
-                <div class="invalid-tooltip position-static small-text "><?= $errors['preferenceIdEmpty'] ?></div>
-            <?php } ?>
         </div>
         <!-- Button pour continuer -->
-        <div class="d-flex justify-content-center mt-4 mb-5 ">
-            <button class="btn btn-warning text-dark w-50 py-3 mt-3 content-text fw-medium"
-                id="btnPreferences"
-                name="prefInscriptionSmoker" type="submit">Continuer</button>
+        <div class="row justify-content-center">
+            <div class="d-flex justify-content-center mt-4 col-12 col-md-6">
+                <button class="btn btn-warning btn-lg fw-semibold text-dark w-50 w-md-25 content-text"
+                    id="btnPreferences"
+                    name="prefInscriptionSmoker" type="submit">Continuer</button>
+            </div>
         </div>
     </form>
 
