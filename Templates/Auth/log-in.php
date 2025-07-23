@@ -27,13 +27,13 @@ require_once  BASE_PATH . '/Templates/header.php';
             <div class="form-floating mb-4">
                 <input type="password" name="password" class="form-control form-control-lg shadow-sm content-text
                 <?= (isset($errors['invalidUser']))
-                    ? "is-invalid"
+                    ? "is-invalid invalid-mdp"
                     : "" ?>" id="floatingPassword" placeholder="Password">
                 <label for="floatingPassword" class="content-text">Mot de passe</label>
-                <!-- message et button pour afficher le mot de passe -->
+                <!-- button pour afficher le mot de passe -->
                 <div class="show-password">
-                    <span class="text-dark small-text" id="showPasswordText">Afficher le mot de passe</span>
-                    <i class="bi bi-square" id="showPasswordIcon"></i>
+                    <span class="text-dark small-text" id="showPasswordText"></span>
+                    <i class="bi bi-eye" id="showPasswordIcon"></i>
                 </div>
             </div>
         </div>
