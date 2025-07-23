@@ -28,6 +28,7 @@ $font-family-serif: "Montserrat", serif; // content Text
   font-family: $font-family-sans-serif;
   font-size: 1.25rem !important;
   font-weight: 500;
+
   // Subtitle Text Mobile
   @media (max-width: "768px") {
     font-size: 1rem !important;
@@ -39,6 +40,7 @@ $font-family-serif: "Montserrat", serif; // content Text
 .content-text {
   font-family: $font-family-serif !important;
   font-size: 1.1rem !important;
+
   // Content Text Mobile
   @media (max-width: "768px") {
     font-size: 0.8rem !important;
@@ -50,6 +52,7 @@ $font-family-serif: "Montserrat", serif; // content Text
 .small-text {
   font-family: $font-family-serif !important;
   font-size: 1rem !important;
+
   // Small Text Mobile
   @media (max-width: "768px") {
     font-size: 0.6rem !important;
@@ -58,20 +61,27 @@ $font-family-serif: "Montserrat", serif; // content Text
 }
 
 // Style pour ajouter une petite ombre
-.shadow-section{
+.shadow-section {
   box-shadow: 0px 2px 15px 2px rgba(0, 0, 0, 0.25);
 }
+
 // Style pour les liens du site
-a{
+a {
   color: $dark !important;
   text-decoration: none !important;
 }
+
 // Pour suprimmer le style par defaut des listes
-ul{
+ul {
   list-style: none;
 }
 
 // Pour masquer des éléments
 .hidden {
   display: none !important;
+}
+
+// Style du button
+button {
+  border: 0.5px solid $dark !important;
 }
