@@ -10,12 +10,14 @@ require_once  BASE_PATH . '/Templates/header.php';
     <!-- titre -->
     <h1 class="text-primary fw-bold mb-5 headline-text text-center">Enregistrez vos préférences</h1>
     <!-- Première partie du formulaire pour enregistrer les préférences utilisateur -->
-    <form method="post" class="chauffeur w-100">
+    <form method="post" class="w-100">
         <div class="row justify-content-center">
             <div class="card shadow-sm rounded-3 p-4 mb-4 col-12 col-md-6 text-center">
                 <!-- Accepte les fumeurs ? -->
                 <div class="d-flex justify-content-center gap-3 align-items-center">
-                    <label for="smokerCheck" class="form-check-label content-text">J'accepte les fumeurs: </label>
+                    <label for="smokerCheck" class="form-check-label content-text fw-semibold">
+                        J'accepte les fumeurs: 
+                    </label>
                     <div class="d-flex align-items-center gap-1">
                         <input class="form-check-input mt-0 shadow-sm"
                             type="radio" name="preference_id" id="smokerCheck"

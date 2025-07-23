@@ -130,8 +130,6 @@ class PreferenceUserController extends Controller
     // Fonction pour enregistrer une nouvelle préférence personnelle
     public function preferencesInscriptionPersonal()
     {
-        // Tableau d'erreurs
-        $errors = [];
         // L'id de l'utilisateur
         $user_id = $_SESSION['user']['id'];
         $preferenceRepository = new PreferenceUserRepository();
@@ -152,8 +150,6 @@ class PreferenceUserController extends Controller
             exit();
         }
 
-        $this->render("PreferencesUser/preferences-inscription-personal", [
-            'errors' => $errors,
-        ]);
+        $this->render("PreferencesUser/preferences-inscription-personal");
     }
 }

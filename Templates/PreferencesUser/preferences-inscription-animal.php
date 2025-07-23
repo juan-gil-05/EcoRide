@@ -9,12 +9,14 @@ require_once  BASE_PATH . '/Templates/header.php';
     <!-- titre -->
     <h1 class="text-primary fw-bold mb-5 headline-text text-center">Enregistrez vos préférences</h1>
     <!-- Deuxième partie du formulaire pour enregistrer les préférences utilisateur -->
-    <form method="post" class="chauffeur w-100">
+    <form method="post" class="w-100">
         <div class="row justify-content-center">
             <div class="card shadow-sm rounded-3 p-4 mb-4 col-12 col-md-6 text-center">
                 <!-- Accepte des animaux ? -->
                 <div class="d-flex justify-content-center gap-3 align-items-center">
-                    <label for="animalCheck" class="form-check-label content-text">J'accepte les animaux: </label>
+                    <label for="animalCheck" class="form-check-label fw-semibold content-text">
+                        J'accepte les animaux:
+                    </label>
                     <div class="d-flex align-items-center gap-1">
                         <input class="form-check-input mt-0 shadow-sm"
                             type="radio" name="preference_id" id="animalCheck"
@@ -44,6 +46,7 @@ require_once  BASE_PATH . '/Templates/header.php';
     </form>
 
 </section>
+
 <?php
 // FOOTER
 require_once  BASE_PATH . '/Templates/footer.php';
