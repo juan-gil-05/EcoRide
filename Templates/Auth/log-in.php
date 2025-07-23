@@ -5,34 +5,34 @@ require_once  BASE_PATH . '/Templates/header.php';
 
 <!-- main -->
 
-<section class="container mt-5 connection-form">
+<section class="container my-5 bg-light shadow-lg rounded-4 p-4 p-md-5 connection-form">
     <!-- Formulaire pour se connecter -->
     <form method="post">
         <!-- titre -->
-        <h2 class="mb-4 text-center text-white headline-text">Se connecter à EcoRide</h2>
+        <h2 class="text-primary fw-bold mb-4 text-center headline-text">Se connecter à EcoRide</h2>
         <!-- Tous les champs du formulaire -->
         <div class="d-flex flex-column align-items-center content-text">
             <!-- E-mail -->
             <div class="form-floating mb-3 ">
-                <input type="email" name="mail" class="form-control content-text
+                <input type="email" name="mail" class="form-control form-control-lg shadow-sm content-text
                 <?= (isset($errors['mail'])) || (isset($errors['invalidUser'])) ? "is-invalid" : "" ?>"
                     id="floatingInput" placeholder="name@example.com" value="<?= $mail ?>">
                 <label for="floatingInput" class="content-text">Adresse e-mail</label>
                 <!-- Si il y a des erreurs on affiche le message d'erreur -->
                 <?php if (isset($errors['mail'])) { ?>
-                    <div class="invalid-tooltip position-static small-text"><?= $errors['mail'] ?></div>
+                    <div class="invalid-feedback small-text"><?= $errors['mail'] ?></div>
                 <?php } ?>
             </div>
             <!-- Mot de passe -->
-            <div class="form-floating mb-5">
-                <input type="password" name="password" class="form-control content-text
+            <div class="form-floating mb-4">
+                <input type="password" name="password" class="form-control form-control-lg shadow-sm content-text
                 <?= (isset($errors['invalidUser']))
                     ? "is-invalid"
                     : "" ?>" id="floatingPassword" placeholder="Password">
                 <label for="floatingPassword" class="content-text">Mot de passe</label>
                 <!-- message et button pour afficher le mot de passe -->
                 <div class="show-password">
-                    <span class="text-white small-text" id="showPasswordText">Afficher le mot de passe</span>
+                    <span class="text-dark small-text" id="showPasswordText">Afficher le mot de passe</span>
                     <i class="bi bi-square" id="showPasswordIcon"></i>
                 </div>
             </div>
@@ -51,12 +51,12 @@ require_once  BASE_PATH . '/Templates/header.php';
         <?php } ?>
         <!-- Button de connexion -->
         <div class="d-flex justify-content-center">
-            <button class="btn btn-warning text-dark w-50 py-3 mt-3 content-text fw-medium"
+            <button class="btn btn-warning btn-lg fw-semibold w-50 content-text"
                 name="logIn" type="submit">Se connecter</button>
         </div>
         <!-- Lien si l'utilisateru n'a pas un compte, pour s'en créer un -->
         <div class="d-flex justify-content-center mt-5 content-text lien">
-            <a href="?controller=user&action=signUp" class="text-light">Créer un compte</a>
+            <a href="?controller=user&action=signUp" class="text-dark fw-semibold">Créer un compte</a>
         </div>
     </form>
 </section>

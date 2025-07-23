@@ -13039,22 +13039,17 @@ html {
   width: 90%;
 }
 .connection-form form .form-floating input {
-  border: 0.5px solid #333333;
-  background-color: #FDFDFD;
-}
-.connection-form form .form-floating .form-control ~ label::after {
   background-color: #FDFDFD;
 }
 .connection-form form .form-floating .show-password {
   display: flex;
+  justify-content: flex-end;
   gap: 10px;
-  justify-content: end;
-  position: absolute;
-  right: 0;
+  margin-top: 7px;
 }
 .connection-form form .form-floating .show-password i {
   cursor: pointer;
-  color: white;
+  color: #333333;
 }
 .connection-form form .form-floating .invalid-tooltip-mdp {
   width: 50%;

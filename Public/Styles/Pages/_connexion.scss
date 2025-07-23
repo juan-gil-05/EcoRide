@@ -7,27 +7,20 @@
       width: 90%;
 
       input {
-        border: 0.5px solid $dark;
-        background-color: $light;
-      }
-
-      // Pour le text de l'input qui est dedans le label
-      .form-control~label::after {
         background-color: $light;
       }
 
       // Pour l'affichage du mot de passe
       .show-password {
         display: flex;
+        justify-content: flex-end;
         gap: 10px;
-        justify-content: end;
-        position: absolute;
-        right: 0;
+        margin-top: 7px;
 
         // Icon du petit carré
         i {
           cursor: pointer;
-          color: white;
+          color: $dark;
         }
       }
 
