@@ -46,6 +46,32 @@ require_once  BASE_PATH . '/Templates/header.php';
                     <div class="accordion-body">
                         <!-- Liste des préférences -->
                         <ul>
+                            <!-- Bouton pour ajouter une nouvelle préférence -->
+                            <li class="add-icon" id="newPrefIcon" >
+                                <!-- Icon avec le lien vers la page pour ajouter une préférence -->
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-plus-circle-fill"></i>
+                                    <!-- Placeholder -->
+                                    <p class="small-text mb-0">Ajouter une préférence</p>
+                                </div>
+                            </li>
+                            <!-- Formulaire pour enregistrer une nouvelle préférence -->
+                            <!-- à la base il est caché -->
+                            <li id="personalPreference" class="hidden d-flex justify-content-center">
+                                <!-- L'action c'est le controller PreferenceUser -->
+                                <form action="?controller=preferences&action=preferencesInscriptionPersonal"
+                                    method="post" class="d-flex flex-column gap-2">
+                                    <!-- L'input text -->
+                                    <textarea name="preference_personnelle" class="form-control" required></textarea>
+                                    <!-- Input invisible pour envoyer un param fictif à la base de données
+                                     à fin de pouvoir réaliser la requête sql -->
+                                    <input type="text" name="preference_id" value="1" hidden>
+                                    <!-- bouton pour envoyer le fomulaire -->
+                                    <button type="submit" class="btn btn-secondary"
+                                        name="newPersonalPreference">Ajouter
+                                    </button>
+                                </form>
+                            </li>
                             <!-- Accepte ou pas les fumeurs? -->
                             <li>
                                 <!-- Si dans l'array existe la préférence fumeur, 
@@ -80,32 +106,6 @@ require_once  BASE_PATH . '/Templates/header.php';
                                     </li>
                                 <?php } ?>
                             <?php } ?>
-                            <!-- Bouton pour ajouter une nouvelle préférence -->
-                            <li class="add-icon">
-                                <!-- Icon avec le lien vers la page pour ajouter une préférence -->
-                                <a id="newPrefIcon">
-                                    <i class="bi bi-plus-circle-fill"></i>
-                                </a>
-                                <!-- Placeholder -->
-                                <p class="small-text">Ajouter une préférence</p>
-                            </li>
-                            <!-- Formulaire pour enregistrer une nouvelle préférence -->
-                            <!-- à la base il est caché -->
-                            <li id="personalPreference" class="hidden d-flex justify-content-center">
-                                <!-- L'action c'est le controller PreferenceUser -->
-                                <form action="?controller=preferences&action=preferencesInscriptionPersonal"
-                                    method="post" class="d-flex flex-column gap-2">
-                                    <!-- L'input text -->
-                                    <textarea name="preference_personnelle" class="form-control" required></textarea>
-                                    <!-- Input invisible pour envoyer un param fictif à la base de données
-                                     à fin de pouvoir réaliser la requête sql -->
-                                    <input type="text" name="preference_id" value="1" hidden>
-                                    <!-- bouton pour envoyer le fomulaire -->
-                                    <button type="submit" class="btn btn-secondary"
-                                        name="newPersonalPreference">Ajouter
-                                    </button>
-                                </form>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -127,21 +127,22 @@ require_once  BASE_PATH . '/Templates/header.php';
                     <div class="accordion-body">
                         <!-- liste avec tous les voitures -->
                         <ul>
+                            <!-- Bouton pour ajouter une nouvelle voiture -->
+                            <li class="add-icon">
+                                <!-- Icon avec le lien vers la page pour ajouter une voiture -->
+                                <a href="?controller=voiture&action=carInscription"
+                                    class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-plus-circle-fill"></i>
+                                    <!-- Placeholder -->
+                                    <p class="small-text mb-0">Ajouter une voiture</p>
+                                </a>
+                            </li>
                             <?php foreach ($allCars as $car) { ?>
                                 <li><span class="fw-semibold">Marque = </span><?= $car['marque'] ?><br>
                                     <span class="fw-semibold">Modèle = </span><?= $car['modele'] ?><br>
                                     <span class="fw-semibold">Immatriculation = </span><?= $car['immatriculation'] ?>
                                 </li>
                             <?php } ?>
-                            <!-- Bouton pour ajouter une nouvelle voiture -->
-                            <li class="add-icon">
-                                <!-- Icon avec le lien vers la page pour ajouter une voiture -->
-                                <a href="?controller=voiture&action=carInscription">
-                                    <i class="bi bi-plus-circle-fill"></i>
-                                </a>
-                                <!-- Placeholder -->
-                                <p class="small-text">Ajouter une voiture</p>
-                            </li>
                         </ul>
                     </div>
                 </div>

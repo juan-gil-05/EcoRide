@@ -13248,33 +13248,23 @@ html {
   border-radius: 5px;
   padding-left: 15px;
 }
+.driver-info-profil .accordion .accordion-body ul li span {
+  display: contents;
+}
 .driver-info-profil .accordion .accordion-body ul .add-icon {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
-  flex-direction: row-reverse;
-  gap: 10px;
-  background-color: white;
-  transition: background-color 0.2s ease-in-out;
-}
-.driver-info-profil .accordion .accordion-body ul .add-icon p {
-  margin-bottom: 0;
-  visibility: hidden;
-  color: #333333;
-  transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out;
-  opacity: 0;
+  transition: transform 0.3s ease;
+  cursor: pointer;
 }
 .driver-info-profil .accordion .accordion-body ul .add-icon i {
   color: #006ebc;
   cursor: pointer;
   font-size: 2rem;
 }
-.driver-info-profil .accordion .accordion-body ul .add-icon a:hover + p {
-  visibility: visible;
-  opacity: 1;
-}
-.driver-info-profil .accordion .accordion-body ul .add-icon:has(i:hover) {
-  background-color: #FDFDFD;
+.driver-info-profil .accordion .accordion-body ul .add-icon:hover {
+  transform: scale(1.01);
+  background-color: #f0f0f0;
 }
 .driver-info-profil .accordion .accordion-body ul .hidden {
   display: none !important;
