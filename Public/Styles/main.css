@@ -13044,14 +13044,15 @@ html {
 .connection-form form .form-floating .show-password {
   position: absolute;
   right: 0;
-  margin-top: 7px;
+  top: 0%;
+  transform: translate(-100%, 60%);
 }
 .connection-form form .form-floating .show-password i {
   cursor: pointer;
   color: #333333;
 }
-.connection-form form .form-floating .invalid-tooltip-mdp {
-  width: 50%;
+.connection-form form .form-floating .invalid-mdp {
+  background-image: none !important;
 }
 .connection-form form .if-chauffeur label {
   color: white;
@@ -13097,6 +13098,9 @@ html {
   .connection-form .covoiturage-form .covoiturage-form-div div .form-control,
   .connection-form .covoiturage-form .covoiturage-form-div div .form-select {
     padding: 2px 0.75rem;
+  }
+  .connection-form .form-floating .show-password {
+    transform: translate(-100%, 100%) !important;
   }
 }
 .chauffeur label,

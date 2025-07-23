@@ -19,7 +19,7 @@ require_once  BASE_PATH . '/Templates/header.php';
         <input type="text" name="pseudo" class="form-control form-control-lg shadow-sm content-text
                 <?= (isset($errors['pseudoEmpty'])) ? "is-invalid" : "" ?>"
           id="floatingInput" placeholder="Ex: Juanes" value="<?= htmlspecialchars($pseudo) ?>">
-          <label for="floatingInput" class="content-text">Pseudo</label>
+        <label for="floatingInput" class="content-text">Pseudo</label>
         <!-- Si il y a des erreurs on affiche le message d'erreur -->
         <?php if (isset($errors['pseudoEmpty'])) { ?>
           <div class="invalid-feedback position-static small-text"><?= $errors['pseudoEmpty'] ?></div>
@@ -42,17 +42,19 @@ require_once  BASE_PATH . '/Templates/header.php';
       <!-- Mot de passe -->
       <div class="form-floating">
         <input type="password" class="form-control form-control-lg shadow-sm content-text
-        <?=
-        (isset($errors['passwordEmpty'])) || (isset($errors['passwordLen'])) || (isset($errors['passwordInfo']))
-          ? "is-invalid"
-          : ""
-        ?>"
-          id="floatingPassword" name="password" placeholder="Password" value="<?= htmlspecialchars($password) ?>">
+          <?=
+          (isset($errors['passwordEmpty'])) || (isset($errors['passwordLen'])) ||
+            (isset($errors['passwordInfo']) || (isset($errors['passwordConfirm'])))
+            ? "is-invalid invalid-mdp"
+            : ""
+          ?>"
+          id="floatingPassword" name="password" placeholder="Mot de passe" value="<?= htmlspecialchars($password) ?>">
         <label for="floatingPassword" class="content-text">Mot de passe</label>
+
         <!-- message et button pour afficher le mot de passe -->
         <div class="show-password">
-          <span class="text-dark small-text" id="showPasswordText">Afficher le mot de passe</span>
-          <i class="bi bi-square" id="showPasswordIcon"></i>
+          <!-- <span class="text-dark small-text" id="showPasswordText">Afficher le mot de passe</span> -->
+          <i class="bi bi-eye" id="showPasswordIcon"></i>
         </div>
         <!-- Si il y a des erreurs on affiche le message d'erreur -->
         <?php if (isset($errors['passwordEmpty'])) { ?>
@@ -71,7 +73,25 @@ require_once  BASE_PATH . '/Templates/header.php';
           </div>
         <?php } ?>
       </div>
-
+      <!-- Mot de passe confirmation -->
+      <div class="form-floating">
+        <input type="password" class="form-control form-control-lg shadow-sm content-text
+        <?=
+        (isset($errors['passwordEmpty'])) || (isset($errors['passwordLen'])) ||
+          (isset($errors['passwordInfo']) || (isset($errors['passwordConfirm'])))
+          ? "is-invalid"
+          : ""
+        ?>"
+          id="floatingPasswordConfirm" name="passwordConfirm" placeholder="Mot de passe"
+          value="<?= htmlspecialchars($passwordConfirm) ?>">
+        <label for="floatingPasswordConfirm" class="content-text">Confirmez votre mot de passe</label>
+        <!-- Si il y a des erreurs on affiche le message d'erreur -->
+        <?php if (isset($errors['passwordConfirm'])) { ?>
+          <div class="invalid-feedback position-static invalid-tooltip-mdp small-text">
+            <?= $errors['passwordConfirm'] ?>
+          </div>
+        <?php } ?>
+      </div>
       <!-- Sélectionner le role -->
       <div class="mt-3">
         <label for="roleSelect" class="text-center text-dark content-text mb-1">Sélectionnez votre rôle : </label>

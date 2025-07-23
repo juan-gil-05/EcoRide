@@ -14,10 +14,8 @@
       .show-password {
         position: absolute;
         right: 0;
-        // display: flex;
-        // justify-content: flex-end;
-        // gap: 10px;
-        margin-top: 7px;
+        top: 0%;
+        transform: translate(-100%, 60%);
 
         // Icon du petit carré
         i {
@@ -27,8 +25,8 @@
       }
 
       // Pour les messages des erreurs
-      .invalid-tooltip-mdp {
-        width: 50%;
+      .invalid-mdp {
+        background-image: none !important;
       }
     }
 
@@ -102,6 +100,15 @@
             padding: 2px 0.75rem;
           }
         }
+      }
+    }
+
+    // Tous les champs du formulaire de connexion
+    .form-floating {
+
+      // Pour l'affichage du mot de passe
+      .show-password {
+        transform: translate(-100%, 100%) !important;
       }
     }
   }

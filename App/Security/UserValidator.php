@@ -8,7 +8,7 @@ use App\Repository\UserRepository;
 class UserValidator
 {
     // Fonction de validation du formulaire pour la création d'un compte utilisateur
-    public function signUpValidate(User $userHydrate): array
+    public function signUpValidate(User $userHydrate, string $passwordConfirm): array
     {
         // Tableau d'erreurs
         $errors = [];
@@ -44,6 +44,8 @@ class UserValidator
 	                                Une lettre majuscule et une lettre minuscule,
 	                                un chiffre et
 	                                un caractère spécial";
+        } elseif ($user->getPassword() != $passwordConfirm) { // Si la confirmation du mot de passe n'est pas identique
+            $errors['passwordConfirm'] = "La confirmation n'est pas identique au mot de passe";
         }
 
         // Si l'option du role est vide

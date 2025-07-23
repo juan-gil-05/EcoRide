@@ -55,6 +55,7 @@ class UserController extends Controller
         $pseudo = "";
         $mail = "";
         $password = "";
+        $passwordConfirm = "";
         $roleName = "";
         $roleId = "";
         try {
@@ -65,6 +66,7 @@ class UserController extends Controller
                         'errors' => $errors,
                         'pseudo' => $pseudo,
                         'password' => $password,
+                        'passwordConfirm' => $passwordConfirm,
                         'mail' => $mail,
                         'roleName' => $roleName,
                         'roleId' => $roleId
@@ -83,12 +85,13 @@ class UserController extends Controller
             $password = $user->getPassword();
             $roleId = $user->getRoleId();
             $roleName = $userRepository->findRoleName($user->getRoleId());
+            $passwordConfirm = $_POST['passwordConfirm'];
+
+            // Pour valider s'il n'y a pas des erreurs dans le formulaire
+            $errors = $userValidator->signUpValidate($user, $passwordConfirm);
 
             // Pour hasher le mot de passe
             Security::passwordHasher($user);
-
-            // Pour valider s'il n'y a pas des erreurs dans le formulaire
-            $errors = $userValidator->signUpValidate($user);
 
             if (!empty($errors)) {
                 $this->render(
@@ -97,6 +100,7 @@ class UserController extends Controller
                         'errors' => $errors,
                         'pseudo' => $pseudo,
                         'password' => $password,
+                        'passwordConfirm' => $passwordConfirm,
                         'mail' => $mail,
                         'roleName' => $roleName,
                         'roleId' => $roleId
@@ -115,6 +119,7 @@ class UserController extends Controller
                         'errors' => $userCreated,
                         'pseudo' => $pseudo,
                         'password' => $password,
+                        'passwordConfirm' => $passwordConfirm,
                         'mail' => $mail,
                         'roleName' => $roleName,
                         'roleId' => $roleId
