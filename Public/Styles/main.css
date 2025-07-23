@@ -13064,33 +13064,12 @@ html {
 .connection-form form .non-chauffeur {
   display: none !important;
 }
-.connection-form form .covoiturage-form .covoiturage-form-div {
-  justify-content: space-between;
-  width: 75%;
-}
-.connection-form form .covoiturage-form .covoiturage-form-div div {
-  width: 46%;
-}
-.connection-form form .covoiturage-form .covoiturage-form-div div label {
-  color: white;
-  font-weight: 500;
-}
-.connection-form form .covoiturage-form .covoiturage-form-div div input {
-  color: #333333;
+.connection-form form .covoiturage-form input {
   background-color: #FDFDFD;
 }
-.connection-form form .covoiturage-form .covoiturage-form-div div .invalid-tooltip {
-  width: 100%;
-}
-.connection-form form .covoiturage-form .covoiturage-form-div div a {
-  text-align: center;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.connection-form form .covoiturage-form .covoiturage-form-div .car-selector {
-  width: 100%;
-  position: relative;
+.connection-form form .covoiturage-form label,
+.connection-form form .covoiturage-form input {
+  color: #333333;
 }
 .connection-form .if-form-error .alert {
   width: 90%;
@@ -13122,47 +13101,19 @@ html {
     padding: 2px 0.75rem;
   }
 }
-.chauffeur {
-  width: 80%;
-}
-.chauffeur label {
-  color: white;
-  margin-bottom: 0;
+.chauffeur label,
+.chauffeur input,
+.chauffeur button {
+  color: #333333;
 }
 .chauffeur input,
 .chauffeur select {
-  border: 0.5px solid #333333;
   background-color: #FDFDFD;
 }
-.chauffeur .car-form .car-form-div {
-  display: flex;
-  gap: 25px;
-  align-items: center;
-}
-.chauffeur .preferences-form {
-  flex-direction: column;
-  align-items: center;
-}
-.chauffeur .preferences-form .form-check-input:checked {
-  background-color: #006ebc;
+.chauffeur button {
+  border: 0.5px solid #333333;
 }
 
-.invalid-tooltip {
-  display: block;
-}
-
-.no-pointer {
-  pointer-events: none;
-}
-
-@media (max-width: 768px) {
-  .chauffeur .form-control, .chauffeur .form-select {
-    padding: 2px 0.75rem;
-  }
-  .chauffeur .form-check-input {
-    margin-top: 0;
-  }
-}
 .mes-covoiturages-hero {
   background-color: black;
   position: relative;

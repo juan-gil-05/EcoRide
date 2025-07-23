@@ -1,6 +1,7 @@
 // Style pour les page de connexion et du création du compte
 .connection-form {
   form {
+
     // Tous les champs du formulaire
     .form-floating {
       width: 90%;
@@ -9,10 +10,12 @@
         border: 0.5px solid $dark;
         background-color: $light;
       }
+
       // Pour le text de l'input qui est dedans le label
-      .form-control ~ label::after {
+      .form-control~label::after {
         background-color: $light;
       }
+
       // Pour l'affichage du mot de passe
       .show-password {
         display: flex;
@@ -20,12 +23,14 @@
         justify-content: end;
         position: absolute;
         right: 0;
+
         // Icon du petit carré
         i {
           cursor: pointer;
           color: white;
         }
       }
+
       // Pour les messages des erreurs
       .invalid-tooltip-mdp {
         width: 50%;
@@ -37,10 +42,12 @@
       label {
         color: white;
       }
+
       input {
         background-color: $light;
       }
     }
+
     // Si l'utilisateur n'est pas un chauffeur, alors on n'affiche pas le fomulaire pour les chauffeur
     .non-chauffeur {
       display: none !important;
@@ -48,45 +55,24 @@
 
     // Style pour le formulaire de création des covoiturages
     .covoiturage-form {
-      .covoiturage-form-div {
-        justify-content: space-between;
-        width: 75%;
-        // Tous les champs du formulaire de l'utilisateur
-        div {
-          width: 46%;
-          label {
-            color: white;
-            font-weight: 500;
-          }
-          input {
-            color: $dark;
-            background-color: $light;
-          }
-          .invalid-tooltip {
-            width: 100%;
-          }
-          // Lien pour enregistrer une nouvelle voiture
-          a {
-            text-align: center;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-          }
-        }
-        // div qui cotient la séléctionne des voitures et le lien pour en enregistrer une nouvelle
-        .car-selector {
-          width: 100%;
-          position: relative;
-        }
+      input {
+        background-color: $light;
+      }
+
+      label,
+      input {
+        color: $dark;
       }
     }
   }
+
   // pour le message d'erreur
   .if-form-error {
     .alert {
       width: 90%;
     }
   }
+
   // Style du button
   button {
     border: 0.5px solid $dark;
@@ -103,15 +89,19 @@
     .lien {
       margin-top: 50px !important;
     }
+
     // Style pour le formulaire de création des covoiturages
     .covoiturage-form {
       gap: 1.1rem !important;
+
       .covoiturage-form-div {
         flex-direction: column;
         align-items: center;
         gap: 1.1rem;
+
         div {
           width: 100% !important;
+
           .form-control,
           .form-select {
             padding: 2px 0.75rem;

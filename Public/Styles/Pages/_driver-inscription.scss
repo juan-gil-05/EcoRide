@@ -1,52 +1,20 @@
 .chauffeur {
-  width: 80%;
-  label {
-    color: white;
-    margin-bottom: 0;
+
+  label,
+  input,
+  button {
+    color: $dark;
   }
+
   input,
   select {
-    border: 0.5px solid $dark;
+    // border: 0.5px solid $dark;
     background-color: $light;
   }
-  // les champs du formulaire pour ajouter une voiture
-  .car-form {
-    .car-form-div {
-      display: flex;
-      gap: 25px;
-      align-items: center;
-    }
+
+  // Style du button
+  button {
+    border: 0.5px solid $dark;
   }
-  // les champs du formulaire pour ajouter le profil du chauffeur
-  .preferences-form {
-    flex-direction: column;
-    align-items: center;
 
-    .form-check-input:checked {
-      background-color: $secondary;
-    }
-  }
-}
-
-// Pour afficher le message d'erreur
-.invalid-tooltip {
-  display: block;
-}
-
-// Pour désactiver le clique sur la première partie du formulaire des préférence
-.no-pointer {
-  pointer-events: none;
-}
-
-// Medias queries pour les mobiles et tablets
-@media (max-width: "768px") {
-  .chauffeur {
-    .form-control,.form-select {
-      padding: 2px 0.75rem;
-    }
-    // Pour les input des préférences, les check boxes
-    .form-check-input{
-      margin-top: 0;
-    }
-  }
 }

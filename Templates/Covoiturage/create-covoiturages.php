@@ -11,7 +11,7 @@ require_once  BASE_PATH . '/Templates/header.php';
             <div class="col-12 col-lg-10">
                 <!-- Informations de Départ -->
                 <div class="card shadow-sm rounded-3 p-4 mb-4 covoiturage-form">
-                    <h2 class="mb-4 text-dark content-text">Informations de Départ</h2>
+                    <h2 class="mb-4  content-text">Informations de Départ</h2>
                     <div class="row g-4">
                         <div class="col-12 col-md-6">
                             <label for="dateTimeDepart" class="form-label fw-semibold content-text">
@@ -59,7 +59,7 @@ require_once  BASE_PATH . '/Templates/header.php';
 
                 <!-- Informations d'Arrivée -->
                 <div class="card shadow-sm rounded-3 p-4 mb-4 covoiturage-form">
-                    <h2 class="mb-4 text-dark content-text">Informations d'Arrivée</h2>
+                    <h2 class="mb-4  content-text">Informations d'Arrivée</h2>
                     <div class="row g-4">
                         <div class="col-12 col-md-6">
                             <label for="dateTimeArrivee" class="form-label fw-semibold content-text">
@@ -107,7 +107,7 @@ require_once  BASE_PATH . '/Templates/header.php';
 
                 <!-- Détails du Covoiturage -->
                 <div class="card shadow-sm rounded-3 p-4 mb-4 covoiturage-form">
-                    <h2 class="mb-4 text-dark content-text">Détails du Covoiturage</h2>
+                    <h2 class="mb-4  content-text">Détails du Covoiturage</h2>
                     <div class="row g-4">
                         <div class="col-12 col-md-6">
                             <label for="nbPlaceDisponible" class="form-label fw-semibold content-text">
@@ -160,13 +160,13 @@ require_once  BASE_PATH . '/Templates/header.php';
 
                 <!-- Sélection de la Voiture -->
                 <div class="card shadow-sm rounded-3 p-4 mb-5 covoiturage-form car-selector">
-                    <h2 class="mb-4 text-dark content-text">Sélection de la Voiture</h2>
+                    <h2 class="mb-4  content-text">Sélection de la Voiture</h2>
                     <div class="form-group mb-3">
                         <label for="voitureId" class="form-label fw-semibold content-text">
                             Sélectionnez la voiture utilisée:
                         </label>
                         <select
-                            class="form-select form-select-lg shadow-sm content-text text-dark 
+                            class="form-select form-select-lg shadow-sm content-text  
                             bg-light <?= (isset($errors['voitureEmpty']))
                                             ? "is-invalid"
                                             : "" ?>"
@@ -193,15 +193,15 @@ require_once  BASE_PATH . '/Templates/header.php';
                         <?php } ?>
                     </div>
                     <p class="text-center">
-                        <a class="small-text text-dark" href="?controller=voiture&action=carInscription">
+                        <a class="small-text " href="?controller=voiture&action=carInscription">
                             Cliquez ici pour enregistrer une nouvelle voiture
                         </a>
                     </p>
                 </div>
 
                 <!-- Button pour créer le covoiturage -->
-                <div class="d-flex justify-content-center mt-4 mb-5">
-                    <button class="btn btn-warning btn-lg fw-bold text-dark w-50 py-3 mt-4 content-text"
+                <div class="d-flex justify-content-center my-4">
+                    <button class="btn btn-warning btn-lg fw-semibold text-dark w-50 py-3 content-text"
                         name="createCovoiturage" type="submit">
                         Créer
                     </button>
