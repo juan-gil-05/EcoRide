@@ -18,3 +18,9 @@
   background-color: $secondary !important;
   border: 0.3px solid $dark !important;
 }
+
+.danger-btn{
+  &:hover{
+    background-color: $danger !important;
+  }
+}

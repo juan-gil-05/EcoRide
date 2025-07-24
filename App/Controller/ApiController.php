@@ -6,7 +6,7 @@ use App\Repository\CovoiturageRepository;
 
 class ApiController extends Controller
 {
-    // URL pour l'appeler : index.php?controller=api&action=getGraphData
+    // URL pour l'appeler : index.php/api/getGraphData
     // Fonction pour envoyer les données au graphique via une API fetch
     public function getGraphData()
     {
@@ -39,7 +39,7 @@ class ApiController extends Controller
         }
     }
 
-    // URL pour l'appeler : index.php?controller=api&action=startCovoiturage
+    // URL pour l'appeler : index.php/api/startCovoiturage
     // Fonction pour démarrer un covoiturage
     public function startCovoiturage()
     {
@@ -59,7 +59,7 @@ class ApiController extends Controller
         }
     }
 
-    // URL pour l'appeler : index.php?controller=api&action=stopCovoiturage
+    // URL pour l'appeler : index.php/api/stopCovoiturage
     // Fonction pour indiquer l'arrivée du covoiturage
     public function stopCovoiturage()
     {

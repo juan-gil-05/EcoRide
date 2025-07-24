@@ -12051,6 +12051,10 @@ textarea.form-control-lg {
   border: 0.3px solid #333333 !important;
 }
 
+.danger-btn:hover {
+  background-color: #E53935 !important;
+}
+
 .loader {
   position: fixed;
   z-index: 1;
@@ -13247,6 +13251,8 @@ html {
   padding: 10px;
   border-radius: 5px;
   padding-left: 15px;
+  flex-direction: row;
+  align-items: center;
 }
 .driver-info-profil .accordion .accordion-body ul li span {
   display: contents;

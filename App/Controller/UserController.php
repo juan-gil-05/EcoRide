@@ -140,15 +140,15 @@ class UserController extends Controller
                 ? $carRepository->findAllCarsByUserId($userId)
                 : [];
 
-            // Fonction pour chercher touts les préférences par l'id de l'utilisateur
+            // Fonction pour chercher toutes les préférences par l'id de l'utilisateur
             $allPreferences = $preferenceRepository->searchPreferencesByDriverId($userId);
+            // Fonction pour chercher toutes les préférences personnelles par l'id de l'utilisateur
+            $allPersoPref = $preferenceRepository->searchPreferencesByDriverId($userId, true);
 
             // Fonction array_map pour récupérer uniquement les values des libelles dans un nouveau array
-            $preferences = array_map(fn($pref) => $pref['libelle'], $allPreferences);
-            // Fonction array_map pour récupérer uniquement
-            //les values des préférences personnelles dans un nouveau array
-            $preferencesPersonnelles = array_map(fn($pref) => $pref['personnelle'], $allPreferences);
+            $preferencesLibelle = array_map(fn($pref) => $pref['libelle'], $allPreferences);
 
+            $this->deletePreference($preferenceRepository);
 
             $this->render(
                 "User/profil",
@@ -158,8 +158,8 @@ class UserController extends Controller
                     "credits" => $userCredits,
                     "photoUniqueId" => $photoUniqueId,
                     "allCars" => $allCars,
-                    "preferences" => $preferences,
-                    "preferencesPersonnelles" => $preferencesPersonnelles,
+                    "preferencesLibelle" => $preferencesLibelle,
+                    "allPersoPref" => $allPersoPref
                 ]
             );
         } else {
@@ -212,5 +212,16 @@ class UserController extends Controller
             header('Location: /page/accueil');
         }
         exit;
+    }
+
+    private function deletePreference(PreferenceUserRepository $preferenceRepository)
+    {
+        if (isset($_POST['deletePreference'])) {
+            $preferenceRepository->deletePreferenceById($_POST['prefId']);
+            // On crée cette session pour pouvoir afficher le message de succès,
+            // le message_code c'est pour l'icon de SweetAlert
+            $_SESSION['message_to_User'] = 'La préférence a été supprimée.';
+            $_SESSION['message_code'] = "success";
+        }
     }
 }

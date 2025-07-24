@@ -59,7 +59,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                             <!-- à la base il est caché -->
                             <li id="personalPreference" class="hidden d-flex justify-content-center">
                                 <!-- L'action c'est le controller PreferenceUser -->
-                                <form action="?controller=preferences&action=preferencesInscriptionPersonal"
+                                <form action="/preference/choix-personnelle"
                                     method="post" class="d-flex flex-column gap-2">
                                     <!-- L'input text -->
                                     <textarea name="preference_personnelle" class="form-control" required></textarea>
@@ -78,9 +78,9 @@ require_once  BASE_PATH . '/Templates/header.php';
                                  alors le chauffeur accepte les fumeurs -->
                                 <!-- Si dans l'array existe la préférence non_fumeur, 
                                  alors le chauffeur n'accepte pas les fumeurs  -->
-                                <?php if (in_array("Fumeur", $preferences)) {
+                                <?php if (in_array("Fumeur", $preferencesLibelle)) {
                                     echo 'J\'accepte les fumeurs';
-                                } elseif (in_array("Non_fumeur", $preferences)) {
+                                } elseif (in_array("Non_fumeur", $preferencesLibelle)) {
                                     echo 'Je n\'accepte pas les fumeurs';
                                 } ?>
                             </li>
@@ -90,19 +90,57 @@ require_once  BASE_PATH . '/Templates/header.php';
                                  alors le chauffeur accepte les animaux -->
                                 <!-- Si dans l'array existe la préférence non_animal, 
                                  alors le chauffeur n'accepte pas les animaux -->
-                                <?php if (in_array("Animal", $preferences)) {
+                                <?php if (in_array("Animal", $preferencesLibelle)) {
                                     echo 'J\'accepte les animaux';
-                                } elseif (in_array("Non_animal", $preferences)) {
+                                } elseif (in_array("Non_animal", $preferencesLibelle)) {
                                     echo 'Je n\'accepte pas les animaux';
                                 } ?>
                             </li>
                             <!-- Préférences Personnelles -->
-                            <?php foreach ($preferencesPersonnelles as $personnelle) { ?>
+                            <?php foreach ($allPersoPref as $pref) { ?>
                                 <!-- on parcours le tableau pour récupérer chaque préférence, -->
                                 <!-- on fait une liste pour chaque préférence, si n'est pas vide -->
-                                <?php if (!empty($personnelle)) { ?>
+                                <?php if (!empty($pref)) { ?>
                                     <li>
-                                        <p class="mb-0"><?= ucfirst($personnelle) ?></p>
+                                        <p class="mb-0"><?= ucfirst($pref['personnelle']) ?></p>
+                                        <!-- Bouton pour pour ouvrir la modal de confirmation de suppresion -->
+                                        <button class="btn btn-outline-dark secondary-btn bi bi-trash danger-btn"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deletePreferenceModal<?= $pref['id'] ?>">
+                                        </button>
+                                        <!-- Modal pour confirmer l'annulation de la préférence -->
+                                        <!-- Ajout de l'id de la pref à l'id de la modal, 
+                                         afin d'eviter des id en double, car la modal est dans un boucle -->
+                                        <div class="modal fade" id="deletePreferenceModal<?= $pref['id'] ?>"
+                                            data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                            aria-labelledby="deletePreferenceModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <!-- Le contenu de la modal -->
+                                                <div class="modal-content">
+                                                    <!-- Bouton pour fermer la modal -->
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close">
+                                                    </button>
+                                                    <!-- Formulaire pour confirmer l'annulation du pref  -->
+                                                    <form method="post" class="w-100 d-flex align-items-center 
+                                                                              flex-column gap-4 p-5 mb-0 bg-light form">
+                                                        <!-- input invisible pour envoyer l'id
+                                                         de la préférence dans le formulaire-->
+                                                        <input type="hidden" name="prefId"
+                                                            value="<?= $pref['id'] ?>">
+                                                        <label class="content-text text-center fw-medium">
+                                                            Voulez-vous vraiment supprimer cette préférence?
+                                                        </label>
+                                                        <!-- Bouton pour confirmer -->
+                                                        <div class="d-flex gap-3 justify-content-center">
+                                                            <input type="submit" class="btn btn-danger shadow-section 
+                                                                text-white content-text secondary-btn" value="Confirmer"
+                                                                name="deletePreference">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </li>
                                 <?php } ?>
                             <?php } ?>

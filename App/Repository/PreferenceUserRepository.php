@@ -24,18 +24,31 @@ class PreferenceUserRepository extends Repository
     }
 
     // Fonction pour chercher les péférences du chauffeur
-    public function searchPreferencesByDriverId(int $driverId): array
+    public function searchPreferencesByDriverId(int $driverId, bool $onlyPersoPref = false): array
     {
         // On utilise le 'DISTINCT' pour récupérer q'une fois la valeur libelle, si elle est répétée
-        $sql = ('SELECT DISTINCT Preference.libelle, User_Preferences.preference_personnelle as personnelle
-                FROM User_Preferences
-                INNER JOIN User ON User_Preferences.user_id = User.id
-                INNER JOIN Preference ON User_Preferences.preference_id = Preference.id
+        $sql = ('SELECT DISTINCT UP.id, Preference.libelle, 
+                                 UP.preference_personnelle as personnelle
+                FROM User_Preferences as UP
+                INNER JOIN User ON UP.user_id = User.id
+                INNER JOIN Preference ON UP.preference_id = Preference.id
                 WHERE User.id = :driverId');
+        // si onlyPersoPref est true, on récupére uniquement les préférences personnelles
+        if ($onlyPersoPref) {
+            $sql .= ' AND UP.preference_personnelle != ""';
+        }
         $query = $this->pdo->prepare($sql);
         $query->bindValue(":driverId", $driverId, $this->pdo::PARAM_INT);
         $query->execute();
 
         return $query->fetchAll($this->pdo::FETCH_ASSOC);
+    }
+
+    public function deletePreferenceById(int $prefId): void
+    {
+        $sql = ('DELETE FROM User_Preferences WHERE id = :prefId');
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":prefId", $prefId, $this->pdo::PARAM_INT);
+        $query->execute();
     }
 }
