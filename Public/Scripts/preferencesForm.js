@@ -2,8 +2,12 @@
 
 // L'icon d'ajouter
 const newPrefIcon = document.getElementById("newPrefIcon") ?? null
+// L'icon d'editer
+const editPrefIcon = document.getElementById("editPrefIcon") ?? null
 // Le formulaire pour créer une nouvelle préférence
 const personalPreference = document.getElementById("personalPreference") ?? null
+// Le formulaire pour éditer préférence
+const editPersonalPreference = document.getElementById("editPersonalPreference") ?? null
 
 // Si on clique dans l'icon d'ajouter, alors on affiche le formualaire pour créer une nouvelle préférence
 if (newPrefIcon) {
@@ -12,13 +16,9 @@ if (newPrefIcon) {
     })
 }
 
-// Script pour afficher la deuxième partie du formulaire d'ajouts des préférences pour le chauffeur
-
-const preferencesForm = document.getElementById("preferencesForm") ?? null
-const buttonToContinue = document.getElementById("btnPreferences") ?? null
-
-if (buttonToContinue) {
-    buttonToContinue.addEventListener("click", () => {
-        preferencesForm.classList.remove("hidden")
+// Si on clique dans l'icon d'editer, alors on affiche le formualaire pour éditer préférence
+if (editPrefIcon) {
+    editPrefIcon.addEventListener("click", () => {
+        editPersonalPreference.classList.toggle("hidden")
     })
 }

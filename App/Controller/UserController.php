@@ -150,6 +150,8 @@ class UserController extends Controller
 
             $this->deletePreference($preferenceRepository);
 
+            PreferenceUserController::editPersonnelle();
+
             $this->render(
                 "User/profil",
                 [

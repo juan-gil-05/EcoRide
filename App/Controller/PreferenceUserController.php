@@ -119,4 +119,25 @@ class PreferenceUserController extends Controller
 
         $this->render("PreferencesUser/preferences-inscription-personal");
     }
+
+    // Fonction pour éditer une préférence personnelle
+    public static function editPersonnelle()
+    {
+        $preferenceRepository = new PreferenceUserRepository();
+
+        // Pour éditer une préférence personnelle
+        if (isset($_POST['editPersonalPreference'])) {
+            $prefId = $_POST['preference_id'];
+            $prefEdited = $_POST['preference_personnelle'];
+            // Pour la créer dans la base de données
+            $preferenceRepository->updatePreferenceById($prefId, $prefEdited);
+            // On crée cette session pour pouvoir afficher le message de succès,
+            // le message_code c'est pour l'icon de SweetAlert
+            $_SESSION['message_to_User'] = "Préférence modifiée";
+            $_SESSION['message_code'] = "success";
+            // On envoi vers la page d'accueil
+            header('Location: /user/profil');
+            exit();
+        }
+    }
 }

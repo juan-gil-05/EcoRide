@@ -44,6 +44,17 @@ class PreferenceUserRepository extends Repository
         return $query->fetchAll($this->pdo::FETCH_ASSOC);
     }
 
+    public function updatePreferenceById(int $prefId, string $prefEdit): void
+    {
+        $sql = ('UPDATE User_Preferences 
+                SET preference_personnelle = :prefEdited
+                WHERE id = :prefId');
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(":prefId", $prefId, $this->pdo::PARAM_INT);
+        $query->bindValue(":prefEdited", $prefEdit, $this->pdo::PARAM_STR);
+        $query->execute();
+    }
+
     public function deletePreferenceById(int $prefId): void
     {
         $sql = ('DELETE FROM User_Preferences WHERE id = :prefId');

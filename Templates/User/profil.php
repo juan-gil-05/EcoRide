@@ -103,11 +103,20 @@ require_once  BASE_PATH . '/Templates/header.php';
                                 <?php if (!empty($pref)) { ?>
                                     <li>
                                         <p class="mb-0"><?= ucfirst($pref['personnelle']) ?></p>
-                                        <!-- Bouton pour pour ouvrir la modal de confirmation de suppresion -->
-                                        <button class="btn btn-outline-dark secondary-btn bi bi-trash danger-btn"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#deletePreferenceModal<?= $pref['id'] ?>">
-                                        </button>
+                                        <!-- Action buttons -->
+                                        <div>
+                                            <!-- Bouton pour pour ouvrir la modal de confirmation de suppresion -->
+                                            <button class="btn btn-outline-dark secondary-btn 
+                                                           bi bi-trash danger-btn me-1"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#deletePreferenceModal<?= $pref['id'] ?>">
+                                            </button>
+                                            <!-- Bouton pour éditer une préférence -->
+                                            <button
+                                                class="btn btn-outline-dark secondary-btn bi bi-pencil-square"
+                                                id="editPrefIcon">
+                                            </button>
+                                        </div>
                                         <!-- Modal pour confirmer l'annulation de la préférence -->
                                         <!-- Ajout de l'id de la pref à l'id de la modal, 
                                          afin d'eviter des id en double, car la modal est dans un boucle -->
@@ -141,6 +150,24 @@ require_once  BASE_PATH . '/Templates/header.php';
                                                 </div>
                                             </div>
                                         </div>
+                                    </li>
+                                    <!-- Formulaire pour éditer une préférence -->
+                                    <!-- à la base il est caché -->
+                                    <li id="editPersonalPreference" class="hidden d-flex justify-content-center">
+                                        <form method="post" class="d-flex flex-column gap-2">
+                                            <!-- L'input text -->
+                                            <textarea name="preference_personnelle"
+                                                class="form-control"
+                                                required><?=
+                                                            htmlspecialchars(ucfirst(trim($pref['personnelle'])))
+                                                            ?></textarea>
+                                            <!-- input invisble avec l'id de la préférence -->
+                                            <input type="text" name="preference_id" value="<?= $pref['id'] ?>" hidden>
+                                            <!-- bouton pour envoyer le fomulaire -->
+                                            <button type="submit" class="btn btn-secondary"
+                                                name="editPersonalPreference">Modifier
+                                            </button>
+                                        </form>
                                     </li>
                                 <?php } ?>
                             <?php } ?>
