@@ -30,7 +30,8 @@ class Entity
                     if (
                         $key == 'date_premiere_immatriculation' ||
                         $key == 'date_heure_depart' ||
-                        $key == 'date_heure_arrivee'
+                        $key == 'date_heure_arrivee' ||
+                        $key == 'locked_until'
                     ) {
                         // Si l'utlisateur ne sélectionne pas une date,
                         // alors, la date est null,

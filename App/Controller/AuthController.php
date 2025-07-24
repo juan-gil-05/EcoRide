@@ -4,8 +4,9 @@ namespace App\Controller;
 
 use App\Repository\UserRepository;
 use App\Entity\User;
-use App\Repository\VoitureRepository;
+use App\Repository\AuthRepository;
 use App\Security\UserValidator;
+use DateTime;
 use Exception;
 
 class AuthController extends Controller
@@ -28,8 +29,9 @@ class AuthController extends Controller
 
             $userRepository = new UserRepository();
             $userValidator = new UserValidator();
+            $authRepository = new AuthRepository();
 
-            $mail = htmlspecialchars($_POST['mail']) ?? "";
+            $mail = $_POST['mail'] ?? "";
             $user = $userRepository->findOneByMail($mail);
             $userMail = $user ? $user->getMail() : $mail;
 
@@ -41,18 +43,65 @@ class AuthController extends Controller
                 exit;
             }
 
-            if (!$user || !$userValidator->passwordVerify($user)) {
+            // Si l'utilisateur n'existe pas en bdd
+            if (!$user) {
                 $errors['invalidUser'] = "Email ou mot de passe invalide";
                 $this->render("Auth/log-in", ['errors' => $errors, 'mail' => $userMail]);
                 exit;
             }
 
-            if ($user->getActive() != 1) {
-                // Si le compte est suspendu, on affiche un message d'erreur
-                $errors['inactiveUser'] = "Votre compte est suspendu, veuillez nous contacter pour en savoir plus.";
+            $userId = $user->getId(); // Pour récuperer l'id de l'utilisateur
+            $attempts = $user->getLoginAttempts();
+            $lockedUntil = $user->getLockedUntil();
+            $now = new DateTime();
+
+            //
+            if ($lockedUntil && $now > $lockedUntil) {
+                $attempts = 0;
+                $lockedUntil = null;
+                $user = $this->resetUserAttempts($user, $userRepository, $authRepository);
+            }
+            // Si l'utilisateur est bloqué temporellement car plus de 5 essais de mot de passe incorrect
+            if ($lockedUntil && $now < $lockedUntil) {
+                $errors['accountLocked'] = "Compte temporairement bloqué. Réessayez à " .
+                    ($lockedUntil)->format('H\h:i');
                 $this->render("Auth/log-in", ['errors' => $errors, 'mail' => $userMail]);
                 exit;
             }
+
+            // Si le mot de passe est incorrect
+            if (!$userValidator->passwordVerify($user)) {
+                $attempts += 1; // à chaque essai
+
+                if ($attempts < 5) {
+                    $remaining = 5 - $attempts;
+                    if ($remaining <= 2) {
+                        $errors['remainingAttempts'] = "Il vous reste <strong>$remaining</strong> tentative" .
+                            ($remaining > 1 ? "s" : "") . " avant le blocage de 15 minutes.";
+                    }
+                }
+                if ($attempts >= 5) {
+                    $lockedUntil = (new DateTime())->modify("+ 15 minutes")->format("Y-m-d H:i:s");
+                }
+                $authRepository->accountLocked($userId, $attempts, $lockedUntil);
+
+                ($lockedUntil)
+                    ? $errors['accountLocked'] = "Trop de tentatives. Compte bloqué jusqu’à " .
+                    (new DateTime($lockedUntil))->format('H\h:i')
+                    : $errors['invalidUser'] = "Email ou mot de passe invalide";
+                $this->render("Auth/log-in", ['errors' => $errors, 'mail' => $userMail]);
+                exit;
+            }
+
+            // Si le compte utilisateur a été bloqué par l'admin
+            if ($user->getActive() != 1) {
+                // Si le compte est suspendu, on affiche un message d'erreur
+                $errors['inactiveUser'] = "Votre compte est suspendu, veuillez nous contacter pour en savoir plus.";
+                $this->render("Auth/log-in", ['errors' => $errors, 'mail' => $userMail, 'attempts' => $attempts]);
+                exit;
+            }
+
+            $user = $this->resetUserAttempts($user, $userRepository, $authRepository);
 
             $this->connectUser($user, $userRepository);
             UserController::redirectAfterLogin($user, $userRepository);
@@ -98,5 +147,11 @@ class AuthController extends Controller
         // le message_code c'est pour l'icon de SweetAlert
         $_SESSION['message_to_User'] = "Vous êtes connectez";
         $_SESSION['message_code'] = "success";
+    }
+
+    private function resetUserAttempts(User $user, UserRepository $userRepository, AuthRepository $authRepository): User
+    {
+        $authRepository->loginAttemptsAndLockedReinit($user->getId());
+        return $userRepository->findOneByMail($user->getMail());
     }
 }

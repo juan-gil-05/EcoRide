@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use DateTime;
+
 class User extends Entity
 {
     protected ?int $id = null;
@@ -14,6 +16,8 @@ class User extends Entity
     protected ?string $photo = "";
     protected ?string $photo_uniqId = "";
     protected ?string $role_id = "";
+    protected int $login_attempts = 0;
+    protected ?DateTime $locked_until = null;
     /**
      * Get the value of id
      */
@@ -172,6 +176,42 @@ class User extends Entity
     public function setActive(int $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of login_attempts
+     */
+    public function getLoginAttempts(): int
+    {
+        return $this->login_attempts;
+    }
+
+    /**
+     * Set the value of login_attempts
+     */
+    public function setLoginAttempts(int $login_attempts): self
+    {
+        $this->login_attempts = $login_attempts;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of locked_until
+     */
+    public function getLockedUntil(): ?DateTime
+    {
+        return $this->locked_until;
+    }
+
+    /**
+     * Set the value of locked_until
+     */
+    public function setLockedUntil(?DateTime $locked_until): self
+    {
+        $this->locked_until = $locked_until;
 
         return $this;
     }

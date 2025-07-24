@@ -40,13 +40,24 @@ require_once  BASE_PATH . '/Templates/header.php';
         <!-- Erreur si le mail ou le mot de passe sont incorrect -->
         <?php if (isset($errors['invalidUser'])) { ?>
             <div class="if-form-error d-flex justify-content-center content-text">
-                <div class="alert alert-danger mt-3 content-text text-center"><?= $errors['invalidUser'] ?></div>
+                <div class="alert alert-danger mt-3 content-text text-center">
+                    <?= $errors['invalidUser'] ?></br>
+                    <?= $errors['remainingAttempts'] ?? "" ?>
+                </div>
             </div>
         <?php } ?>
         <!-- Erreur si le compte est suspendu -->
         <?php if (isset($errors['inactiveUser'])) { ?>
             <div class="if-form-error d-flex justify-content-center content-text">
                 <div class="alert alert-danger mt-3 content-text text-center"><?= $errors['inactiveUser'] ?></div>
+            </div>
+        <?php } ?>
+        <!-- Erreur si le compte est bloqué temporellement car plus de 5 essais de mot de passe incorrect  -->
+        <?php if (isset($errors['accountLocked'])) { ?>
+            <div class="if-form-error d-flex justify-content-center content-text">
+                <div class="alert alert-danger mt-3 content-text text-center">
+                    <?= $errors['accountLocked'] ?>
+                </div>
             </div>
         <?php } ?>
         <!-- Button de connexion -->

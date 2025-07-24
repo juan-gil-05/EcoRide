@@ -1,7 +1,5 @@
 <?php
 
-// Definition de un constante pour le path depuis l'index.php
-define('_ROOTPATH_', __DIR__);
 // Pour charger les namespaces
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -20,6 +18,8 @@ session_start();
 
 // On definit le path pour appeler les fichier depuis l'index, afin d'eviter des erreurs dans le serveur
 define('BASE_PATH', dirname(__DIR__));
+// Pour utiliser la bonne zone horaire
+date_default_timezone_set('Europe/Paris');
 
 // Pour le système du routage
 use App\Controller\Controller;
