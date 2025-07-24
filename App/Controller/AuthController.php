@@ -28,8 +28,8 @@ class AuthController extends Controller
             }
 
             $userRepository = new UserRepository();
-            $userValidator = new UserValidator();
             $authRepository = new AuthRepository();
+            $userValidator = new UserValidator();
 
             $mail = $_POST['mail'] ?? "";
             $user = $userRepository->findOneByMail($mail);
@@ -53,14 +53,16 @@ class AuthController extends Controller
             $userId = $user->getId(); // Pour récuperer l'id de l'utilisateur
             $attempts = $user->getLoginAttempts();
             $lockedUntil = $user->getLockedUntil();
-            $now = new DateTime();
+            $now = new DateTime(); // Nouvelle date afin de comparer la date du lockedUntil
 
-            //
+            /* Si l'utilisateur n'est pas bloqué temporellement,
+            on réinitialise les champs loginAttempts et lockedUntil */
             if ($lockedUntil && $now > $lockedUntil) {
                 $attempts = 0;
                 $lockedUntil = null;
                 $user = $this->resetUserAttempts($user, $userRepository, $authRepository);
             }
+
             // Si l'utilisateur est bloqué temporellement car plus de 5 essais de mot de passe incorrect
             if ($lockedUntil && $now < $lockedUntil) {
                 $errors['accountLocked'] = "Compte temporairement bloqué. Réessayez à " .
@@ -69,29 +71,17 @@ class AuthController extends Controller
                 exit;
             }
 
-            // Si le mot de passe est incorrect
-            if (!$userValidator->passwordVerify($user)) {
-                $attempts += 1; // à chaque essai
-
-                if ($attempts < 5) {
-                    $remaining = 5 - $attempts;
-                    if ($remaining <= 2) {
-                        $errors['remainingAttempts'] = "Il vous reste <strong>$remaining</strong> tentative" .
-                            ($remaining > 1 ? "s" : "") . " avant le blocage de 15 minutes.";
-                    }
-                }
-                if ($attempts >= 5) {
-                    $lockedUntil = (new DateTime())->modify("+ 15 minutes")->format("Y-m-d H:i:s");
-                }
-                $authRepository->accountLocked($userId, $attempts, $lockedUntil);
-
-                ($lockedUntil)
-                    ? $errors['accountLocked'] = "Trop de tentatives. Compte bloqué jusqu’à " .
-                    (new DateTime($lockedUntil))->format('H\h:i')
-                    : $errors['invalidUser'] = "Email ou mot de passe invalide";
-                $this->render("Auth/log-in", ['errors' => $errors, 'mail' => $userMail]);
-                exit;
-            }
+            // Fonction qui gére la verification du mot de passe et le blocage temporelle de l'utilisateur
+            $this->handlePasswordVerification(
+                $user,
+                $userId,
+                $userValidator,
+                $attempts,
+                $lockedUntil,
+                $now,
+                $authRepository,
+                $userMail
+            );
 
             // Si le compte utilisateur a été bloqué par l'admin
             if ($user->getActive() != 1) {
@@ -101,7 +91,8 @@ class AuthController extends Controller
                 exit;
             }
 
-            $user = $this->resetUserAttempts($user, $userRepository, $authRepository);
+            // réinitialiser les champs loginAttempts et lockedUntil ainsi que l'objet User
+            $user = $this->resetUserAttempts($user);
 
             $this->connectUser($user, $userRepository);
             UserController::redirectAfterLogin($user, $userRepository);
@@ -149,9 +140,55 @@ class AuthController extends Controller
         $_SESSION['message_code'] = "success";
     }
 
-    private function resetUserAttempts(User $user, UserRepository $userRepository, AuthRepository $authRepository): User
+    private function resetUserAttempts(User $user): User
     {
+        $userRepository = new UserRepository();
+        $authRepository = new AuthRepository();
         $authRepository->loginAttemptsAndLockedReinit($user->getId());
         return $userRepository->findOneByMail($user->getMail());
+    }
+
+    private function handlePasswordVerification(
+        User $user,
+        int $userId,
+        UserValidator $userValidator,
+        int $attempts,
+        $lockedUntil,
+        DateTime $now,
+        AuthRepository $authRepository,
+        string $userMail
+    ): bool {
+        if ($userValidator->passwordVerify($user)) {
+            return true;
+        }
+
+        // Si le mot de passe est incorrect
+        if (!$userValidator->passwordVerify($user)) {
+            $attempts += 1; // à chaque essai
+
+            // Pour afficher le message qu'on il reste 2 tentaives d'inserer le mot de passe
+            if ($attempts < 5) {
+                $remaining = 5 - $attempts;
+                if ($remaining <= 2) {
+                    $errors['remainingAttempts'] = "Il vous reste <strong>$remaining</strong> tentative" .
+                        ($remaining > 1 ? "s" : "") . " avant le blocage de 15 minutes.";
+                }
+            }
+            /* Pour ajouter 15 minutes au champ lockedUntil
+            et en suite faire la modification en bdd */
+            if ($attempts >= 5) {
+                $lockedUntil = ($now)->modify("+ 15 minutes")->format("Y-m-d H:i:s");
+            }
+            $authRepository->accountLocked($userId, $attempts, $lockedUntil);
+
+            // Si lockedUntil n'est pas null, ca veut dire que l'utilisateur est bloqué temporellement
+            ($lockedUntil)
+                ? $errors['accountLocked'] = "Trop de tentatives. Compte bloqué jusqu’à " .
+                (new DateTime($lockedUntil))->format('H\h:i')
+                : $errors['invalidUser'] = "Email ou mot de passe invalide";
+            $this->render("Auth/log-in", ['errors' => $errors, 'mail' => $userMail]);
+            exit;
+        }
+        return false;
     }
 }
