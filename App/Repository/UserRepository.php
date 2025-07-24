@@ -100,14 +100,18 @@ class UserRepository extends Repository
     }
 
     // Fonction pour suspendre ou réactiver un utilisateur
-    public function userAccountStatus(int $userId, int $userStatus): bool
+    public function userAccountStatus(int $userId, int $userStatus, bool $deleteAction = false): bool
     {
         // userStatus = 0 (Suspendre)
         // userStatus = 1 (Activer)
-        $sql = ("UPDATE User SET active = :userStatus WHERE id = :userId");
-        $query = $this->pdo->prepare($sql);
+        if ($deleteAction == false) {
+            $query = $this->pdo->prepare("UPDATE User SET active = :userStatus WHERE id = :userId");
+            $query->bindValue(':userStatus', $userStatus, $this->pdo::PARAM_INT);
+        } else {
+            $query = $this->pdo->prepare("DELETE FROM User WHERE id = :userId");
+        }
+
         $query->bindValue(':userId', $userId, $this->pdo::PARAM_INT);
-        $query->bindValue(':userStatus', $userStatus, $this->pdo::PARAM_INT);
         return $query->execute();
     }
 

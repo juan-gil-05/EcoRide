@@ -125,7 +125,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                             <?php } else { ?>
                                 <i class="bi bi-x-circle-fill"></i>
                             <?php } ?>
-                            <!-- La collone avec les bouton d'action : suspendre et activer un utilisateur -->
+                            <!-- La collone avec les boutons d'action -->
                         <td class="actions-col" data-cell="Actions">
                             <?php
                             $modalTarget = ($user['active'] == 1)
@@ -135,6 +135,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                                 ? "Suspendre l'utilisateur"
                                 : "Réactiver l'utilisateur";
                             ?>
+                            <!-- suspendre et activer un compte utilisateur -->
                             <i class="bi bi-person-fill-slash 
                                     <?= ($user['active'] == 0) ? "inactif-user-delete-btn" : "" ?>"
                                 data-bs-toggle="modal"
@@ -144,10 +145,20 @@ require_once  BASE_PATH . '/Templates/header.php';
                                 data-bs-title="<?= $tooltipTitle ?>"
                                 data-bs-custom-class="custom-tooltip">
                             </i>
+                            <!-- Supprimer un compte utilisateur -->
+                            <i class="bi bi-trash"
+                                data-bs-toggle="modal"
+                                data-bs-target="#deleteUserConfirm<?= $user['id'] ?>"
+                                data-bs-toggleTooltip="tooltip"
+                                data-bs-placement="right"
+                                data-bs-title="Supprimer l'utilisateur"
+                                data-bs-custom-class="custom-tooltip">
+                            </i>
                         </td>
                     </tr>
                     <!-- On ajout le html de la modale à la vaiable $modals -->
                     <?php $modals .= "
+                        <!-- Modal pour suspendre un compte utilisateur -->
                         <div class='modal fade modal-status-user-account' 
                             id='suspendUserConfirm{$user['id']}' tabindex='-1' 
                             aria-labelledby='suspendUserConfirmLabel' aria-hidden='true'>
@@ -163,7 +174,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                                         <label class='content-text text-center fw-medium'>
                                             Voulez-vous vraiment suspendre le compte de <br>
                                             <strong>{$user['pseudo']}</strong>
-                                            ({$user['mail']}) ?
+                                            (<em>{$user['mail']}</em>) ?
                                          </label>
                                         <div class='d-flex gap-3 justify-content-center'>
                                             <input type='submit' value='Confirmer' name='suspendUser' 
@@ -174,6 +185,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                             </div>
                         </div>
 
+                        <!-- Modal pour activer un compte utilisateur -->
                         <div class='modal fade modal-status-user-account' 
                             id='activeUserConfirm{$user['id']}' tabindex='-1' 
                             aria-labelledby='activeUserConfirmLabel' aria-hidden='true'>
@@ -189,11 +201,38 @@ require_once  BASE_PATH . '/Templates/header.php';
                                         <label class='content-text text-center fw-medium'>
                                             Voulez-vous réactiver le compte de <br>
                                             <strong>{$user['pseudo']}</strong>
-                                            ({$user['mail']}) ?
+                                            (<em>{$user['mail']}</em>) ?
                                          </label>
                                         <div class='d-flex gap-3 justify-content-center'>
                                             <input type='submit' value='Confirmer' name='reactiveUser' 
                                                 class='btn btn-warning text-dark small-text secondary-btn'>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal pour supprimer un compte utilisateur -->
+                        <div class='modal fade modal-status-user-account' 
+                            id='deleteUserConfirm{$user['id']}' tabindex='-1' 
+                            aria-labelledby='deleteUserConfirmLabel' aria-hidden='true'>
+                            <div class='modal-dialog modal-dialog-centered'>
+                                <div class='modal-content bg-light'>
+                                    <div class='btn-close-div'>
+                                        <button type='button' class='btn-close' 
+                                            data-bs-dismiss='modal' aria-label='Close'>
+                                        </button>
+                                    </div>
+                                    <form method='post' class='gap-4 status-user-account-form'>
+                                        <input type='hidden' name='id' value='{$user['id']}'>
+                                        <label class='content-text text-center fw-medium'>
+                                            Êtes-vous sûr(e) de vouloir supprimer le compte de </br>
+                                            <strong>{$user['pseudo']}</strong> (<em>{$user['mail']}</em>) ? </br>
+                                            ⚠️ Cette action est irréversible.
+                                         </label>
+                                        <div class='d-flex gap-3 justify-content-center'>
+                                            <input type='submit' value='Confirmer' name='deleteUser' 
+                                                class='btn btn-danger text-light small-text secondary-btn'>
                                         </div>
                                     </form>
                                 </div>

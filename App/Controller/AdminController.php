@@ -118,6 +118,14 @@ class AdminController extends Controller
             // le message_code c'est pour l'icon de SweetAlert
             $_SESSION['message_to_User'] = 'Le compte utilisateur a été réactivé.';
             $_SESSION['message_code'] = "success";
+        } elseif (isset($_POST['deleteUser'])) {
+            $userId = $_POST['id']; // On récupère l'id de l'utilisateur à suspendre
+            // On supprime l'utilisateur
+            $userRepository->userAccountStatus($userId, 1, true);
+            // On crée cette session pour pouvoir afficher le message de succès,
+            // le message_code c'est pour l'icon de SweetAlert
+            $_SESSION['message_to_User'] = 'Le compte utilisateur a bien été supprimé.';
+            $_SESSION['message_code'] = "success";
         }
     }
 
