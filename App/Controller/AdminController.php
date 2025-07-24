@@ -24,16 +24,7 @@ class AdminController extends Controller
             // On récupère tous les utilisateurs
             $allUsers = $userRepository->findAllUsers();
 
-            // Si il y a une action de suppression d'un utilisateur
-            if (isset($_POST['suspendUser'])) {
-                $userId = $_POST['id']; // On récupère l'id de l'utilisateur à suspendre
-                // On supprime l'utilisateur
-                $userRepository->suspendUser($userId);
-                // On crée cette session pour pouvoir afficher le message de succès,
-                // le message_code c'est pour l'icon de SweetAlert
-                $_SESSION['message_to_User'] = 'Le compte utilisateur a bien été suspendu.';
-                $_SESSION['message_code'] = "success";
-            }
+            $this->userAccountStatus($userRepository);
 
             // Fonction pour créer un compte employé
             $employeAccount = $this->createEmployeAccount();
@@ -107,6 +98,29 @@ class AdminController extends Controller
             ]);
         }
     }
+
+    private function userAccountStatus(UserRepository $userRepository)
+    {
+        // Si il y a une action de suppression d'un utilisateur
+        if (isset($_POST['suspendUser'])) {
+            $userId = $_POST['id']; // On récupère l'id de l'utilisateur à suspendre
+            // On suspendre l'utilisateur
+            $userRepository->userAccountStatus($userId, 0);
+            // On crée cette session pour pouvoir afficher le message de succès,
+            // le message_code c'est pour l'icon de SweetAlert
+            $_SESSION['message_to_User'] = 'Le compte utilisateur a bien été suspendu.';
+            $_SESSION['message_code'] = "success";
+        } elseif (isset($_POST['reactiveUser'])) {
+            $userId = $_POST['id']; // On récupère l'id de l'utilisateur à suspendre
+            // On réactive l'utilisateur
+            $userRepository->userAccountStatus($userId, 1);
+            // On crée cette session pour pouvoir afficher le message de succès,
+            // le message_code c'est pour l'icon de SweetAlert
+            $_SESSION['message_to_User'] = 'Le compte utilisateur a été réactivé.';
+            $_SESSION['message_code'] = "success";
+        }
+    }
+
 
     /*
     Exemple d'appel depuis l'url

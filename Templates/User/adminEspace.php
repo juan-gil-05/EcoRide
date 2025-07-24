@@ -125,27 +125,30 @@ require_once  BASE_PATH . '/Templates/header.php';
                             <?php } else { ?>
                                 <i class="bi bi-x-circle-fill"></i>
                             <?php } ?>
-                            <!-- La collone avec les bouton d'action : suspendre un utilisateur -->
+                            <!-- La collone avec les bouton d'action : suspendre et activer un utilisateur -->
                         <td class="actions-col" data-cell="Actions">
+                            <?php
+                            $modalTarget = ($user['active'] == 1)
+                                ? "#suspendUserConfirm{$user['id']}"
+                                : "#activeUserConfirm{$user['id']}";
+                            $tooltipTitle = ($user['active'] == 1)
+                                ? "Suspendre l'utilisateur"
+                                : "Réactiver l'utilisateur";
+                            ?>
                             <i class="bi bi-person-fill-slash 
-                                <?= ($user['active'] == 0)
-                                    ? "inactif-user-delete-btn"
-                                    : "" ?> "
-                                <?= ($user['active'] == 1)
-                                    ? "data-bs-toggle='modal' data-bs-target='#suspendUserConfirm{$user['id']}'"
-                                    : "" ?>
-                                data-bs-toggleTooltip="tooltip" data-bs-placement="right"
-                                data-bs-title="
-                                <?= ($user['active'] == 1)
-                                    ? "Suspendre l'utilisateur"
-                                    : "Utilisateur inactif" ?>"
+                                    <?= ($user['active'] == 0) ? "inactif-user-delete-btn" : "" ?>"
+                                data-bs-toggle="modal"
+                                data-bs-target="<?= $modalTarget ?>"
+                                data-bs-toggleTooltip="tooltip"
+                                data-bs-placement="right"
+                                data-bs-title="<?= $tooltipTitle ?>"
                                 data-bs-custom-class="custom-tooltip">
                             </i>
                         </td>
                     </tr>
                     <!-- On ajout le html de la modale à la vaiable $modals -->
                     <?php $modals .= "
-                        <div class='modal fade modal-suspend-user' 
+                        <div class='modal fade modal-status-user-account' 
                             id='suspendUserConfirm{$user['id']}' tabindex='-1' 
                             aria-labelledby='suspendUserConfirmLabel' aria-hidden='true'>
                             <div class='modal-dialog modal-dialog-centered'>
@@ -155,7 +158,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                                             data-bs-dismiss='modal' aria-label='Close'>
                                         </button>
                                     </div>
-                                    <form method='post' class='gap-4 suspend-user-form'>
+                                    <form method='post' class='gap-4 status-user-account-form'>
                                         <input type='hidden' name='id' value='{$user['id']}'>
                                         <label class='content-text text-center fw-medium'>
                                             Voulez-vous vraiment suspendre le compte de <br>
@@ -165,6 +168,32 @@ require_once  BASE_PATH . '/Templates/header.php';
                                         <div class='d-flex gap-3 justify-content-center'>
                                             <input type='submit' value='Confirmer' name='suspendUser' 
                                                 class='btn btn-danger text-white small-text secondary-btn'>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='modal fade modal-status-user-account' 
+                            id='activeUserConfirm{$user['id']}' tabindex='-1' 
+                            aria-labelledby='activeUserConfirmLabel' aria-hidden='true'>
+                            <div class='modal-dialog modal-dialog-centered'>
+                                <div class='modal-content bg-light'>
+                                    <div class='btn-close-div'>
+                                        <button type='button' class='btn-close' 
+                                            data-bs-dismiss='modal' aria-label='Close'>
+                                        </button>
+                                    </div>
+                                    <form method='post' class='gap-4 status-user-account-form'>
+                                        <input type='hidden' name='id' value='{$user['id']}'>
+                                        <label class='content-text text-center fw-medium'>
+                                            Voulez-vous réactiver le compte de <br>
+                                            <strong>{$user['pseudo']}</strong>
+                                            ({$user['mail']}) ?
+                                         </label>
+                                        <div class='d-flex gap-3 justify-content-center'>
+                                            <input type='submit' value='Confirmer' name='reactiveUser' 
+                                                class='btn btn-warning text-dark small-text secondary-btn'>
                                         </div>
                                     </form>
                                 </div>

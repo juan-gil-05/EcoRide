@@ -12043,6 +12043,7 @@ textarea.form-control-lg {
 .secondary-btn {
   color: #333333;
   border: 0.3px solid #333333;
+  font-weight: 500;
 }
 
 .swal-btn {
@@ -13679,7 +13680,6 @@ html {
   filter: brightness(0.9);
 }
 .admin-espace-container .dt-container .dt-layout-table .user-table tbody .actions-col .inactif-user-delete-btn {
-  cursor: not-allowed;
   color: #333333;
 }
 .admin-espace-container .dt-container .dt-layout-table .user-table tbody .actions-col .inactif-user-delete-btn:hover {
@@ -13697,12 +13697,12 @@ html {
   color: #E53935;
 }
 
-.modal-suspend-user .btn-close-div {
+.modal-status-user-account .btn-close-div {
   display: flex;
   justify-content: flex-end;
   padding: 10px;
 }
-.modal-suspend-user .suspend-user-form {
+.modal-status-user-account .status-user-account-form {
   display: flex;
   flex-direction: column;
   align-items: center;

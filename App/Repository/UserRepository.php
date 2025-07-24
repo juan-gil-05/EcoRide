@@ -99,12 +99,15 @@ class UserRepository extends Repository
         return $query->execute();
     }
 
-    // Fonction pour suspendre un utilisateur
-    public function suspendUser(int $userId): bool
+    // Fonction pour suspendre ou réactiver un utilisateur
+    public function userAccountStatus(int $userId, int $userStatus): bool
     {
-        $sql = ("UPDATE User SET active = 0 WHERE id = :userId");
+        // userStatus = 0 (Suspendre)
+        // userStatus = 1 (Activer)
+        $sql = ("UPDATE User SET active = :userStatus WHERE id = :userId");
         $query = $this->pdo->prepare($sql);
         $query->bindValue(':userId', $userId, $this->pdo::PARAM_INT);
+        $query->bindValue(':userStatus', $userStatus, $this->pdo::PARAM_INT);
         return $query->execute();
     }
 

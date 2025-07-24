@@ -128,7 +128,6 @@
 
                         // L'icon quand l'user est déjà suspendu
                         .inactif-user-delete-btn {
-                            cursor: not-allowed;
                             color: $dark;
 
                             &:hover {
@@ -161,8 +160,8 @@
 
 }
 
-// Styles de la modale pour suspendre un compte utilisateur
-.modal-suspend-user {
+// Styles de la modale pour suspendre ou activer un compte utilisateur
+.modal-status-user-account {
     .btn-close-div {
         display: flex;
         justify-content: flex-end;
@@ -170,7 +169,7 @@
     }
 
     // Formulaire de suppression d'un compte utilisateur
-    .suspend-user-form {
+    .status-user-account-form {
         display: flex;
         flex-direction: column;
         align-items: center;
