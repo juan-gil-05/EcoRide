@@ -7,15 +7,16 @@ use Exception;
 
 class Controller
 {
-    // Fonction pour gérer le routage
+    // Fonction pour gérer le routage - voir le .htaccess
     public function route(): void
     {
         try {
             $url = $_GET['url'] ?? "";
-            $url = trim($url, '/');
-            $segments = explode('/', $url);
+            $url = trim($url, '/'); // Pour supprimer les "/" au debut et a la fin de l'url
+            $segments = explode('/', $url); // Pour séparer l'url dans un tableau
 
             $controllerName = $segments[0] ?? "page";
+            // On transforme l'action passée en camelCase, afin d'utiliser la method du controller
             $action = StringTools::toCamelCase($segments[1]) ?? "accueil";
 
             switch ($controllerName) {
@@ -52,8 +53,11 @@ class Controller
             };
 
             if (method_exists($controller, $action)) {
-                $params = array_slice($segments, 2);
+                $params = array_slice($segments, 2); // Pour récuperer tous les params dans un tableau
+                // Appelle de l'action avec les paramètres
                 $controller->$action(...$params);
+                /* (...$params) = Splat Operator, qui décompresse les arguments passées dans l'url
+                    pour les ajouter comme paramètres de la method du controller*/
             } else {
                 throw new Exception("Cette action n'existe pas: " . $action);
             }
