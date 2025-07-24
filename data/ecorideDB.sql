@@ -161,7 +161,9 @@ CREATE TABLE `User` (
   `photo` varchar(255) DEFAULT NULL,
   `role_id` int(10) UNSIGNED DEFAULT NULL,
   `photo_uniqId` varchar(255) DEFAULT NULL,
-  `active` tinyint(1) DEFAULT 1
+  `active` tinyint(1) DEFAULT 1,
+  `login_attempts` int(5) DEFAULT 0,
+  `locked_until` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
