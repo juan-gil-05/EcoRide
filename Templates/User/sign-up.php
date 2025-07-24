@@ -53,7 +53,6 @@ require_once  BASE_PATH . '/Templates/header.php';
 
         <!-- message et button pour afficher le mot de passe -->
         <div class="show-password">
-          <!-- <span class="text-dark small-text" id="showPasswordText">Afficher le mot de passe</span> -->
           <i class="bi bi-eye" id="showPasswordIcon"></i>
         </div>
         <!-- Si il y a des erreurs on affiche le message d'erreur -->

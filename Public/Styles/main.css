@@ -13634,14 +13634,17 @@ html {
   color: #333333;
 }
 .admin-espace-container .create-employe-account-modal .modal-content .modal-body .create-employe-account-form .create-employe-account-body .form-floating .show-password {
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  gap: 10px;
+  position: absolute;
+  right: 0;
+  top: 0%;
+  transform: translate(-100%, 70%);
 }
 .admin-espace-container .create-employe-account-modal .modal-content .modal-body .create-employe-account-form .create-employe-account-body .form-floating .show-password i {
   cursor: pointer;
   color: #333333;
+}
+.admin-espace-container .create-employe-account-modal .modal-content .modal-body .create-employe-account-form .create-employe-account-body .form-floating .invalid-mdp {
+  background-image: none !important;
 }
 .admin-espace-container .dt-container .dt-length label,
 .admin-espace-container .dt-container .dt-search label {

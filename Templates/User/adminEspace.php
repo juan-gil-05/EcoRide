@@ -31,7 +31,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                                 <label for="floatingPseudo" class="small-text">Pseudo</label>
                                 <!-- S'il y a des erreurs on affiche le message d'erreur -->
                                 <!-- Les messages sont chargés dynamiquement depuis le js -->
-                                <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text hidden"
+                                <div class="invalid-feedback invalid-tooltip-mdp small-text hidden"
                                     id="pseudoEmpty">
                                 </div>
                             </div>
@@ -39,39 +39,36 @@ require_once  BASE_PATH . '/Templates/header.php';
                             <div class="form-floating">
                                 <input type="email" class="form-control small-text"
                                     id="floatingMail" name="mail" placeholder="name@example.com"
-                                    value="<?= $employeMailAccount ?>">
+                                    value="<?= htmlspecialchars($employeMailAccount) ?>">
                                 <label for="floatingMail" class="small-text">Email address</label>
                                 <!-- S'il y a des erreurs on affiche le message d'erreur -->
                                 <!-- Les messages sont chargés dynamiquement depuis le js -->
-                                <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text hidden"
+                                <div class="invalid-feedback invalid-tooltip-mdp small-text hidden"
                                     id="mailEmpty">
                                 </div>
-                                <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text hidden"
+                                <div class="invalid-feedback invalid-tooltip-mdp small-text hidden"
                                     id="mailUsed">
                                 </div>
                             </div>
                             <!-- Mot de passe -->
                             <div class="form-floating">
-                                <input type="password" class="form-control small-text"
+                                <input type="password" class="form-control small-text invalid-mdp"
                                     id="floatingPassword" name="password"
-                                    placeholder="Password" value="<?= $employePasswordAccount ?>">
+                                    placeholder="Password" value="<?= htmlspecialchars($employePasswordAccount) ?>">
                                 <label for="floatingPassword" class="small-text">Mot de passe</label>
                                 <!-- message et button pour afficher le mot de passe -->
                                 <div class="show-password">
-                                    <span class="text-dark small-text" id="showPasswordText">
-                                        Afficher le mot de passe
-                                    </span>
-                                    <i class="bi bi-square" id="showPasswordIcon"></i>
+                                    <i class="bi bi-eye" id="showPasswordIcon"></i>
                                 </div>
                                 <!-- S'il y a des erreurs on affiche le message d'erreur -->
                                 <!-- Les messages sont chargés dynamiquement depuis le js -->
-                                <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text hidden"
+                                <div class="invalid-feedback invalid-tooltip-mdp small-text hidden"
                                     id="passwordEmpty">
                                 </div>
-                                <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text hidden"
+                                <div class="invalid-feedback invalid-tooltip-mdp small-text hidden"
                                     id="passwordLen">
                                 </div>
-                                <div class="invalid-tooltip position-static invalid-tooltip-mdp small-text hidden"
+                                <div class="invalid-feedback invalid-tooltip-mdp small-text hidden"
                                     id="passwordInfo">
                                 </div>
                             </div>

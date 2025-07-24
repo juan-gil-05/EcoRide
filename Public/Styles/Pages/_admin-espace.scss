@@ -44,16 +44,20 @@
 
                             // section pour afficher le mot de passe
                             .show-password {
-                                display: flex;
-                                justify-content: end;
-                                align-items: center;
-                                gap: 10px;
+                                position: absolute;
+                                right: 0;
+                                top: 0%;
+                                transform: translate(-100%, 70%);
 
-                                // Icon du petit carré
                                 i {
                                     cursor: pointer;
                                     color: $dark;
                                 }
+                            }
+
+                            // Pour les messages des erreurs
+                            .invalid-mdp {
+                                background-image: none !important;
                             }
                         }
                     }
