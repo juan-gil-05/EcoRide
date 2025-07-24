@@ -486,7 +486,7 @@ ALTER TABLE `User`
 -- Contraintes pour la table `User_Covoiturages`
 --
 ALTER TABLE `User_Covoiturages`
-  ADD CONSTRAINT `user_covoiturages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`),
+  ADD CONSTRAINT `user_covoiturages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `user_covoiturages_ibfk_2` FOREIGN KEY (`covoiturage_id`) REFERENCES `Covoiturage` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `user_covoiturages_ibfk_3` FOREIGN KEY (`statut_id`) REFERENCES `Statut` (`id`);
 
@@ -495,6 +495,6 @@ ALTER TABLE `User_Covoiturages`
 --
 ALTER TABLE `User_Preferences`
   ADD CONSTRAINT `user_preferences_ibfk_1` FOREIGN KEY (`preference_id`) REFERENCES `Preference` (`id`),
-  ADD CONSTRAINT `user_preferences_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`);
+  ADD CONSTRAINT `user_preferences_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
