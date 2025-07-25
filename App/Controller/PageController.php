@@ -263,7 +263,7 @@ class PageController extends Controller
                 // Si le passager indique que le covoiturage NE S'EST PAS bien passé
                 // On récupere le commentaire
                 $commentaire = $_POST['commentaire'];
-                // Pour chercher l'id de la participation d'un passager dans un covoiturage. (Table : User_Covoiturages)
+                // Pour chercher l'id de la participation d'un passager dans un covoiturage. (Table : User_Covoiturage)
                 $userCovoiturageId = $covoiturageRepository->searchUserCovoiturageId($passagerId, $covoiturageId);
                 $userCovoiturageId = $userCovoiturageId['id'];
                 // Fonction pour enregistrer le commentaire dans la bdd

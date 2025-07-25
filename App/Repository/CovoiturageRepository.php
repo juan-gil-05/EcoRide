@@ -155,7 +155,7 @@ class CovoiturageRepository extends Repository
     // Fonction pour enregistrer la participation à un covoiturage
     public function participateToCovoiturage(int $userId, int $covoiturageId)
     {
-        $sql = "INSERT INTO User_Covoiturages (user_id, covoiturage_id)
+        $sql = "INSERT INTO User_Covoiturage (user_id, covoiturage_id)
                 VALUES (:userId, :covoiturageId)";
         $query = $this->pdo->prepare($sql);
         $query->bindValue(":userId", $userId, $this->pdo::PARAM_INT);
@@ -168,8 +168,8 @@ class CovoiturageRepository extends Repository
     {
         $sql = "SELECT Covoiturage.id, Covoiturage.date_heure_depart, Covoiturage.date_heure_arrivee,
                 Covoiturage.adresse_depart, Covoiturage.adresse_arrivee, Covoiturage.prix
-                FROM User_Covoiturages 
-                INNER JOIN Covoiturage ON User_Covoiturages.covoiturage_id = Covoiturage.id 
+                FROM User_Covoiturage 
+                INNER JOIN Covoiturage ON User_Covoiturage.covoiturage_id = Covoiturage.id 
                 WHERE user_id = :userId";
         $query = $this->pdo->prepare($sql);
         $query->bindValue(":userId", $userId, $this->pdo::PARAM_INT);
@@ -222,7 +222,7 @@ class CovoiturageRepository extends Repository
     // Fonction pour enlever l'user du covoiturage, quand l'user quitte le covoiturage
     public function quitCovoiturageAsPassager(int $userId, int $covoiturageId)
     {
-        $sql = "DELETE FROM User_Covoiturages
+        $sql = "DELETE FROM User_Covoiturage
                 WHERE user_id = :userId AND covoiturage_id = :covoiturageId";
         $query = $this->pdo->prepare($sql);
         $query->bindValue(":userId", $userId, $this->pdo::PARAM_INT);
@@ -243,12 +243,12 @@ class CovoiturageRepository extends Repository
     // Fonction pour chercher les participants d'un covoiturage par le covoiturage ID, et le pseudo du chauffeur
     public function searchCovoiturageParticipantsByCovoiturageId(int $covoiturageId): array
     {
-        $sql = "SELECT User_Covoiturages.user_id, passager.mail as passager_mail, 
+        $sql = "SELECT User_Covoiturage.user_id, passager.mail as passager_mail, 
                 passager.pseudo as passager_pseudo, passager.id as passager_id,
                 driver.pseudo as driver_pseudo, driver.id as driver_id
-                FROM User_Covoiturages
-                INNER JOIN User as passager ON User_Covoiturages.user_id = passager.id
-                INNER JOIN Covoiturage ON User_Covoiturages.covoiturage_id = Covoiturage.id
+                FROM User_Covoiturage
+                INNER JOIN User as passager ON User_Covoiturage.user_id = passager.id
+                INNER JOIN Covoiturage ON User_Covoiturage.covoiturage_id = Covoiturage.id
                 INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
                 INNER JOIN User as driver ON Voiture.user_id = driver.id
                 WHERE covoiturage_id = :covoiturageId";
@@ -262,7 +262,7 @@ class CovoiturageRepository extends Repository
     // Fonction pour savoir si le l'utilisateur participe déjà à un covoiturage
     public function isUserParticipant(int $userId, int $covoiturageId): bool
     {
-        $sql = "SELECT id FROM User_Covoiturages
+        $sql = "SELECT id FROM User_Covoiturage
                 WHERE user_id = :userId AND covoiturage_id = :covoiturageId";
         $query = $this->pdo->prepare($sql);
         $query->bindValue(":userId", $userId, $this->pdo::PARAM_INT);
@@ -288,7 +288,7 @@ class CovoiturageRepository extends Repository
     // Fonction pour changer le statut de la participation d'un passager dans un covoiturage
     public function updateUserCovoiturageStatut(int $passgerId, int $covoiturageId, int $statutId): bool
     {
-        $sql = "UPDATE User_Covoiturages 
+        $sql = "UPDATE User_Covoiturage 
                 SET statut_id = :statutId
                 WHERE user_id = :passgerId AND covoiturage_id = :covoiturageId";
         $query = $this->pdo->prepare($sql);
@@ -308,7 +308,7 @@ class CovoiturageRepository extends Repository
                 COUNT(DISTINCT c.id) AS nb_trajets,
                 COUNT(uc.id) * 2 AS gain
                 FROM Covoiturage c
-                LEFT JOIN User_Covoiturages uc ON uc.covoiturage_id = c.id
+                LEFT JOIN User_Covoiturage uc ON uc.covoiturage_id = c.id
                 GROUP BY jour
                 ORDER BY STR_TO_DATE(jour, '%d-%m-%Y') ASC;";
         $query = $this->pdo->prepare($sql);
@@ -339,10 +339,10 @@ class CovoiturageRepository extends Repository
         return $query->execute();
     }
 
-    // Fonction pour chercher l'id de la participation d'un passager dans un covoiturage. (Table : User_Covoiturages)
+    // Fonction pour chercher l'id de la participation d'un passager dans un covoiturage. (Table : User_Covoiturage)
     public function searchUserCovoiturageId(int $userId, int $covoiturageId): array
     {
-        $sql = "SELECT id FROM User_Covoiturages
+        $sql = "SELECT id FROM User_Covoiturage
                 WHERE user_id = :userId AND covoiturage_id = :covoiturageId";
         $query = $this->pdo->prepare($sql);
         $query->bindValue(":userId", $userId, $this->pdo::PARAM_INT);

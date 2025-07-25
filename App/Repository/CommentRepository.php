@@ -13,7 +13,7 @@ class CommentRepository extends Repository
                 Driver.id AS driver_id, Driver.pseudo AS driver_pseudo, Driver.mail AS driver_mail,
                 Comment.commentaire, Comment.id as commentaire_id
                 FROM Commentaire AS Comment
-                INNER JOIN User_Covoiturages AS UC ON Comment.user_covoiturage_id = UC.id
+                INNER JOIN User_Covoiturage AS UC ON Comment.user_covoiturage_id = UC.id
                 INNER JOIN Covoiturage AS C ON UC.covoiturage_id = C.id
                 INNER JOIN Voiture AS V ON C.voiture_id = V.id
                 INNER JOIN User AS Driver ON V.user_id = Driver.id
