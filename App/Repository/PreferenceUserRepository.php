@@ -10,7 +10,7 @@ class PreferenceUserRepository extends Repository
     // Fonction pour Insérer une préférence
     public function createPreference(PreferenceUser $UserPreference, int $user_id)
     {
-        $sql = ("INSERT INTO User_Preferences (preference_personnelle, preference_id, user_id) 
+        $sql = ("INSERT INTO User_Preference (preference_personnelle, preference_id, user_id) 
                 VALUES (:preference_personnelle, :preference_id, :user_id)");
         $query = $this->pdo->prepare($sql);
         $query->bindValue(
@@ -29,7 +29,7 @@ class PreferenceUserRepository extends Repository
         // On utilise le 'DISTINCT' pour récupérer q'une fois la valeur libelle, si elle est répétée
         $sql = ('SELECT DISTINCT UP.id, Preference.libelle, 
                                  UP.preference_personnelle as personnelle
-                FROM User_Preferences as UP
+                FROM User_Preference as UP
                 INNER JOIN User ON UP.user_id = User.id
                 INNER JOIN Preference ON UP.preference_id = Preference.id
                 WHERE User.id = :driverId');
@@ -46,7 +46,7 @@ class PreferenceUserRepository extends Repository
 
     public function updatePreferenceById(int $prefId, string $prefEdit): void
     {
-        $sql = ('UPDATE User_Preferences 
+        $sql = ('UPDATE User_Preference 
                 SET preference_personnelle = :prefEdited
                 WHERE id = :prefId');
         $query = $this->pdo->prepare($sql);
@@ -57,7 +57,7 @@ class PreferenceUserRepository extends Repository
 
     public function deletePreferenceById(int $prefId): void
     {
-        $sql = ('DELETE FROM User_Preferences WHERE id = :prefId');
+        $sql = ('DELETE FROM User_Preference WHERE id = :prefId');
         $query = $this->pdo->prepare($sql);
         $query->bindValue(":prefId", $prefId, $this->pdo::PARAM_INT);
         $query->execute();

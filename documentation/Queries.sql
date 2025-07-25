@@ -79,21 +79,21 @@ INNER JOIN User ON Voiture.user_id = User.id
 WHERE User.id = 47;
 
 
-INSERT INTO User_Preferences (preference_personnelle, preference_id, user_id) VALUES ("seguna",4, 47);
+INSERT INTO User_Preference (preference_personnelle, preference_id, user_id) VALUES ("seguna",4, 47);
 
-SELECT * FROM User_Preferences;
+SELECT * FROM User_Preference;
 SELECT * FROM Preference;
 
 
 SELECT User.pseudo,
-User_Preferences.preference_personnelle, 
+User_Preference.preference_personnelle, 
 Preference.libelle
-FROM User_Preferences
-INNER JOIN User ON User_Preferences.User_id = User.id
-INNER JOIN Preference ON User_Preferences.preference_id = Preference.id
+FROM User_Preference
+INNER JOIN User ON User_Preference.User_id = User.id
+INNER JOIN Preference ON User_Preference.preference_id = Preference.id
 WHERE User.id = 10;
 
-CREATE TABLE User_Preferences(
+CREATE TABLE User_Preference(
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     preference_personnelle VARCHAR(500) NULL,
     preference_id INT UNSIGNED,
@@ -102,8 +102,8 @@ CREATE TABLE User_Preferences(
     FOREIGN KEY (user_id) REFERENCES User(id)
 );
 
-SELECT User_Preferences.id FROM User_Preferences
-INNER JOIN User ON User_Preferences.User_id = User.id
+SELECT User_Preference.id FROM User_Preference
+INNER JOIN User ON User_Preference.User_id = User.id
 WHERE User.id = "47";
 
 SELECT Voiture.id FROM Voiture
@@ -127,23 +127,23 @@ INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
 INNER JOIN User ON Voiture.user_id = User.id
 WHERE Covoiturage.id = 1;
 
-SELECT DISTINCT Preference.libelle, User_Preferences.preference_personnelle
-FROM User_Preferences
-INNER JOIN User ON User_Preferences.user_id = User.id
-INNER JOIN Preference ON User_Preferences.preference_id = Preference.id
+SELECT DISTINCT Preference.libelle, User_Preference.preference_personnelle
+FROM User_Preference
+INNER JOIN User ON User_Preference.user_id = User.id
+INNER JOIN Preference ON User_Preference.preference_id = Preference.id
 WHERE User.id = 47;
 
-SELECT DISTINCT Preference.libelle, User_Preferences.preference_personnelle, User.pseudo
-FROM User_Preferences
-INNER JOIN User ON User_Preferences.user_id = User.id
-INNER JOIN Preference ON User_Preferences.preference_id = Preference.id
+SELECT DISTINCT Preference.libelle, User_Preference.preference_personnelle, User.pseudo
+FROM User_Preference
+INNER JOIN User ON User_Preference.user_id = User.id
+INNER JOIN Preference ON User_Preference.preference_id = Preference.id
 WHERE User.id = 64;
 
 
 SELECT * FROM Preference;
-SELECT * FROM User_Preferences;
+SELECT * FROM User_Preference;
 
-DELETE FROM User_Preferences
+DELETE FROM User_Preference
 WHERE User_id = 47 AND Preference_id = 4;
 
 SELECT * FROM Voiture
@@ -223,7 +223,7 @@ adresse_arrivee = "barcelona" AND TIMESTAMPDIFF(HOUR, date_heure_depart, date_he
 
 USE ecorideDB;
 
-SELECT * FROM User_Covoiturages;
+SELECT * FROM User_Covoiturage;
 
 SELECT * FROM Covoiturage
 WHERE id = 14;
@@ -240,12 +240,12 @@ WHERE User.id = 47;
 -- Pour récuperer les covoiturages auxquels l'user participe'
 SELECT Covoiturage.id, Covoiturage.date_heure_depart, Covoiturage.date_heure_arrivee, 
 Covoiturage.adresse_depart, Covoiturage.adresse_arrivee
-FROM User_Covoiturages 
-INNER JOIN Covoiturage ON User_Covoiturages.covoiturage_id = Covoiturage.id 
+FROM User_Covoiturage 
+INNER JOIN Covoiturage ON User_Covoiturage.covoiturage_id = Covoiturage.id 
 WHERE user_id = 47;
 
 
-SELECT * FROM User_Covoiturages;
+SELECT * FROM User_Covoiturage;
 SELECT * FROM User WHERE id = 59;
 SELECT User.pseudo, User.photo_uniqId FROM Covoiturage 
 INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
@@ -278,9 +278,9 @@ DESC User;
 
 
 
-SELECT * FROM User_Covoiturages WHERE user_id = 59;
+SELECT * FROM User_Covoiturage WHERE user_id = 59;
 
-DELETE FROM User_Covoiturages WHERE user_id = 59;
+DELETE FROM User_Covoiturage WHERE user_id = 59;
 
 
 SELECT * FROM Covoiturage WHERE id = 4;
@@ -294,24 +294,24 @@ UPDATE User
 SET nb_credits = 20 
 WHERE id = 47;
 
-SELECT * FROM User_Covoiturages WHERE covoiturage_id = 17;
+SELECT * FROM User_Covoiturage WHERE covoiturage_id = 17;
 
 UPDATE Covoiturage
 SET nb_place_disponible = 10
 WHERE id = 17;
 
 /* Fonction pour annuler la participation au covoiturage en tant que passager */
-DELETE FROM User_Covoiturages WHERE user_id = 47 AND covoiturage_id = 17;
+DELETE FROM User_Covoiturage WHERE user_id = 47 AND covoiturage_id = 17;
 
 /* Fonction pour annuler la participation au covoiturage en tant que chauffeur */
 DELETE FROM Covoiturage WHERE id = 17;
-SHOW CREATE TABLE User_Covoiturages;
-SELECT * FROM User_Covoiturages WHERE covoiturage_id = 2;
+SHOW CREATE TABLE User_Covoiturage;
+SELECT * FROM User_Covoiturage WHERE covoiturage_id = 2;
 
 SELECT nb_credits FROM User WHERE id = 65;
 
 SELECT user_id 
-FROM User_Covoiturages 
+FROM User_Covoiturage 
 WHERE covoiturage_id = 8;
 
 SELECT * FROM Covoiturage WHERE id = 2;
@@ -319,25 +319,25 @@ SELECT * FROM Covoiturage WHERE id = 2;
 /* Pour voir tous les constraints de la table */
 SELECT CONSTRAINT_NAME
 FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
-WHERE TABLE_NAME = 'User_Covoiturages'
+WHERE TABLE_NAME = 'User_Covoiturage'
 AND CONSTRAINT_TYPE = 'FOREIGN KEY';
 
-/* Ici on elimine la constraint de la foreign key de la table User_Covoiturages
+/* Ici on elimine la constraint de la foreign key de la table User_Covoiturage
 pour en ajouter une nouvelle avec le ON DELETE CASCADE, comme ca, si l'user chauffeur supprime 
-un covoiturage, alors, tous ces covoiturages qu'eteint dans la table User_Covoiturages seront supprimés
+un covoiturage, alors, tous ces covoiturages qu'eteint dans la table User_Covoiturage seront supprimés
  */
-ALTER TABLE User_Covoiturages DROP FOREIGN KEY user_covoiturages_ibfk_2;
-ALTER TABLE User_Covoiturages 
-ADD CONSTRAINT user_covoiturages_ibfk_2
+ALTER TABLE User_Covoiturage DROP FOREIGN KEY user_covoiturage_ibfk_2;
+ALTER TABLE User_Covoiturage 
+ADD CONSTRAINT user_covoiturage_ibfk_2
 FOREIGN KEY (covoiturage_id) REFERENCES Covoiturage(id) 
 ON DELETE CASCADE;
 
 /* Fonction pour chercher le mail de tous les participants d'un covoiturage */
 
-SELECT User_Covoiturages.user_id, passager.mail, driver.pseudo
-FROM User_Covoiturages
-INNER JOIN User as passager ON User_Covoiturages.user_id = passager.id
-INNER JOIN Covoiturage ON User_Covoiturages.covoiturage_id = Covoiturage.id
+SELECT User_Covoiturage.user_id, passager.mail, driver.pseudo
+FROM User_Covoiturage
+INNER JOIN User as passager ON User_Covoiturage.user_id = passager.id
+INNER JOIN Covoiturage ON User_Covoiturage.covoiturage_id = Covoiturage.id
 INNER JOIN Voiture ON Covoiturage.voiture_id = Voiture.id
 INNER JOIN User as driver ON Voiture.user_id = driver.id
 WHERE covoiturage_id = 8;
@@ -362,7 +362,7 @@ WHERE id = 16;
 
 
 /* Pour savoir si l'user participe déjà au covoiturage */
-SELECT * FROM User_Covoiturages
+SELECT * FROM User_Covoiturage
 WHERE user_id = 59 AND covoiturage_id = 14;
 
 
@@ -397,10 +397,10 @@ WHERE id = 47;
 
 SELECT * FROM Commentaire;
 
-SELECT * FROM User_Covoiturages WHERE user_id = 65 AND covoiturage_id = 16;
+SELECT * FROM User_Covoiturage WHERE user_id = 65 AND covoiturage_id = 16;
 
 DESCRIBE Commentaire;
-SELECT * FROM User_Covoiturages WHERE id = 78; 
+SELECT * FROM User_Covoiturage WHERE id = 78; 
 
 /* Rêquete pour chercher l'info de chaque commmentaire laissait concernant un covoiturage mal passé */
 SELECT C.id AS covoiturage_id, C.date_heure_depart, C.date_heure_arrivee, C.adresse_depart, C.adresse_arrivee,
@@ -408,7 +408,7 @@ Passager.id AS passager_id, Passager.pseudo AS passager_pseudo, Passager.mail AS
 Driver.id AS driver_id, Driver.pseudo AS driver_pseudo, Driver.mail AS driver_mail,
 Comment.commentaire, Comment.id as commentaire_id
 FROM Commentaire AS Comment
-INNER JOIN User_Covoiturages AS UC ON Comment.user_covoiturage_id = UC.id
+INNER JOIN User_Covoiturage AS UC ON Comment.user_covoiturage_id = UC.id
 INNER JOIN Covoiturage AS C ON UC.covoiturage_id = C.id
 INNER JOIN Voiture AS V ON C.voiture_id = V.id
 INNER JOIN User AS Driver ON V.user_id = Driver.id
@@ -483,7 +483,7 @@ UPDATE User SET active = 1 WHERE id = 47;
 
 /* combien la plateforme gagne de crédit en fonction des jours */
 
-SELECT * FROM User_Covoiturages;
+SELECT * FROM User_Covoiturage;
 
 /* Avec cette requete on peut savoir combien de credits la plataforme a gagne par jour 
 selon la participation dans le covoiturage*/
@@ -491,7 +491,7 @@ SELECT c.id AS covoiturage_id,DATE(c.date_heure_depart) AS jour,
 COUNT(UC.id) * 2 AS gain_journalier,
 COUNT(DISTINCT c.id) AS nb_trajets
 FROM covoiturage c
-INNER JOIN User_Covoiturages UC ON UC.covoiturage_id = c.id
+INNER JOIN User_Covoiturage UC ON UC.covoiturage_id = c.id
 /*WHERE UC.statut_id = 4*/
 GROUP BY c.id, jour
 ORDER BY jour ASC;
@@ -499,29 +499,29 @@ ORDER BY jour ASC;
 SELECT * FROM Covoiturage WHERE id = 16;
 
 SELECT * FROM Covoiturage WHERE id = 16;
-SELECT * FROM User_Covoiturages;
+SELECT * FROM User_Covoiturage;
 
 UPDATE Covoiturage SET statut_id = 1 WHERE id = 16;
 
-ALTER TABLE User_Covoiturages
+ALTER TABLE User_Covoiturage
 ADD statut_id int UNSIGNED;
 
-SELECT * FROM User_Covoiturages WHERE user_id = 65 AND covoiturage_id = 16;
-UPDATE User_Covoiturages 
+SELECT * FROM User_Covoiturage WHERE user_id = 65 AND covoiturage_id = 16;
+UPDATE User_Covoiturage 
 SET statut_id = null
 WHERE covoiturage_id = 16 AND user_id = 65;
 
-ALTER TABLE User_Covoiturages
+ALTER TABLE User_Covoiturage
 ADD FOREIGN KEY (statut_id) REFERENCES Statut(id);
 
-DESCRIBE User_Covoiturages;
+DESCRIBE User_Covoiturage;
 
 SELECT 
 DATE_FORMAT(c.date_heure_depart, '%d-%m-%Y') AS jour,
 COUNT(DISTINCT c.id) AS nb_trajets,
 COUNT(uc.id) * 2 AS gain
 FROM covoiturage c
-LEFT JOIN user_covoiturages uc ON uc.covoiturage_id = c.id
+LEFT JOIN user_covoiturage uc ON uc.covoiturage_id = c.id
 GROUP BY jour
 ORDER BY STR_TO_DATE(jour, '%d-%m-%Y') ASC;
 

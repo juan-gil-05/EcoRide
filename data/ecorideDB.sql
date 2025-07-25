@@ -204,10 +204,10 @@ INSERT INTO `User` (`id`, `nb_credits`, `pseudo`, `mail`, `password`, `photo`, `
 -- --------------------------------------------------------
 
 --
--- Structure de la table `User_Covoiturages`
+-- Structure de la table `User_Covoiturage`
 --
 
-CREATE TABLE `User_Covoiturages` (
+CREATE TABLE `User_Covoiturage` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED DEFAULT NULL,
   `covoiturage_id` int(10) UNSIGNED DEFAULT NULL,
@@ -215,10 +215,10 @@ CREATE TABLE `User_Covoiturages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `User_Covoiturages`
+-- Déchargement des données de la table `User_Covoiturage`
 --
 
-INSERT INTO `User_Covoiturages` (`id`, `user_id`, `covoiturage_id`, `statut_id`) VALUES
+INSERT INTO `User_Covoiturage` (`id`, `user_id`, `covoiturage_id`, `statut_id`) VALUES
 (24, 59, 14, NULL),
 (25, 59, 12, 4),
 (79, 47, 11, NULL),
@@ -229,10 +229,10 @@ INSERT INTO `User_Covoiturages` (`id`, `user_id`, `covoiturage_id`, `statut_id`)
 -- --------------------------------------------------------
 
 --
--- Structure de la table `User_Preferences`
+-- Structure de la table `User_Preference`
 --
 
-CREATE TABLE `User_Preferences` (
+CREATE TABLE `User_Preference` (
   `id` int(10) UNSIGNED NOT NULL,
   `preference_personnelle` varchar(500) DEFAULT NULL,
   `preference_id` int(10) UNSIGNED DEFAULT NULL,
@@ -240,10 +240,10 @@ CREATE TABLE `User_Preferences` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `User_Preferences`
+-- Déchargement des données de la table `User_Preference`
 --
 
-INSERT INTO `User_Preferences` (`id`, `preference_personnelle`, `preference_id`, `user_id`) VALUES
+INSERT INTO `User_Preference` (`id`, `preference_personnelle`, `preference_id`, `user_id`) VALUES
 (3, '', 1, 47),
 (4, '', 1, 47),
 (6, '', 1, 47),
@@ -375,18 +375,18 @@ ALTER TABLE `User`
   ADD KEY `role_id` (`role_id`);
 
 --
--- Index pour la table `User_Covoiturages`
+-- Index pour la table `User_Covoiturage`
 --
-ALTER TABLE `User_Covoiturages`
+ALTER TABLE `User_Covoiturage`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
-  ADD KEY `user_covoiturages_ibfk_2` (`covoiturage_id`),
+  ADD KEY `user_covoiturage_ibfk_2` (`covoiturage_id`),
   ADD KEY `statut_id` (`statut_id`);
 
 --
--- Index pour la table `User_Preferences`
+-- Index pour la table `User_Preference`
 --
-ALTER TABLE `User_Preferences`
+ALTER TABLE `User_Preference`
   ADD PRIMARY KEY (`id`),
   ADD KEY `preference_id` (`preference_id`),
   ADD KEY `user_id` (`user_id`);
@@ -444,15 +444,15 @@ ALTER TABLE `User`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
--- AUTO_INCREMENT pour la table `User_Covoiturages`
+-- AUTO_INCREMENT pour la table `User_Covoiturage`
 --
-ALTER TABLE `User_Covoiturages`
+ALTER TABLE `User_Covoiturage`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
--- AUTO_INCREMENT pour la table `User_Preferences`
+-- AUTO_INCREMENT pour la table `User_Preference`
 --
-ALTER TABLE `User_Preferences`
+ALTER TABLE `User_Preference`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
@@ -469,7 +469,7 @@ ALTER TABLE `Voiture`
 -- Contraintes pour la table `Commentaire`
 --
 ALTER TABLE `Commentaire`
-  ADD CONSTRAINT `commentaire_ibfk_1` FOREIGN KEY (`user_covoiturage_id`) REFERENCES `User_Covoiturages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `commentaire_ibfk_1` FOREIGN KEY (`user_covoiturage_id`) REFERENCES `User_Covoiturage` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `Covoiturage`
@@ -485,18 +485,18 @@ ALTER TABLE `User`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `Role` (`id`);
 
 --
--- Contraintes pour la table `User_Covoiturages`
+-- Contraintes pour la table `User_Covoiturage`
 --
-ALTER TABLE `User_Covoiturages`
-  ADD CONSTRAINT `user_covoiturages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_covoiturages_ibfk_2` FOREIGN KEY (`covoiturage_id`) REFERENCES `Covoiturage` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_covoiturages_ibfk_3` FOREIGN KEY (`statut_id`) REFERENCES `Statut` (`id`);
+ALTER TABLE `User_Covoiturage`
+  ADD CONSTRAINT `user_covoiturage_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_covoiturage_ibfk_2` FOREIGN KEY (`covoiturage_id`) REFERENCES `Covoiturage` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_covoiturage_ibfk_3` FOREIGN KEY (`statut_id`) REFERENCES `Statut` (`id`);
 
 --
--- Contraintes pour la table `User_Preferences`
+-- Contraintes pour la table `User_Preference`
 --
-ALTER TABLE `User_Preferences`
-  ADD CONSTRAINT `user_preferences_ibfk_1` FOREIGN KEY (`preference_id`) REFERENCES `Preference` (`id`),
-  ADD CONSTRAINT `user_preferences_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `User_Preference`
+  ADD CONSTRAINT `user_preference_ibfk_1` FOREIGN KEY (`preference_id`) REFERENCES `Preference` (`id`),
+  ADD CONSTRAINT `user_preference_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
