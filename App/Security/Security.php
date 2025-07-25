@@ -55,7 +55,7 @@ class Security
     // Fonction pour vérifier si je suis en production ou dévéloppement
     public static function inProduction()
     {
-        if ($_SERVER['HTTP_HOST'] == "https://ecoride.juangil.fr") {
+        if ($_SERVER['HTTP_HOST'] == "ecoride.juangil.fr") {
             return true;
         } elseif ($_SERVER['HTTP_HOST'] == "localhost") {
             return false;
