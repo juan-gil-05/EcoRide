@@ -68,7 +68,7 @@ $scripts = [
 // on parcours le tableau et on crée une balise script pour chaque script de l'action
 if (isset($scripts[$currentAction])) {
     foreach ($scripts[$currentAction] as $script) {
-        echo "<script src=\"../Scripts/{$script}\"></script>\n";
+        echo "<script src=\"/Scripts/{$script}\"></script>\n";
     }
 }
 ?>
