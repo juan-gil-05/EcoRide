@@ -667,6 +667,11 @@ class CovoiturageController extends Controller
     // le chauffeur indique que le covoiturage est terminé
     public function sendMailToValidateCovoiturage(CovoiturageRepository $covoiturageRepository, int $covoiturageId)
     {
+        /* Appel du fichier avec les paramètres de la BDD
+           Por appeller le smpt_host, afin de valider le lien à envoyer
+           selon l'nevironement (Prod ou dev) */
+        $config = require BASE_PATH . "/config.php";
+
         // Le sujet et le modèle du mail
         $mailSubject = 'Votre covoiturage est terminé – Merci de confirmer votre expérience';
         $mailBody = 'covoiturage-finished.php';
@@ -691,7 +696,8 @@ class CovoiturageController extends Controller
             $passagerMail = $passager['passager_mail'];
             $driverPseudo = ucfirst($passager['driver_pseudo']); // Pseudo du chauffeur
             // On crée le lien vers le site pour valider le covoiturage, avec les id chiffrés
-            if (Security::inProduction()) {
+            if ($config['SMTP_HOST'] == "ecoride.juangil.fr") {
+                // Si envoyé depuis le SMTP host du production
                 // Lien en Production
                 $linkToSite =
                     "https://ecoride.juangil.fr/page/valider-covoiturage/" .
