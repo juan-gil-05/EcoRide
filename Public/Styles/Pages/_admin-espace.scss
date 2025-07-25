@@ -120,7 +120,7 @@
 
                         // L'icon pour suspendre un compte utilisateur
                         .bi-person-fill-slash {
-                            color: $dark;
+                            color: $secondary;
                             cursor: pointer;
                             transition: all 0.3s ease-in-out;
 
@@ -131,7 +131,7 @@
 
                         // L'icon quand l'user est déjà suspendu
                         .inactif-user-delete-btn {
-                            color: $secondary;
+                            color: $dark;
 
                             &:hover {
                                 filter: brightness(1.3);

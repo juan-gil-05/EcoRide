@@ -15,9 +15,9 @@ class Controller
             $url = trim($url, '/'); // Pour supprimer les "/" au debut et a la fin de l'url
             $segments = explode('/', $url); // Pour séparer l'url dans un tableau
 
-            $controllerName = $segments[0] ?? "page";
+            $controllerName = ($segments[0]) ? $segments[0] : "page";
             // On transforme l'action passée en camelCase, afin d'utiliser la method du controller
-            $action = StringTools::toCamelCase($segments[1]) ?? "accueil";
+            $action = ($segments[1]) ? StringTools::toCamelCase($segments[1]) : "accueil";
 
             switch ($controllerName) {
                 case 'page':

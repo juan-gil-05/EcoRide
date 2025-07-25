@@ -13674,7 +13674,7 @@ html {
   justify-content: space-evenly;
 }
 .admin-espace-container .dt-container .dt-layout-table .user-table tbody .actions-col .bi-person-fill-slash {
-  color: #333333;
+  color: #006ebc;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
@@ -13682,7 +13682,7 @@ html {
   filter: brightness(1.3);
 }
 .admin-espace-container .dt-container .dt-layout-table .user-table tbody .actions-col .inactif-user-delete-btn {
-  color: #006ebc;
+  color: #333333;
 }
 .admin-espace-container .dt-container .dt-layout-table .user-table tbody .actions-col .inactif-user-delete-btn:hover {
   filter: brightness(1.3);

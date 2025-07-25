@@ -37,7 +37,7 @@ $url = $_GET['url'] ?? "";
 $url = trim($url, '/');
 $segments = explode('/', $url);
 
-$currentAction = StringTools::toCamelCase($segments[1]) ?? "accueil";
+$currentAction = ($segments[1]) ? StringTools::toCamelCase($segments[1]) : "accueil";
 
 if (isset($currentAction) && $currentAction == 'espace') { ?>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
