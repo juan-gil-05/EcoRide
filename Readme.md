@@ -68,24 +68,6 @@ Cette plateforme web, pensée pour les voyageurs soucieux de l’écologie et de
         ```
     2. enlevez le .exemple, afin que le fichier soit lisible en tant que variables d'environement
         >🔐 Ne versionnez jamais le fichier `.env` : ajoutez-le dans votre fichier `.gitignore`.
-    3. Dans le fichier App/Db/Mongodb.php -> decommentez la ligne 52 avec le string de connexion à Mongodb en local et commentez la ligne 54 avec le string de connexion à Mongodb Atlas. 
-    Voici le code attendu :
-        ```php
-        try {
-            // Connection string en LOCAL
-            $connectionPath = "mongodb://" . $user . ":" . $password . "@" . $host . ":" . $port . "/" . $dbName;
-            // Connection string en mongoDB Atlas
-            // $connectionPath = "mongodb+srv://" . $user . ":" . $password . "@" . $host . "/?retryWrites=true&w=majority&appName=" . $dbName;
-            // Instance de la classe Client
-            $mongo = new Client($connectionPath);
-            $db = $mongo->selectDatabase($dbName); // Sélection de la base de données
-            // On retourne l'instance de la base de données
-            return $db;
-        } catch (Exception $e) {
-            echo ('Error : ' . $e->getMessage());
-            exit;
-        }
-        ```
 
 3. **Configuration SMTP pour l'envoi d'emails (en local)**
 
