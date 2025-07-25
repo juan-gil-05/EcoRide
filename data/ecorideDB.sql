@@ -9,9 +9,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `Commentaire` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `commentaire` varchar(250) NOT NULL,
-  `user_covoiturage_id` int(10) UNSIGNED DEFAULT NULL
+  `id` int UNSIGNED NOT NULL,
+  `commentaire` varchar(255) NOT NULL,
+  `user_covoiturage_id` int UNSIGNED NOT NULL 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -29,15 +29,15 @@ INSERT INTO `Commentaire` (`id`, `commentaire`, `user_covoiturage_id`) VALUES
 --
 
 CREATE TABLE `Covoiturage` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `nb_place_disponible` int(11) NOT NULL,
-  `prix` float NOT NULL,
+  `id` int UNSIGNED NOT NULL,
+  `nb_place_disponible` tinyint UNSIGNED NOT NULL,
+  `prix` decimal(8,2) UNSIGNED NOT NULL,
   `date_heure_depart` datetime NOT NULL,
   `date_heure_arrivee` datetime NOT NULL,
   `adresse_depart` varchar(255) NOT NULL,
   `adresse_arrivee` varchar(255) NOT NULL,
-  `voiture_id` int(10) UNSIGNED DEFAULT NULL,
-  `statut_id` int(10) UNSIGNED DEFAULT NULL
+  `voiture_id` int UNSIGNED NOT NULL,
+  `statut_id` int UNSIGNED NOT NULL 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -65,8 +65,8 @@ INSERT INTO `Covoiturage` (`id`, `nb_place_disponible`, `prix`, `date_heure_depa
 --
 
 CREATE TABLE `Energie` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `libelle` varchar(500) NOT NULL
+  `id` int UNSIGNED NOT NULL,
+  `libelle` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -87,8 +87,8 @@ INSERT INTO `Energie` (`id`, `libelle`) VALUES
 --
 
 CREATE TABLE `Preference` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `libelle` varchar(500) NOT NULL,
+  `id` int UNSIGNED NOT NULL,
+  `libelle` varchar(255) NOT NULL,
   `statut` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -109,8 +109,8 @@ INSERT INTO `Preference` (`id`, `libelle`, `statut`) VALUES
 --
 
 CREATE TABLE `Role` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `libelle` varchar(50) DEFAULT NULL
+  `id` int UNSIGNED NOT NULL,
+  `libelle` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -131,7 +131,7 @@ INSERT INTO `Role` (`id`, `libelle`) VALUES
 --
 
 CREATE TABLE `Statut` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int UNSIGNED NOT NULL,
   `libelle` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -153,16 +153,16 @@ INSERT INTO `Statut` (`id`, `libelle`) VALUES
 --
 
 CREATE TABLE `User` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `nb_credits` int(11) DEFAULT 20,
+  `id` int UNSIGNED NOT NULL,
+  `nb_credits` int UNSIGNED DEFAULT 20,
   `pseudo` varchar(50) NOT NULL,
   `mail` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `password` char(60) NOT NULL,
   `photo` varchar(255) DEFAULT NULL,
-  `role_id` int(10) UNSIGNED DEFAULT NULL,
+  `role_id` int UNSIGNED NOT NULL,
   `photo_uniqId` varchar(255) DEFAULT NULL,
   `active` tinyint(1) DEFAULT 1,
-  `login_attempts` int(5) DEFAULT 0,
+  `login_attempts` tinyint UNSIGNED DEFAULT 0,
   `locked_until` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -208,10 +208,10 @@ INSERT INTO `User` (`id`, `nb_credits`, `pseudo`, `mail`, `password`, `photo`, `
 --
 
 CREATE TABLE `User_Covoiturage` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED DEFAULT NULL,
-  `covoiturage_id` int(10) UNSIGNED DEFAULT NULL,
-  `statut_id` int(10) UNSIGNED DEFAULT NULL
+  `id` int UNSIGNED NOT NULL,
+  `user_id` int UNSIGNED NOT NULL ,
+  `covoiturage_id` int UNSIGNED NOT NULL ,
+  `statut_id` int UNSIGNED NOT NULL 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -233,10 +233,10 @@ INSERT INTO `User_Covoiturage` (`id`, `user_id`, `covoiturage_id`, `statut_id`) 
 --
 
 CREATE TABLE `User_Preference` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `preference_personnelle` varchar(500) DEFAULT NULL,
-  `preference_id` int(10) UNSIGNED DEFAULT NULL,
-  `user_id` int(10) UNSIGNED DEFAULT NULL
+  `id` int UNSIGNED NOT NULL,
+  `preference_personnelle` varchar(255) DEFAULT NULL,
+  `preference_id` int UNSIGNED NOT NULL ,
+  `user_id` int UNSIGNED NOT NULL 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -292,14 +292,14 @@ INSERT INTO `User_Preference` (`id`, `preference_personnelle`, `preference_id`, 
 --
 
 CREATE TABLE `Voiture` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int UNSIGNED NOT NULL,
   `modele` varchar(255) NOT NULL,
   `couleur` varchar(50) NOT NULL,
   `marque` varchar(50) NOT NULL,
-  `immatriculation` varchar(50) NOT NULL,
+  `immatriculation` varchar(9) NOT NULL,
   `date_premiere_immatriculation` date NOT NULL,
-  `user_id` int(10) UNSIGNED DEFAULT NULL,
-  `energie_id` int(10) UNSIGNED DEFAULT NULL
+  `user_id` int UNSIGNED NOT NULL,
+  `energie_id` int UNSIGNED NOT NULL 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -405,61 +405,61 @@ ALTER TABLE `Voiture`
 -- AUTO_INCREMENT pour la table `Commentaire`
 --
 ALTER TABLE `Commentaire`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `Covoiturage`
 --
 ALTER TABLE `Covoiturage`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT pour la table `Energie`
 --
 ALTER TABLE `Energie`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `Preference`
 --
 ALTER TABLE `Preference`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `Role`
 --
 ALTER TABLE `Role`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `Statut`
 --
 ALTER TABLE `Statut`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `User`
 --
 ALTER TABLE `User`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT pour la table `User_Covoiturage`
 --
 ALTER TABLE `User_Covoiturage`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT pour la table `User_Preference`
 --
 ALTER TABLE `User_Preference`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT pour la table `Voiture`
 --
 ALTER TABLE `Voiture`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Contraintes pour les tables déchargées
