@@ -691,10 +691,19 @@ class CovoiturageController extends Controller
             $passagerMail = $passager['passager_mail'];
             $driverPseudo = ucfirst($passager['driver_pseudo']); // Pseudo du chauffeur
             // On crée le lien vers le site pour valider le covoiturage, avec les id chiffrés
-            $linkToSite =
-                "https://ecoride.juangil.fr/index.php/page/validate-covoiturage/" .
-                $passagerEncryptId[$passager['passager_id']] .
-                "/" . $covoiturageEncryptId[$covoiturage['covoiturage_id']];
+            if (Security::inProduction()) {
+                // Lien en Production
+                $linkToSite =
+                    "https://ecoride.juangil.fr/page/valider-covoiturage/" .
+                    $passagerEncryptId[$passager['passager_id']] .
+                    "/" . $covoiturageEncryptId[$covoiturage['covoiturage_id']];
+            } else {
+                // Lien en LOCAL
+                $linkToSite =
+                    "/page/valider-covoiturage/" .
+                    $passagerEncryptId[$passager['passager_id']] .
+                    "/" . $covoiturageEncryptId[$covoiturage['covoiturage_id']];
+            }
 
             // Les paramètres pour envoyer le mail
             $mailParams = [

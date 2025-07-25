@@ -52,6 +52,16 @@ class Security
         }
     }
 
+    // Fonction pour vérifier si je suis en production ou dévéloppement
+    public static function inProduction()
+    {
+        if ($_SERVER['HTTP_HOST'] == "https://ecoride.juangil.fr") {
+            return true;
+        } elseif ($_SERVER['HTTP_HOST'] == "localhost") {
+            return false;
+        }
+    }
+
     // Fonction pour crypter un paramètre passé dans l'url avec l'algorithme ASE (Advanced Encryption Standard)
     public static function encryptUrlParameter($id)
     {

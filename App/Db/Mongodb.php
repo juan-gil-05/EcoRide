@@ -4,6 +4,7 @@ namespace App\Db;
 
 require BASE_PATH . '/vendor/autoload.php'; // Autoload de composer pour charger la class Client de MongoDB
 
+use App\Security\Security;
 use Exception;
 use MongoDB\Client;
 
@@ -48,12 +49,15 @@ class Mongodb
         $dbName = $this->db_name_mongo;
 
         try {
-            // Connection string en LOCAL
-            // $connectionPath = "mongodb://" . $user . ":" . $password . "@" . $host . ":" . $port . "/" . $dbName;
-            // Connection string en mongoDB Atlas
-            $connectionPath =
-            "mongodb+srv://" . $user . ":" . $password . "@" .
-            $host . "/?retryWrites=true&w=majority&appName=" . $dbName;
+            if (Security::inProduction()) {
+                // Connection string en mongoDB Atlas (Production)
+                $connectionPath =
+                    "mongodb+srv://" . $user . ":" . $password . "@" .
+                    $host . "/?retryWrites=true&w=majority&appName=" . $dbName;
+            } else {
+                // Connection string en LOCAL
+                $connectionPath = "mongodb://" . $user . ":" . $password . "@" . $host . ":" . $port . "/" . $dbName;
+            }
             // Instance de la classe Client
             $mongo = new Client($connectionPath);
             $db = $mongo->selectDatabase($dbName); // Sélection de la base de données

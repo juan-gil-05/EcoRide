@@ -48,7 +48,7 @@ use App\Security\Security;
         <nav class="navbar navbar-expand-lg bg-light header">
             <div class="container-fluid">
                 <!--Logo du site-->
-                <a class="navbar-brand subtitle-text fw-bold" href="/page/accueil">EcoRide</a>
+                <a class="navbar-brand headline-text" href="/page/accueil">EcoRide</a>
                 <!--Bouton du site en mode responsive-->
                 <button
                     class="navbar-toggler"

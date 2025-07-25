@@ -1,4 +1,5 @@
 <?php
+
 require_once BASE_PATH . '/vendor/autoload.php';
 
 // Dans ce fichier on charge les variables d'environement avec la Bibliotheque vlucas/phpdotenv
