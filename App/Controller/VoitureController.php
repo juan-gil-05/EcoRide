@@ -62,7 +62,7 @@ class VoitureController extends Controller
                             exit;
                         } else {
                             // On evoi vers la page pour enregistrer les préférences
-                            header('Location: /preference/choix-fumeur');
+                            header('Location: /preference/enregistrement');
                         }
                     }
                 }

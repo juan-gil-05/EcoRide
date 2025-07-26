@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Covoiturage;
 use App\Repository\AvisRepository;
 use App\Repository\CovoiturageRepository;
-use App\Repository\PreferenceUserRepository;
+use App\Repository\PreferenceRepository;
 use App\Repository\UserRepository;
 use App\Repository\VoitureRepository;
 use App\Security\CovoiturageValidator;
@@ -153,7 +153,7 @@ class CovoiturageController extends Controller
     {
         // Appel des repositories
         $covoiturageRepository = new CovoiturageRepository();
-        $preferenceUserRepository = new PreferenceUserRepository();
+        $preferenceRepository = new PreferenceRepository();
         $userRepository = new UserRepository();
         $avisRepository = new AvisRepository();
 
@@ -194,13 +194,13 @@ class CovoiturageController extends Controller
         // on appel la fonction qui formate les dates et les heures des covoiturages
         $dateTimeCovoiturage = $this->dateTimeCovoiturage($covoiturageDetail);
 
-        // Pour récupérer les préférences du chauffeur
-        $driverPreferences = $preferenceUserRepository->searchPreferencesByDriverId($driverId);
+        // Fonction pour chercher toutes les préférences par l'id de l'utilisateur
+        $allPreferences = $preferenceRepository->findPreferencesByDriverId($driverId);
+        // Fonction pour chercher toutes les préférences personnelles par l'id de l'utilisateur
+        $allPersoPref = $preferenceRepository->findPersonalPreferenceByDriverId($driverId);
 
         // Fonction array_map pour récupérer uniquement les values des libelles dans un nouveau array
-        $preferences = array_map(fn($pref) => $pref['libelle'], $driverPreferences);
-        // Fonction array_map pour récupérer uniquement les values des préférences personnelles dans un nouveau array
-        $preferencesPersonnelles = array_map(fn($pref) => $pref['personnelle'], $driverPreferences);
+        $preferencesLibelle = array_map(fn($pref) => $pref['preference'], $allPreferences);
 
         // Fonction pour participer au covoiturage
         $participateToCovoiturage = $this->participateToCovoiturage(
@@ -224,8 +224,8 @@ class CovoiturageController extends Controller
                 "dureeCovoiturage" => $dateTimeCovoiturage[7],
                 "jours" => $dateTimeCovoiturage[8],
                 "driver" => $driver,
-                "preferences" => $preferences,
-                "preferencesPersonnelles" => $preferencesPersonnelles,
+                "preferencesLibelle" => $preferencesLibelle,
+                "allPersoPref" => $allPersoPref,
                 "carInfo" => $carInfo,
                 "isNotLogged" => $participateToCovoiturage[0],
                 "noDisponiblePlaces" => $participateToCovoiturage[1],

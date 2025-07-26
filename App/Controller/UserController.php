@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Repository\PreferenceUserRepository;
+use App\Repository\PreferenceRepository;
 use App\Repository\UserRepository;
 use App\Repository\VoitureRepository;
 use App\Security\Security;
@@ -121,7 +121,7 @@ class UserController extends Controller
             // Repositories
             $userRepository = new UserRepository();
             $carRepository = new VoitureRepository();
-            $preferenceRepository = new PreferenceUserRepository();
+            $preferenceRepository = new PreferenceRepository();
 
             $userId = $_SESSION['user']['id'];
             // Pour récuperer le mail de l'utilisateur qui est connecté
@@ -141,16 +141,16 @@ class UserController extends Controller
                 : [];
 
             // Fonction pour chercher toutes les préférences par l'id de l'utilisateur
-            $allPreferences = $preferenceRepository->searchPreferencesByDriverId($userId);
+            $allPreferences = $preferenceRepository->findPreferencesByDriverId($userId);
             // Fonction pour chercher toutes les préférences personnelles par l'id de l'utilisateur
-            $allPersoPref = $preferenceRepository->searchPreferencesByDriverId($userId, true);
+            $allPersoPref = $preferenceRepository->findPersonalPreferenceByDriverId($userId);
 
             // Fonction array_map pour récupérer uniquement les values des libelles dans un nouveau array
-            $preferencesLibelle = array_map(fn($pref) => $pref['libelle'], $allPreferences);
+            $preferencesLibelle = array_map(fn($pref) => $pref['preference'], $allPreferences);
 
             $this->deletePreference($preferenceRepository);
 
-            PreferenceUserController::editPersonnelle();
+            PreferenceController::editPersonnelle();
 
             $this->render(
                 "User/profil",
@@ -191,10 +191,6 @@ class UserController extends Controller
             }
             $userRepository->createDriverUser($user);
         }
-        // On crée cette session pour pouvoir afficher le message de succès,
-        // le message_code c'est pour l'icon de SweetAlert
-        $_SESSION['message_to_User'] = "Compte crée avec succès";
-        $_SESSION['message_code'] = "success";
     }
 
     public static function redirectAfterLogin(User $user, UserRepository $userRepository): void
@@ -207,16 +203,21 @@ class UserController extends Controller
             if ($voitureRepository->findCarByUserId($user->getId())) { // s'il a déjà des voitures
                 header('Location: /page/accueil');
             } else { // sinon, on envoie vers la page d'inscription d'une voiture
+                // On crée cette session pour pouvoir afficher le message de succès,
+                // le message_code c'est pour l'icon de SweetAlert
+                $_SESSION['message_to_User'] = "Bienvenue ! Pour commencer, veuillez ajouter votre voiture " .
+                    "et indiquer vos préférences.";
+                $_SESSION['message_code'] = "info";
                 header('Location: /voiture/inscription');
             }
         } else {
-            // Passager
+            // passager
             header('Location: /page/accueil');
         }
         exit;
     }
 
-    private function deletePreference(PreferenceUserRepository $preferenceRepository)
+    private function deletePreference(PreferenceRepository $preferenceRepository)
     {
         if (isset($_POST['deletePreference'])) {
             $preferenceRepository->deletePreferenceById($_POST['prefId']);

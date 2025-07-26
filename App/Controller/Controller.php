@@ -36,7 +36,7 @@ class Controller
                     $controller = new VoitureController();
                     break;
                 case 'preference':
-                    $controller = new PreferenceUserController();
+                    $controller = new PreferenceController();
                     break;
                 case 'employe':
                     $controller = new EmployeController();

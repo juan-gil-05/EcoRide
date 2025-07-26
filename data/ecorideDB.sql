@@ -88,19 +88,38 @@ INSERT INTO `Energie` (`id`, `libelle`) VALUES
 
 CREATE TABLE `Preference` (
   `id` int UNSIGNED NOT NULL,
-  `libelle` varchar(255) NOT NULL,
-  `statut` tinyint(1) DEFAULT NULL
+  `libelle` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `Preference`
 --
 
-INSERT INTO `Preference` (`id`, `libelle`, `statut`) VALUES
-(1, 'Fumeur', 1),
-(2, 'Animal', 1),
-(3, 'Non_fumeur', 0),
-(4, 'Non_animal', 0);
+INSERT INTO `Preference` (`id`, `libelle`) VALUES
+(1, 'Fumeur'),
+(2, 'Animal'),
+(3, 'Non_fumeur'),
+(4, 'Non_animal');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Preference_Personnelle`
+--
+
+CREATE TABLE `Preference_Personnelle` (
+  `id` int UNSIGNED NOT NULL,
+  `preference` varchar(255) NOT NULL,
+  `user_id` int UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `Preference_Personnelle`
+--
+
+INSERT INTO `Preference_Personnelle` (`id`, `preference`, `user_id`) VALUES
+(1, 'ceci est une preuve, ca fonctionne!!!', 47),
+(2, 'Je ne parle pas', 65);
 
 -- --------------------------------------------------------
 
@@ -209,8 +228,8 @@ INSERT INTO `User` (`id`, `nb_credits`, `pseudo`, `mail`, `password`, `photo`, `
 
 CREATE TABLE `User_Covoiturage` (
   `id` int UNSIGNED NOT NULL,
-  `user_id` int UNSIGNED NOT NULL ,
-  `covoiturage_id` int UNSIGNED NOT NULL ,
+  `user_id` int UNSIGNED NOT NULL,
+  `covoiturage_id` int UNSIGNED NOT NULL,
   `statut_id` int UNSIGNED NOT NULL 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -219,12 +238,12 @@ CREATE TABLE `User_Covoiturage` (
 --
 
 INSERT INTO `User_Covoiturage` (`id`, `user_id`, `covoiturage_id`, `statut_id`) VALUES
-(24, 59, 14, NULL),
+(24, 59, 14, 1),
 (25, 59, 12, 4),
-(79, 47, 11, NULL),
-(81, 59, 15, NULL),
-(84, 47, 12, NULL),
-(85, 67, 23, NULL);
+(79, 47, 11, 1),
+(81, 59, 15, 1),
+(84, 47, 12, 1),
+(85, 67, 23, 1);
 
 -- --------------------------------------------------------
 
@@ -234,8 +253,7 @@ INSERT INTO `User_Covoiturage` (`id`, `user_id`, `covoiturage_id`, `statut_id`) 
 
 CREATE TABLE `User_Preference` (
   `id` int UNSIGNED NOT NULL,
-  `preference_personnelle` varchar(255) DEFAULT NULL,
-  `preference_id` int UNSIGNED NOT NULL ,
+  `preference_id` int UNSIGNED NOT NULL,
   `user_id` int UNSIGNED NOT NULL 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -243,47 +261,11 @@ CREATE TABLE `User_Preference` (
 -- Déchargement des données de la table `User_Preference`
 --
 
-INSERT INTO `User_Preference` (`id`, `preference_personnelle`, `preference_id`, `user_id`) VALUES
-(3, '', 1, 47),
-(4, '', 1, 47),
-(6, '', 1, 47),
-(7, '', 1, 47),
-(8, '', 1, 47),
-(9, '', 1, 47),
-(10, '', 1, 47),
-(13, 'ceci est une preuve, ca fonctionne!!!', 2, 47),
-(15, '', 1, 47),
-(25, '', 1, 47),
-(26, '', 1, 47),
-(27, '', 1, 47),
-(28, '', 1, 47),
-(29, '', 1, 47),
-(31, '', 1, 47),
-(32, '', 2, 47),
-(34, '', 3, 50),
-(35, 'J\'écoute pop en anglais', 2, 50),
-(36, '', 3, 50),
-(37, '', 2, 50),
-(38, '', 3, 54),
-(39, 'Je suis amie du rayo MCqueen', 2, 54),
-(40, '', 1, 60),
-(41, '', 2, 60),
-(42, '', 3, 63),
-(43, '', 3, 63),
-(44, '', 3, 63),
-(45, 'xd', 2, 63),
-(46, '', 3, 64),
-(47, 'J\'écoute pop en anglais', 2, 64),
-(48, '', 1, 65),
-(49, '', 4, 65),
-(55, 'J\'écoute pop en francais', 1, 65),
-(56, 'J\'aime bien parler avec les passagers ', 1, 65),
-(57, '', 3, 71),
-(58, '', 3, 71),
-(59, '', 2, 71),
-(60, '', 1, 73),
-(61, 'J\'aime la musique en espagnol', 1, 47),
-(62, 'J\'aime la musique en anglais', 1, 47);
+INSERT INTO `User_Preference` (`id`, `preference_id`, `user_id`) VALUES
+(1, 3, 47),
+(2, 4, 47),
+(3, 1, 65),
+(4, 2, 65);
 
 -- --------------------------------------------------------
 
@@ -356,6 +338,13 @@ ALTER TABLE `Preference`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `Preference_Personnelle`
+--
+ALTER TABLE `Preference_Personnelle`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Index pour la table `Role`
 --
 ALTER TABLE `Role`
@@ -426,6 +415,12 @@ ALTER TABLE `Preference`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT pour la table `Preference_Personnelle`
+--
+ALTER TABLE `Preference_Personnelle`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT pour la table `Role`
 --
 ALTER TABLE `Role`
@@ -483,6 +478,12 @@ ALTER TABLE `Covoiturage`
 --
 ALTER TABLE `User`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `Role` (`id`);
+
+--
+-- Contraintes pour la table `Preference_Personnelle`
+--
+ALTER TABLE `Preference_Personnelle`
+  ADD CONSTRAINT `preference_personnelle_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `User_Covoiturage`

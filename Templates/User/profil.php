@@ -58,14 +58,11 @@ require_once  BASE_PATH . '/Templates/header.php';
                             <!-- Formulaire pour enregistrer une nouvelle préférence -->
                             <!-- à la base il est caché -->
                             <li id="personalPreference" class="hidden d-flex justify-content-center">
-                                <!-- L'action c'est le controller PreferenceUser -->
-                                <form action="/preference/choix-personnelle"
-                                    method="post" class="d-flex flex-column gap-2">
+                                <!-- L'action c'est le controller Preference -->
+                                <form action="/preference/creer-personnelle"
+                                    method="post" class="d-flex flex-column gap-2 w-100">
                                     <!-- L'input text -->
-                                    <textarea name="preference_personnelle" class="form-control" required></textarea>
-                                    <!-- Input invisible pour envoyer un param fictif à la base de données
-                                     à fin de pouvoir réaliser la requête sql -->
-                                    <input type="text" name="preference_id" value="1" hidden>
+                                    <textarea name="preference" class="form-control" required></textarea>
                                     <!-- bouton pour envoyer le fomulaire -->
                                     <button type="submit" class="btn btn-secondary"
                                         name="newPersonalPreference">Ajouter
@@ -104,17 +101,18 @@ require_once  BASE_PATH . '/Templates/header.php';
                                     <li>
                                         <p class="mb-0"><?= ucfirst($pref['personnelle']) ?></p>
                                         <!-- Action buttons -->
-                                        <div>
+                                        <div class="d-flex gap-1">
                                             <!-- Bouton pour pour ouvrir la modal de confirmation de suppresion -->
-                                            <button class="btn btn-outline-dark secondary-btn 
+                                            <button class="btn btn-outline-dark secondary-btn content-text
                                                            bi bi-trash danger-btn me-1"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#deletePreferenceModal<?= $pref['id'] ?>">
                                             </button>
                                             <!-- Bouton pour éditer une préférence -->
                                             <button
-                                                class="btn btn-outline-dark secondary-btn bi bi-pencil-square"
-                                                id="editPrefIcon">
+                                                class="btn btn-outline-dark secondary-btn 
+                                                    bi bi-pencil-square content-text editPrefIcon"
+                                                data-index="<?= $pref['id'] ?>">
                                             </button>
                                         </div>
                                         <!-- Modal pour confirmer l'annulation de la préférence -->
@@ -153,8 +151,9 @@ require_once  BASE_PATH . '/Templates/header.php';
                                     </li>
                                     <!-- Formulaire pour éditer une préférence -->
                                     <!-- à la base il est caché -->
-                                    <li id="editPersonalPreference" class="hidden d-flex justify-content-center">
-                                        <form method="post" class="d-flex flex-column gap-2">
+                                    <li class="hidden d-flex justify-content-center editPersonalPreference"
+                                        data-index="<?= $pref['id'] ?>">
+                                        <form method="post" class="d-flex flex-column gap-2 w-100">
                                             <!-- L'input text -->
                                             <textarea name="preference_personnelle"
                                                 class="form-control"

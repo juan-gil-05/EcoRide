@@ -203,9 +203,9 @@ require_once  BASE_PATH . '/Templates/header.php';
           <!-- Si dans l'array existe la préférence fumeur, alors le chauffeur accepte les fumeurs -->
           <!-- Si dans l'array existe la préférence non_fumeur, alors le chauffeur n'accepte pas les fumeurs  -->
           <?php
-          if (in_array("Fumeur", $preferences)) {
+          if (in_array("Fumeur", $preferencesLibelle)) {
             echo 'J\'accepte les fumeurs';
-          } elseif (in_array("Non_fumeur", $preferences)) {
+          } elseif (in_array("Non_fumeur", $preferencesLibelle)) {
             echo 'Je n\'accepte les fumeurs';
           }
           ?>
@@ -214,19 +214,19 @@ require_once  BASE_PATH . '/Templates/header.php';
         <li><span>Animal / pas d’animal :</span>
           <!-- Si dans l'array existe la préférence animal, alors le chauffeur accepte les animaux -->
           <!-- Si dans l'array existe la préférence non_animal, alors le chauffeur n'accepte pas les animaux -->
-          <?php if (in_array("Animal", $preferences)) {
+          <?php if (in_array("Animal", $preferencesLibelle)) {
             echo 'J\'accepte les animaux';
-          } elseif (in_array("Non_animal", $preferences)) {
+          } elseif (in_array("Non_animal", $preferencesLibelle)) {
             echo 'Je n\'accepte pas les animaux';
           } ?>
         </li>
         <!-- Préférences Personnelles -->
-        <?php foreach ($preferencesPersonnelles as $personnelle) { ?>
+        <?php foreach ($allPersoPref as $personnelle) { ?>
           <!-- on parcours le tableau pour récupérer chaque préférence, -->
           <!-- on fait une liste pour chaque préférence, si n'est pas vide -->
           <?php if (!empty($personnelle)) { ?>
             <li>
-              <p><?= ucfirst($personnelle) ?></p>
+              <p><?= ucfirst($personnelle['personnelle']) ?></p>
             </li>
           <?php } ?>
         <?php } ?>
