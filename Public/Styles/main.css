@@ -97,7 +97,7 @@ button {
   --bs-gray-800: #343a40;
   --bs-gray-900: #212529;
   --bs-primary: #2c772f;
-  --bs-secondary: #006ebc;
+  --bs-secondary: #0063AC;
   --bs-success: #198754;
   --bs-info: #0dcaf0;
   --bs-warning: #f1ea49;
@@ -105,7 +105,7 @@ button {
   --bs-light: #FDFDFD;
   --bs-dark: #333333;
   --bs-primary-rgb: 44, 119, 47;
-  --bs-secondary-rgb: 0, 110, 188;
+  --bs-secondary-rgb: 0, 99, 172;
   --bs-success-rgb: 25, 135, 84;
   --bs-info-rgb: 13, 202, 240;
   --bs-warning-rgb: 241, 234, 73;
@@ -113,7 +113,7 @@ button {
   --bs-light-rgb: 253, 253, 253;
   --bs-dark-rgb: 51, 51, 51;
   --bs-primary-text-emphasis: rgb(17.6, 47.6, 18.8);
-  --bs-secondary-text-emphasis: rgb(0, 44, 75.2);
+  --bs-secondary-text-emphasis: rgb(0, 39.6, 68.8);
   --bs-success-text-emphasis: rgb(10, 54, 33.6);
   --bs-info-text-emphasis: rgb(5.2, 80.8, 96);
   --bs-warning-text-emphasis: rgb(96.4, 93.6, 29.2);
@@ -121,7 +121,7 @@ button {
   --bs-light-text-emphasis: #495057;
   --bs-dark-text-emphasis: #495057;
   --bs-primary-bg-subtle: rgb(212.8, 227.8, 213.4);
-  --bs-secondary-bg-subtle: rgb(204, 226, 241.6);
+  --bs-secondary-bg-subtle: rgb(204, 223.8, 238.4);
   --bs-success-bg-subtle: rgb(209, 231, 220.8);
   --bs-info-bg-subtle: rgb(206.6, 244.4, 252);
   --bs-warning-bg-subtle: rgb(252.2, 250.8, 218.6);
@@ -129,7 +129,7 @@ button {
   --bs-light-bg-subtle: rgb(251.5, 252, 252.5);
   --bs-dark-bg-subtle: #ced4da;
   --bs-primary-border-subtle: rgb(170.6, 200.6, 171.8);
-  --bs-secondary-border-subtle: rgb(153, 197, 228.2);
+  --bs-secondary-border-subtle: rgb(153, 192.6, 221.8);
   --bs-success-border-subtle: rgb(163, 207, 186.6);
   --bs-info-border-subtle: rgb(158.2, 233.8, 249);
   --bs-warning-border-subtle: rgb(249.4, 246.6, 182.2);
@@ -209,7 +209,7 @@ button {
   --bs-tertiary-bg: rgb(42.5, 47.5, 52.5);
   --bs-tertiary-bg-rgb: 43, 48, 53;
   --bs-primary-text-emphasis: rgb(128.4, 173.4, 130.2);
-  --bs-secondary-text-emphasis: rgb(102, 168, 214.8);
+  --bs-secondary-text-emphasis: rgb(102, 161.4, 205.2);
   --bs-success-text-emphasis: rgb(117, 183, 152.4);
   --bs-info-text-emphasis: rgb(109.8, 223.2, 246);
   --bs-warning-text-emphasis: rgb(246.6, 242.4, 145.8);
@@ -217,7 +217,7 @@ button {
   --bs-light-text-emphasis: #f8f9fa;
   --bs-dark-text-emphasis: #dee2e6;
   --bs-primary-bg-subtle: rgb(8.8, 23.8, 9.4);
-  --bs-secondary-bg-subtle: rgb(0, 22, 37.6);
+  --bs-secondary-bg-subtle: rgb(0, 19.8, 34.4);
   --bs-success-bg-subtle: rgb(5, 27, 16.8);
   --bs-info-bg-subtle: rgb(2.6, 40.4, 48);
   --bs-warning-bg-subtle: rgb(48.2, 46.8, 14.6);
@@ -225,7 +225,7 @@ button {
   --bs-light-bg-subtle: #343a40;
   --bs-dark-bg-subtle: #1a1d20;
   --bs-primary-border-subtle: rgb(26.4, 71.4, 28.2);
-  --bs-secondary-border-subtle: rgb(0, 66, 112.8);
+  --bs-secondary-border-subtle: rgb(0, 59.4, 103.2);
   --bs-success-border-subtle: rgb(15, 81, 50.4);
   --bs-info-border-subtle: rgb(7.8, 121.2, 144);
   --bs-warning-border-subtle: rgb(144.6, 140.4, 43.8);
@@ -2013,13 +2013,13 @@ progress {
 
 .table-secondary {
   --bs-table-color: #000;
-  --bs-table-bg: rgb(204, 226, 241.6);
-  --bs-table-border-color: rgb(163.2, 180.8, 193.28);
-  --bs-table-striped-bg: rgb(193.8, 214.7, 229.52);
+  --bs-table-bg: rgb(204, 223.8, 238.4);
+  --bs-table-border-color: rgb(163.2, 179.04, 190.72);
+  --bs-table-striped-bg: rgb(193.8, 212.61, 226.48);
   --bs-table-striped-color: #000;
-  --bs-table-active-bg: rgb(183.6, 203.4, 217.44);
+  --bs-table-active-bg: rgb(183.6, 201.42, 214.56);
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: rgb(188.7, 209.05, 223.48);
+  --bs-table-hover-bg: rgb(188.7, 207.015, 220.52);
   --bs-table-hover-color: #000;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -3095,19 +3095,19 @@ textarea.form-control-lg {
 
 .btn-secondary {
   --bs-btn-color: #fff;
-  --bs-btn-bg: #006ebc;
-  --bs-btn-border-color: #006ebc;
+  --bs-btn-bg: #0063AC;
+  --bs-btn-border-color: #0063AC;
   --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: rgb(0, 93.5, 159.8);
-  --bs-btn-hover-border-color: rgb(0, 88, 150.4);
-  --bs-btn-focus-shadow-rgb: 38, 132, 198;
+  --bs-btn-hover-bg: rgb(0, 84.15, 146.2);
+  --bs-btn-hover-border-color: rgb(0, 79.2, 137.6);
+  --bs-btn-focus-shadow-rgb: 38, 122, 184;
   --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: rgb(0, 88, 150.4);
-  --bs-btn-active-border-color: rgb(0, 82.5, 141);
+  --bs-btn-active-bg: rgb(0, 79.2, 137.6);
+  --bs-btn-active-border-color: rgb(0, 74.25, 129);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #fff;
-  --bs-btn-disabled-bg: #006ebc;
-  --bs-btn-disabled-border-color: #006ebc;
+  --bs-btn-disabled-bg: #0063AC;
+  --bs-btn-disabled-border-color: #0063AC;
 }
 
 .btn-success {
@@ -3230,19 +3230,19 @@ textarea.form-control-lg {
 }
 
 .btn-outline-secondary {
-  --bs-btn-color: #006ebc;
-  --bs-btn-border-color: #006ebc;
+  --bs-btn-color: #0063AC;
+  --bs-btn-border-color: #0063AC;
   --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #006ebc;
-  --bs-btn-hover-border-color: #006ebc;
-  --bs-btn-focus-shadow-rgb: 0, 110, 188;
+  --bs-btn-hover-bg: #0063AC;
+  --bs-btn-hover-border-color: #0063AC;
+  --bs-btn-focus-shadow-rgb: 0, 99, 172;
   --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #006ebc;
-  --bs-btn-active-border-color: #006ebc;
+  --bs-btn-active-bg: #0063AC;
+  --bs-btn-active-border-color: #0063AC;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: #006ebc;
+  --bs-btn-disabled-color: #0063AC;
   --bs-btn-disabled-bg: transparent;
-  --bs-btn-disabled-border-color: #006ebc;
+  --bs-btn-disabled-border-color: #0063AC;
   --bs-gradient: none;
 }
 
@@ -6916,8 +6916,8 @@ textarea.form-control-lg {
   text-decoration-color: RGBA(var(--bs-secondary-rgb), var(--bs-link-underline-opacity, 1)) !important;
 }
 .link-secondary:hover, .link-secondary:focus {
-  color: RGBA(0, 88, 150, var(--bs-link-opacity, 1)) !important;
-  text-decoration-color: RGBA(0, 88, 150, var(--bs-link-underline-opacity, 1)) !important;
+  color: RGBA(0, 79, 138, var(--bs-link-opacity, 1)) !important;
+  text-decoration-color: RGBA(0, 79, 138, var(--bs-link-underline-opacity, 1)) !important;
 }
 
 .link-success {
@@ -12048,7 +12048,7 @@ textarea.form-control-lg {
 
 .swal-btn {
   color: #FDFDFD !important;
-  background-color: #006ebc !important;
+  background-color: #0063AC !important;
   border: 0.3px solid #333333 !important;
 }
 
@@ -12409,7 +12409,7 @@ html {
 }
 .covoiturages .filter .filter-header {
   display: flex;
-  background-color: #006ebc;
+  background-color: #0063AC;
   color: white;
   align-items: center;
   justify-content: center;
@@ -12447,7 +12447,7 @@ html {
 }
 .covoiturages .filter .filter-body form div input {
   margin-left: 15px;
-  border: solid 1px #006ebc;
+  border: solid 1px #0063AC;
   max-width: 30%;
   height: 20px;
 }
@@ -12467,7 +12467,7 @@ html {
   cursor: pointer;
 }
 .covoiturages .filter .filter-body form .note-filter .note-stars .active-star {
-  color: #006ebc;
+  color: #0063AC;
   opacity: 1;
 }
 .covoiturages .filter .mes-covoiturages-btn {
@@ -12541,7 +12541,7 @@ html {
   margin-bottom: 10px;
 }
 .covoiturages .covoiturage-results .travel-card .travel-content .travel-description div .bi-car-front-fill {
-  color: #006ebc;
+  color: #0063AC;
 }
 .covoiturages .covoiturage-results .travel-card .travel-content .travel-description div .bi-tree-fill {
   color: #2c772f;
@@ -12715,7 +12715,7 @@ html {
   }
   .modal-content .modal-body .filter-body div input {
     margin-left: 15px;
-    border: solid 1px #006ebc;
+    border: solid 1px #0063AC;
     max-width: 30%;
     height: 20px;
     margin-top: 0;
@@ -12736,7 +12736,7 @@ html {
     cursor: pointer;
   }
   .modal-content .modal-body .filter-body .note-filter .note-stars .active-star {
-    color: #006ebc;
+    color: #0063AC;
     opacity: 1;
   }
 }
@@ -12750,7 +12750,7 @@ html {
 }
 .covoiturage-info .trip-info .trip-header {
   display: flex;
-  background-color: #006ebc;
+  background-color: #0063AC;
   color: white;
   align-items: center;
   justify-content: space-around;
@@ -12823,7 +12823,7 @@ html {
 .covoiturage-info .trip-info .trip-body .trip-description .descriptions div .bi-car-front-fill,
 .covoiturage-info .trip-info .trip-body .trip-description .descriptions div .fa-car-side,
 .covoiturage-info .trip-info .trip-body .trip-description .descriptions div .fa-car-on {
-  color: #006ebc;
+  color: #0063AC;
 }
 .covoiturage-info .trip-info .trip-body .trip-description .descriptions div .bi-tree-fill,
 .covoiturage-info .trip-info .trip-body .trip-description .descriptions div .bi-lightning-charge-fill {
@@ -12911,7 +12911,7 @@ html {
   position: relative;
 }
 .covoiturage-info .driver-info .preferences h2, .covoiturage-info .driver-info .preferences .h2 {
-  color: #006ebc;
+  color: #0063AC;
   margin-bottom: 20px;
 }
 .covoiturage-info .driver-info .preferences ul {
@@ -12939,7 +12939,7 @@ html {
   margin-top: 20px;
 }
 .covoiturage-info .driver-info .comments h2, .covoiturage-info .driver-info .comments .h2 {
-  color: #006ebc;
+  color: #0063AC;
   margin-bottom: 20px;
 }
 .covoiturage-info .driver-info .comments ul {
@@ -13162,7 +13162,7 @@ html {
 }
 .accordion .accordion-body ul li .covoiturage-day-month {
   padding: 10px;
-  background-color: #006ebc;
+  background-color: #0063AC;
   color: #FDFDFD;
   border-radius: 50px;
 }
@@ -13265,7 +13265,7 @@ html {
   cursor: pointer;
 }
 .driver-info-profil .accordion .accordion-body ul .add-icon i {
-  color: #006ebc;
+  color: #0063AC;
   cursor: pointer;
   font-size: 2rem;
 }
@@ -13388,8 +13388,8 @@ html {
   cursor: pointer;
 }
 .covoiturage-form-validate .good-travel .checkbox-group .form-check-input:checked {
-  background-color: #006ebc;
-  border-color: #006ebc;
+  background-color: #0063AC;
+  border-color: #0063AC;
 }
 .covoiturage-form-validate .good-travel .comment-about-travel {
   max-height: 0;
@@ -13420,7 +13420,7 @@ html {
 }
 .covoiturage-form-validate .driver-note .note-stars .active-star,
 .covoiturage-form-validate .driver-comment .note-stars .active-star {
-  color: #006ebc;
+  color: #0063AC;
   opacity: 1;
 }
 
@@ -13498,7 +13498,7 @@ html {
   opacity: 0.3;
 }
 .avis-list-container .avis-list .avis-title-note .note-stars .active-star {
-  color: #006ebc;
+  color: #0063AC;
   opacity: 1;
 }
 .avis-list-container .avis-list .avis-description {
@@ -13674,7 +13674,7 @@ html {
   justify-content: space-evenly;
 }
 .admin-espace-container .dt-container .dt-layout-table .user-table tbody .actions-col .bi-person-fill-slash {
-  color: #006ebc;
+  color: #0063AC;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
