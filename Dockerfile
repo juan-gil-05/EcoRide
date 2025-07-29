@@ -1,5 +1,5 @@
-# Pour récuperer php version 8.1 avec un serveur apache 
-FROM php:8.1-apache
+# Pour récuperer php version 8.4 avec un serveur apache 
+FROM php:8.4-apache
 
 # Pour installer les extensions necessaires afin d'utiliser mysql et mongodb
 RUN apt-get update && apt-get install -y \
