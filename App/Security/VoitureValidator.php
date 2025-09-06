@@ -53,8 +53,6 @@ class VoitureValidator
             $errors['energieEmpty'] = "Ce champ est obligatoire";
         }
 
-
-
         return $errors;
     }
 }

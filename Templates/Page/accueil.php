@@ -98,7 +98,7 @@ require_once BASE_PATH . '/Templates/header.php';
       <div class="img-description">
         <img
           src="../Assets/Img_page-accueil/description-1.webp"
-          alt=""
+          alt="Image de la déscription"
           class="img-1" />
       </div>
       <!--Text de la description-->
@@ -130,7 +130,7 @@ require_once BASE_PATH . '/Templates/header.php';
       <div class="img-description">
         <img
           src="../Assets/Img_page-accueil/description-2.webp"
-          alt=""
+          alt="Image de la deuxième déscription"
           class="img-2" />
       </div>
     </div>

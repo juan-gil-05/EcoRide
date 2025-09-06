@@ -131,7 +131,7 @@ require_once  BASE_PATH . '/Templates/header.php';
         </div>
       </div>
     </div>
-
+    
     <!-- Button pour créer le compte -->
     <div class="d-flex justify-content-center mt-5 content-text">
       <button class="btn btn-warning btn-lg fw-semibold text-dark w-50"

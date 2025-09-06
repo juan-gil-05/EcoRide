@@ -486,6 +486,12 @@ ALTER TABLE `Preference_Personnelle`
   ADD CONSTRAINT `preference_personnelle_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Contraintes pour la table `Voiture`
+--
+ALTER TABLE `Voiture`
+  ADD CONSTRAINT `Voiture_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Voiture_ibfk_2` FOREIGN KEY (`energie_id`) REFERENCES `Energie` (`id`);
+--
 -- Contraintes pour la table `User_Covoiturage`
 --
 ALTER TABLE `User_Covoiturage`

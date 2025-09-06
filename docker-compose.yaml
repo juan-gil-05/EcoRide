@@ -24,7 +24,8 @@ services:
       - 3307:3306
     volumes:
       - db:/var/lib/mysql/
-      - ./data/ecorideDB.sql:/docker-entrypoint-initdb.d/ecorideDB.sql # Pour migrer les données existantes vers la bdd
+      # Pour migrer les données existantes vers la bdd
+      - ./data/ecorideDB.sql:/docker-entrypoint-initdb.d/ecorideDB.sql 
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE : ${MYSQL_DATABASE}
@@ -52,7 +53,8 @@ services:
       - 27017:27017
     volumes:
       - mongo_data:/data/db
-      # Pour faire la creation de l'user, la bdd et l'import de la collection Avis dans le conteneur docker 
+      # Pour faire la creation de l'user, la bdd et l'import de la 
+      # collection Avis dans le conteneur docker 
       - ./mongo-seed/mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh
       - ./mongo-seed/seed.json:/docker-entrypoint-initdb.d/seed.json
     environment:

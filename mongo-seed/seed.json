@@ -2,8 +2,8 @@
   "_id": {
     "$oid": "681f6474660e18ec4f0bf913"
   },
-  "titre": "autre testttt",
-  "avis": "ca fonctioneee bien",
+  "titre": "autre test",
+  "avis": "ca fonctione bien",
   "note": 5,
   "accepte": 0,
   "user_id_auteur": 65,

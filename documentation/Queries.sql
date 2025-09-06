@@ -2,19 +2,189 @@
 utilisées pour la gestion de la base des données MySQL. */
 
 
--- Création de la base de donées
+-- Création de la base de données
 CREATE DATABASE ecorideDB;
 
--- Création de lutilisateur, le mot de passe n'est pas affiché
-CREATE USER 'juandb'@'localhost' IDENTIFIED BY mot_de_passe;
+-- Création de l'utilisateur, le mot de passe n'est pas affiché
+CREATE USER 'juandb'@'localhost' IDENTIFIED BY 'mot_de_passe';
 
--- Ajouter tous les droits a lutilisateur 
+-- Ajouter tous les droits a l'utilisateur 
 GRANT ALL PRIVILEGES ON *.* TO 'juandb'@'localhost' WITH GRANT OPTION;
 
--- Blocage de lutilisateur root
+-- Blocage de l'utilisateur root
 ALTER USER 'root'@'localhost' ACCOUNT LOCK;
 
 USE ecorideDB;
+
+--
+-- Structure de la table Commentaire
+--
+
+CREATE TABLE Commentaire (
+  id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  commentaire VARCHAR(255) NOT NULL,
+  user_covoiturage_id INT UNSIGNED NOT NULL,
+  CONSTRAINT fk_Commentaire_User_Covoiturage
+  FOREIGN KEY (user_covoiturage_id) 
+  REFERENCES User_Covoiturage(id)
+  ON DELETE CASCADE ON UPDATE CASCADE 
+);
+
+--
+-- Structure de la table Covoiturage
+--
+
+CREATE TABLE Covoiturage (
+  id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  nb_place_disponible TINYINT UNSIGNED NOT NULL,
+  prix DECIMAL(8,2) UNSIGNED NOT NULL,
+  date_heure_depart DATETIME NOT NULL,
+  date_heure_arrivee DATETIME NOT NULL,
+  adresse_depart VARCHAR(255) NOT NULL,
+  adresse_arrivee VARCHAR(255) NOT NULL,
+  voiture_id INT UNSIGNED NOT NULL,
+  statut_id INT UNSIGNED NOT NULL,
+  CONSTRAINT fk_Covoiturage_Voiture
+    FOREIGN KEY (voiture_id)
+    REFERENCES Voiture(id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT fk_Covoiturage_Statut
+    FOREIGN KEY (statut_id)
+    REFERENCES Statut(id)
+);
+
+--
+-- Structure de la table Energie
+--
+
+CREATE TABLE Energie (
+  id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  libelle VARCHAR(255) NOT NULL
+);
+
+--
+-- Structure de la table Preference
+--
+
+CREATE TABLE Preference (
+  id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  libelle VARCHAR(255) NOT NULL
+);
+
+--
+-- Structure de la table Preference_Personnelle
+--
+
+CREATE TABLE Preference_Personnelle (
+  id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  preference VARCHAR(255) NOT NULL,
+  user_id INT UNSIGNED NOT NULL,
+  CONSTRAINT fk_Preference_Personnelle_User
+    FOREIGN KEY (user_id)
+    REFERENCES User(id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+--
+-- Structure de la table Role
+--
+
+CREATE TABLE Role (
+  id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  libelle VARCHAR(50) NOT NULL
+);
+
+--
+-- Structure de la table Statut
+--
+
+CREATE TABLE Statut (
+  id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  libelle VARCHAR(50) NOT NULL
+);
+
+--
+-- Structure de la table User
+--
+
+CREATE TABLE User (
+  id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  nb_credits INT UNSIGNED DEFAULT 20,
+  pseudo VARCHAR(50) NOT NULL,
+  mail VARCHAR(255) NOT NULL UNIQUE,
+  password char(60) NOT NULL,
+  photo VARCHAR(255) DEFAULT NULL,
+  photo_uniqId VARCHAR(255) DEFAULT NULL,
+  active TINYINT(1) DEFAULT 1,
+  login_attempts TINYINT UNSIGNED DEFAULT 0,
+  locked_until DATETIME DEFAULT NULL,
+  role_id INT UNSIGNED NOT NULL,
+  CONSTRAINT fk_User_Role
+    FOREIGN KEY (role_id)
+    REFERENCES Role(id)
+);
+
+--
+-- Structure de la table User_Covoiturage
+--
+
+CREATE TABLE User_Covoiturage (
+  id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  user_id INT UNSIGNED NOT NULL,
+  covoiturage_id INT UNSIGNED NOT NULL,
+  statut_id INT UNSIGNED NOT NULL,
+  CONSTRAINT fk_User_Covoiturage_1
+    FOREIGN KEY (user_id)
+    REFERENCES User(id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT fk_User_Covoiturage_2
+    FOREIGN KEY (covoiturage_id)
+    REFERENCES Covoiturage(id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT fk_User_Covoiturage_3
+    FOREIGN KEY (statut_id)
+    REFERENCES Statut(id)
+);
+
+--
+-- Structure de la table User_Preference
+--
+
+CREATE TABLE User_Preference (
+  id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  preference_id INT UNSIGNED NOT NULL,
+  user_id INT UNSIGNED NOT NULL,
+  CONSTRAINT fk_User_Preference_1
+    FOREIGN KEY (preference_id)
+    REFERENCES Preference(id),
+  CONSTRAINT fk_User_Preference_2
+    FOREIGN KEY (user_id)
+    REFERENCES User(id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+--
+-- Structure de la table Voiture
+--
+
+CREATE TABLE Voiture (
+  id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  modele VARCHAR(255) NOT NULL,
+  couleur VARCHAR(50) NOT NULL,
+  marque VARCHAR(50) NOT NULL,
+  immatriculation VARCHAR(9) NOT NULL,
+  date_premiere_immatriculation date NOT NULL,
+  user_id INT UNSIGNED NOT NULL,
+  energie_id INT UNSIGNED NOT NULL,
+  CONSTRAINT fk_Voiture_User
+    FOREIGN KEY (user_id)
+    REFERENCES User(id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT fk_Voiture_Energie
+    FOREIGN KEY (energie_id)
+    REFERENCES Energie(id)
+);
+
 
 SELECT * FROM Role;
 SELECT * FROM User;
@@ -316,15 +486,15 @@ WHERE covoiturage_id = 8;
 
 SELECT * FROM Covoiturage WHERE id = 2;
 
-/* Pour voir tous les constraints de la table */
+/* Pour voir tous les constraINTs de la table */
 SELECT CONSTRAINT_NAME
 FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
 WHERE TABLE_NAME = 'User_Covoiturage'
 AND CONSTRAINT_TYPE = 'FOREIGN KEY';
 
-/* Ici on elimine la constraint de la foreign key de la table User_Covoiturage
+/* Ici on elimine la constraINT de la foreign key de la table User_Covoiturage
 pour en ajouter une nouvelle avec le ON DELETE CASCADE, comme ca, si l'user chauffeur supprime 
-un covoiturage, alors, tous ces covoiturages qu'eteint dans la table User_Covoiturage seront supprimés
+un covoiturage, alors, tous ces covoiturages qu'eteINT dans la table User_Covoiturage seront supprimés
  */
 ALTER TABLE User_Covoiturage DROP FOREIGN KEY user_covoiturage_ibfk_2;
 ALTER TABLE User_Covoiturage 
@@ -504,7 +674,7 @@ SELECT * FROM User_Covoiturage;
 UPDATE Covoiturage SET statut_id = 1 WHERE id = 16;
 
 ALTER TABLE User_Covoiturage
-ADD statut_id int UNSIGNED;
+ADD statut_id INT UNSIGNED;
 
 SELECT * FROM User_Covoiturage WHERE user_id = 65 AND covoiturage_id = 16;
 UPDATE User_Covoiturage 

@@ -6,7 +6,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
 /** Paramètres de la session de l'utilisateur
  *  Sécurise le cookie de session avec httponly
  *  */
-
 session_set_cookie_params([
     'lifetime' => 86400, //24 heures
     'path' => '/',
