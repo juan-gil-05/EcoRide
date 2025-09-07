@@ -43,8 +43,14 @@ class Entity
                         }
                     }
                     $this->{$methodName}($value);
+                } else {
+                    // Si le methode n'existe pas, on leve une exception
+                    throw new \Exception("Méthode {$methodName} n'existe pas pour l'entité " . get_class($this));
                 }
             }
+        } else {
+            // Si aucune donnée n'est passée, on leve une exception
+            throw new \Exception("Pas des données envoyées pour l'entité " . get_class($this));
         }
     }
 }
