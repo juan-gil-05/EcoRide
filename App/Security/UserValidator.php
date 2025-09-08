@@ -7,6 +7,10 @@ use App\Repository\UserRepository;
 
 class UserValidator
 {
+    public function __construct(private UserRepository $userRepository)
+    {
+    }
+
     // Fonction de validation du formulaire pour la création d'un compte utilisateur
     public function signUpValidate(User $userHydrate, string $passwordConfirm): array
     {
@@ -14,8 +18,6 @@ class UserValidator
         $errors = [];
         // Variable de l'utilisateur passé dans le formulaire
         $user = $userHydrate;
-        // Appel de la classe avec les requêtes SQL
-        $userRepository = new UserRepository();
         // Expresión regular pour la verification du mot de passe sécurisé
         $regex = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{12,}$/';
 
@@ -29,7 +31,7 @@ class UserValidator
             $errors['mailEmpty'] = "Le champ mail ne doit pas être vide";
         } elseif (!filter_var($user->getMail(), FILTER_VALIDATE_EMAIL)) { // Si le mail n'est pas un mail valide
             $errors['mail'] = "Le mail n\'est pas valide";
-        } elseif ($userRepository->findOneByMail($user->getMail())) {
+        } elseif ($this->userRepository->findOneByMail($user->getMail())) {
             // Si le mail est déjà enregistrer dans la base de données
             $errors['mailUsed'] = "Le e-mail est déjà utilisé";
         }
@@ -37,9 +39,9 @@ class UserValidator
         // Si le champ du mot de passe est vide
         if (empty($user->getPassword())) {
             $errors['passwordEmpty'] = "Le champ mot de passe ne doit pas être vide";
-        } elseif (strlen($_POST['password']) < 12) { // Si le mot de passe a mois de 12 caractères
+        } elseif (strlen($user->getPassword()) < 12) { // Si le mot de passe a mois de 12 caractères
             $errors['passwordLen'] = "Le mot de passe doit comporter au moins 12 caractères";
-        } elseif (! preg_match($regex, $_POST['password'])) { // Si le mot de passe ne respecte pas le regex
+        } elseif (! preg_match($regex, $user->getPassword())) { // Si le mot de passe ne respecte pas le regex
             $errors['passwordInfo'] = "Votre mot de passe doit contenir :
 	                                Une lettre majuscule et une lettre minuscule,
 	                                un chiffre et
@@ -63,8 +65,6 @@ class UserValidator
         $errors = [];
         // Variable de l'utilisateur passé dans le formulaire
         $user = $userHydrate;
-        // Appel de la classe avec les requêtes SQL
-        $userRepository = new UserRepository();
         // Expresión regular pour la verification du mot de passe sécurisé
         $regex = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{12,}$/';
 
@@ -78,7 +78,7 @@ class UserValidator
             $errors['mailEmpty'] = "Le champ mail ne doit pas être vide";
         } elseif (!filter_var($user->getMail(), FILTER_VALIDATE_EMAIL)) { // Si le mail n'est pas un mail valide
             $errors['mail'] = "Le mail n\'est pas valide";
-        } elseif ($userRepository->findOneByMail($user->getMail())) {
+        } elseif ($this->userRepository->findOneByMail($user->getMail())) {
             // Si le mail est déjà enregistrer dans la base de données
             $errors['mailUsed'] = "Le e-mail est déjà utilisé";
         }

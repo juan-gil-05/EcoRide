@@ -129,7 +129,6 @@ class AdminController extends Controller
         }
     }
 
-
     /*
     Exemple d'appel depuis l'url
         /admin/graphique

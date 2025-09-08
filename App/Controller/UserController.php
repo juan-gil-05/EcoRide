@@ -44,8 +44,8 @@ class UserController extends Controller
             }
 
             $user = new User();
-            $userValidator = new UserValidator();
             $userRepository = new UserRepository();
+            $userValidator = new UserValidator($userRepository);
 
             $user->hydrate($_POST);
             $pseudo = $user->getPseudo();
