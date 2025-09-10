@@ -7,19 +7,22 @@ use App\Repository\VoitureRepository;
 
 class VoitureValidator
 {
+    public function __construct(private VoitureRepository $voitureRepository)
+    {
+    }
+
     // Fonction qui valide le formulaire pour la création d'une voiture
     public function newCarValidate(Voiture $voitureHydrate): array
     {
         $errors = [];
         $voiture = $voitureHydrate;
-        $voitureRepository = new VoitureRepository();
         // Regex pour la validation du bon format de la plaque d'immatriculation
         $regex = "/^[A-Z]{2}-\d{3}-[A-Z]{2}$/";
 
         // Si le champ est vide
         if (empty($voiture->getImmatriculation())) {
             $errors['immatriculationEmpty'] = "Ce champ est obligatoire";
-        } elseif ($voitureRepository->findCarByImmatriculation($voiture->getImmatriculation())) {
+        } elseif ($this->voitureRepository->findCarByImmatriculation($voiture->getImmatriculation())) {
             // Si l'immatriculation de la voiture est dèjà utilisée
             $errors['immatriculationExists'] = "Cette voiture est déjà enregistrée";
         } elseif (!preg_match($regex, $voiture->getImmatriculation())) {

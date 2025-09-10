@@ -34,7 +34,7 @@ class VoitureController extends Controller
             try {
                 $voiture = new Voiture();
                 $voitureRepository = new VoitureRepository();
-                $voitureValidator = new VoitureValidator();
+                $voitureValidator = new VoitureValidator($voitureRepository);
 
                 // Si le formulaire est envoyé, on hydrate l'objet Voiture avec les données passées
                 if (isset($_POST['carInscription'])) {

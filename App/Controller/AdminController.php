@@ -54,8 +54,8 @@ class AdminController extends Controller
         $password = "";
         try {
             $user = new User();
-            $UserValidator = new UserValidator();
             $userRepository = new UserRepository();
+            $UserValidator = new UserValidator($userRepository);
             $userController = new UserController();
             // Si le formulaire est envoyé, on hydrate l'objet User avec les données passées
             if (isset($_POST['signUp'])) {

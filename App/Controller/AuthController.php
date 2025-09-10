@@ -29,7 +29,7 @@ class AuthController extends Controller
 
             $userRepository = new UserRepository();
             $authRepository = new AuthRepository();
-            $userValidator = new UserValidator();
+            $userValidator = new UserValidator($userRepository);
 
             $mail = $_POST['mail'] ?? "";
             $user = $userRepository->findOneByMail($mail);
