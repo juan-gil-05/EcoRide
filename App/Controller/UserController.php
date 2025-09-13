@@ -170,7 +170,7 @@ class UserController extends Controller
         }
     }
 
-    private function createUserDependingOnRole(
+    public function createUserDependingOnRole(
         User $user,
         UserRepository $userRepository,
         UserValidator $userValidator,
@@ -179,9 +179,12 @@ class UserController extends Controller
         // Si l'utilisateur est passager
         if ($user->getRoleId() == "1") {
             $userRepository->createUser($user);
+            return true;
         } else { // Si l'utilisateur est chauffeur
             // Pour enregistrer la photo dans l'attribut photo de l'objet User
-            $user->setPhoto($_FILES['photo']['name']);
+            if (isset($_FILES['photo'])) {
+                $user->setPhoto($_FILES['photo']['name']);
+            }
             // Pour valider s'il n'y a pas des erreurs dans le formulaire
             $errors = $userValidator->userPhotoValidate($user);
             // S'il n'y pas des erreur, on crée l'utilisateur avec la photo de profile
@@ -190,6 +193,7 @@ class UserController extends Controller
                 return $errors;
             }
             $userRepository->createDriverUser($user);
+            return true;
         }
     }
 
@@ -217,7 +221,7 @@ class UserController extends Controller
         exit;
     }
 
-    private function deletePreference(PreferenceRepository $preferenceRepository)
+    public function deletePreference(PreferenceRepository $preferenceRepository)
     {
         if (isset($_POST['deletePreference'])) {
             $preferenceRepository->deletePreferenceById($_POST['prefId']);
