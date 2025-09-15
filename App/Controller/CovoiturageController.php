@@ -296,10 +296,10 @@ class CovoiturageController extends Controller
             }
 
             // Si l'utilisateur quitte le covoiturage
-            $this->leaveCovoiturage();
+            $this->leaveCovoiturage($covoiturageRepository);
 
             // Si le chauffeur supprime le covoiturage
-            $this->deleteCovoiturage();
+            $this->deleteCovoiturage($covoiturageRepository);
 
             $this->render(
                 "Covoiturage/mes-covoiturages",
@@ -395,7 +395,6 @@ class CovoiturageController extends Controller
         }
     }
 
-
     // Fonction pour formater les dates des covoiturages
     protected function dateTimeCovoiturage(array $covoiturageDetail)
     {
@@ -476,7 +475,7 @@ class CovoiturageController extends Controller
     }
 
     // Fonction pour participer au covoiturage
-    protected function participateToCovoiturage(
+    public function participateToCovoiturage(
         array $covoiturageDetail,
         CovoiturageRepository $covoiturageRepository,
         UserRepository $userRepository
@@ -524,7 +523,6 @@ class CovoiturageController extends Controller
                 // Si l'utilisateur ne possède pas assez des crédits pour participer au covoiturage
                 $noEnoughCredits = true;
             }
-
 
             // Si tous ces params sont faux, l'utilisateur peut participer au covoiturage
             if (
@@ -577,11 +575,8 @@ class CovoiturageController extends Controller
     }
 
     // Fonction si l'utilisateur quitte le covoiturage
-    public function leaveCovoiturage()
+    public function leaveCovoiturage(CovoiturageRepository $covoiturageRepository)
     {
-        // Appel du repository
-        $covoiturageRepository = new CovoiturageRepository();
-
         if (isset($_POST['quitCovoiturageAsPassager'])) {
             // L'id du covoiturage et de l'utilisateur
             $covoiturageId = $_POST['covoiturage_id'];
@@ -605,11 +600,8 @@ class CovoiturageController extends Controller
     }
 
     // Fonction pour annuler le covoiturage
-    public function deleteCovoiturage()
+    public function deleteCovoiturage(CovoiturageRepository $covoiturageRepository)
     {
-        // Appel du repository
-        $covoiturageRepository = new CovoiturageRepository();
-
         // Le sujet et le modèle du mail
         $mailSubject = 'Annulation de votre covoiturage';
         $mailBody = 'covoiturage-deleted.php';
