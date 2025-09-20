@@ -81,8 +81,8 @@ class EmployeController extends Controller
             $avisRepository->updateAvisStatut($avisStatut, $avisId);
             // On crée cette session pour pouvoir afficher le message de succès,
             // le message_code c'est pour l'icon de SweetAlert
-            $_SESSION['message_to_User'] = 'L’avis a été validé avec succès.</br>" . 
-                "Il est maintenant visible publiquement.';
+            $_SESSION['message_to_User'] = 'L’avis a été validé avec succès.</br>' .
+                'Il est maintenant visible publiquement.';
             $_SESSION['message_code'] = "success";
         } elseif (isset($_POST['avisRefused'])) {
             // Si l'employé refuse l'avis, alors ...
