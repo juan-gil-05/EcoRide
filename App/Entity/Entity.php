@@ -44,8 +44,6 @@ class Entity
                     }
                     $this->{$methodName}($value);
                 } else {
-                    // Si le methode n'existe pas, on leve une exception
-                    throw new \Exception("Méthode {$methodName} n'existe pas pour l'entité " . get_class($this));
                 }
             }
         } else {

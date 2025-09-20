@@ -57,7 +57,7 @@ class Controller
                 // Appelle de l'action avec les paramètres
                 $controller->$action(...$params);
                 /* (...$params) = Splat Operator, qui décompresse les arguments passées dans l'url
-                    pour les ajouter comme paramètres de la method du controller*/
+                    pour les ajouter comme paramètres de la methode du controller*/
             } else {
                 throw new Exception("Cette action n'existe pas: " . $action);
             }

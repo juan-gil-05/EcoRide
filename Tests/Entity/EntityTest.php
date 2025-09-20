@@ -36,17 +36,4 @@ class EntityTest extends Testcase
 
         $this->user->hydrate($data);
     }
-
-    public function testHydrateFunctionReturnsExceptionIfMethodDoesntExist(): void
-    {
-        $this->expectException(\Exception::class);
-
-        $data = array(
-            'pseudo' => 'juan',
-            'mail' => 'juan@example.com',
-            'MotDePasse' => 'pass123',
-        );
-
-        $this->user->hydrate($data);
-    }
 }

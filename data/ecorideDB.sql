@@ -230,7 +230,7 @@ CREATE TABLE `User_Covoiturage` (
   `id` int UNSIGNED NOT NULL,
   `user_id` int UNSIGNED NOT NULL,
   `covoiturage_id` int UNSIGNED NOT NULL,
-  `statut_id` int UNSIGNED NOT NULL 
+  `statut_id` int UNSIGNED DEFAULT 1 NOT NULL 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
