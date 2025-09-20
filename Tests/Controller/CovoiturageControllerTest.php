@@ -149,7 +149,6 @@ class CovoiturageControllerTest extends TestCase
             ->willReturn(true);
 
         $result = $this->covoiturageController->deleteCovoiturage($this->covoiturageRepoMock);
-        var_dump($result);
         $this->assertEquals(
             'Covoiturage annulé. Les participants ont été informés par e-mail.',
             $_SESSION['message_to_User']
