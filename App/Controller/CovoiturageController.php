@@ -693,7 +693,7 @@ class CovoiturageController extends Controller
             } else {
                 // Lien en LOCAL
                 $linkToSite =
-                    "/page/valider-covoiturage/" .
+                    "localhost/page/valider-covoiturage/" .
                     $passagerEncryptId[$passager['passager_id']] .
                     "/" . $covoiturageEncryptId[$covoiturage['covoiturage_id']];
             }
