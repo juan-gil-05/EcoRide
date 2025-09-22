@@ -79,28 +79,27 @@ class UserController extends Controller
 
             $userCreated = $this->createUserDependingOnRole($user, $userRepository, $userValidator, $errors);
 
-            // Si userCreated n'est pas vide, c'est parce qu'il contient les erreurs retournées para la fonction
-            if (!empty($userCreated)) {
-                $this->render(
-                    "User/sign-up",
-                    [
-                        'errors' => $userCreated,
-                        'pseudo' => $pseudo,
-                        'password' => $password,
-                        'passwordConfirm' => $passwordConfirm,
-                        'mail' => $mail,
-                        'roleName' => $roleName,
-                        'roleId' => $roleId
-                    ]
-                );
-                exit;
+            if ($userCreated === true) {
+                // Pour connecter l'utilisateur
+                AuthController::connectUser($user, $userRepository);
+
+                // Pour rediriger l'user selon certaines conditions
+                $this->redirectAfterLogin($user, $userRepository);
+                exit();
             }
 
-            // Pour connecter l'utilisateur
-            AuthController::connectUser($user, $userRepository);
-
-            // Pour rediriger l'user selon certaines conditions
-            $this->redirectAfterLogin($user, $userRepository);
+            $this->render(
+                "User/sign-up",
+                [
+                    'errors' => $userCreated,
+                    'pseudo' => $pseudo,
+                    'password' => $password,
+                    'passwordConfirm' => $passwordConfirm,
+                    'mail' => $mail,
+                    'roleName' => $roleName,
+                    'roleId' => $roleId
+                ]
+            );
             exit();
         } catch (Exception $e) {
             $this->render("Errors/404", [
@@ -180,7 +179,7 @@ class UserController extends Controller
         if ($user->getRoleId() == "1") {
             $userRepository->createUser($user);
             return true;
-        } else { // Si l'utilisateur est chauffeur
+        } elseif ($user->getRoleId() == "2" || $user->getRoleId() == "3") { // Si l'utilisateur est chauffeur
             // Pour enregistrer la photo dans l'attribut photo de l'objet User
             if (isset($_FILES['photo'])) {
                 $user->setPhoto($_FILES['photo']['name']);
@@ -189,7 +188,6 @@ class UserController extends Controller
             $errors = $userValidator->userPhotoValidate($user);
             // S'il n'y pas des erreur, on crée l'utilisateur avec la photo de profile
             if (!empty($errors)) {
-                // $errors = array_push($errors, $errors);
                 return $errors;
             }
             $userRepository->createDriverUser($user);
