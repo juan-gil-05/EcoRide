@@ -152,126 +152,130 @@ require_once  BASE_PATH . '/Templates/header.php';
                 <!-- Body -->
                 <div id="collapseDrive" class="accordion-collapse collapse" data-bs-parent="#carAccordion">
                     <div class="accordion-body">
-                        <!-- Liste avec les covoiturages -->
-                        <ul>
-                            <?php foreach ($covoituragesAsDriver as $covoiturage) { ?>
-                                <li class="content-text">
-                                    <!-- Le jour et le mois du covoiturage -->
-                                    <div class="fw-medium covoiturage-day-month">
-                                        <p class="mb-0 text-center">
-                                            <?= $dayName[$covoiturage['id']] . ", " .
-                                                $dayNumber[$covoiturage['id']] . " " .
-                                                $monthName[$covoiturage['id']] ?>
-                                        </p>
-                                    </div>
-                                    <!-- Les heures et adresses de départ et d'arrivée-->
-                                    <div class="covoiturage-info-list">
-                                        <!-- Les heures -->
-                                        <div class="covoiturage-date-time">
-                                            <p class="fw-semibold">Départ</p>
-                                            <p><?= $covoiturage['adresse_depart'] ?></p>
-                                            <p><?= substr($covoiturage['date_heure_depart'], 11, 5) ?></p>
+                        <?php if ($covoituragesAsDriver) { ?>
+                            <!-- Liste avec les covoiturages -->
+                            <ul>
+                                <?php foreach ($covoituragesAsDriver as $covoiturage) { ?>
+                                    <li class="content-text">
+                                        <!-- Le jour et le mois du covoiturage -->
+                                        <div class="fw-medium covoiturage-day-month">
+                                            <p class="mb-0 text-center">
+                                                <?= $dayName[$covoiturage['id']] . ", " .
+                                                    $dayNumber[$covoiturage['id']] . " " .
+                                                    $monthName[$covoiturage['id']] ?>
+                                            </p>
                                         </div>
-                                        <i class="bi bi-arrow-right"></i>
-                                        <!-- Les adresses -->
-                                        <div class="covoiturage-date-time">
-                                            <p class="fw-semibold">Arrivée</p>
-                                            <p><?= $covoiturage['adresse_arrivee'] ?></p>
-                                            <p><?= substr($covoiturage['date_heure_arrivee'], 11, 5) ?></p>
-                                        </div>
-                                    </div>
-                                    <!-- Tous les boutons d'action du covoiturage -->
-                                    <div class="covoiturage-btn-div d-flex justify-content-evenly align-items-center">
-                                        <!-- Bouton pour pour ouvrir la modal de confirmation -->
-                                        <button class="btn btn-danger secondary-btn text-light"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#deleteCovoiturageModal<?= $covoiturage['id'] ?>">
-                                            Supprimer
-                                        </button>
-                                        <!-- Modal pour confirmer l'annulation du covoiturage -->
-                                        <!-- Ajout de l'id du covoiturage à l'id de la modal, 
-                                         afin d'eviter des id en double, car la modal est dans un boucle -->
-                                        <div class="modal fade" id="deleteCovoiturageModal<?= $covoiturage['id'] ?>"
-                                            data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                            aria-labelledby="deleteCovoiturageModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <!-- Le contenu de la modal -->
-                                                <div class="modal-content">
-                                                    <!-- Bouton pour fermer la modal -->
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close">
-                                                    </button>
-                                                    <!-- Formulaire pour confirmer l'annulation du covoiturage  -->
-                                                    <form method="post" class="w-100 d-flex align-items-center 
-                                                                              flex-column gap-4 p-5 mb-0 bg-light form">
-                                                        <!-- input invisible pour envoyer l'id et le prix 
-                                                         du covoiturage dans le formulaire-->
-                                                        <input type="hidden" name="covoiturage_id"
-                                                            value="<?= $covoiturage['id'] ?>">
-                                                        <input type="hidden" name="covoiturage_price"
-                                                            value="<?= $covoiturage['prix'] ?>">
-                                                        <label class="content-text text-center fw-medium">
-                                                            Voulez-vous vraiment annuler ce covoiturage?<br>
-                                                            Tous les participants seront informés de l’annulation.
-                                                        </label>
-                                                        <!-- Bouton pour confirmer -->
-                                                        <div class="d-flex gap-3 justify-content-center">
-                                                            <input type="submit" class="btn btn-danger shadow-section 
-                                                                text-white content-text secondary-btn" value="Confirmer"
-                                                                name="deleteCovoiturageAsDriver">
-                                                        </div>
-                                                    </form>
-                                                </div>
+                                        <!-- Les heures et adresses de départ et d'arrivée-->
+                                        <div class="covoiturage-info-list">
+                                            <!-- Les heures -->
+                                            <div class="covoiturage-date-time">
+                                                <p class="fw-semibold">Départ</p>
+                                                <p><?= $covoiturage['adresse_depart'] ?></p>
+                                                <p><?= substr($covoiturage['date_heure_depart'], 11, 5) ?></p>
+                                            </div>
+                                            <i class="bi bi-arrow-right"></i>
+                                            <!-- Les adresses -->
+                                            <div class="covoiturage-date-time">
+                                                <p class="fw-semibold">Arrivée</p>
+                                                <p><?= $covoiturage['adresse_arrivee'] ?></p>
+                                                <p><?= substr($covoiturage['date_heure_arrivee'], 11, 5) ?></p>
                                             </div>
                                         </div>
-                                        <!-- Bouton pour voir les détails du covoiturage -->
-                                        <a href="/covoiturage/detail/<?= $covoiturageEncryptId[$covoiturage['id']] ?>"
-                                            class="btn btn-warning secondary-btn text-dark">Détail
-                                        </a>
-                                        <!-- Boutons pour démarrer, arrivé à destination et clôturé le covoiturage -->
-                                        <!-- Les statuts d'un covoiturage : 
+                                        <!-- Tous les boutons d'action du covoiturage -->
+                                        <div class="covoiturage-btn-div d-flex justify-content-evenly align-items-center">
+                                            <!-- Bouton pour pour ouvrir la modal de confirmation -->
+                                            <button class="btn btn-danger secondary-btn text-light"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#deleteCovoiturageModal<?= $covoiturage['id'] ?>">
+                                                Supprimer
+                                            </button>
+                                            <!-- Modal pour confirmer l'annulation du covoiturage -->
+                                            <!-- Ajout de l'id du covoiturage à l'id de la modal, 
+                                         afin d'eviter des id en double, car la modal est dans un boucle -->
+                                            <div class="modal fade" id="deleteCovoiturageModal<?= $covoiturage['id'] ?>"
+                                                data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                                aria-labelledby="deleteCovoiturageModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <!-- Le contenu de la modal -->
+                                                    <div class="modal-content">
+                                                        <!-- Bouton pour fermer la modal -->
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close">
+                                                        </button>
+                                                        <!-- Formulaire pour confirmer l'annulation du covoiturage  -->
+                                                        <form method="post" class="w-100 d-flex align-items-center 
+                                                                              flex-column gap-4 p-5 mb-0 bg-light form">
+                                                            <!-- input invisible pour envoyer l'id et le prix 
+                                                         du covoiturage dans le formulaire-->
+                                                            <input type="hidden" name="covoiturage_id"
+                                                                value="<?= $covoiturage['id'] ?>">
+                                                            <input type="hidden" name="covoiturage_price"
+                                                                value="<?= $covoiturage['prix'] ?>">
+                                                            <label class="content-text text-center fw-medium">
+                                                                Voulez-vous vraiment annuler ce covoiturage?<br>
+                                                                Tous les participants seront informés de l’annulation.
+                                                            </label>
+                                                            <!-- Bouton pour confirmer -->
+                                                            <div class="d-flex gap-3 justify-content-center">
+                                                                <input type="submit" class="btn btn-danger shadow-section 
+                                                                text-white content-text secondary-btn" value="Confirmer"
+                                                                    name="deleteCovoiturageAsDriver">
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Bouton pour voir les détails du covoiturage -->
+                                            <a href="/covoiturage/detail/<?= $covoiturageEncryptId[$covoiturage['id']] ?>"
+                                                class="btn btn-warning secondary-btn text-dark">Détail
+                                            </a>
+                                            <!-- Boutons pour démarrer, arrivé à destination et clôturé le covoiturage -->
+                                            <!-- Les statuts d'un covoiturage : 
                                          - 1 : Crée - 2 : Démarré - 3 : Arrivé - 4 : Validé 
                                         -->
-                                        <?php if ($covoiturage['statut_id'] == 1) { ?>
-                                            <button id="startBtn<?= $covoiturage['id'] ?>"
-                                                class="btn btn-primary secondary-btn text-white"
-                                                onclick="startCovoiturage(<?= $covoiturage['id'] ?>)">
-                                                Démarrer
-                                            </button>
-                                        <?php } else { ?>
-                                            <button id="startBtn<?= $covoiturage['id'] ?>"
-                                                class="btn btn-primary secondary-btn text-white hidden">
-                                                Démarrer
-                                            </button>
-                                        <?php } ?>
-                                        <?php if ($covoiturage['statut_id'] == 2) { ?>
-                                            <button id="arriveBtn<?= $covoiturage['id'] ?>"
-                                                class="btn btn-primary secondary-btn text-white"
-                                                onclick="arriveCovoiturage(<?= $covoiturage['id'] ?>)">
-                                                Arrivée
-                                            </button>
-                                        <?php } else { ?>
-                                            <button id="arriveBtn<?= $covoiturage['id'] ?>"
-                                                class="btn btn-primary secondary-btn text-white hidden"
-                                                onclick="arriveCovoiturage(<?= $covoiturage['id'] ?>)">
-                                                Arrivée
-                                            </button>
-                                        <?php } ?>
-                                        <?php if ($covoiturage['statut_id'] == 3 || $covoiturage['statut_id'] == 4) { ?>
-                                            <button id="finishBtn<?= $covoiturage['id'] ?>"
-                                                class="btn btn-dark secondary-btn text-white">
-                                                Clôturé
-                                            </button>
-                                        <?php } else { ?>
-                                            <button id="finishBtn<?= $covoiturage['id'] ?>"
-                                                class="btn btn-dark secondary-btn text-white hidden">
-                                                Clôturé
-                                            </button>
-                                        <?php } ?>
-                                    </div>
-                                </li>
-                            <?php } ?>
-                        </ul>
+                                            <?php if ($covoiturage['statut_id'] == 1) { ?>
+                                                <button id="startBtn<?= $covoiturage['id'] ?>"
+                                                    class="btn btn-primary secondary-btn text-white"
+                                                    onclick="startCovoiturage(<?= $covoiturage['id'] ?>)">
+                                                    Démarrer
+                                                </button>
+                                            <?php } else { ?>
+                                                <button id="startBtn<?= $covoiturage['id'] ?>"
+                                                    class="btn btn-primary secondary-btn text-white hidden">
+                                                    Démarrer
+                                                </button>
+                                            <?php } ?>
+                                            <?php if ($covoiturage['statut_id'] == 2) { ?>
+                                                <button id="arriveBtn<?= $covoiturage['id'] ?>"
+                                                    class="btn btn-primary secondary-btn text-white"
+                                                    onclick="arriveCovoiturage(<?= $covoiturage['id'] ?>)">
+                                                    Arrivée
+                                                </button>
+                                            <?php } else { ?>
+                                                <button id="arriveBtn<?= $covoiturage['id'] ?>"
+                                                    class="btn btn-primary secondary-btn text-white hidden"
+                                                    onclick="arriveCovoiturage(<?= $covoiturage['id'] ?>)">
+                                                    Arrivée
+                                                </button>
+                                            <?php } ?>
+                                            <?php if ($covoiturage['statut_id'] == 3 || $covoiturage['statut_id'] == 4) { ?>
+                                                <button id="finishBtn<?= $covoiturage['id'] ?>"
+                                                    class="btn btn-dark secondary-btn text-white">
+                                                    Clôturé
+                                                </button>
+                                            <?php } else { ?>
+                                                <button id="finishBtn<?= $covoiturage['id'] ?>"
+                                                    class="btn btn-dark secondary-btn text-white hidden">
+                                                    Clôturé
+                                                </button>
+                                            <?php } ?>
+                                        </div>
+                                    </li>
+                                <?php } ?>
+                            </ul>
+                        <?php } else { ?>
+                            <p class="mb-0 fw-medium">Aucun covoiturage pour le moment</p>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
