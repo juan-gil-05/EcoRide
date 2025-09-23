@@ -470,7 +470,7 @@ ALTER TABLE `Commentaire`
 -- Contraintes pour la table `Covoiturage`
 --
 ALTER TABLE `Covoiturage`
-  ADD CONSTRAINT `covoiturage_ibfk_1` FOREIGN KEY (`voiture_id`) REFERENCES `Voiture` (`id`),
+  ADD CONSTRAINT `covoiturage_ibfk_1` FOREIGN KEY (`voiture_id`) REFERENCES `Voiture` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `covoiturage_ibfk_2` FOREIGN KEY (`statut_id`) REFERENCES `Statut` (`id`);
 
 --
