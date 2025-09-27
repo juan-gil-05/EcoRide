@@ -9,6 +9,7 @@ require_once  BASE_PATH . '/Templates/header.php';
 <section class="container my-5 bg-light shadow-lg rounded-4 p-4 p-md-5 connection-form">
   <!-- Formulaire pour créer un compte utilisateur -->
   <form method="post" class="d-flex flex-column" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? "" ?>">
     <!-- titre -->
     <h2 class="text-primary fw-bold mb-4 text-center headline-text">Créer un compte</h2>
 

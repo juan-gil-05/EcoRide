@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Repository\PreferenceRepository;
 use App\Repository\UserRepository;
 use App\Repository\VoitureRepository;
+use App\Security\CsrfTokenManager;
 use App\Security\Security;
 use App\Security\UserValidator;
 use Exception;
@@ -82,7 +83,7 @@ class UserController extends Controller
             if ($userCreated === true) {
                 // Pour connecter l'utilisateur
                 AuthController::connectUser($user, $userRepository);
-
+                CsrfTokenManager::resetTokenCsrf();
                 // Pour rediriger l'user selon certaines conditions
                 $this->redirectAfterLogin($user, $userRepository);
                 exit();
