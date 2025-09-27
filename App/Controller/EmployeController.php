@@ -38,7 +38,7 @@ class EmployeController extends Controller
             $allComments = $commentRepository->searchAllComments();
 
             // Function pour visualiser les commentaires de tous les covoiturages signalés
-            $commentsFunction = $this->validateComments($allComments, $commentRepository, $userRepository);
+            $commentsFunction = $this->validateComments($allComments, $userRepository);
 
             $this->render(
                 'User/employeEspace',
@@ -101,7 +101,6 @@ class EmployeController extends Controller
     // Fonction pour visualiser les commentaires de tous les covoiturages signalés
     private function validateComments(
         array $allComments,
-        CommentRepository $commentRepository,
         UserRepository $userRepository
     ) {
         // Pour parcourir le tableau des commentaires
@@ -122,6 +121,11 @@ class EmployeController extends Controller
 
 
         // On retourne le tableau avec les pseudos des passagers et des chauffeurs
-        return [$passagerName, $driverName, $dateDepartFormatted, $dateArriveeFormatted];
+        return [
+            $passagerName ?? null,
+            $driverName ?? null,
+            $dateDepartFormatted ?? null,
+            $dateArriveeFormatted ?? null
+        ];
     }
 }

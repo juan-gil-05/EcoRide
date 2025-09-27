@@ -2,7 +2,7 @@
 // HEADER
 require_once  BASE_PATH . '/Templates/header.php';
 ?>
-<?= $_SESSION['csrf_token'] ?? "no set" ?>
+
 <!-- Section avec la table de tous les utilisateurs -->
 <section class="container admin-espace-container mt-3 mb-5">
     <!-- Bouton pour créer un compte employé -->

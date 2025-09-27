@@ -1,8 +1,6 @@
 <?php
 
 // HEADER
-use App\Security\Security;
-
 require_once  BASE_PATH . '/Templates/header.php';
 ?>
 <!-- Navbar pour afficher les avis ou les covoiturages signalés -->
@@ -70,6 +68,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                 <!-- Les boutons d'action : (Valider ou refuser) -->
                 <div class="mt-4">
                     <form method="post" class="avis-btn">
+                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? "" ?>">
                         <!-- Input chaché pour envoyer l'id de l'avis dans le form -->
                         <input type="hidden" name="avis_id" value="<?= $avisAndNote['_id'] ?>">
                         <!-- Refuser -->
@@ -100,6 +99,11 @@ require_once  BASE_PATH . '/Templates/header.php';
     <div class="">
         <h2 class="subtitle-text text-center text-white text-capitalize-">Tous les commentaires</h2>
     </div>
+    <?php if (empty($allComments)) {?>
+        <div class="text-center mt-4">
+            <p class="text-white content-text">Aucun covoiturage signalé pour le moment.</p>
+        </div>
+    <?php }?>
     <!-- La list des commentaires -->
     <ul class="mt-4 ps-0 comment-list-container">
         <?php foreach ($allComments as $comment) { ?>
