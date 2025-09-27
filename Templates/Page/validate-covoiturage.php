@@ -6,6 +6,7 @@ require_once  BASE_PATH . '/Templates/header.php';
 <!-- Formulaire pour valider que le covoiturage s'est bien passé -->
 <section class="container mt-5 mb-5">
     <form method="post" class="content-text covoiturage-form-validate">
+        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? "" ?>">
         <!-- Est-ce que le covoiturage c'est bine passé -->
         <div class="good-travel form-div">
             <label class="form-label" for="">Est-ce que le covoiturage c'est bien passé?</label>

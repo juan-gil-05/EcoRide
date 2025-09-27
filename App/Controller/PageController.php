@@ -6,6 +6,7 @@ use App\Entity\Covoiturage;
 use App\Repository\AvisRepository;
 use App\Repository\CovoiturageRepository;
 use App\Security\CovoiturageValidator;
+use App\Security\CsrfTokenManager;
 use App\Security\Security;
 use DateTime;
 use Exception;
@@ -244,6 +245,7 @@ class PageController extends Controller
                     $_SESSION['message_to_User'] = "Merci pour votre avis !</br>" .
                         "Votre note et commentaire ont bien été enregistrés et seront examinés par notre équipe.";
                     $_SESSION['message_code'] = "success";
+                    CsrfTokenManager::resetTokenCsrf(); // Pour réinitialiser le token CSRF
                     // On redirige vers la page d'accueil
                     header('location: /page/accueil');
                     exit();
@@ -255,6 +257,7 @@ class PageController extends Controller
                     $_SESSION['message_to_User'] = "Merci pour votre retour !</br>" .
                         "Nous sommes ravis que votre trajet se soit bien déroulé.";
                     $_SESSION['message_code'] = "success";
+                    CsrfTokenManager::resetTokenCsrf(); // Pour réinitialiser le token CSRF
                     // // On redirige vers la page d'accueil
                     header('location: /page/accueil');
                     exit();
@@ -273,6 +276,7 @@ class PageController extends Controller
                 $_SESSION['message_to_User'] = "Merci pour votre retour !</br>" .
                     "Nous allons examiner votre commentaire et contacter le chauffeur si nécessaire.";
                 $_SESSION['message_code'] = "success";
+                CsrfTokenManager::resetTokenCsrf(); // Pour réinitialiser le token CSRF
                 // // On redirige vers la page d'accueil
                 header('location: /page/accueil');
                 exit();

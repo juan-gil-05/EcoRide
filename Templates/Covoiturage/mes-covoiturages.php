@@ -184,7 +184,8 @@ require_once  BASE_PATH . '/Templates/header.php';
                                             </div>
                                         </div>
                                         <!-- Tous les boutons d'action du covoiturage -->
-                                        <div class="covoiturage-btn-div d-flex justify-content-evenly align-items-center">
+                                        <div class="covoiturage-btn-div d-flex 
+                                        justify-content-evenly align-items-center">
                                             <!-- Bouton pour pour ouvrir la modal de confirmation -->
                                             <button class="btn btn-danger secondary-btn text-light"
                                                 data-bs-toggle="modal"
@@ -221,8 +222,9 @@ require_once  BASE_PATH . '/Templates/header.php';
                                                             </label>
                                                             <!-- Bouton pour confirmer -->
                                                             <div class="d-flex gap-3 justify-content-center">
-                                                                <input type="submit" class="btn btn-danger shadow-section 
-                                                                text-white content-text secondary-btn" value="Confirmer"
+                                                                <input type="submit" class="btn btn-danger 
+                                                                shadow-section text-white content-text secondary-btn"
+                                                                    value="Confirmer"
                                                                     name="deleteCovoiturageAsDriver">
                                                             </div>
                                                         </form>
@@ -240,7 +242,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                                             <?php if ($covoiturage['statut_id'] == 1) { ?>
                                                 <button id="startBtn<?= $covoiturage['id'] ?>"
                                                     class="btn btn-primary secondary-btn text-white"
-                                                    onclick="startCovoiturage(<?= $covoiturage['id'] ?>)">
+                                                    onclick="startCovoiturage('<?= htmlspecialchars($covoiturage['id']) ?>','<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>')">
                                                     Démarrer
                                                 </button>
                                             <?php } else { ?>
@@ -252,13 +254,13 @@ require_once  BASE_PATH . '/Templates/header.php';
                                             <?php if ($covoiturage['statut_id'] == 2) { ?>
                                                 <button id="arriveBtn<?= $covoiturage['id'] ?>"
                                                     class="btn btn-primary secondary-btn text-white"
-                                                    onclick="arriveCovoiturage(<?= $covoiturage['id'] ?>)">
+                                                    onclick="arriveCovoiturage('<?= htmlspecialchars($covoiturage['id']) ?>','<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>')">
                                                     Arrivée
                                                 </button>
                                             <?php } else { ?>
                                                 <button id="arriveBtn<?= $covoiturage['id'] ?>"
                                                     class="btn btn-primary secondary-btn text-white hidden"
-                                                    onclick="arriveCovoiturage(<?= $covoiturage['id'] ?>)">
+                                                    onclick="arriveCovoiturage('<?= htmlspecialchars($covoiturage['id']) ?>','<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>')">
                                                     Arrivée
                                                 </button>
                                             <?php } ?>

@@ -1,13 +1,13 @@
 // script pour masquer le bouton "Démarrer" et afficher le bouton "Arrivée à destination" lors du clic sur le bouton "Démarrer"
 // tout en utilisant une requête fetch pour mettre à jour l'état du covoiturage dans la base de données
-function startCovoiturage(id) {
+function startCovoiturage(id, csrfToken) {
     fetch("/api/startCovoiturage", {
         method: "POST",
         headers: {
             "content-type": "application/x-www-form-urlencoded"
         },
         // Envoi de l'id du covoiturage et l'action startCovoiturage
-        body: `covoiturage_id=${id}&startCovoiturage=1`
+        body: `covoiturage_id=${id}&startCovoiturage=1&csrf_token=${csrfToken}`
     })
         .then(response => response.json())
         .then(data => {
@@ -33,14 +33,14 @@ function startCovoiturage(id) {
 
 // script pour masquer le bouton "Arrivée à destination" et afficher le bouton "Clôturé" lors du clic sur le bouton "Arrivée à destination"
 // tout en utilisant une requête fetch pour mettre à jour l'état du covoiturage dans la base de données
-function arriveCovoiturage(id) {
+function arriveCovoiturage(id, csrfToken) {
     fetch("/api/stopCovoiturage", {
         method: "POST",
         headers: {
             "content-type": "application/x-www-form-urlencoded"
         },
         // Envoi de l'id du covoiturage et l'action arriveCovoiturage
-        body: `covoiturage_id=${id}&arriveCovoiturage=1`
+        body: `covoiturage_id=${id}&arriveCovoiturage=1&csrf_token=${csrfToken}`
     })
         .then(response => response.json())
         .then(data => {
