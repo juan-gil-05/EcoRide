@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Security\CsrfTokenManager;
 use App\Security\Security;
 use App\Security\UserValidator;
 use Exception;
@@ -56,7 +57,6 @@ class AdminController extends Controller
             $user = new User();
             $userRepository = new UserRepository();
             $UserValidator = new UserValidator($userRepository);
-            $userController = new UserController();
             // Si le formulaire est envoyé, on hydrate l'objet User avec les données passées
             if (isset($_POST['signUp'])) {
                 $user->hydrate($_POST);
@@ -76,6 +76,7 @@ class AdminController extends Controller
                     // le message_code c'est pour l'icon de SweetAlert
                     $_SESSION['message_to_User'] = "Le compte employé a été créé avec succès.";
                     $_SESSION['message_code'] = "success";
+                    CsrfTokenManager::resetTokenCsrf(); // Pour réinitialiser le token CSRF
                     // On envoie le json au fetch
                     echo (json_encode(['success' => true, 'message' => 'Compte créé avec succès']));
                     exit;

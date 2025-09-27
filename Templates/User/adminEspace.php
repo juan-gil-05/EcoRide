@@ -2,6 +2,7 @@
 // HEADER
 require_once  BASE_PATH . '/Templates/header.php';
 ?>
+<?= $_SESSION['csrf_token'] ?? "no set" ?>
 <!-- Section avec la table de tous les utilisateurs -->
 <section class="container admin-espace-container mt-3 mb-5">
     <!-- Bouton pour créer un compte employé -->
@@ -23,6 +24,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                         id="createEmployeAccountForm">
                         <!-- Tous les champs du formulaire de l'utilisateur -->
                         <div class="create-employe-account-body">
+                            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? "" ?>">
                             <!-- Pseudo -->
                             <div class="form-floating">
                                 <input type="text" name="pseudo" class="form-control small-text"
@@ -167,6 +169,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                                         </button>
                                     </div>
                                     <form method='post' class='gap-4 status-user-account-form'>
+                                        <input type='hidden' name='csrf_token' value='{$_SESSION['csrf_token']}'>
                                         <input type='hidden' name='id' value='{$user['id']}'>
                                         <label class='content-text text-center fw-medium'>
                                             Voulez-vous vraiment suspendre le compte de <br>
@@ -194,6 +197,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                                         </button>
                                     </div>
                                     <form method='post' class='gap-4 status-user-account-form'>
+                                        <input type='hidden' name='csrf_token' value='{$_SESSION['csrf_token']}'>
                                         <input type='hidden' name='id' value='{$user['id']}'>
                                         <label class='content-text text-center fw-medium'>
                                             Voulez-vous réactiver le compte de <br>
@@ -221,6 +225,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                                         </button>
                                     </div>
                                     <form method='post' class='gap-4 status-user-account-form'>
+                                        <input type='hidden' name='csrf_token' value='{$_SESSION['csrf_token']}'>
                                         <input type='hidden' name='id' value='{$user['id']}'>
                                         <label class='content-text text-center fw-medium'>
                                             Êtes-vous sûr(e) de vouloir supprimer le compte de </br>
