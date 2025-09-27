@@ -6,6 +6,7 @@ require_once  BASE_PATH . '/Templates/header.php';
 <!-- main -->
 <section class="container my-5 bg-light shadow-lg rounded-4 p-4 p-md-5">
     <form method="post" class="contact-form">
+        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? "" ?>">
         <!-- Titre -->
         <h2 class="text-primary headline-text fw-bold mb-4 text-center">Contactez nous</h2>
         <!-- Pseudo et Email-->
