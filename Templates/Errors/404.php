@@ -4,12 +4,17 @@ require_once BASE_PATH . '/Templates/header.php';
 ?>
 
 <!-- main -->
-
-<div class="container text-white mt-3">
-    <h1>404 - Page introuvable</h1>
-    <p>oups, il semble que cette page n'existe pas</p>
-    <p>Error : <?= $error; ?></p>
-    <a href="/page/accueil" class="text-warning">Retour vers la page d'accueil</a>
+<div class="text-light bg-primary p-5">
+    <div class="d-flex align-items-start justify-content-center m-5">
+        <div class="text-center">
+            <h1 class="display-1 fw-bold">404</h1>
+            <p class="fs-2 fw-medium mt-4">Page introuvable</p>
+            <p class="mt-4 mb-5">Erreur : <?= $error; ?></p>
+            <a href="/page/accueil" class="btn btn-light fw-semibold rounded-pill px-4 py-2 custom-btn">
+                Retour vers la page d'accueil
+            </a>
+        </div>
+    </div>
 </div>
 
 <?php
