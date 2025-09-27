@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Voiture;
 use App\Repository\VoitureRepository;
+use App\Security\CsrfTokenManager;
 use App\Security\Security;
 use App\Security\VoitureValidator;
 use Exception;
@@ -57,6 +58,7 @@ class VoitureController extends Controller
                             // le message_code c'est pour l'icon de SweetAlert
                             $_SESSION['message_to_User'] = "Voiture crée avec succès";
                             $_SESSION['message_code'] = "success";
+                            CsrfTokenManager::resetTokenCsrf(); // Pour réinitialiser le token CSRF
                             // On redirige vers la page d'accueil
                             header('location: /user/profil');
                             exit;

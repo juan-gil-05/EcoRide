@@ -9,6 +9,7 @@ require_once  BASE_PATH . '/Templates/header.php';
 <section class="container bg-light shadow-lg rounded-4 p-4 p-md-5 my-5">
     <!-- Formulaire pour créer enregistrez une voiture -->
     <form method="post" class="d-flex flex-column chauffeur">
+        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? "" ?>">
         <!-- titre -->
         <h1 class="text-primary fw-bold mb-4 text-center headline-text">Enregistrez votre voiture</h1>
         <!-- Si l'utilisateur a un role chauffeur, alors, formulaire pour enregistrer la voiture -->
