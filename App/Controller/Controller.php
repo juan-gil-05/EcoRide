@@ -69,7 +69,7 @@ class Controller
     }
 
     // Fonction pour appeler à la vue via le path de la page et avec des params specifiques
-    protected function render(string $path, array $params = []): void
+    public function render(string $path, array $params = []): void
     {
         // Path du fichier avec la vue
         $filePath = BASE_PATH . "/Templates/" . $path . ".php";

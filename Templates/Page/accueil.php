@@ -2,6 +2,8 @@
 // HEADER
 require_once BASE_PATH . '/Templates/header.php';
 ?>
+<?= $_SESSION['csrf_token'] ?? "no set" ?>
+
 
 <!-- main -->
 <!-- Section qui contient le slogan et la barre de recherche des covoiturages -->

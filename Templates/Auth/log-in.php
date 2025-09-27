@@ -4,7 +4,6 @@ require_once  BASE_PATH . '/Templates/header.php';
 ?>
 
 <!-- main -->
-
 <section class="container my-5 bg-light shadow-lg rounded-4 p-4 p-md-5 connection-form">
     <!-- Formulaire pour se connecter -->
     <form method="post">
@@ -12,6 +11,7 @@ require_once  BASE_PATH . '/Templates/header.php';
         <h2 class="text-primary fw-bold mb-4 text-center headline-text">Se connecter à EcoRide</h2>
         <!-- Tous les champs du formulaire -->
         <div class="d-flex flex-column align-items-center content-text">
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? "" ?>">
             <!-- E-mail -->
             <div class="form-floating mb-3 ">
                 <input type="email" name="mail" class="form-control form-control-lg shadow-sm content-text

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\UserRepository;
 use App\Entity\User;
 use App\Repository\AuthRepository;
+use App\Security\CsrfTokenManager;
 use App\Security\UserValidator;
 use DateTime;
 use Exception;
@@ -95,6 +96,7 @@ class AuthController extends Controller
             $user = $this->resetUserAttempts($user);
 
             $this->connectUser($user, $userRepository);
+            CsrfTokenManager::resetTokenCsrf();
             UserController::redirectAfterLogin($user, $userRepository);
             exit;
         } catch (Exception $e) {

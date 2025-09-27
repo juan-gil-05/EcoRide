@@ -20,9 +20,14 @@ define('BASE_PATH', dirname(__DIR__));
 // Pour utiliser la bonne zone horaire
 date_default_timezone_set('Europe/Paris');
 
-// Pour le système du routage
 use App\Controller\Controller;
+use App\Security\CsrfTokenManager;
 
+// Le systèmeme qui gère les tokens csrf
+$csrfTokenManager = new CsrfTokenManager();
+$csrfTokenManager::middleware();
+
+// Pour le système du routage
 $controller = new Controller();
 $controller->route();
 
