@@ -9,6 +9,7 @@ use App\Repository\PreferenceRepository;
 use App\Repository\UserRepository;
 use App\Repository\VoitureRepository;
 use App\Security\CovoiturageValidator;
+use App\Security\CsrfTokenManager;
 use App\Security\Security;
 use App\Tools\SendMail;
 use DateTime;
@@ -142,7 +143,6 @@ class CovoiturageController extends Controller
             ]
         );
     }
-
 
     /*
     Exemple d'appel depuis l'url
@@ -367,6 +367,7 @@ class CovoiturageController extends Controller
                         // le message_code c'est pour l'icon de SweetAlert
                         $_SESSION['message_to_User'] = "Covoiturage ajouté avec succès";
                         $_SESSION['message_code'] = "success";
+                        CsrfTokenManager::resetTokenCsrf(); // Pour réinitialiser le token CSRF
                         // On envoi vers la page de mes covoiturages
                         header('Location: /covoiturage/mes-covoiturages');
                         exit();
@@ -596,6 +597,7 @@ class CovoiturageController extends Controller
             // le message_code c'est pour l'icon de SweetAlert
             $_SESSION['message_to_User'] = "Votre participation à ce covoiturage a été annulée.";
             $_SESSION['message_code'] = "success";
+            CsrfTokenManager::resetTokenCsrf(); // Pour réinitialiser le token CSRF
         }
     }
 
@@ -652,6 +654,7 @@ class CovoiturageController extends Controller
             // le message_code c'est pour l'icon de SweetAlert
             $_SESSION['message_to_User'] = "Covoiturage annulé. Les participants ont été informés par e-mail.";
             $_SESSION['message_code'] = "info";
+            CsrfTokenManager::resetTokenCsrf(); // Pour réinitialiser le token CSRF
         }
     }
 

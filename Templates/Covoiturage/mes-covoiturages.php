@@ -5,7 +5,7 @@ use App\Security\Security;
 
 require_once  BASE_PATH . '/Templates/header.php';
 ?>
-
+<?= $_SESSION['csrf_token'] ?? "no set" ?>
 <!-- Main -->
 <!-- Section avec le hero, et le bouton pour créer un nouveau covoiturage si l'user est chauffer -->
 <section class="text-center mes-covoiturages-hero">
@@ -95,9 +95,11 @@ require_once  BASE_PATH . '/Templates/header.php';
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close">
                                                     </button>
-                                                    <!-- Formulaire pour confirmer l'annulation du covoiturage  -->
+                                                    <!-- Formulaire pour confirmer que l'user quitte le covoiturage  -->
                                                     <form method="post" class="w-100 d-flex align-items-center 
                                                                             flex-column gap-4 p-5 mb-0 bg-light form">
+                                                        <input type="hidden" name="csrf_token"
+                                                            value="<?= $_SESSION['csrf_token'] ?? "" ?>">
                                                         <!-- input invisible pour envoyer l'id du covoiturage, 
                                                          ƒde l'user dans le formulaire et le prix-->
                                                         <input type="hidden" name="user_id"
@@ -205,6 +207,8 @@ require_once  BASE_PATH . '/Templates/header.php';
                                                         <!-- Formulaire pour confirmer l'annulation du covoiturage  -->
                                                         <form method="post" class="w-100 d-flex align-items-center 
                                                                               flex-column gap-4 p-5 mb-0 bg-light form">
+                                                            <input type="hidden" name="csrf_token"
+                                                                value="<?= $_SESSION['csrf_token'] ?? "" ?>">
                                                             <!-- input invisible pour envoyer l'id et le prix 
                                                          du covoiturage dans le formulaire-->
                                                             <input type="hidden" name="covoiturage_id"

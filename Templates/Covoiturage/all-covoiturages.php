@@ -24,6 +24,7 @@ require_once  BASE_PATH . '/Templates/header.php';
     <div class="filter-body content-text shadow-section">
       <!-- Formulaire pour les filtres de la section des covoiturages -->
       <form method="post">
+        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? "" ?>">
         <!-- Filtre du Voyage Écologique -->
         <div>
           <!-- Icon du filtre -->
@@ -130,6 +131,7 @@ require_once  BASE_PATH . '/Templates/header.php';
           <div class="modal-body">
             <!-- Formulaire pour les filtres de la section des covoiturages -->
             <form method="post" class="filter-body content-text">
+              <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? "" ?>">
               <!-- Filtre du Voyage Écologique -->
               <div>
                 <!-- Icon du filtre -->

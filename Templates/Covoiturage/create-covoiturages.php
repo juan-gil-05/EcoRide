@@ -9,6 +9,7 @@ require_once  BASE_PATH . '/Templates/header.php';
         <!-- Tout le contenu du formulaire -->
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10">
+                <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? "" ?>">
                 <!-- Informations de Départ -->
                 <div class="card shadow-sm rounded-3 p-4 mb-4 covoiturage-form">
                     <h2 class="mb-4  content-text">Informations de Départ</h2>
