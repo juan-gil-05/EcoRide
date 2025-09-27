@@ -514,7 +514,7 @@ class CovoiturageController extends Controller
             // Si l'user n'est pas connecté, on change la variable pour passer l'info à la vue
             if (!Security::isLogged()) {
                 $isNotLogged = true;
-            } elseif (in_array($userId, $covoiturageDetail)) {
+            } elseif ($_SESSION['user']['id'] === $covoiturageDetail['user_id']) {
                 // Si l'utilisateur est le chauffeur du covoiturage
                 $isDriverInCovoiturage = true;
             } elseif ($disponiblePlaces == 0) {
