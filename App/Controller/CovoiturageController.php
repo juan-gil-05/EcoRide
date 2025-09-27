@@ -548,6 +548,7 @@ class CovoiturageController extends Controller
                     // le message_code c'est pour l'icon de SweetAlert
                     $_SESSION['message_to_User'] = 'Votre participation au covoiturage a été enregistrée avec succès !';
                     $_SESSION['message_code'] = "success";
+                    CsrfTokenManager::resetTokenCsrf(); // Pour réinitialiser le token CSRF
                 }
             }
             return

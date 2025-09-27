@@ -147,6 +147,7 @@ require_once  BASE_PATH . '/Templates/header.php';
             <form method="post" class="w-100 d-flex align-items-center 
                                 flex-column gap-4 p-5 text-center mb-0 bg-light form"
               id="participateForm">
+              <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? "" ?>">
               <!-- Input cache pour passer les donnes dans la requête sql -->
               <input type="text" name="user_id" hidden
                 value="<?= (isset($_SESSION['user']['id'])) ? $_SESSION['user']['id'] : "" ?>">

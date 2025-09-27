@@ -5,7 +5,7 @@ use App\Security\Security;
 
 require_once  BASE_PATH . '/Templates/header.php';
 ?>
-<?= $_SESSION['csrf_token'] ?? "no set" ?>
+
 <!-- Main -->
 <!-- Section avec le hero, et le bouton pour créer un nouveau covoiturage si l'user est chauffer -->
 <section class="text-center mes-covoiturages-hero">
