@@ -61,6 +61,7 @@ require_once  BASE_PATH . '/Templates/header.php';
                                 <!-- L'action c'est le controller Preference -->
                                 <form action="/preference/creer-personnelle"
                                     method="post" class="d-flex flex-column gap-2 w-100">
+                                    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? "" ?>">
                                     <!-- L'input text -->
                                     <textarea name="preference" class="form-control" required></textarea>
                                     <!-- bouton pour envoyer le fomulaire -->
@@ -131,6 +132,8 @@ require_once  BASE_PATH . '/Templates/header.php';
                                                     <!-- Formulaire pour confirmer l'annulation du pref  -->
                                                     <form method="post" class="w-100 d-flex align-items-center 
                                                                               flex-column gap-4 p-5 mb-0 bg-light form">
+                                                        <input type="hidden" name="csrf_token"
+                                                            value="<?= $_SESSION['csrf_token'] ?? "" ?>">
                                                         <!-- input invisible pour envoyer l'id
                                                          de la préférence dans le formulaire-->
                                                         <input type="hidden" name="prefId"
@@ -154,6 +157,8 @@ require_once  BASE_PATH . '/Templates/header.php';
                                     <li class="hidden d-flex justify-content-center editPersonalPreference"
                                         data-index="<?= $pref['id'] ?>">
                                         <form method="post" class="d-flex flex-column gap-2 w-100">
+                                            <input type="hidden" name="csrf_token"
+                                                value="<?= $_SESSION['csrf_token'] ?? "" ?>">
                                             <!-- L'input text -->
                                             <textarea name="preference_personnelle"
                                                 class="form-control"

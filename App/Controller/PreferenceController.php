@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Preference;
 use App\Entity\PreferencePersonnelle;
 use App\Repository\PreferenceRepository;
+use App\Security\CsrfTokenManager;
 use App\Security\PreferenceValidator;
 use App\Security\Security;
 use Exception;
@@ -55,6 +56,7 @@ class PreferenceController extends Controller
 
                     $_SESSION['message_to_User'] = "Compte crée avec succès";
                     $_SESSION['message_code'] = "success";
+                    CsrfTokenManager::resetTokenCsrf(); // Pour réinitialiser le token CSRF
                     // On envoi vers la page du profil
                     header('Location: /user/profil');
                     exit;
@@ -92,6 +94,7 @@ class PreferenceController extends Controller
             // le message_code c'est pour l'icon de SweetAlert
             $_SESSION['message_to_User'] = "Préférence sauvegardée";
             $_SESSION['message_code'] = "success";
+            CsrfTokenManager::resetTokenCsrf(); // Pour réinitialiser le token CSRF
             // On envoi vers la page d'accueil
             header('Location: /user/profil');
             exit();
@@ -113,6 +116,7 @@ class PreferenceController extends Controller
             // le message_code c'est pour l'icon de SweetAlert
             $_SESSION['message_to_User'] = "Préférence modifiée";
             $_SESSION['message_code'] = "success";
+            CsrfTokenManager::resetTokenCsrf(); // Pour réinitialiser le token CSRF
             // On envoi vers la page d'accueil
             header('Location: /user/profil');
             exit();

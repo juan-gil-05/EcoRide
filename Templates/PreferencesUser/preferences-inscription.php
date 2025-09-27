@@ -11,6 +11,7 @@ require_once  BASE_PATH . '/Templates/header.php';
     <h1 class="text-primary fw-bold mb-5 headline-text text-center">Enregistrez vos préférences</h1>
     <!-- formulaire pour enregistrer les préférences utilisateur -->
     <form method="post" class="w-100">
+        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? "" ?>">
         <!-- Accepte les fumeurs ? -->
         <div class="row justify-content-center">
             <div class="card shadow-sm rounded-3 p-4 mb-4 col-12 col-md-6 text-center">
