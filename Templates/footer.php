@@ -10,7 +10,7 @@ use App\Tools\StringTools;
         <!--Les informations du footer-->
         <div class="footer-info">
             <!--Mail-->
-            <p>contact@ecoride.fr</p>
+            <a href="/page/contact" class="text-white">contact@ecoride.fr</a>
             <div class="separator"></div>
             <!--Nom-->
             <a class="principal content-text text-white" href="/page/accueil">EcoRide</a>

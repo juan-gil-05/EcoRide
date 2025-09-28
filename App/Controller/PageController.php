@@ -207,13 +207,6 @@ class PageController extends Controller
                 // pour savoir si le passager a répondu oui ou non à la question
                 $questionRadioNo = ($_POST['questionRadio'] == "non");
 
-                // Fonction pour mettre à jour les crédits du chauffeur
-                $covoiturageRepository->updateDriverCredits($covoituragePrice, $driverId);
-
-                // Fonction pour mettre à jour le statut de la participation du passager au covoiturage
-                // 4 = Validé
-                $covoiturageRepository->updateUserCovoiturageStatut($passagerId, $covoiturageId, 4);
-
                 // Variables pour enregistrer les détails de l'avis
                 $avisTitle = $_POST['titre'];
                 $avisDescription = $_POST['avis'];
@@ -245,10 +238,13 @@ class PageController extends Controller
                     $_SESSION['message_to_User'] = "Merci pour votre avis !</br>" .
                         "Votre note et commentaire ont bien été enregistrés et seront examinés par notre équipe.";
                     $_SESSION['message_code'] = "success";
-                    CsrfTokenManager::resetTokenCsrf(); // Pour réinitialiser le token CSRF
-                    // On redirige vers la page d'accueil
-                    header('location: /page/accueil');
-                    exit();
+                    $this->updateDriverCreditsAndCovoiturageStatut(
+                        $covoiturageRepository,
+                        $covoituragePrice,
+                        $driverId,
+                        $passagerId,
+                        $covoiturageId
+                    );
                 } elseif (count($errors) == 3) {
                     /* Si le passager n'a pas rempli les champs de l'avis et de la note,
                        on affiche le message de success et on le redirige vers la page d'accueil */
@@ -257,10 +253,13 @@ class PageController extends Controller
                     $_SESSION['message_to_User'] = "Merci pour votre retour !</br>" .
                         "Nous sommes ravis que votre trajet se soit bien déroulé.";
                     $_SESSION['message_code'] = "success";
-                    CsrfTokenManager::resetTokenCsrf(); // Pour réinitialiser le token CSRF
-                    // // On redirige vers la page d'accueil
-                    header('location: /page/accueil');
-                    exit();
+                    $this->updateDriverCreditsAndCovoiturageStatut(
+                        $covoiturageRepository,
+                        $covoituragePrice,
+                        $driverId,
+                        $passagerId,
+                        $covoiturageId
+                    );
                 }
             } elseif (isset($_POST["validateCovoiturageForm"]) && $_POST['questionRadio'] == "non") {
                 // Si le passager indique que le covoiturage NE S'EST PAS bien passé
@@ -309,5 +308,24 @@ class PageController extends Controller
     protected function mentionsLegales()
     {
         $this->render("Page/mentions-legales");
+    }
+
+    private function updateDriverCreditsAndCovoiturageStatut(
+        CovoiturageRepository $covoiturageRepository,
+        int $covoituragePrice,
+        int $driverId,
+        int $passagerId,
+        int $covoiturageId
+    ): void {
+        // Fonction pour mettre à jour les crédits du chauffeur
+        $covoiturageRepository->updateDriverCredits($covoituragePrice, $driverId);
+
+        // Fonction pour mettre à jour le statut de la participation du passager au covoiturage
+        // 4 = Validé
+        $covoiturageRepository->updateUserCovoiturageStatut($passagerId, $covoiturageId, 4);
+        CsrfTokenManager::resetTokenCsrf(); // Pour réinitialiser le token CSRF
+        // On redirige vers la page d'accueil
+        header('location: /page/accueil');
+        exit();
     }
 }
